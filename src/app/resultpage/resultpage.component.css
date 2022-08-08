@@ -1,0 +1,33 @@
+.imgContainer {
+    width:100%; /*container-width*/
+    overflow:hidden; /*hide bounds of image */
+    margin:0;   /*reset margin of figure tag*/
+}
+.starsGif {
+    display:block; /*remove inline-block spaces*/
+    width: 100%; /*make image streatch*/
+
+    padding: auto;
+    margin: 0;
+}
+
+.resultContainer {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.bigNumber {
+    font-size: 4rem;
+    font-weight: var(--fw-bold);
+    color: var(--clr-primary-dark);
+    margin: 2rem auto 0;
+    text-align: center;
+    line-height: 100%;
+}
+
+.labelBigNumber {
+    font-size: 0.8rem;
+    font-weight: var(--fw-normal);
+    color: var(--clr-primary-dark);
+
+}

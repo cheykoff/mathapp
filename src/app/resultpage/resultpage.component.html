@@ -1,0 +1,26 @@
+<div class="header">
+    <h1 class="headerTitle">Dein Ergebnis</h1>
+  </div>
+
+<div class="results">
+    <!--
+    <p>Beantwortete Fragen: {{ correctAnswer + incorrectAnswer }}</p>
+    <p>Richtige Antworten: {{ correctAnswer }}</p>
+    <p>Falsche Antworten: {{ incorrectAnswer }}</p>
+    <p>Punkte: {{ points }}</p>
+    -->
+    <p>Geschafft!</p>
+    
+    <div class="imgContainer">
+        <img [src]="getStars()" id="starsGif" class="starsGif">
+      </div>
+    <div class="resultContainer">
+        <div class="bigNumber">{{ correctAnswer }}/{{ correctAnswer + incorrectAnswer }}</div>
+        <p class="labelBigNumber">Fragen richtig beantwortet</p>
+    </div>
+      
+    <p *ngIf="incorrectAnswer !== 0">Willst du dein Ergebnis verbessern?</p>
+</div>
+
+
+<button routerLink="/" class="btn">Neuer Versuch</button>

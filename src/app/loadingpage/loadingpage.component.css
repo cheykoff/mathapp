@@ -1,0 +1,31 @@
+body {
+    background-color: #054666;
+}
+.background {
+    background-color: #054666;
+    margin: -16px;
+    padding: 0;
+    height: 100vh;
+}
+
+.imgContainer {
+    width: 100%; /*container-width*/
+    text-align: center;
+    padding-top: 10vh;
+}
+
+#quote {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: 50px 16px 20px;
+}
+
+#quoteAuthor {
+    font-size: 1.5em;
+    font-weight: regular;
+    color: darkgray;
+    text-align: center;
+    margin-top: 20px;
+}

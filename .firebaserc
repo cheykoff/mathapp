@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "quizapp-d018b": {
+      "hosting": {
+        "quizappv1": [
+          "quizapp-d018b"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "quizapp-d018b"
+  }
+}

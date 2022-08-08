@@ -1,0 +1,39 @@
+
+
+
+app-startpage {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    color: darkgray;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0 -16px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.classListItem > button{
+    height: 45px;
+    color: black;
+}
+
+li {
+    margin: 0 16px;
+    padding: 0;
+}
+/*
+.classListItem > button:hover {
+    background-color: yellow;
+}
+*/
+
+button:focus {
+    background-color: var(--clr-primary-lighter);
+}
