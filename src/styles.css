@@ -309,7 +309,9 @@ button {
     padding: 4px;
     text-align: center;
     width: 100%;
-    height: 48px;
+    /*height: 48px;*/
+    min-height: 48px;
+    height: auto;
     font-size: 1.6rem;
     font-weight: var(--fw-bold);
     letter-spacing: 0.5px;

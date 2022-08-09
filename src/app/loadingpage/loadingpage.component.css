@@ -1,37 +1,3 @@
-html {
-    background-color: magenta;
-}
-
-body {
-    /*background-color: #054666;*/
-    background-color: yellow;
-}
-
-@-moz-document url-prefix() {
-    .background {
-        height: calc(100% + 32px);
-    }
-}
-
-@supports (-ms-ime-align:auto) {
-    .background {
-        height: 90vh;
-    }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0)
-and (min-resolution:.001dpcm) {
-.background{ height: 100%; }
-}
-
-.background {
-    /*background-color: #054666;*/
-    background-color: green;
-    margin: -16px;
-    padding: 0;
-    /*height: calc(100% + 32px);*/
-    height: 100vh;
-}
 
 .imgContainer {
     width: 100%; /*container-width*/
@@ -39,10 +5,14 @@ and (min-resolution:.001dpcm) {
     padding-top: 10vh;
 }
 
+#iconPng {
+    border-radius: 8px;
+}
+
 #quote {
     font-size: 1.5em;
     font-weight: bold;
-    color: white;
+    color: black;
     text-align: center;
     margin: 50px 16px 20px;
 }
@@ -50,7 +20,7 @@ and (min-resolution:.001dpcm) {
 #quoteAuthor {
     font-size: 1.5em;
     font-weight: regular;
-    color: lightgray;
+    color: darkslategray;
     text-align: center;
     margin-top: 20px;
 }

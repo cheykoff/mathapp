@@ -6,6 +6,10 @@ app-classselection {
     padding: 0;
 }
 
+body {
+    background-color:orange;
+}
+
 p {
     color: darkgray;
     text-transform: uppercase;
