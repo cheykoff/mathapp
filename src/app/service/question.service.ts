@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class QuestionService {
   constructor(private http: HttpClient) {}
 
-  getQuestionJson() {
-    return this.http.get<any>('assets/questions.json');
+  getQuestionJson(schoolClass: number) {
+    return this.http.get<any>(`assets/questions${schoolClass}.json`);
   }
 }

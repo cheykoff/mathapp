@@ -26,11 +26,15 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllQuestions();
+    this.getAllQuestions(this.shared.getSchoolClass());
+    console.log('exercise component: ngOnInit');
+    console.log(
+      'exercise component: schoolClass: ' + this.shared.getSchoolClass()
+    );
   }
 
-  getAllQuestions() {
-    this.questionService.getQuestionJson().subscribe((data) => {
+  getAllQuestions(schoolClass: number) {
+    this.questionService.getQuestionJson(schoolClass).subscribe((data) => {
       this.questionList = data.questions.filter((question: any) => {
         return question.schoolClass === this.shared.getSchoolClass();
       });

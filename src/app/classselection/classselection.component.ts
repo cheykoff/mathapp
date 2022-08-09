@@ -15,6 +15,7 @@ export class ClassselectionComponent implements OnInit {
   ngOnInit(): void {}
 
   selectSchoolClass(className: number): void {
+    console.log('className: ' + className);
     this.schoolClass = className;
     this.shared.setSchoolClass(className);
     this.goToExercise();
