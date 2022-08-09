@@ -1,10 +1,35 @@
-body {
-    background-color: #054666;
+html {
+    background-color: magenta;
 }
+
+body {
+    /*background-color: #054666;*/
+    background-color: yellow;
+}
+
+@-moz-document url-prefix() {
+    .background {
+        height: calc(100% + 32px);
+    }
+}
+
+@supports (-ms-ime-align:auto) {
+    .background {
+        height: 90vh;
+    }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+and (min-resolution:.001dpcm) {
+.background{ height: 100%; }
+}
+
 .background {
-    background-color: #054666;
+    /*background-color: #054666;*/
+    background-color: green;
     margin: -16px;
     padding: 0;
+    /*height: calc(100% + 32px);*/
     height: 100vh;
 }
 
@@ -25,7 +50,7 @@ body {
 #quoteAuthor {
     font-size: 1.5em;
     font-weight: regular;
-    color: darkgray;
+    color: lightgray;
     text-align: center;
     margin-top: 20px;
 }

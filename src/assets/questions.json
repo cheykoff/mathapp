@@ -125,7 +125,7 @@
                     "text": "stumpf"
                 },
                 {
-                    "text": "überstumpf",
+                    "text": "keine Antwort ist richtig",
                     "correct": true
                 }
             ]
@@ -168,7 +168,7 @@
         },
         {
             "schoolClass": 5,
-            "questionText": "Welche Primfaktorenzerlegung ergibt 168",
+            "questionText": "Welche Primfaktorenzerlegung ergibt 168?",
             "options": [{
                     "text": "2² ⋅ 3 ⋅ 7"
                 },

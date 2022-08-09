@@ -43,7 +43,7 @@
     /*--clr-text-dark: rgba(19, 15, 48, 0.6);*/
     --clr-text-dark: hsl(var(--hue-primary), 20%, 5%);
     /*--clr-text-light: #FFF;*/
-    --clr-text-light: hsl(var(--hue-primary), 95%, 99%)
+    --clr-text-light: hsl(var(--hue-primary), 95%, 99%);
 
     --fs-normal: 1.125rem;
     --fw-normal: 400;
