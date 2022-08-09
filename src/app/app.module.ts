@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { MathjaxModule } from 'mathjax-angular';
+
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFirestoreModule } from '@angular/fire/firestore';
 
@@ -32,6 +34,7 @@ import { LoadingpageComponent } from './loadingpage/loadingpage.component';
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
     provideFirestore(() => getFirestore()),
+    MathjaxModule.forRoot(),
     // AngularFireModule.initializeApp(environment.firebase),
     // AngularFirestoreModule,
   ],

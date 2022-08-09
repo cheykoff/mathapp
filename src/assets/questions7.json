@@ -1,0 +1,24 @@
+{
+    "questions": [
+        {
+            "schoolClass": 7,
+            "questionText": "",
+            "options": [
+                {
+                    "text": "42"
+                },
+                {
+                    "text": "43"
+                },
+                {
+                    "text": "52",
+                    "correct": true
+                },
+                
+                {
+                    "text": "53"
+                }
+            ]
+        }
+    ]
+}

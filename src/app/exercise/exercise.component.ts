@@ -31,6 +31,7 @@ export class ExerciseComponent implements OnInit {
     console.log(
       'exercise component: schoolClass: ' + this.shared.getSchoolClass()
     );
+    console.log('ngOnInit questions: ' + this.questionList);
   }
 
   getAllQuestions(schoolClass: number) {
@@ -39,6 +40,7 @@ export class ExerciseComponent implements OnInit {
         return question.schoolClass === this.shared.getSchoolClass();
       });
     });
+    console.log('getAllQuestions questions: ' + this.questionList);
   }
 
   answer(currentQno: number, option: any) {
@@ -60,9 +62,21 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
+  // Richard Durstenfeld's version of the Fisher-Yates shuffle algorithm
+  randomizeOrderOfOptions() {
+    let arr = this.questionList[this.currentQuestion].options;
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    this.questionList[this.currentQuestion].options = arr;
+  }
+
   nextQuestion() {
     this.currentQuestion++;
     this.isAnswered = false;
+    this.randomizeOrderOfOptions();
+    console.log('nextQuestion questions: ' + this.questionList[0].questionText);
     if (this.currentQuestion >= this.questionList.length - 1) {
       this.quizCompleted = true;
     }
