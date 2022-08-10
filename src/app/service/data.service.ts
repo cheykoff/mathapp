@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SharedService } from '../shared/shared.service';
 import { map } from 'rxjs/operators';
 /*
 import { initializeApp } from '@angular/fire/app';
@@ -16,14 +17,15 @@ import {
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private shared: SharedService) {}
 
   storeResult(points) {
     console.log('storeResult (data.service.ts)');
+    const schoolClass = this.shared.getSchoolClass();
     this.http
       .post(
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/result.json',
-        points
+        { points, schoolClass }
       )
       .subscribe((response) => {
         console.log(response);
