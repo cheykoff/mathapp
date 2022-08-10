@@ -21,7 +21,7 @@ export class DataService {
   storeResult(points) {
     console.log('storeResult (data.service.ts)');
     this.http
-      .put(
+      .post(
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/result.json',
         points
       )
