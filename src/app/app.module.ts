@@ -3,7 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  provideFirestore,
+  getFirestore,
+  serverTimestamp,
+  FieldValue,
+} from '@angular/fire/firestore';
 import { MathjaxModule } from 'mathjax-angular';
 
 // import { AngularFireModule } from '@angular/fire';
@@ -17,6 +22,10 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { HeaderComponent } from './header/header.component';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
+
+export interface ts {
+  created: typeof serverTimestamp | FieldValue | Date;
+}
 
 @NgModule({
   declarations: [

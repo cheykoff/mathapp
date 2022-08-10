@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
 import { map } from 'rxjs/operators';
+import {
+  provideFirestore,
+  getFirestore,
+  serverTimestamp,
+  FieldValue,
+} from '@angular/fire/firestore';
+
 /*
 import { initializeApp } from '@angular/fire/app';
 import {
@@ -22,10 +29,12 @@ export class DataService {
   storeResult(points) {
     console.log('storeResult (data.service.ts)');
     const schoolClass = this.shared.getSchoolClass();
+
     this.http
       .post(
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/result.json',
-        { points, schoolClass }
+        //{ points, schoolClass, createdAt: serverTimestamp() }
+        { points, schoolClass, createdAt: Date.now() }
       )
       .subscribe((response) => {
         console.log(response);
