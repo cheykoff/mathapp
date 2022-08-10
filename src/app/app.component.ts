@@ -12,8 +12,7 @@ interface Exercise {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  /*
-  template: `
+  /*template: `
     <div *ngFor="let exercise of exercise$ | async">
       <p>Question: {{ exercise.question }}</p>
       <ul>
@@ -35,4 +34,5 @@ export class AppComponent {
     this.exercise$ = <Observable<Exercise[]>>collectionData(exercises);
   }
   */
+  
 }
