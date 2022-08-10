@@ -34,7 +34,12 @@ export class DataService {
       .post(
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/result.json',
         //{ points, schoolClass, createdAt: serverTimestamp() }
-        { points, schoolClass, createdAt: Date.now() }
+        {
+          points,
+          schoolClass,
+          createdAt: Date.now(),
+          url: window.location.href,
+        }
       )
       .subscribe((response) => {
         console.log(response);
