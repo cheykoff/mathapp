@@ -27,11 +27,6 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllQuestions(this.shared.getSchoolClass());
-    console.log('exercise component: ngOnInit');
-    console.log(
-      'exercise component: schoolClass: ' + this.shared.getSchoolClass()
-    );
-    console.log('ngOnInit questions: ' + this.questionList);
   }
 
   getAllQuestions(schoolClass: number) {
@@ -40,7 +35,6 @@ export class ExerciseComponent implements OnInit {
         return question.schoolClass === this.shared.getSchoolClass();
       });
     });
-    console.log('getAllQuestions questions: ' + this.questionList);
   }
 
   answer(currentQno: number, option: any) {
@@ -76,7 +70,6 @@ export class ExerciseComponent implements OnInit {
     this.currentQuestion++;
     this.isAnswered = false;
     this.randomizeOrderOfOptions();
-    console.log('nextQuestion questions: ' + this.questionList[0].questionText);
     if (this.currentQuestion >= this.questionList.length - 1) {
       this.quizCompleted = true;
     }

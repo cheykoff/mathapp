@@ -8,13 +8,7 @@ import { Router } from '@angular/router';
 })
 export class LoadingpageComponent implements OnInit {
   constructor(private router: Router) {}
-  ngOnChange(): void {
-    console.log('ngOnChange');
-    console.log(window.location.href);
-  }
   ngOnInit(): void {
-    console.log('ngOnInit');
-    console.log(window.location.href);
     setTimeout(() => {
       this.router.navigate(['classselection']);
     }, 3000);

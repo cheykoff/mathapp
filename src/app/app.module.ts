@@ -11,16 +11,12 @@ import {
 } from '@angular/fire/firestore';
 import { MathjaxModule } from 'mathjax-angular';
 
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFirestoreModule } from '@angular/fire/firestore';
-
 import { AppComponent } from './app.component';
 import { ClassselectionComponent } from './classselection/classselection.component';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
-import { HeaderComponent } from './header/header.component';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 
 export interface ts {
@@ -34,7 +30,6 @@ export interface ts {
     ExerciseComponent,
     ResultpageComponent,
     ChangeBgDirective,
-    HeaderComponent,
     LoadingpageComponent,
   ],
   imports: [
@@ -44,8 +39,6 @@ export interface ts {
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
     provideFirestore(() => getFirestore()),
     MathjaxModule.forRoot(),
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
