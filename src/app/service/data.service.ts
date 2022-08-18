@@ -12,19 +12,35 @@ export class DataService {
 
   storeUrlParameters(parameters) {
     console.log('storeUrlParameters', parameters);
-    this.urlParameters = parameters;
-    this.http
-      .post(
-        'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
-        {
-          parameters,
-          startTime: Date.now(),
-          url: window.location.href,
-        }
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
+    if (parameters.length === 1) {
+      const userId = parameters[0].split('=')[1];
+      this.http
+        .post(
+          'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
+          {
+            userId: userId,
+            startTime: Date.now(),
+            url: window.location.href,
+          }
+        )
+        .subscribe((response) => {
+          console.log(response);
+        });
+    } else {
+      this.urlParameters = parameters;
+      this.http
+        .post(
+          'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
+          {
+            parameters,
+            startTime: Date.now(),
+            url: window.location.href,
+          }
+        )
+        .subscribe((response) => {
+          console.log(response);
+        });
+    }
   }
 
   storeResult(points) {
