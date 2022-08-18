@@ -348,12 +348,12 @@ button {
 button:hover, button:active, button:focus, button:visited {
     background-color: var(--clr-primary-lighter);
 }
-/*
+
 button:hover {
     transform: scale(1.02) perspective(1px);
     cursor: pointer;
 }
-*/
+
 
 button:disabled {
     background-color: var(--clr-grey-lighter);
