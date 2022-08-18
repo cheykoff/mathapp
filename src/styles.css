@@ -40,6 +40,9 @@
     --clr-secondary-dark: hsl(var(--hue-secondary), 72%, 37%);
     --clr-secondary-darker: hsl(var(--hue-secondary), 78%, 28%);
 
+    
+
+
     /*--clr-text-dark: rgba(19, 15, 48, 0.6);*/
     --clr-text-dark: hsl(var(--hue-primary), 20%, 5%);
     /*--clr-text-light: #FFF;*/
@@ -345,11 +348,12 @@ button {
 button:hover, button:active, button:focus, button:visited {
     background-color: var(--clr-primary-lighter);
 }
-
+/*
 button:hover {
     transform: scale(1.02) perspective(1px);
     cursor: pointer;
 }
+*/
 
 button:disabled {
     background-color: var(--clr-grey-lighter);
