@@ -12,30 +12,6 @@ h3 {
     font-size: 1em;
 }
 
-/* colored buttons */
-:root {
-    --hue-red: 350;
-    --sat-red: 100%;
-    --lum-red: 70%;
-    --clr-red: hsl(var(--hue-red), var(--sat-red), var(--lum-red));
-
-    --hue-green: 150;
-    --sat-green: 72%;
-    --lum-green: 63%;
-    --clr-green: hsl(var(--hue-green), var(--sat-green), var(--lum-green));
-
-    --hue-blue: 210;
-    --sat-blue: 100%;
-    --lum-blue: 55%;
-    --clr-blue: hsl(var(--hue-blue), var(--sat-blue), var(--lum-blue));
-
-    --hue-yellow: 50;
-    --sat-yellow: 100%;
-    --lum-yellow: 50%;
-    --clr-yellow: hsl(var(--hue-yellow), var(--sat-yellow), var(--lum-yellow));
-}
-
-
 #option0 {
     background-color : hsl(350, 100%, 70%);
 }
@@ -61,7 +37,6 @@ h3 {
 }
 
 #option3 {
-    /*background-color: var(--clr-yellow);*/
     background-color: hsl(50, 100%, 50%);
 }
 
@@ -72,7 +47,5 @@ h3 {
 button:hover {
     transform: scale(1.02) perspective(1px);
     cursor: pointer;
-    /*    background-color: hsl(var(--hue-blue), var(--sat-blue), var(--lum-blue));*/
-    background-color: black;
     color: white
 }
