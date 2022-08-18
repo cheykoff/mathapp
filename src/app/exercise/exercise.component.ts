@@ -26,7 +26,11 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllQuestions(this.shared.getSchoolClass());
+    if (this.shared.getSchoolClass()) {
+      this.getAllQuestions(this.shared.getSchoolClass());
+    } else {
+      this.router.navigate(['/', 'startpage']);
+    }
   }
 
   getAllQuestions(schoolClass: number) {

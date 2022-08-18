@@ -17,6 +17,7 @@ export class AppComponent {
 
   title = 'quizappv1';
   parameters = {};
+  userId = '';
   ngOnInit(): void {
     this.getParameters();
   }
@@ -27,6 +28,7 @@ export class AppComponent {
     if (paramString) {
       this.parameters = paramString.split('&');
     }
+    console.log('getParameters', this.parameters);
     this.dataService.storeUrlParameters(this.parameters);
   }
 }

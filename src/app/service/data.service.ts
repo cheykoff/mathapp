@@ -8,6 +8,15 @@ import {
   serverTimestamp,
   FieldValue,
 } from '@angular/fire/firestore';
+import {
+  Database,
+  set,
+  ref,
+  update,
+  onValue,
+  remove,
+} from '@angular/fire/database';
+import { getDatabase } from 'firebase/database';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +27,14 @@ export class DataService {
   urlParameters = {};
 
   storeUrlParameters(parameters) {
+    console.log('storeUrlParameters', parameters);
     this.urlParameters = parameters;
     this.http.post(
-      'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
+      'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/test.json',
+      //'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
       {
         parameters,
-        createdAt: Date.now(),
+        startTime: Date.now(),
         url: window.location.href,
       }
     );
