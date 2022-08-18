@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
+import { StartpageComponent } from './startpage/startpage.component';
 
 export interface ts {
   created: typeof serverTimestamp | FieldValue | Date;
@@ -31,6 +32,7 @@ export interface ts {
     ResultpageComponent,
     ChangeBgDirective,
     LoadingpageComponent,
+    StartpageComponent,
   ],
   imports: [
     BrowserModule,

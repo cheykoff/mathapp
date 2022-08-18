@@ -128,6 +128,16 @@ h1.headerTitle {
     margin: 4px 0px;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    color: var(--clr-grey-darker);
+    padding: 16px;
+    text-align: center;
+}
+
 #team-name-small {
     font-size: 1rem;
     display: inline-block;
