@@ -11,3 +11,19 @@
 h3 {
     font-size: 1em;
 }
+
+#option0 {
+    background-color:#ff6080;
+}
+
+#option1 {
+    background-color: #5ce5a1;
+}
+
+#option2 {
+    background-color: #198dff;
+}
+
+#option3 {
+    background-color: #ffd400;
+}
