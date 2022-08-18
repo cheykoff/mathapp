@@ -18,7 +18,7 @@ export class DataService {
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/parameters.json',
         {
           parameters,
-          createdAt: Date.now(),
+          startTime: Date.now(),
           url: window.location.href,
         }
       )
@@ -37,7 +37,7 @@ export class DataService {
         {
           points,
           schoolClass,
-          startTime: Date.now(),
+          endTime: Date.now(),
           url: window.location.href,
           parameters,
         }
