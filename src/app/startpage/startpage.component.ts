@@ -9,8 +9,4 @@ export class StartpageComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  selectTeamDuell() {
-    console.log('selectTeamDuell');
-  }
 }
