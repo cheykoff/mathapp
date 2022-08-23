@@ -338,6 +338,7 @@ button {
 .answerButton {
     background-color: var(--clr-secondary-light);
     color: black;
+    text-transform: none;
 }
 
 .btn-mc {

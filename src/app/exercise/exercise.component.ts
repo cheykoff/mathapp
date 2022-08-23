@@ -36,7 +36,7 @@ export class ExerciseComponent implements OnInit {
   getAllQuestions(schoolClass: number) {
     this.questionService.getQuestionJson(schoolClass).subscribe((data) => {
       this.questionList = data.questions.filter((question: any) => {
-        return question.schoolClass === this.shared.getSchoolClass();
+        return question.schoolClass === this.shared.getSchoolClass() - 1;
       });
     });
   }

@@ -35,6 +35,7 @@ export class SharedService {
   }
 
   setSchoolClass(data: number) {
+    console.log('setSchoolClass: ' + data);
     this.schoolClass = data;
   }
 

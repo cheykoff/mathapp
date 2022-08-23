@@ -1,1 +1,188 @@
-{"questions":[{"schoolClass":6,"questionText":"Berechne 1,7 + 3,4","options":[{"text":"5,1","correct": true},{"text":"15"},{"text":"4,1"},{"text":"5,3"}]},{"schoolClass":6,"questionText":"Berechne 2/3 + 3/4","options":[{"text":"17/12","correct": true},{"text":"5/7"},{"text":"7/6"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Berechne 17 • 11","options":[{"text":"187","correct": true},{"text":"156"},{"text":"245"},{"text":"177"}]},{"schoolClass":6,"questionText":"Berechne 30 - (50 - (70 - 90))","options":[{"text":"-40","correct": true},{"text":"-180"},{"text":"0"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Berechne 7/24 + 5/18","options":[{"text":"41/72","correct": true},{"text":"42/72"},{"text":"7/12"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Berechne 72% von 200","options":[{"text":"144","correct": true},{"text":"72"},{"text":"158"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Wandle in Prozent um: 29/40","options":[{"text":"72,5%","correct": true},{"text":"58%"},{"text":"77,5%"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Wandle in einen Bruch um: 34%","options":[{"text":"Keine Antwort ist richtig","correct": true},{"text":"17/40"},{"text":"34/120"},{"text":"1/3"}]},{"schoolClass":6,"questionText":"Berechne das Volumen eines Quaders mit den Kantenlängen: a = 3 cm, b = 5 cm, c = 12 cm","options":[{"text":"180 cm³","correct": true},{"text":"240 cm³"},{"text":"280 cm³"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":6,"questionText":"Teile 2 1/4 durch 6","options":[{"text":"3/8","correct": true},{"text":"3/4"},{"text":"1 1/4"},{"text":"1/4"}]}]}
+{
+    "questions": [
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: 17 + 35",
+            "options": [
+                {
+                    "text": "42"
+                },
+                {
+                    "text": "43"
+                },
+                {
+                    "text": "52",
+                    "correct": true
+                },
+                
+                {
+                    "text": "53"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: 167 - 269",
+            "options": [{
+                    "text": "-102",
+                    "correct": true
+                },
+                {
+                    "text": "-98"
+                },
+                {
+                    "text": "102"
+                },
+                {
+                    "text": "436"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: (-2) - (-1)",
+            "options": [{
+                    "text": "-3"
+                },
+                {
+                    "text": "-1",
+                    "correct": true
+                },
+                {
+                    "text": "1"
+                },
+                {
+                    "text": "3"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: (-2) ⋅ (-1)",
+            "options": [{
+                    "text": "-3"
+                },
+                {
+                    "text": "-2"
+                },
+                {
+                    "text": "2",
+                    "correct": true
+                },
+                {
+                    "text": "3"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: 168 : (-12)",
+            "options": [{
+                    "text": "-14",
+                    "correct": true
+                },
+                {
+                    "text": "-13"
+                },
+                {
+                    "text": "13"
+                },
+                {
+                    "text": "14"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Berechne: 4 + 6 : 2 ⋅ 3",
+            "options": [
+                
+                {
+                    "text": "5"
+                },
+                {
+                    "text": "13",
+                    "correct": true
+                },
+                {
+                    "text": "15"
+                },
+                {
+                    "text": "21"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Ein Winkel von 200° ist: ...",
+            "options": [{
+                    "text": "spitz"
+                },
+                {
+                    "text": "rechtwinklig"
+                },
+                {
+                    "text": "stumpf"
+                },
+                {
+                    "text": "keine Antwort ist richtig",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Ein Viereck mit zwei parallelen Seiten ist immer ein ...",
+            "options": [{
+                    "text": "Quadrat"
+                },
+                {
+                    "text": "Rechteck"
+                },
+                {
+                    "text": "Parallelogram"
+                },
+                {
+                    "text": "Trapez",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Ein Buch hat 152 Seiten. Auf jeder Seite stehen ca 42 Zeilen mit je 55 Buchstaben. Wie viele Buchstaben stehen etwa in dem Buch?\nÜberschlage die Antwort.",
+            "options": [{
+                    "text": "35.000"
+                },
+                {
+                    "text": "350.000",
+                    "correct": true
+                },
+                {
+                    "text": "3.500.000"
+                },
+                {
+                    "text": "35.000.000"
+                }
+            ]
+        },
+        {
+            "schoolClass": 5,
+            "questionText": "Welche Primfaktorenzerlegung ergibt 168?",
+            "options": [{
+                    "text": "2² ⋅ 3 ⋅ 7"
+                },
+                {
+                    "text": "2² ⋅ 3² ⋅ 7"
+                },
+                {
+                    "text": "2³ ⋅ 3 ⋅ 7",
+                    "correct": true
+                },
+                {
+                    "text": "2³ ⋅ 3² ⋅ 7"
+                }
+            ]
+        }
+    ]
+}
