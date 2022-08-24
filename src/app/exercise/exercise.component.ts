@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵresetJitOptions } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { QuestionService } from '../service/question.service';
@@ -60,12 +60,46 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
-  // Richard Durstenfeld's version of the Fisher-Yates shuffle algorithm
-  randomizeOrderOfOptions() {
+  compare(a, b) {
+    if (parseInt(a.text) < parseInt(b.text)) {
+      return -1;
+    }
+    if (parseInt(a.text) > parseInt(b.text)) {
+      return 1;
+    }
+    if (a.text < b.text) {
+      return -1;
+    }
+    if (a.text > b.text) {
+      return 1;
+    }
+    return 0;
+  }
+
+  contains(arr, value) {
+    let i = arr.length;
+    while (i--) {
+      if (arr[i].text === value) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  sortAnswerOptions() {
     let arr = this.questionList[this.currentQuestion].options;
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    for (let i = 0; i < arr.length; i++) {}
+    const otherIndex = this.contains(arr, 'Keine Antwort ist richtig');
+    if (otherIndex >= 0) {
+      const temp = arr[otherIndex];
+      arr[otherIndex] = arr[arr.length - 1];
+      arr[arr.length - 1] = temp;
+
+      const arr2 = arr.slice(0, -1).sort(this.compare);
+      arr2.push(arr[arr.length - 1]);
+      arr = arr2;
+    } else {
+      arr.sort(this.compare);
     }
     this.questionList[this.currentQuestion].options = arr;
   }
@@ -73,7 +107,7 @@ export class ExerciseComponent implements OnInit {
   nextQuestion() {
     this.currentQuestion++;
     this.isAnswered = false;
-    this.randomizeOrderOfOptions();
+    this.sortAnswerOptions();
     if (this.currentQuestion >= this.questionList.length - 1) {
       this.quizCompleted = true;
     }
