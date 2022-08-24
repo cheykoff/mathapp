@@ -86,13 +86,14 @@ export class ExerciseComponent implements OnInit {
     return -1;
   }
 
-  sortAnswerOptions() {
-    let arr = this.questionList[this.currentQuestion].options;
-    for (let i = 0; i < arr.length; i++) {}
-    const otherIndex = this.contains(arr, 'Keine Antwort ist richtig');
-    if (otherIndex >= 0) {
-      const temp = arr[otherIndex];
-      arr[otherIndex] = arr[arr.length - 1];
+  sortAnswerOptions(arr) {
+    // let arr = this.questionList[this.currentQuestion].options;
+
+    const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
+
+    if (indexOfNoAnswer >= 0) {
+      const temp = arr[indexOfNoAnswer];
+      arr[indexOfNoAnswer] = arr[arr.length - 1];
       arr[arr.length - 1] = temp;
 
       const arr2 = arr.slice(0, -1).sort(this.compare);
@@ -101,13 +102,16 @@ export class ExerciseComponent implements OnInit {
     } else {
       arr.sort(this.compare);
     }
-    this.questionList[this.currentQuestion].options = arr;
+    // this.questionList[this.currentQuestion].options = arr;
+    return arr;
   }
 
   nextQuestion() {
     this.currentQuestion++;
     this.isAnswered = false;
-    this.sortAnswerOptions();
+    this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
+      this.questionList[this.currentQuestion].options
+    );
     if (this.currentQuestion >= this.questionList.length - 1) {
       this.quizCompleted = true;
     }
