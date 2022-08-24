@@ -1,15 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared/shared.service';
-/*
-import { initializeApp } from '@angular/fire/app';
-import {
-  Firestore,
-  collectionData,
-  collection,
-  addDoc,
-  getFirestore,
-} from '@angular/fire/firestore';
-*/
 import { DataService } from '../service/data.service';
 
 @Component({

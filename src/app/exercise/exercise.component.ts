@@ -87,8 +87,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   sortAnswerOptions(arr) {
-    // let arr = this.questionList[this.currentQuestion].options;
-
     const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
 
     if (indexOfNoAnswer >= 0) {
@@ -102,7 +100,6 @@ export class ExerciseComponent implements OnInit {
     } else {
       arr.sort(this.compare);
     }
-    // this.questionList[this.currentQuestion].options = arr;
     return arr;
   }
 

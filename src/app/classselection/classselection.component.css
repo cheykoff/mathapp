@@ -32,11 +32,6 @@ li {
     margin: 0 16px;
     padding: 0;
 }
-/*
-.classListItem > button:hover {
-    background-color: yellow;
-}
-*/
 
 button:focus {
     background-color: var(--clr-primary-lighter);

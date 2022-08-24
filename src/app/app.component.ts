@@ -28,7 +28,6 @@ export class AppComponent {
     if (paramString) {
       this.parameters = paramString.split('&');
     }
-    console.log('getParameters', this.parameters);
     this.dataService.storeUrlParameters(this.parameters);
   }
 }

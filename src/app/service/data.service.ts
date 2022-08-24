@@ -11,7 +11,6 @@ export class DataService {
   urlParameters = {};
 
   storeUrlParameters(parameters) {
-    console.log('storeUrlParameters', parameters);
     if (parameters.length === 1) {
       const userId = parameters[0].split('=')[1];
       this.http
@@ -23,9 +22,7 @@ export class DataService {
             url: window.location.href,
           }
         )
-        .subscribe((response) => {
-          console.log(response);
-        });
+        .subscribe((response) => {});
     } else {
       this.urlParameters = parameters;
       this.http
@@ -37,9 +34,7 @@ export class DataService {
             url: window.location.href,
           }
         )
-        .subscribe((response) => {
-          console.log(response);
-        });
+        .subscribe((response) => {});
     }
   }
 
@@ -58,8 +53,6 @@ export class DataService {
           parameters,
         }
       )
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) => {});
   }
 }
