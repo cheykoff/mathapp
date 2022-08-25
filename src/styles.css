@@ -318,7 +318,6 @@ button {
     padding: 4px;
     text-align: center;
     width: 100%;
-    /*height: 48px;*/
     min-height: 48px;
     height: auto;
     font-size: 1.6rem;
@@ -468,7 +467,7 @@ button[disabled]:hover {
     #header-small {
         display: none;
     }
-    
+
     .instruction, .description {
         padding: 0px 12px;
         font-size: 1.4rem;

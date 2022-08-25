@@ -7,9 +7,11 @@
 </div>
 
 <div class="options" *ngFor='let option of sortAnswerOptions(
-    this.questionList[this.currentQuestion].options
+    this.questionList[this.currentQuestion]?.options
   ); let i = index'>
-
+  <!--
+    <div class="options" *ngFor='let option of questionList[currentQuestion]?.options; let i = index'>
+-->
     <ul class="answerList">
         <li (click)="answer(currentQuestion + 1, option)" class="answerListItem">
             <button appChangeBg [isCorrect]="option.correct" id="{{ 'option' + i }}" class="answerButton btn" [disabled]="isAnswered">

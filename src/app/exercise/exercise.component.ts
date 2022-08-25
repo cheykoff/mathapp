@@ -28,6 +28,11 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     if (this.shared.getSchoolClass()) {
       this.getAllQuestions(this.shared.getSchoolClass());
+      /*
+      this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
+        this.questionList[this.currentQuestion].options
+      );
+      */
     } else {
       this.router.navigate(['/', 'startpage']);
     }
@@ -77,10 +82,12 @@ export class ExerciseComponent implements OnInit {
   }
 
   contains(arr, value) {
-    let i = arr.length;
-    while (i--) {
-      if (arr[i].text === value) {
-        return i;
+    if (arr && value) {
+      let i = arr.length;
+      while (i--) {
+        if (arr[i].text === value) {
+          return i;
+        }
       }
     }
     return -1;
@@ -88,7 +95,9 @@ export class ExerciseComponent implements OnInit {
 
   sortAnswerOptions(arr) {
     const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
-
+    if (!arr) {
+      return undefined;
+    }
     if (indexOfNoAnswer >= 0) {
       const temp = arr[indexOfNoAnswer];
       arr[indexOfNoAnswer] = arr[arr.length - 1];
