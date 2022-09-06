@@ -1,1 +1,106 @@
-{"questions":[{"schoolClass":4,"questionText":"Wie viele Sekunden entsprechen 5 Minuten?","options":[{"text":"300 s","correct": true},{"text":"200 s"},{"text":"500 s"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":4,"questionText":"Um 17:34 Uhr  fährt ein Zug los. Er kommt 29 Minuten später an. Wie viel Uhr ist es bei der Ankunft?","options":[{"text":"18:03 Uhr","correct": true},{"text":"17:34 Uhr"},{"text":"18:43 Uhr"},{"text":"Keine Antwort ist richtig"}]},{"schoolClass":4,"questionText":"Ein Schwimmbecken wird eingelassen. Pro Minute fließen 150 Liter Wasser in das Becken. Insgesamt fasst das Becken 18.000 Liter. Nach wie viel Minuten ist das Becken halb voll?","options":[{"text":"60 min","correct": true},{"text":"120 min"},{"text":"180 min"},{"text":"240 min"}]},{"schoolClass":4,"questionText":"Berechne: 85642 - 4861","options":[{"text":"80781","correct": true},{"text":"37032"},{"text":"80771"},{"text":"37031"}]},{"schoolClass":4,"questionText":"Ergänze die Zahlenreihe: 2; 4; 8; 16","options":[{"text":"32; 64","correct": true},{"text":"24; 32"},{"text":"32; 48"},{"text":"24; 48"}]},{"schoolClass":4,"questionText":"Wie viel kg sind 7000 g?","options":[{"text":"7 kg","correct": true},{"text":"70 kg"},{"text":"700 kg"},{"text":"7000 kg"}]},{"schoolClass":4,"questionText":"Wie viel Stunden entsprechen 3 Tagen?","options":[{"text":"72 h","correct": true},{"text":"30 h"},{"text":"60 h"},{"text":"48 h"}]},{"schoolClass":4,"questionText":"Du hast 4 verschiedenfarbige Socken. Wie viele Kombinationen gibt es diese anzuziehen? (Du ziehst genau 2 Socken an)","options":[{"text":"12","correct": true},{"text":"6"},{"text":"16"},{"text":"4"}]},{"schoolClass":4,"questionText":"Ein Bus fährt mit einer Geschwindigkeit von 80 km/h. Wie weit ist er nach 15 Minuten gekommen?","options":[{"text":"20 km","correct": true},{"text":"12 km"},{"text":"40 km "},{"text":"80 km"}]},{"schoolClass":4,"questionText":"Welche Zahl ist nicht gerade?","options":[{"text":"7","correct": true},{"text":"0"},{"text":"2"},{"text":"108"}]}]}
+{
+    "questions":[
+        {"schoolClass":4,
+        "questionText":"Wie viele Sekunden entsprechen 5 Minuten?",
+        "options":[{"text":"300 s","correct": true},{"text":"200 s"},{"text":"500 s"},{"text":"Keine Antwort ist richtig"}]},
+        {"schoolClass":4,
+        "questionText":"Um 17:34 Uhr  fährt ein Zug los. Er kommt 29 Minuten später an. Wie viel Uhr ist es bei der Ankunft?",
+        "options":[{"text":"18:03 Uhr","correct": true},{"text":"17:34 Uhr"},{"text":"18:43 Uhr"},{"text":"Keine Antwort ist richtig"}]},
+        {"schoolClass":4,"questionText":"Ein Schwimmbecken wird eingelassen. Pro Minute fließen 150 Liter Wasser in das Becken. Insgesamt fasst das Becken 18.000 Liter. Nach wie viel Minuten ist das Becken halb voll?",
+        "options":[{"text":"60 min","correct": true},{"text":"120 min"},{"text":"180 min"},{"text":"240 min"}]},
+        {"schoolClass":4,"questionText":"Berechne: 85642 - 4861",
+        "options":[{"text":"80781","correct": true},{"text":"37032"},{"text":"80771"},{"text":"37031"}]},
+        {"schoolClass":4,"questionText":"Ergänze die Zahlenreihe: 2; 4; 8; 16",
+        "options":[{"text":"32; 64","correct": true},{"text":"24; 32"},{"text":"32; 48"},{"text":"24; 48"}]},
+        {"schoolClass":4,"questionText":"Wie viel kg sind 7000 g?",
+        "options":[{"text":"7 kg","correct": true},{"text":"70 kg"},{"text":"700 kg"},{"text":"7000 kg"}]},
+        {"schoolClass":4,"questionText":"Wie viel Stunden entsprechen 3 Tagen?",
+        "options":[{"text":"72 h","correct": true},{"text":"30 h"},{"text":"60 h"},{"text":"48 h"}]},
+        {"schoolClass":4,"questionText":"Du hast 4 verschiedenfarbige Socken. Wie viele Kombinationen gibt es diese anzuziehen? (Du ziehst genau 2 Socken an)",
+        "options":[{"text":"12","correct": true},{"text":"6"},{"text":"16"},{"text":"4"}]},{"schoolClass":4,"questionText":"Ein Bus fährt mit einer Geschwindigkeit von 80 km/h. Wie weit ist er nach 15 Minuten gekommen?",
+        "options":[{"text":"20 km","correct": true},{"text":"12 km"},{"text":"40 km "},{"text":"80 km"}]},{"schoolClass":4,"questionText":"Welche Zahl ist nicht gerade?",
+        "options":[{"text":"7","correct": true},{"text":"0"},{"text":"2"},{"text":"108"}]},
+        {"schoolClass":4,"questionText":"Schreibe die Zahl aus: 5 HT, 3 ZT, 4T, 2E",
+"options":[{"text":"534002","correct": true},{"text":"5342"},{"text":"53402"},{"text":"53420"}]},
+{"schoolClass":4,"questionText":"Wie viele Zehner sind in 2500?",
+"options":[{"text":"250 Z","correct": true},{"text":"2500 Z"},{"text":"25 Z"},{"text":"Keine Antwort ist richtig"}]},
+{"schoolClass":4,"questionText":"Berechne: 1000 + 9000","options":[{"text":"10000","correct": true},{"text":"9100"},{"text":"1900"},{"text":"100000"}]},
+{"schoolClass":4,"questionText":"Welche Zahl ist größer 1000 oder 865?",
+"options":[{"text":"1000 ist größer als 865","correct": true},{"text":"865 ist größer als 1000"},{"text":"Die Zahlen sind gleich groß"},{"text":"Keine Antwort ist richtig"}]},
+{"schoolClass":4,"questionText":"Wie viele 1-Euro-Stücke passen auf ein DIN A4 Papier?","options":[{"text":"ca 100","correct": true},{"text":"ca 10"},{"text":"ca 1000"},{"text":"ca 10000"}]},
+{"schoolClass":4,"questionText":"Berechne: 6 ∙ 7","options":[{"text":"42","correct": true},{"text":"48"},{"text":"43"},{"text":"45"}]},
+{"schoolClass":4,"questionText":"Berechne: 9 ∙ 4","options":[{"text":"36","correct": true},{"text":"32"},{"text":"34"},{"text":"40"}]},
+{"schoolClass":4,"questionText":"Berechne: 35 : 5","options":[{"text":"7","correct": true},{"text":"5"},{"text":"6"},{"text":"4"}]},
+{"schoolClass":4,"questionText":"Berechne: 81 : 9","options":[{"text":"9","correct": true},{"text":"7"},{"text":"8"},{"text":"6"}]},
+{"schoolClass":4,"questionText":"Berechne: 30 · 7","options":[{"text":"210","correct": true},{"text":"150"},{"text":"180"},{"text":"190"}]},
+{"schoolClass":4,"questionText":"Berechne: 70 · 8","options":[{"text":"560","correct": true},{"text":"580"},{"text":"600"},{"text":"620"}]},
+{"schoolClass":4,"questionText":"Berechne: 280 + 50","options":[{"text":"330","correct": true},{"text":"230"},{"text":"430"},{"text":"350"}]},
+{"schoolClass":4,"questionText":"Subtrahiere 5 von 12","options":[{"text":"7","correct": true},{"text":"17"},{"text":"60"},{"text":"Keine Antwort ist richtig"}]},
+{"schoolClass":4,"questionText":"67 - 48","options":[{"text":"19","correct": true},{"text":"9"},{"text":"11"},{"text":"21"}]},{"schoolClass":4,"questionText":"Setze die Zahlenfolge fort 3; 5; 7; 9; ...",
+"options":[{"text":"11; 13","correct": true},{"text":"4; 8"},{"text":"13; 15"},{"text":"10; 11"}]},
+{"schoolClass":4,"questionText":"Setze die Zahlenfolge fort 1; 2; 4; 7; 11; ...","options":[{"text":"15; 21","correct": true},{"text":"14; 18"},{"text":"15; 20"},{"text":"14; 17"}]},
+
+{"schoolClass":4,
+"questionText":"Anna und Benji haben zusammen 3 Euro. Anna hat 1 Euro mehr als Benji. Wie viel Geld hat Anna?",
+"options":[{"text":"2 Euro","correct": true},{"text":"1 Euro"},{"text":"1,50 Euro"},{"text":"2,50 Euro"}]},
+
+{"schoolClass":4,
+"questionText":"Charlie hat 3 T-Shirts und 2 Hosen. Wie viele verschiedene Kombinationsmöglichkeiten mit je einem T-Shirt und einer Hose hat er?",
+"options":[{"text":"6","correct": true},{"text":"5"},{"text":"3"},{"text":"9"}]},{"schoolClass":4,"questionText":"Berechne 5,6 m + 4 m 2 cm. Gib das Ergebnis in Meter an.",
+"options":[{"text":"9,62 m","correct": true},{"text":"9,8 m"},{"text":"10,02 m"},{"text":"10,2 m"}]},
+
+{"schoolClass":4,
+"questionText":"Karl fährt jeden Tag mit dem Fahrrad 3 km zur Schule. Welche Strecke legt er in einer Woche (mit 5 Schultagen) zurück?",
+"options":[{"text":"30 km","correct": true},{"text":"15 km"},{"text":"8 km"},{"text":"11 km"}]},
+
+{"schoolClass":4,
+"questionText":"Quadrate und Rechtecke haben immer jeweils 4 rechte Winkel.",
+"options":[
+    {"text":"Die Aussage ist richtig","correct": true},
+    {"text":"Nein, nur Quadrate haben immer 4 rechte Winkel."},
+    {"text":"Nein, nur Rechtecke haben immer 4 rechte Winkel."},
+    {"text":"Nein, nur Dreiecke haben immer 4 rechte Winkel."}]},
+
+{"schoolClass":4,
+"questionText":"Aus wie vielen Quadraten besteht ein Würfel?",
+"options":[{"text":"6","correct": true},{"text":"4"},{"text":"8"},{"text":"3"}]},
+
+{"schoolClass":4,
+"questionText":"Auf einer Landkarte des Maßstabs 1:200000 ist eine Strecke 3 cm lang. Wie lang ist die Naturstrecke (also in der Realität)?",
+"options":[{"text":"6 km","correct": true},{"text":"1,5 km"},{"text":"60 km"},{"text":"15 km"}]},
+
+{"schoolClass":4,
+"questionText":"Welche Buchstaben sind alle (ungefähr) achsensymetrisch?","options":[{"text":"A, B, C, D","correct": true},{"text":"E, F, G, H"},{"text":"I, J, K, L"},{"text":"M, N, O, P"}]},
+
+{"schoolClass":4,
+"questionText":"Marie trinkt jeden Tag eine Tasse Kakao (220 ml). Wie viel Kakao trinkt Marie in der Woche (in Litern)?","options":[{"text":"1,54 l","correct": true},{"text":"1,64 l"},{"text":"1,1 l"},{"text":"1,74 l"}]},
+
+{"schoolClass":4,
+"questionText":"Emma hat 9,50 Euro. Sie kauft 3 Packungen mit Stickern für je 80 Cent. Wie viel Geld hat sie danach noch?",
+"options":[{"text":"7,10 Euro","correct": true},{"text":"8,80 Euro"},{"text":"7,30 Euro"},{"text":"8,30 Euro"}]},
+
+{"schoolClass":4,
+"questionText":"David braucht für den Schulweg 12 min. Finn braucht eine Viertelstunde. Welche Aussage ist richtig?",
+"options":[{"text":"David braucht 3 min kürzer als Finn.","correct": true},{"text":"Finn und David brauchen gleich lange."},{"text":"Finn ist schneller."},{"text":"Finn braucht 13 min länger als David."}]},
+
+{"schoolClass":4,
+"questionText":"Für einen Kuchenteig braucht Sarah 300 g Mehl, ein Viertel Kilo Zucker, 150 g Butter und drei Eier. Ein Ei wiegt 80 g. Was zeigt die Waage an, nachdem alle Zutaten in der Schüssel sind?",
+"options":[{"text":"940 g","correct": true},{"text":"1,1 kg"},{"text":"750 g"},{"text":"880 g"}]},
+
+{"schoolClass":4,
+"questionText":"Leo, Kevin und Zoe machen einen Wurfwettbewerb. Leo wirft 5 m weiter als Zoe. Kevin wirft 8 m weniger weit als Kevin. Welche Aussage stimmt?",
+"options":[{"text":"Zoe wirft 3 m weiter als Kevin.","correct": true},{"text":"Kevin wirft 3 m weiter als Zoe."},{"text":"Kevin wirft am weitesten."},{"text":"Zoe wirft am weitesten."}]},
+
+{"schoolClass":4,
+"questionText":"An einer Haltestelle hält ein Bus alle 7 Minuten. Alle 10 Minuten hält eine Straßenbahn. Wie viele Fahrzeuge halten innerhalb von einer Stunde?",
+"options":[{"text":"Das genaue Ergebnis kann nicht bestimmt werden.","correct": true},{"text":"15"},{"text":"14"},{"text":"16"}]},
+
+{"schoolClass":4,
+"questionText":"Romina würfelt mit 2 Würfeln. Welche Aussage ist richtig?",
+"options":[
+    {"text":"Die Summe der Würfelaugen ist mindestens 2.","correct": true},
+    {"text":"Es fällt immer eine 6."},
+    {"text":"Die Summe der Würfelaugen liegt zwischen 1 und 12."},
+    {"text":"Alle Würfelaugensummen sind gleich wahrscheinlich."}
+]}]}
+

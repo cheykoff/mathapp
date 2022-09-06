@@ -320,7 +320,7 @@ button {
     width: 100%;
     min-height: 48px;
     height: auto;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     font-weight: var(--fw-bold);
     letter-spacing: 0.5px;
     border: 1px solid var(--clr-dark);
@@ -479,7 +479,7 @@ button[disabled]:hover {
 
     .btn {
         height: 80px;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         letter-spacing: 1px;
         border-radius: 10px;
         margin: 4px 0px;
