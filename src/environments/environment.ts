@@ -2,6 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// Old Realtime Database
 export const environment = {
   firebase: {
     projectId: 'quizapp-d018b',
@@ -14,6 +15,18 @@ export const environment = {
   },
   production: false,
 };
+
+/*
+// New Firestore Database
+export const environment = {
+  apiKey: 'AIzaSyDLy5AegnDsygE2tL2zimtUBmVWuG9LsD0',
+  authDomain: 'prod-test-603fa.firebaseapp.com',
+  projectId: 'prod-test-603fa',
+  storageBucket: 'prod-test-603fa.appspot.com',
+  messagingSenderId: '426874288773',
+  appId: '1:426874288773:web:6723f92f9bead0a83fc7ec',
+};
+*/
 
 /*
  * For easier debugging in development mode, you can import the following file

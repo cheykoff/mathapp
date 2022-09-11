@@ -10,6 +10,10 @@ import {
   serverTimestamp,
   FieldValue,
 } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { RouterModule } from '@angular/router';
+
 import { MathjaxModule } from 'mathjax-angular';
 
 import { AppComponent } from './app.component';
@@ -43,6 +47,8 @@ export interface ts {
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
     provideFirestore(() => getFirestore()),
     MathjaxModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

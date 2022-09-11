@@ -1,16 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient, private shared: SharedService) {}
+  constructor(
+    private http: HttpClient,
+    private shared: SharedService,
+    private _store: AngularFirestore
+  ) {}
 
   urlParameters = {};
 
   storeUrlParameters(parameters) {
+    console.log('storeUrlParameters');
+    this._store.collection('session').add({
+      session: 'session2',
+      startTime: Date.now(),
+      url: window.location.href,
+    });
     if (parameters.length === 1) {
       const userId = parameters[0].split('=')[1];
       this.http
