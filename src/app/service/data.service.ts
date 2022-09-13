@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+import 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +21,7 @@ export class DataService {
   storeUrlParameters(parameters) {
     console.log('storeUrlParameters');
     this._store.collection('session').add({
-      session: 'session2',
+      session: 'session3',
       startTime: Date.now(),
       url: window.location.href,
     });
@@ -47,6 +50,33 @@ export class DataService {
         )
         .subscribe((response) => {});
     }
+  }
+
+  docId = '';
+
+  storeSessionId(sessionId) {
+    this._store.collection(`session2`).add({
+      sessionId: sessionId,
+      url: window.location.href,
+      startTime: serverTimestamp(),
+    });
+    this._store
+      .collection('session2', (ref) => ref.where('sessionId', '==', sessionId))
+      .get()
+      .subscribe((snaps) => {
+        snaps.forEach((snap) => {
+          this.docId = snap.id;
+          console.log('sessionId: ' + sessionId);
+          console.log('snap.id' + snap.id);
+        });
+      });
+  }
+
+  storeMode() {
+    this._store.doc(`/session2/${this.docId}`).update({
+      mode: 'quiz',
+    });
+    console.log('docId: ' + this.docId);
   }
 
   storeResult(points) {

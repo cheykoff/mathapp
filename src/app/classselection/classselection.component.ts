@@ -17,14 +17,26 @@ export class ClassselectionComponent implements OnInit {
     private _store: AngularFirestore
   ) {}
 
-  sessionId: string = 'session1';
-
   ngOnInit(): void {
     console.log('ngOnInit of classselection');
+    this._store.collection(`session`).add({
+      test: 'test',
+    });
+
+    /* update or add a  field in an document or (works)
+    this._store.doc('/session.session3/3O1NG3TjXCyCwN8HUB7S').update({
+      class: 7,
+    });
+    this._store.doc('/session.session3/3O1NG3TjXCyCwN8HUB7S').update({
+      class2: 7,
+    });
+    */
+    /*
     this._store.collection('session').add({
       session: this.sessionId,
       startTime: Date.now(),
     });
+    */
   }
 
   selectSchoolClass(className: number): void {

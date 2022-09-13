@@ -20,6 +20,12 @@ export class AppComponent {
   userId = '';
   ngOnInit(): void {
     this.getParameters();
+    this.setSessionId();
+  }
+
+  sessionId = 'sessionl_' + Math.random().toString(36).substr(2, 9);
+  setSessionId() {
+    this.dataService.storeSessionId(this.sessionId);
   }
 
   getParameters() {

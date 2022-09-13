@@ -48,6 +48,7 @@ export interface ts {
     provideFirestore(() => getFirestore()),
     MathjaxModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
+    // AngularFirestoreModule, // do I need it?
     RouterModule,
   ],
   providers: [],
