@@ -79,6 +79,12 @@ export class DataService {
     console.log('docId: ' + this.docId);
   }
 
+  storeSchoolClass(className: number) {
+    this._store.doc(`/session2/${this.docId}`).update({
+      schoolClass: className,
+    });
+  }
+
   storeResult(points) {
     const schoolClass = this.shared.getSchoolClass();
     const parameters = this.urlParameters;
@@ -95,5 +101,9 @@ export class DataService {
         }
       )
       .subscribe((response) => {});
+
+    this._store.doc(`/session2/${this.docId}`).update({
+      points: points,
+    });
   }
 }

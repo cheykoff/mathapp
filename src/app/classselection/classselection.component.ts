@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+import { DataService } from '../service/data.service';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
   selector: 'app-classselection',
@@ -14,7 +16,8 @@ export class ClassselectionComponent implements OnInit {
   constructor(
     private shared: SharedService,
     private router: Router,
-    private _store: AngularFirestore
+    private _store: AngularFirestore,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +44,7 @@ export class ClassselectionComponent implements OnInit {
 
   selectSchoolClass(className: number): void {
     this.schoolClass = className;
+    this.dataService.storeSchoolClass(className);
     this.shared.setSchoolClass(className);
     this.goToExercise();
   }
