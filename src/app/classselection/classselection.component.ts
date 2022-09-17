@@ -21,7 +21,6 @@ export class ClassselectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit of classselection');
     this._store.collection(`session`).add({
       test: 'test',
     });

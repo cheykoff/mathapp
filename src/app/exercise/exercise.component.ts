@@ -27,20 +27,13 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.shared.getSchoolClass()) {
-      console.log('ngOnInit');
       this.getAllQuestions(this.shared.getSchoolClass());
-      /*
-      this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
-        this.questionList[this.currentQuestion].options
-      );
-      */
     } else {
       this.router.navigate(['/', 'startpage']);
     }
   }
 
   getAllQuestions(schoolClass: number) {
-    console.log('getAllQuestions, class: ' + schoolClass);
     this.questionService.getQuestionJson(schoolClass).subscribe((data) => {
       this.questionList = data.questions.filter((question: any) => {
         return question.schoolClass === this.shared.getSchoolClass() - 1;
