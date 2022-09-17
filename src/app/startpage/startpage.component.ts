@@ -14,6 +14,8 @@ export class StartpageComponent implements OnInit {
   }
 
   setMode() {
+    console.log('start setMode');
     this.dataService.storeMode();
+    console.log('end setMode');
   }
 }

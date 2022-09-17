@@ -10,11 +10,11 @@ import {
   serverTimestamp,
   FieldValue,
 } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { RouterModule } from '@angular/router';
 
-import { MathjaxModule } from 'mathjax-angular';
+// import { MathjaxModule } from 'mathjax-angular';
 
 import { AppComponent } from './app.component';
 import { ClassselectionComponent } from './classselection/classselection.component';
@@ -46,7 +46,7 @@ export interface ts {
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
     provideFirestore(() => getFirestore()),
-    MathjaxModule.forRoot(),
+    // MathjaxModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     // AngularFirestoreModule, // do I need it?
     RouterModule,

@@ -32,12 +32,14 @@ export class DataService {
   sessionId = '';
 
   storeSessionId(sessionId) {
+    console.log('start storeSessionId');
     this.sessionId = sessionId;
     this._store.collection(`sessions`).add({
       sessionId: sessionId,
       url: window.location.href,
       startTime: serverTimestamp(),
     });
+
     this._store
       .collection('sessions', (ref) => ref.where('sessionId', '==', sessionId))
       .get()
@@ -45,12 +47,16 @@ export class DataService {
         snaps.forEach((snap) => {
           this.docId = snap.id;
           console.log('sessionId: ' + sessionId);
-          console.log('snap.id' + snap.id);
+          console.log('snap.id: ' + snap.id);
+          console.log('end (async) storeSessionId');
         });
+        console.log('end (async2) storeSessionId');
       });
+    console.log('end storeSessionId');
   }
 
   storeMode() {
+    console.log('start storeMode');
     this._store.doc(`/sessions/${this.docId}`).update({
       mode: 'quiz',
     });
@@ -78,9 +84,10 @@ export class DataService {
         snaps.forEach((snap) => {
           this.quizId = snap.id;
           console.log('sessionId: ' + this.sessionId);
-          console.log('snap.id' + snap.id);
+          console.log('snap.id: ' + snap.id);
         });
       });
+    console.log('end storeSchoolClass');
   }
 
   storeResult(points) {
