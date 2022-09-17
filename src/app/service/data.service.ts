@@ -38,11 +38,12 @@ export class DataService {
       startTime: serverTimestamp(),
     });
 
-    this._store
+    this._store // TODO: Get exactly the right document
       .collection('sessions', (ref) => ref.where('sessionId', '==', sessionId))
       .get()
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
+          // TODO: Is it possible without the loop?
           this.docId = snap.id;
         });
       });
@@ -61,13 +62,14 @@ export class DataService {
       url: window.location.href,
       startTime: serverTimestamp(),
     });
-    this._store
+    this._store // TODO: Get exactly the right document
       .collection('quizzes', (ref) =>
         ref.where('sessionId', '==', this.sessionId)
       )
       .get()
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
+          // TODO: Is it possible without the loop?
           this.quizId = snap.id;
         });
       });

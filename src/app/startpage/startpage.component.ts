@@ -12,6 +12,6 @@ export class StartpageComponent implements OnInit {
   ngOnInit(): void {}
 
   setMode() {
-    this.dataService.storeMode();
+    this.dataService.storeMode(); // TODO: Pass value to service
   }
 }
