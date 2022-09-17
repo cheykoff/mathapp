@@ -52,9 +52,4 @@ export class ClassselectionComponent implements OnInit {
   goToExercise() {
     this.router.navigate(['/', 'exercise']);
   }
-
-  addItem() {
-    console.log('add item');
-    this._store.collection('test').add({ test: 'test' });
-  }
 }
