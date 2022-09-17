@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './service/data.service';
+import { SharedService } from './shared/shared.service';
 
 interface Exercise {
   question: string;
@@ -13,19 +14,18 @@ interface Exercise {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private shared: SharedService
+  ) {}
 
   title = 'quizappv1';
   parameters = {};
   userId = '';
   ngOnInit(): void {
     this.getParameters();
-    this.setSessionId();
-  }
-
-  sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
-  setSessionId() {
-    this.dataService.storeSessionId(this.sessionId);
+    this.shared.setSessionId();
+    this.dataService.storeSessionId();
   }
 
   getParameters() {

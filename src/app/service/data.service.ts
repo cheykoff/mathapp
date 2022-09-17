@@ -26,18 +26,18 @@ export class DataService {
     });
   }
 
-  sessionId = '';
-
-  storeSessionId(sessionId) {
-    this.sessionId = sessionId;
+  storeSessionId() {
+    console.log('storeSessionId: ' + this.shared.getSessionId());
     this._store.collection(`sessions`).add({
-      sessionId: sessionId,
+      sessionId: this.shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
     });
 
     this._store // TODO: Get exactly the right document
-      .collection('sessions', (ref) => ref.where('sessionId', '==', sessionId))
+      .collection('sessions', (ref) =>
+        ref.where('sessionId', '==', this.shared.getSessionId())
+      )
       .get()
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
@@ -56,13 +56,13 @@ export class DataService {
   storeSchoolClass(className: number) {
     this._store.collection(`quizzes`).add({
       schoolClass: className,
-      sessionId: this.sessionId,
+      sessionId: this.shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
     });
     this._store // TODO: Get exactly the right document
       .collection('quizzes', (ref) =>
-        ref.where('sessionId', '==', this.sessionId)
+        ref.where('sessionId', '==', this.shared.getSessionId())
       )
       .get()
       .subscribe((snaps) => {

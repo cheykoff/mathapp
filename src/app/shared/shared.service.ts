@@ -54,8 +54,9 @@ export class SharedService {
     return this.docId;
   }
 
-  setSessionId(data: string) {
-    this.sessionId = data;
+  setSessionId() {
+    console.log('sessionId set');
+    this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
   }
 
   getSessionId() {
