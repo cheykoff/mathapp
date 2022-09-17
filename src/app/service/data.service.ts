@@ -104,6 +104,7 @@ export class DataService {
 
     this._store.doc(`/session2/${this.docId}`).update({
       points: points,
+      endTime: serverTimestamp(),
     });
   }
 }
