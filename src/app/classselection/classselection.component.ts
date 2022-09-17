@@ -20,11 +20,7 @@ export class ClassselectionComponent implements OnInit {
     private dataService: DataService
   ) {}
 
-  ngOnInit(): void {
-    this._store.collection(`session`).add({
-      test: 'test',
-    });
-  }
+  ngOnInit(): void {}
 
   selectSchoolClass(className: number): void {
     this.schoolClass = className;

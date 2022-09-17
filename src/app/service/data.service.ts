@@ -26,8 +26,6 @@ export class DataService {
     });
   }
 
-  docId = '';
-  quizId = '';
   sessionId = '';
 
   storeSessionId(sessionId) {
@@ -44,13 +42,13 @@ export class DataService {
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
-          this.docId = snap.id;
+          this.shared.setDocId(snap.id);
         });
       });
   }
 
   storeMode() {
-    this._store.doc(`/sessions/${this.docId}`).update({
+    this._store.doc(`/sessions/${this.shared.getDocId()}`).update({
       mode: 'quiz',
     });
   }
@@ -70,13 +68,13 @@ export class DataService {
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
-          this.quizId = snap.id;
+          this.shared.setQuizId(snap.id);
         });
       });
   }
 
   storeResult(points) {
-    this._store.doc(`/quizzes/${this.quizId}`).update({
+    this._store.doc(`/quizzes/${this.shared.getQuizId()}`).update({
       points: points,
       endTime: serverTimestamp(),
     });
