@@ -25,6 +25,7 @@ export class DataService {
       startTime: Date.now(),
       url: window.location.href,
     });
+    /*
     if (parameters.length === 1) {
       const userId = parameters[0].split('=')[1];
       this.http
@@ -50,6 +51,7 @@ export class DataService {
         )
         .subscribe((response) => {});
     }
+    */
   }
 
   docId = '';
@@ -96,7 +98,7 @@ export class DataService {
   storeResult(points) {
     const schoolClass = this.shared.getSchoolClass();
     const parameters = this.urlParameters;
-
+    /* 
     this.http
       .post(
         'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app/result.json',
@@ -109,7 +111,7 @@ export class DataService {
         }
       )
       .subscribe((response) => {});
-
+        */
     this._store.doc(`/session2/${this.docId}`).update({
       points: points,
       endTime: serverTimestamp(),
