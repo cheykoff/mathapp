@@ -53,8 +53,10 @@ export class DataService {
   }
 
   docId = '';
+  sessionId = '';
 
   storeSessionId(sessionId) {
+    this.sessionId = sessionId;
     this._store.collection(`session2`).add({
       sessionId: sessionId,
       url: window.location.href,
@@ -82,6 +84,11 @@ export class DataService {
   storeSchoolClass(className: number) {
     this._store.doc(`/session2/${this.docId}`).update({
       schoolClass: className,
+    });
+    this._store.collection(`quizzes`).add({
+      sessionId: this.sessionId,
+      url: window.location.href,
+      startTime: serverTimestamp(),
     });
   }
 
