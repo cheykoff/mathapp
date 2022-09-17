@@ -19,21 +19,9 @@ export class AppComponent {
     private shared: SharedService
   ) {}
 
-  title = 'quizappv1';
-  parameters = {};
-  userId = '';
   ngOnInit(): void {
-    this.getParameters();
     this.shared.setSessionId();
+    this.shared.setParameters();
     this.dataService.storeSessionId();
-  }
-
-  getParameters() {
-    let urlString = window.location.href;
-    let paramString = urlString.split('?')[1];
-    if (paramString) {
-      this.parameters = paramString.split('&');
-    }
-    this.dataService.storeUrlParameters(this.parameters);
   }
 }

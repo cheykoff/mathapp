@@ -11,6 +11,7 @@ export class SharedService {
   docId: string = '';
   sessionId: string = '';
   quizId: string = '';
+  parameters = {};
 
   constructor() {}
 
@@ -69,5 +70,20 @@ export class SharedService {
 
   getQuizId() {
     return this.quizId;
+  }
+
+  setParameters() {
+    let paramString = window.location.href.split('?')[1];
+    if (paramString) {
+      this.parameters = paramString.split('&');
+    }
+  }
+
+  getParameters() {
+    if (Object.keys(this.parameters).length) {
+      return this.parameters;
+    } else {
+      return null;
+    }
   }
 }

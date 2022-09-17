@@ -16,22 +16,14 @@ export class DataService {
     private _store: AngularFirestore
   ) {}
 
-  urlParameters = {};
-
-  storeUrlParameters(parameters) {
-    this._store.collection('session').add({
-      session: 'session3',
-      startTime: Date.now(),
-      url: window.location.href,
-    });
-  }
-
   storeSessionId() {
     console.log('storeSessionId: ' + this.shared.getSessionId());
+
     this._store.collection(`sessions`).add({
       sessionId: this.shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
+      parameters: this.shared.getParameters(),
     });
 
     this._store // TODO: Get exactly the right document
