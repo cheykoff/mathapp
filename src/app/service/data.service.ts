@@ -86,6 +86,7 @@ export class DataService {
       schoolClass: className,
     });
     this._store.collection(`quizzes`).add({
+      schoolClass: className,
       sessionId: this.sessionId,
       url: window.location.href,
       startTime: serverTimestamp(),
