@@ -9,11 +9,11 @@
         <img [src]="getStars()" id="starsGif" class="starsGif">
       </div>
     <div class="resultContainer">
-        <div class="bigNumber">{{ correctAnswer }}/{{ correctAnswer + incorrectAnswer }}</div>
+        <div class="bigNumber">{{ this.shared.correctAnswer }}/{{ this.shared.correctAnswer + this.shared.incorrectAnswer }}</div>
         <p class="labelBigNumber">Fragen richtig beantwortet</p>
     </div>
       
-    <p *ngIf="incorrectAnswer !== 0">Willst du dein Ergebnis verbessern?</p>
+    <p *ngIf="this.shared.incorrectAnswer !== 0">Willst du dein Ergebnis verbessern?</p>
 </div>
 
 

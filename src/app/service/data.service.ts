@@ -63,9 +63,10 @@ export class DataService {
       });
   }
 
-  storeResult(points) {
+  storeResult() {
     this._store.doc(`/quizzes/${this.shared.getQuizId()}`).update({
-      points: points,
+      correctAnswers: this.shared.correctAnswer,
+      totalQuestions: this.shared.correctAnswer + this.shared.incorrectAnswer,
       endTime: serverTimestamp(),
     });
   }

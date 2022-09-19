@@ -8,19 +8,15 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./resultpage.component.css'],
 })
 export class ResultpageComponent implements OnInit {
-  // TODO: Should I initialize these variables in the constructor?
-  correctAnswer: number = 0;
-  incorrectAnswer: number = 0;
-  points: number = 0;
   percentage: number = 0;
-  constructor(
-    private shared: SharedService,
-    private dataService: DataService
-  ) {}
+
+  constructor(public shared: SharedService, private dataService: DataService) {}
 
   getPercentage(): number {
     return (
-      (this.correctAnswer / (this.correctAnswer + this.incorrectAnswer)) * 100
+      (this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer)) *
+      100
     );
   }
 
@@ -34,13 +30,6 @@ export class ResultpageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.points = this.shared.getPoints();
-    this.correctAnswer = this.shared.getCorrectAnswer();
-    this.incorrectAnswer = this.shared.getIncorrectAnswer();
-    this.storeResult();
-  }
-
-  storeResult() {
-    this.dataService.storeResult(this.points);
+    this.dataService.storeResult();
   }
 }

@@ -13,9 +13,7 @@ export class ExerciseComponent implements OnInit {
   // TODO: Should I initialize these variables in the constructor?
   public questionList: any = [];
   public currentQuestion: number = 0;
-  correctAnswer: number = 0; // TODO: Move to service
-  incorrectAnswer: number = 0;
-  public points: number = 0;
+  // public points: number = 0;
   quizCompleted: boolean = false;
   public givenAnswers: any = [];
   isAnswered: boolean = false;
@@ -44,21 +42,23 @@ export class ExerciseComponent implements OnInit {
 
   answer(option: any) {
     if (option.correct) {
-      this.points += 1;
-      this.correctAnswer++;
+      // this.points += 1;
+      this.shared.points += 1;
+      this.shared.correctAnswer++;
     } else {
-      this.incorrectAnswer++;
+      this.shared.incorrectAnswer++;
     }
     this.isAnswered = true;
 
-    this.shared.setPoints(this.points);
-    this.shared.setCorrectAnswer(this.correctAnswer);
-    this.shared.setIncorrectAnswer(this.incorrectAnswer);
+    // this.shared.setPoints(this.points);
+
     if (this.currentQuestion < this.questionList.length - 1) {
       this.nextQuestion();
     } else {
       this.showResult();
     }
+    console.log('correct: ' + this.shared.correctAnswer);
+    console.log('incorrect: ' + this.shared.incorrectAnswer);
   }
 
   compare(a, b) {
