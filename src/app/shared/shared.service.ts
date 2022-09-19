@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SharedService {
+  // TODO: Should I initialize these variables in the constructor?
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
@@ -56,7 +57,6 @@ export class SharedService {
   }
 
   setSessionId() {
-    console.log('sessionId set');
     this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
   }
 

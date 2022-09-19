@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http'; // TODO: Not used
 import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -11,14 +11,12 @@ import { serverTimestamp } from 'firebase/firestore';
 })
 export class DataService {
   constructor(
-    private http: HttpClient,
+    private http: HttpClient, // TODO: Not used
     private shared: SharedService,
     private _store: AngularFirestore
   ) {}
 
   storeSessionId() {
-    console.log('storeSessionId: ' + this.shared.getSessionId());
-
     this._store.collection(`sessions`).add({
       sessionId: this.shared.getSessionId(),
       url: window.location.href,

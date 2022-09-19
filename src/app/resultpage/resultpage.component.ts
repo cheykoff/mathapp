@@ -8,6 +8,7 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./resultpage.component.css'],
 })
 export class ResultpageComponent implements OnInit {
+  // TODO: Should I initialize these variables in the constructor?
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
   points: number = 0;
