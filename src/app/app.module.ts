@@ -10,7 +10,6 @@ TODO:
 - consistent css styles
 - use layout/core compenents (e.g. header)
 - try routing for exercises and use services and resolvers
-- remove console logs
 - add tests
 - add comments
 - store end date of session (leaving the page)
@@ -22,12 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import {
-  provideFirestore,
-  getFirestore,
-  serverTimestamp,
-  FieldValue,
-} from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { RouterModule } from '@angular/router';
 
@@ -39,10 +33,6 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
-
-export interface ts {
-  created: typeof serverTimestamp | FieldValue | Date;
-}
 
 @NgModule({
   declarations: [
