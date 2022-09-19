@@ -29,7 +29,7 @@ export class ClassselectionComponent implements OnInit {
     this.goToExercise();
   }
 
-  goToExercise() {
+  goToExercise(): void {
     this._router.navigate(['/', 'exercise']);
   }
 }

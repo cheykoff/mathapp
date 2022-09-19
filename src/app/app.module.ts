@@ -5,8 +5,7 @@ TODO:
   - startpage/exercise is not found (Failed to load resource: the server responded with a status of 404 ()  - reload leads to menu
 - https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig?key=AIzaSyC9VBHxz2xe5x2V5LJB87VpQVrtwSWioEI&cb=1663574536029 404 (Not Found) - chrome and edge
 - reuse code
-- check scopes in TypeScript
-- use more types
+- check all <any> data types
 - enable strict mode?
 - consistent css styles
 - use layout/core compenents (e.g. header)

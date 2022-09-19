@@ -11,6 +11,7 @@ import { SharedService } from '../shared/shared.service';
 })
 export class ExerciseComponent implements OnInit {
   // TODO: Should I initialize these variables in the constructor?
+  // TODO: Check type of questionlist and if we need it at all?
   public questionList: any = [];
   public currentQuestion: number = 0;
   quizCompleted: boolean = false;
@@ -31,15 +32,17 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
-  getAllQuestions(schoolClass: number) {
+  getAllQuestions(schoolClass: number): void {
     this._questionService.getQuestionJson(schoolClass).subscribe((data) => {
       this.questionList = data.questions.filter((question: any) => {
         return question.schoolClass === this._shared.getSchoolClass() - 1;
       });
     });
+    console.log(this.questionList);
+    console.log(typeof this.questionList);
   }
 
-  answer(option: any) {
+  answer(option: any): void {
     if (option.correct) {
       // this.points += 1;
       this._shared.points += 1;
@@ -60,7 +63,7 @@ export class ExerciseComponent implements OnInit {
     console.log('incorrect: ' + this._shared.incorrectAnswer);
   }
 
-  compare(a, b) {
+  compare(a: any, b: any): number {
     if (parseInt(a.text) < parseInt(b.text)) {
       return -1;
     }
@@ -76,7 +79,7 @@ export class ExerciseComponent implements OnInit {
     return 0;
   }
 
-  contains(arr, value) {
+  contains(arr, value): number {
     if (arr && value) {
       let i = arr.length;
       while (i--) {
@@ -88,7 +91,7 @@ export class ExerciseComponent implements OnInit {
     return -1;
   }
 
-  sortAnswerOptions(arr) {
+  sortAnswerOptions(arr: any): void {
     const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
     if (!arr) {
       return undefined;
@@ -107,7 +110,7 @@ export class ExerciseComponent implements OnInit {
     return arr;
   }
 
-  nextQuestion() {
+  nextQuestion(): void {
     this.currentQuestion++;
     this.isAnswered = false;
     this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
@@ -118,7 +121,7 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
-  showResult() {
+  showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
 }
