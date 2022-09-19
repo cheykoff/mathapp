@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵresetJitOptions } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { QuestionService } from '../service/question.service';
