@@ -10,6 +10,7 @@ import { SharedService } from '../shared/shared.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
+  // TODO: Should I initialize these variables in the constructor?
   public questionList: any = [];
   public currentQuestion: number = 0;
   correctAnswer: number = 0;
@@ -41,7 +42,7 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-  answer(currentQno: number, option: any) {
+  answer(option: any) {
     if (option.correct) {
       this.points += 1;
       this.correctAnswer++;

@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from './service/data.service';
 import { SharedService } from './shared/shared.service';
 
-interface Exercise {
-  question: string;
-  answers: number[];
-  correctAnswer: number;
-}
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

@@ -13,6 +13,8 @@ TODO:
 - add tests
 - add comments
 - store end date of session (leaving the page)
+- enable prod mode
+- define rules for firebase
 */
 
 import { NgModule } from '@angular/core';
