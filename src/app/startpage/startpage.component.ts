@@ -7,11 +7,11 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./startpage.component.css'],
 })
 export class StartpageComponent implements OnInit {
-  constructor(private dataService: DataService) {}
+  constructor(private _dataService: DataService) {}
 
   ngOnInit(): void {}
 
   setMode() {
-    this.dataService.storeMode(); // TODO: Pass value to service
+    this._dataService.storeMode(); // TODO: Pass value to service
   }
 }

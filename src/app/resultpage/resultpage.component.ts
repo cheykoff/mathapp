@@ -10,7 +10,10 @@ import { DataService } from '../service/data.service';
 export class ResultpageComponent implements OnInit {
   percentage: number = 0;
 
-  constructor(public shared: SharedService, private dataService: DataService) {}
+  constructor(
+    public shared: SharedService,
+    private _dataService: DataService
+  ) {}
 
   getPercentage(): number {
     return (
@@ -30,6 +33,6 @@ export class ResultpageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.storeResult();
+    this._dataService.storeResult();
   }
 }

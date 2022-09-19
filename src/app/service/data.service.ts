@@ -11,34 +11,33 @@ import { serverTimestamp } from 'firebase/firestore';
 })
 export class DataService {
   constructor(
-    private http: HttpClient, // TODO: Not used
-    private shared: SharedService,
+    private _shared: SharedService,
     private _store: AngularFirestore
   ) {}
 
   storeSessionId() {
     this._store.collection(`sessions`).add({
-      sessionId: this.shared.getSessionId(),
+      sessionId: this._shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
-      parameters: this.shared.getParameters(),
+      parameters: this._shared.getParameters(),
     });
 
     this._store // TODO: Get exactly the right document
       .collection('sessions', (ref) =>
-        ref.where('sessionId', '==', this.shared.getSessionId())
+        ref.where('sessionId', '==', this._shared.getSessionId())
       )
       .get()
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
-          this.shared.setDocId(snap.id);
+          this._shared.setDocId(snap.id);
         });
       });
   }
 
   storeMode() {
-    this._store.doc(`/sessions/${this.shared.getDocId()}`).update({
+    this._store.doc(`/sessions/${this._shared.getDocId()}`).update({
       mode: 'quiz',
     });
   }
@@ -46,27 +45,27 @@ export class DataService {
   storeSchoolClass(className: number) {
     this._store.collection(`quizzes`).add({
       schoolClass: className,
-      sessionId: this.shared.getSessionId(),
+      sessionId: this._shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
     });
     this._store // TODO: Get exactly the right document
       .collection('quizzes', (ref) =>
-        ref.where('sessionId', '==', this.shared.getSessionId())
+        ref.where('sessionId', '==', this._shared.getSessionId())
       )
       .get()
       .subscribe((snaps) => {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
-          this.shared.setQuizId(snap.id);
+          this._shared.setQuizId(snap.id);
         });
       });
   }
 
   storeResult() {
-    this._store.doc(`/quizzes/${this.shared.getQuizId()}`).update({
-      correctAnswers: this.shared.correctAnswer,
-      totalQuestions: this.shared.correctAnswer + this.shared.incorrectAnswer,
+    this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
+      correctAnswers: this._shared.correctAnswer,
+      totalQuestions: this._shared.correctAnswer + this._shared.incorrectAnswer,
       endTime: serverTimestamp(),
     });
   }

@@ -9,13 +9,13 @@ import { SharedService } from './shared/shared.service';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private dataService: DataService,
-    private shared: SharedService
+    private _dataService: DataService,
+    private _shared: SharedService
   ) {}
 
   ngOnInit(): void {
-    this.shared.setSessionId();
-    this.shared.setParameters();
-    this.dataService.storeSessionId();
+    this._shared.setSessionId();
+    this._shared.setParameters();
+    this._dataService.storeSessionId();
   }
 }
