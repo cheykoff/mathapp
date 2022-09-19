@@ -13,29 +13,28 @@ export class ExerciseComponent implements OnInit {
   // TODO: Should I initialize these variables in the constructor?
   public questionList: any = [];
   public currentQuestion: number = 0;
-  // public points: number = 0;
   quizCompleted: boolean = false;
   public givenAnswers: any = [];
   isAnswered: boolean = false;
 
   constructor(
-    private questionService: QuestionService,
-    private shared: SharedService,
-    private router: Router
+    private _questionService: QuestionService,
+    private _shared: SharedService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
-    if (this.shared.getSchoolClass()) {
-      this.getAllQuestions(this.shared.getSchoolClass());
+    if (this._shared.getSchoolClass()) {
+      this.getAllQuestions(this._shared.getSchoolClass());
     } else {
-      this.router.navigate(['/', 'startpage']);
+      this._router.navigate(['/', 'startpage']);
     }
   }
 
   getAllQuestions(schoolClass: number) {
-    this.questionService.getQuestionJson(schoolClass).subscribe((data) => {
+    this._questionService.getQuestionJson(schoolClass).subscribe((data) => {
       this.questionList = data.questions.filter((question: any) => {
-        return question.schoolClass === this.shared.getSchoolClass() - 1;
+        return question.schoolClass === this._shared.getSchoolClass() - 1;
       });
     });
   }
@@ -43,10 +42,10 @@ export class ExerciseComponent implements OnInit {
   answer(option: any) {
     if (option.correct) {
       // this.points += 1;
-      this.shared.points += 1;
-      this.shared.correctAnswer++;
+      this._shared.points += 1;
+      this._shared.correctAnswer++;
     } else {
-      this.shared.incorrectAnswer++;
+      this._shared.incorrectAnswer++;
     }
     this.isAnswered = true;
 
@@ -57,8 +56,8 @@ export class ExerciseComponent implements OnInit {
     } else {
       this.showResult();
     }
-    console.log('correct: ' + this.shared.correctAnswer);
-    console.log('incorrect: ' + this.shared.incorrectAnswer);
+    console.log('correct: ' + this._shared.correctAnswer);
+    console.log('incorrect: ' + this._shared.incorrectAnswer);
   }
 
   compare(a, b) {
@@ -120,6 +119,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   showResult() {
-    this.router.navigate(['/', 'resultpage']);
+    this._router.navigate(['/', 'resultpage']);
   }
 }

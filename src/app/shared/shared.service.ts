@@ -57,7 +57,7 @@ export class SharedService {
   }
 
   setSessionId() {
-    this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+    this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9); // TODO: Should I just use the firebase id?
   }
 
   getSessionId() {

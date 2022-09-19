@@ -14,22 +14,22 @@ export class ClassselectionComponent implements OnInit {
   schoolClass: number = 0;
 
   constructor(
-    private shared: SharedService,
-    private router: Router,
+    private _shared: SharedService,
+    private _router: Router,
     private _store: AngularFirestore,
-    private dataService: DataService
+    private _dataService: DataService
   ) {}
 
   ngOnInit(): void {}
 
   selectSchoolClass(className: number): void {
     this.schoolClass = className;
-    this.dataService.storeSchoolClass(className);
-    this.shared.setSchoolClass(className);
+    this._dataService.storeSchoolClass(className);
+    this._shared.setSchoolClass(className);
     this.goToExercise();
   }
 
   goToExercise() {
-    this.router.navigate(['/', 'exercise']);
+    this._router.navigate(['/', 'exercise']);
   }
 }
