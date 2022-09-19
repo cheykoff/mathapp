@@ -1,5 +1,6 @@
 /*
 TODO:
+- https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fquizapp-d018b%2Fdatabases%2F(default)&gsessionid=3hpQCbO-HwvxYOSRSUURHKdrsniXENKB&VER=8&RID=rpc&SID=wYvCAY7gc4qpAO_P03-boQ&CI=0&AID=4&TYPE=xmlhttp&zx=eeqiqdm5muuh&t=1
 - routing: 
   - startpage/exercise is not found (Failed to load resource: the server responded with a status of 404 ()  - reload leads to menu
 - https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig?key=AIzaSyC9VBHxz2xe5x2V5LJB87VpQVrtwSWioEI&cb=1663574536029 404 (Not Found) - chrome and edge

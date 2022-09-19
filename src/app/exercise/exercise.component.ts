@@ -13,7 +13,7 @@ export class ExerciseComponent implements OnInit {
   // TODO: Should I initialize these variables in the constructor?
   public questionList: any = [];
   public currentQuestion: number = 0;
-  correctAnswer: number = 0;
+  correctAnswer: number = 0; // TODO: Move to service
   incorrectAnswer: number = 0;
   public points: number = 0;
   quizCompleted: boolean = false;
