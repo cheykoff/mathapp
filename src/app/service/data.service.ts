@@ -2,18 +2,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // TODO: Not used
 import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import 'firebase/firestore';
-import { serverTimestamp } from 'firebase/firestore';
+import { CollectionReference, serverTimestamp } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
+  // col = collection(this._store, 'sessions');
   constructor(
-    private _shared: SharedService,
-    private _store: AngularFirestore
+    private _store: AngularFirestore,
+    private _store2: Firestore,
+    private _shared: SharedService // private _store: Firestore //private _col: collection
   ) {}
+  /*
+  storeTest() {
+    this._store2.collection(`tests`).add({
+      test: 'test',
+    });
+  }
+  */
 
   storeSessionId() {
     this._store.collection(`sessions`).add({
