@@ -3,7 +3,9 @@
 </div>
 
 <div class="question">
-    <h3>{{ questionList[currentQuestion]?.questionText }}</h3>
+    <!--<h3>{{ questionList[currentQuestion]?.questionText }}</h3>-->
+    <h3>test</h3>
+    <app-exercises-list [exercises]="exercisesClass5$ | async"></app-exercises-list>
 </div>
 
 <div class="options" *ngFor='let option of sortAnswerOptions(

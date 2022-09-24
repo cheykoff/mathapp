@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { QuestionService } from '../service/question.service';
 import { SharedService } from '../shared/shared.service';
+import { Exercise } from '../shared/exercise';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-exercise',
@@ -10,7 +13,10 @@ import { SharedService } from '../shared/shared.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
-  // TODO: Should I initialize these variables in the constructor?
+  @Input() exercises: Exercise[];
+
+  exercisesClass5$: Observable<Exercise[]>;
+
   // TODO: Check type of questionlist and if we need it at all?
   public questionList: any = [];
   public currentQuestion: number = 0;
@@ -21,7 +27,8 @@ export class ExerciseComponent implements OnInit {
   constructor(
     private _questionService: QuestionService,
     private _shared: SharedService,
-    private _router: Router
+    private _router: Router,
+    private _dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +126,14 @@ export class ExerciseComponent implements OnInit {
     if (this.currentQuestion >= this.questionList.length - 1) {
       this.quizCompleted = true;
     }
+    this.getExercise();
+  }
+
+  getExercise(): void {
+    console.log('getExercise() called');
+    console.log(this._dataService.getExercise(5)); // pass classLevel
+    this.exercisesClass5$ = this._dataService.getExercise(5);
+    console.log(this.exercisesClass5$);
   }
 
   showResult(): void {
