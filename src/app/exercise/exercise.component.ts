@@ -46,8 +46,6 @@ export class ExerciseComponent implements OnInit {
         return question.schoolClass === this._shared.getSchoolClass() - 1;
       });
     });
-    console.log(this.questionList);
-    console.log(typeof this.questionList);
   }
 
   answer(option: any): void {
@@ -67,8 +65,6 @@ export class ExerciseComponent implements OnInit {
     } else {
       this.showResult();
     }
-    console.log('correct: ' + this._shared.correctAnswer);
-    console.log('incorrect: ' + this._shared.incorrectAnswer);
   }
 
   compare(a: any, b: any): number {
