@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataService } from '../service/data.service';
+import { Exercise } from '../shared/exercise';
 
 @Component({
   selector: 'app-startpage',
@@ -7,6 +9,8 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./startpage.component.css'],
 })
 export class StartpageComponent implements OnInit {
+  exercisesClass5$: Observable<Exercise[]>;
+
   constructor(private _dataService: DataService) {}
 
   ngOnInit(): void {}
@@ -18,5 +22,7 @@ export class StartpageComponent implements OnInit {
   getExercise(): void {
     console.log('getExercise() called');
     console.log(this._dataService.getExercise(5)); // pass classLevel
+    this.exercisesClass5$ = this._dataService.getExercise(5);
+    console.log(this.exercisesClass5$);
   }
 }

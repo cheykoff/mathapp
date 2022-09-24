@@ -8,6 +8,7 @@ import { CollectionReference, serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
+import { convertSnaps } from './db-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -89,16 +90,7 @@ export class DataService {
         ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
-      .pipe(
-        map((results) => {
-          return results.docs.map((snap) => {
-            return {
-              id: snap.id,
-              ...(<any>snap.data()),
-            };
-          });
-        })
-      );
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
     console.log('a: ', a);
     console.log('typeof a: ', typeof a);
     return a;
