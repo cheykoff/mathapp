@@ -42,7 +42,6 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
-import { OpenQuestionComponent } from './open-question/open-question.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,6 @@ import { OpenQuestionComponent } from './open-question/open-question.component';
     ChangeBgDirective,
     LoadingpageComponent,
     StartpageComponent,
-    OpenQuestionComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import 'firebase/firestore';
 import { CollectionReference, serverTimestamp } from 'firebase/firestore';
+import { Observable, map } from 'rxjs';
+
+import { Exercise } from '../shared/exercise';
 
 @Injectable({
   providedIn: 'root',
@@ -77,5 +80,27 @@ export class DataService {
       totalQuestions: this._shared.correctAnswer + this._shared.incorrectAnswer,
       endTime: serverTimestamp(),
     });
+  }
+
+  getExercise(classLevel: number): Observable<Exercise[]> {
+    console.log('getExercise() called in data.service.ts');
+    const a = this._store
+      .collection('exercises', (ref) =>
+        ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
+      )
+      .get() // return an Observable id and data seperately
+      .pipe(
+        map((results) => {
+          return results.docs.map((snap) => {
+            return {
+              id: snap.id,
+              ...(<any>snap.data()),
+            };
+          });
+        })
+      );
+    console.log('a: ', a);
+    console.log('typeof a: ', typeof a);
+    return a;
   }
 }

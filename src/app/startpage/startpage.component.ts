@@ -14,4 +14,9 @@ export class StartpageComponent implements OnInit {
   setMode(): void {
     this._dataService.storeMode(); // TODO: Pass value to service
   }
+
+  getExercise(): void {
+    console.log('getExercise() called');
+    console.log(this._dataService.getExercise(5)); // pass classLevel
+  }
 }
