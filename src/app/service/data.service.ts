@@ -87,8 +87,7 @@ export class DataService {
     classLevel: number,
     questionNumber: number
   ): Observable<Exercise[]> {
-    console.log('getExercise() called in data.service.ts');
-    const a = this._store
+    return this._store
       .collection('exercises', (ref) =>
         ref
           .where('classLevel', '==', classLevel)
@@ -96,8 +95,5 @@ export class DataService {
       )
       .get() // return an Observable id and data seperately
       .pipe(map((result) => convertSnaps<Exercise>(result)));
-    console.log('a: ', a);
-    console.log('typeof a: ', typeof a);
-    return a;
   }
 }

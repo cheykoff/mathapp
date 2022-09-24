@@ -9,6 +9,5 @@ export class QuestionService {
 
   getQuestionJson(schoolClass: number) {
     return this.http.get<any>(`assets/questions${schoolClass}.json`);
-    console.log('getQuestionJson');
   }
 }

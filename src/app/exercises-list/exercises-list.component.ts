@@ -8,6 +8,7 @@ import { Exercise } from '../shared/exercise';
 })
 export class ExercisesListComponent implements OnInit {
   @Input() exercises: Exercise[];
+  @Input() exercise: Exercise;
   constructor() {}
 
   ngOnInit(): void {}
