@@ -42,6 +42,7 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
+import { ExercisesListComponent } from './exercises-list/exercises-list.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { StartpageComponent } from './startpage/startpage.component';
     ChangeBgDirective,
     LoadingpageComponent,
     StartpageComponent,
+    ExercisesListComponent,
   ],
   imports: [
     BrowserModule,
