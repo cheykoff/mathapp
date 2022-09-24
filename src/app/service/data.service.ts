@@ -83,11 +83,16 @@ export class DataService {
     });
   }
 
-  getExercise(classLevel: number): Observable<Exercise[]> {
+  getExercise(
+    classLevel: number,
+    questionNumber: number
+  ): Observable<Exercise[]> {
     console.log('getExercise() called in data.service.ts');
     const a = this._store
       .collection('exercises', (ref) =>
-        ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
+        ref
+          .where('classLevel', '==', classLevel)
+          .where('orderNumber', '==', questionNumber)
       )
       .get() // return an Observable id and data seperately
       .pipe(map((result) => convertSnaps<Exercise>(result)));

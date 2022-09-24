@@ -131,8 +131,8 @@ export class ExerciseComponent implements OnInit {
 
   getExercise(): void {
     console.log('getExercise() called');
-    console.log(this._dataService.getExercise(5)); // pass classLevel
-    this.exercisesClass5$ = this._dataService.getExercise(5);
+    console.log(this._dataService.getExercise(5, 1)); // pass classLevel
+    this.exercisesClass5$ = this._dataService.getExercise(5, 1);
     console.log(this.exercisesClass5$);
   }
 
