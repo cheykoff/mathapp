@@ -56,7 +56,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(): void {
-    // to do
+    this._dataService.storeAnswer();
   }
 
   compare(a: any, b: any): number {

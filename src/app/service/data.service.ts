@@ -75,6 +75,13 @@ export class DataService {
       });
   }
 
+  storeAnswer() {
+    console.log('storeAnswer');
+    this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
+      test: 'test5',
+    });
+  }
+
   storeResult() {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
       correctAnswers: this._shared.correctAnswer,
@@ -86,10 +93,7 @@ export class DataService {
   getAllExercises(classLevel: number): Observable<Exercise[]> {
     return this._store
       .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', classLevel)
-          // .where('orderNumber', '==', questionNumber)
-          .orderBy('orderNumber')
+        ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
       .pipe(
