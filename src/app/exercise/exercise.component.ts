@@ -13,56 +13,12 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
-  // @Input() exercise: Exercise;
-
   exercisesClass5$: Observable<Exercise[]>;
 
-  // TODO: Check type of questionlist and if we need it at all?
-  public questionList: any = [];
-  public currentQuestion: number = 1;
-  quizCompleted: boolean = false;
+  public currentQuestion: number = 0;
   public givenAnswers: any = [];
-  isAnswered: boolean = false;
 
-  public exercises: Exercise[] = [
-    {
-      id: 'teistae',
-      classLevel: 5,
-      question: 'Wie viele Zähne hat ein Erwachsener?',
-      answers: [5, 10, 32, 232],
-      correctAnswer: 32,
-      orderNumber: 1,
-    },
-    {
-      id: 'teistiejae',
-      classLevel: 5,
-      question: 'Wie viele Beine hat ein Erwachsener?',
-      answers: [2, 10, 12, 232],
-      correctAnswer: 2,
-      orderNumber: 2,
-    },
-  ];
-  public exercise = this.exercises[this.currentQuestion - 1];
-  /*
-  public exercise: Exercise = {
-    id: 'teistae',
-    classLevel: 5,
-    question: 'Wie viele Zähne hat ein Erwachsener?',
-    answers: [5, 10, 12, 232],
-    correctAnswer: 10,
-    orderNumber: 1,
-  };
-
-  public exercise2: Exercise = {
-    id: 'teistae',
-    classLevel: 5,
-    question: 'Wie viele Beine hat ein Erwachsener?',
-    answers: [2, 10, 12, 232],
-    correctAnswer: 2,
-    orderNumber: 2,
-  };
-  */
-  // exercise.question = 'test';
+  public exercises: Exercise[] = [];
 
   constructor(
     private _questionService: QuestionService,
@@ -72,115 +28,35 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit() in exercise.component.ts');
     this.exercisesClass5$ = this._dataService.getAllExercises(5);
     this.exercisesClass5$.subscribe((results) => {
       results.forEach((result) => {
-        console.log(result);
-        console.log(result.id);
-        console.log(result.classLevel);
-        console.log(result.question);
         this.exercises.push(result);
       });
     });
-
-    /*
-    console.log(
-      this._dataService.getAllExercises(5).subscribe((results) => {
-        results.forEach((result) => {
-          console.log(result);
-          console.log(result.id);
-          console.log(result.classLevel);
-          console.log(typeof result);
-        });
-      })
-    );
-    */
-
-    /*
-    this.exercisesClass5$.subscribe((exercises) => {
-      exercises.forEach((exercise) => {
-        console.log(exercise.id);
-        console.log(exercise.question);
-        console.log(exercise.answers);
-      });
-    });
-    */
-    // console.log('this.exercisesClass5$: ' + this.exercisesClass5$.subscribe());
-
-    // this.getNextQuestion();
-    /*
-    if (this._shared.getSchoolClass()) {
-      this.getAllQuestions(this._shared.getSchoolClass());
-    } else {
-      this._router.navigate(['/', 'startpage']);
-    }
-    this.exercisesClass5$ = this._dataService.getExercise(
-      5,
-      this.currentQuestion
-    );
-    */
-    // console.log(typeof this.exercises);
-    // this.getAllExercises();
   }
-  /*
-  getAllQuestions(schoolClass: number): void {
-    this._questionService.getQuestionJson(schoolClass).subscribe((data) => {
-      this.questionList = data.questions.filter((question: any) => {
-        return question.schoolClass === this._shared.getSchoolClass() - 1;
-      });
-    });
-  }
-  */
 
   onClickAnswer(option: any, i: number): void {
-    console.log('CLICKED');
-    console.log('currentQuestion: ' + this.currentQuestion);
     this.checkAnswer(option, i);
     this.storeAnswer();
     this.currentQuestion++;
-    if (this.currentQuestion < this.exercises.length + 1) {
-      this.getNextQuestion();
-    } else {
+    if (this.currentQuestion >= this.exercises.length) {
       this.showResult();
     }
   }
 
   checkAnswer(option: any, i: number): void {
-    console.log('checkAnswer() in exercise.component.ts');
-    console.log('option ' + i + 'selected: ' + option);
     if (option === this.exercises[0].correctAnswer) {
-      console.log('correct answer');
-      // this.points += 1;
       this._shared.points += 1;
       this._shared.correctAnswer++;
     } else {
-      console.log('incorrect answer');
       this._shared.incorrectAnswer++;
     }
-    this.isAnswered = true;
-
-    // this.shared.setPoints(this.points);
-    /*
-    if (this.currentQuestion < this.questionList.length - 1) {
-      this.nextQuestion();
-    } else {
-      this.showResult();
-    }
-    */
   }
 
   storeAnswer(): void {
-    console.log('storeAnswer() in exercise.component.ts');
+    // to do
   }
-
-  getNextQuestion(): void {
-    console.log('getNextQuestion() in exercise.component.ts');
-    //this.getExercise();
-    this.nextQuestion();
-  }
-
-  showNextQuestion(): void {}
 
   compare(a: any, b: any): number {
     if (parseInt(a.text) < parseInt(b.text)) {
@@ -229,74 +105,7 @@ export class ExerciseComponent implements OnInit {
     return arr;
   }
 
-  nextQuestion(): void {
-    this.isAnswered = false;
-    this.exercise = this.exercises[this.currentQuestion - 1];
-    /*
-    this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
-      this.questionList[this.currentQuestion].options
-    );
-    if (this.currentQuestion >= this.questionList.length - 1) {
-      this.quizCompleted = true;
-    }
-    // this.getExercise();
-    */
-  }
-  /*
-  getExercise(): void {
-    console.log(
-      'getExercise() in exercise.component.ts, exerciseClass5$: ' +
-        this.exercisesClass5$ +
-        ' currentQuestion: ' +
-        this.currentQuestion
-    );
-    this.exercisesClass5$ = this._dataService.getExercise(
-      5,
-      this.currentQuestion
-    );
-    console.log(this.exercisesClass5$.subscribe((data) => console.log(data)));
-    console.log(
-      this.exercisesClass5$.subscribe((data) => console.log(data))
-    )[0];
-  }
-  */
-
-  getAllExercises(): void {
-    console.log(
-      'getExercise() in exercise.component.ts, exerciseClass5$: ' +
-        this.exercisesClass5$ +
-        ' currentQuestion: ' +
-        this.currentQuestion
-    );
-    // this.exercisesClass5$ = this._dataService.getAllExercises(5);
-    /*
-    this._dataService.getAllExercises(5);
-    this.exercisesClass5$.subscribe((data) => {
-      console.log('data: ' + data);
-    });
-
-    const a = this.exercisesClass5$.subscribe();
-    console.log('a: ' + a + typeof a);
-    console.log(
-      'result: ' + this.exercisesClass5$.forEach((data) => console.log(data))
-    );
-
-
-    this.exercises.push(this.exercisesClass5$[0]);
-    */
-    /* 
-    console.log(this.exercisesClass5$.subscribe((data) => console.log(data)));
-    console.log(
-      this.exercisesClass5$.subscribe((data) => console.log(data))
-    )[0];
-    
-    this.exercises = this.exercisesClass5$.subscribe();
-    console.log(this.exercises);
-    */
-  }
-
   showResult(): void {
-    this.quizCompleted = true;
     this._router.navigate(['/', 'resultpage']);
   }
 }

@@ -1,11 +1,11 @@
 <div class="header">
-  <h1 class="headerTitle">Frage {{ currentQuestion }} von {{ exercises.length }}</h1>
+  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }} von {{ exercises.length }}</h1>
 </div>
 
 <div class="question">
-    <p>{{exercise.question}}</p>
+    <p>{{exercises[currentQuestion].question}}</p>
 </div>
-<div class="options" *ngFor='let option of exercise.answers; let i = index'>
+<div class="options" *ngFor='let option of exercises[currentQuestion].answers; let i = index'>
     <ul class="answerList">
         <li (click)="onClickAnswer(option, i)" class="answerListItem">
             <button id="{{ 'option' + i }}" class="answerButton btn">
