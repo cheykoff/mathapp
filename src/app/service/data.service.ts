@@ -87,6 +87,12 @@ export class DataService {
     classLevel: number,
     questionNumber: number
   ): Observable<Exercise[]> {
+    console.log(
+      'getExercise() in data.service.ts, classLevel: ' +
+        classLevel +
+        ' questionNumber: ' +
+        questionNumber
+    );
     return this._store
       .collection('exercises', (ref) =>
         ref

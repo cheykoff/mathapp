@@ -1,15 +1,35 @@
 <div class="header">
-  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }} von {{ questionList.length }}</h1>
+  <h1 class="headerTitle">Frage {{ currentQuestion }} von {{ questionList.length }}</h1>
 </div>
 
 <div class="question">
-    <!--<h3>{{ questionList[currentQuestion]?.questionText }}</h3>-->
-    <app-exercises-list [exercises]="exercisesClass5$ | async"></app-exercises-list>
+    <p>{{exercise.question}}</p>
 </div>
-<div class="options">
-    <app-exercise-answer-options [exercises]="exercisesClass5$ | async"></app-exercise-answer-options>
-</div>
+<div class="options" *ngFor='let option of exercise.answers; let i = index'>
+    <ul class="answerList">
+        <li (click)="onClickAnswer(option, i)" class="answerListItem">
+            <button id="{{ 'option' + i }}" class="answerButton btn">
+                {{ option }}
+            </button>
+        </li>
+    </ul>
+  </div>
 
+  <!--
+    <app-exercise-answer-options [exercises]="exercisesClass5$ | async"></app-exercise-answer-options>-->
+<!--
+<div class="options" *ngFor='let answer of exercise.answers; let i = index'>
+    <ul class="answerList">
+        <li (click)="answer(option)" class="answerListItem">
+            <button appChangeBg [isCorrect]="option.correct" id="{{ 'option' + i }}" class="answerButton btn" [disabled]="isAnswered">
+                {{ option.text }}
+            </button>
+        </li>
+    </ul>
+  </div>
+  -->
+
+<!--
 <div class="options" *ngFor='let option of sortAnswerOptions(
     this.questionList[this.currentQuestion]?.options
   ); let i = index'>
@@ -21,3 +41,4 @@
         </li>
     </ul>
   </div>
+  -->

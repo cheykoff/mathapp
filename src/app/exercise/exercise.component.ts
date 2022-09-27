@@ -13,16 +13,35 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
-  @Input() exercises: Exercise[];
+  // @Input() exercise: Exercise;
 
   exercisesClass5$: Observable<Exercise[]>;
 
   // TODO: Check type of questionlist and if we need it at all?
   public questionList: any = [];
-  public currentQuestion: number = 0;
+  public currentQuestion: number = 1;
   quizCompleted: boolean = false;
   public givenAnswers: any = [];
   isAnswered: boolean = false;
+
+  public exercise: Exercise = {
+    id: 'teistae',
+    classLevel: 5,
+    question: 'Wie viele Zähne hat ein Erwachsener?',
+    answers: [5, 10, 12, 232],
+    correctAnswer: 10,
+    orderNumber: 1,
+  };
+
+  public exercise2: Exercise = {
+    id: 'teistae',
+    classLevel: 5,
+    question: 'Wie viele Beine hat ein Erwachsener?',
+    answers: [2, 10, 12, 232],
+    correctAnswer: 2,
+    orderNumber: 1,
+  };
+  // exercise.question = 'test';
 
   constructor(
     private _questionService: QuestionService,
@@ -32,12 +51,19 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit() in exercise.component.ts');
+    this.getNextQuestion();
+    /*
     if (this._shared.getSchoolClass()) {
       this.getAllQuestions(this._shared.getSchoolClass());
     } else {
       this._router.navigate(['/', 'startpage']);
     }
-    this.exercisesClass5$ = this._dataService.getExercise(5, 1);
+    this.exercisesClass5$ = this._dataService.getExercise(
+      5,
+      this.currentQuestion
+    );
+    */
   }
 
   getAllQuestions(schoolClass: number): void {
@@ -48,23 +74,43 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-  answer(option: any): void {
-    if (option.correct) {
+  onClickAnswer(option: any, i: number): void {
+    this.checkAnswer(option, i);
+    this.storeAnswer();
+    this.getNextQuestion();
+  }
+
+  checkAnswer(option: any, i: number): void {
+    console.log('checkAnswer() in exercise.component.ts');
+    console.log('option ' + i + 'selected: ' + option);
+    if (option === this.exercise.correctAnswer) {
+      console.log('correct answer');
       // this.points += 1;
       this._shared.points += 1;
       this._shared.correctAnswer++;
     } else {
+      console.log('incorrect answer');
       this._shared.incorrectAnswer++;
     }
     this.isAnswered = true;
 
     // this.shared.setPoints(this.points);
-
+    /*
     if (this.currentQuestion < this.questionList.length - 1) {
       this.nextQuestion();
     } else {
       this.showResult();
     }
+    */
+  }
+
+  storeAnswer(): void {
+    console.log('storeAnswer() in exercise.component.ts');
+  }
+
+  getNextQuestion(): void {
+    console.log('getNextQuestion() in exercise.component.ts');
+    this.getExercise();
   }
 
   compare(a: any, b: any): number {
@@ -127,10 +173,17 @@ export class ExerciseComponent implements OnInit {
   }
 
   getExercise(): void {
+    console.log(
+      'getExercise() in exercise.component.ts, exerciseClass5$: ' +
+        this.exercisesClass5$ +
+        ' currentQuestion: ' +
+        this.currentQuestion
+    );
     this.exercisesClass5$ = this._dataService.getExercise(
       5,
-      this.currentQuestion + 1
+      this.currentQuestion
     );
+    console.log(this.exercisesClass5$);
   }
 
   showResult(): void {
