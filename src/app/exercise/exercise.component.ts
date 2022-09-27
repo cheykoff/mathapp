@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, TitleStrategy } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { QuestionService } from '../service/question.service';
 import { SharedService } from '../shared/shared.service';
 import { Exercise } from '../shared/exercise';
 import { DataService } from '../service/data.service';
@@ -25,7 +24,6 @@ export class ExerciseComponent implements OnInit {
   public exercises: Exercise[] = [];
 
   constructor(
-    private _questionService: QuestionService,
     private _shared: SharedService,
     private _router: Router,
     private _dataService: DataService
