@@ -18,6 +18,9 @@ export class ExerciseComponent implements OnInit {
   public currentQuestion: number = 0;
   public givenAnswers: any = [];
   answerIsCorrect: boolean = false;
+  startTime: Date = new Date();
+  endTime: Date;
+  duration: number;
 
   public exercises: Exercise[] = [];
 
@@ -38,6 +41,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   onClickAnswer(option: any, i: number): void {
+    this.endTime = new Date();
+    this.duration = this.endTime.getTime() - this.startTime.getTime();
     this.checkAnswer(option, i);
     this.storeAnswer();
     this.currentQuestion++;
@@ -61,7 +66,8 @@ export class ExerciseComponent implements OnInit {
   storeAnswer(): void {
     this._dataService.storeAnswer(
       this.exercises[this.currentQuestion].id,
-      this.answerIsCorrect
+      this.answerIsCorrect,
+      this.duration
     );
   }
 
