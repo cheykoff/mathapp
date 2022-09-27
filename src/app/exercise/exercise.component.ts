@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, TitleStrategy } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { SharedService } from '../shared/shared.service';
 import { Exercise } from '../shared/exercise';
@@ -12,16 +12,13 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
-  exercisesClass5$: Observable<Exercise[]>;
+  exercises$: Observable<Exercise[]>;
 
-  public currentQuestion: number = 0;
-  public givenAnswers: any = [];
-  answerIsCorrect: boolean = false;
+  currentQuestion: number = 0;
+  givenAnswers: any = [];
   startTime: Date = new Date();
   endTime: Date;
   duration: number;
-
-  public exercises: Exercise[] = [];
 
   constructor(
     private _shared: SharedService,
@@ -30,46 +27,48 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.exercisesClass5$ = this._dataService.getAllExercises(5);
-    this.exercisesClass5$.subscribe((results) => {
-      results.forEach((result) => {
-        this.exercises.push(result);
-      });
-    });
+    this.exercises$ = this._dataService.getAllExercises(5);
   }
 
-  onClickAnswer(option: any, i: number): void {
+  onClickAnswer(
+    option: any,
+    exercisesLength: number,
+    { correctAnswer, id }: Exercise
+  ): void {
+    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
-    this.checkAnswer(option, i);
-    this.storeAnswer();
+    const isCorrect = this._checkAnswer(option, correctAnswer);
+    this.storeAnswer(isCorrect, id);
     this.currentQuestion++;
-    if (this.currentQuestion >= this.exercises.length) {
+
+    if (this.currentQuestion >= exercisesLength) {
       this.showResult();
     }
   }
 
-  checkAnswer(option: any, i: number): void {
-    if (option === this.exercises[this.currentQuestion].correctAnswer) {
-      this._shared.points += 1;
+  private _checkAnswer(option: any, correctAnswer: string): boolean {
+    if (option === correctAnswer) {
+      // TODO: check if this is needed or can be fetched from correctAnswer
+      this._shared.points++;
       this._shared.correctAnswer++;
-      this.answerIsCorrect = true;
-      console.log('correct');
-    } else {
-      this._shared.incorrectAnswer++;
-      this.answerIsCorrect = false;
+
+      return true;
     }
+
+    this._shared.incorrectAnswer++;
+
+    return false;
   }
 
-  storeAnswer(): void {
-    this._dataService.storeAnswer(
-      this.exercises[this.currentQuestion].id,
-      this.answerIsCorrect,
-      this.duration
-    );
+  storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    this._dataService.storeAnswer(currentQuestionId, isCorrect, this.duration);
   }
 
   compare(a: any, b: any): number {
+    if (a.text === 'Keine Antwort ist richtig') {
+      return 1;
+    }
     if (parseInt(a.text) < parseInt(b.text)) {
       return -1;
     }
@@ -85,11 +84,11 @@ export class ExerciseComponent implements OnInit {
     return 0;
   }
 
-  contains(arr, value): number {
-    if (arr && value) {
-      let i = arr.length;
+  contains(options, value): number {
+    if (options && value) {
+      let i = options.length;
       while (i--) {
-        if (arr[i].text === value) {
+        if (options[i].text === value) {
           return i;
         }
       }
@@ -97,23 +96,15 @@ export class ExerciseComponent implements OnInit {
     return -1;
   }
 
-  sortAnswerOptions(arr: any): void {
-    const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
-    if (!arr) {
+  // TODO: test
+  sortAnswerOptions(options: any): void {
+    if (!options) {
       return undefined;
     }
-    if (indexOfNoAnswer >= 0) {
-      const temp = arr[indexOfNoAnswer];
-      arr[indexOfNoAnswer] = arr[arr.length - 1];
-      arr[arr.length - 1] = temp;
 
-      const arr2 = arr.slice(0, -1).sort(this.compare);
-      arr2.push(arr[arr.length - 1]);
-      arr = arr2;
-    } else {
-      arr.sort(this.compare);
-    }
-    return arr;
+    options.sort(this.compare);
+
+    return options;
   }
 
   showResult(): void {

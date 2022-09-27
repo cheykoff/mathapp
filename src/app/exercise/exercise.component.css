@@ -8,6 +8,19 @@
     font-size: 0.8em;
 }
 
+.question {
+    border: 1px solid var(--clr-primary-dark);
+    border-radius: 5px;
+    padding: 0px 8px;
+    background-color: var(--clr-light);
+    font-size: 1.4rem;
+    margin: 30px 0px;
+    position: relative;
+    box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+
 h3 {
     font-size: 0.8em;
 }

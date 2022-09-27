@@ -76,7 +76,6 @@ export class DataService {
   }
 
   storeAnswer(exerciseId: string, answerIsCorrect: boolean, duration: number) {
-    console.log('storeAnswer');
     this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
       exerciseId: exerciseId,
       answerIsCorrect: answerIsCorrect,

@@ -1,8 +1,8 @@
 export interface Exercise {
   id: string;
   question: string;
-  correctAnswer: number;
-  answers: number[];
+  correctAnswer: string;
+  answers: string[];
   classLevel: number;
   orderNumber: number;
 }

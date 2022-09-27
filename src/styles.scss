@@ -1,11 +1,3 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif‣;
-}
-
 :root {
   --hue-primary: 183;
   --hue-secondary: 55;
@@ -49,6 +41,20 @@
   --fw-normal: 400;
   --fw-bold: 700;
   --fw-black: 900;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif‣;
+}
+
+// TODO: check padding and margin for all l elements
+* {
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -185,19 +191,6 @@ h1.headerTitle {
   line-height: 100%;
 }
 
-.question {
-  border: 1px solid var(--clr-primary-dark);
-  border-radius: 5px;
-  padding: 0px 8px;
-  background-color: var(--clr-light);
-  font-size: 1.4rem;
-  margin: 30px 0px;
-  position: relative;
-  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
-  overflow: auto;
-  white-space: pre-wrap;
-}
-
 .answer {
   position: relative;
   margin-top: 12px;
@@ -237,7 +230,7 @@ input {
 
 .answer-unit {
   width: 40px;
-  margin: 0;
+
   position: absolute;
   right: 50px;
   top: 50%;
@@ -372,7 +365,7 @@ button {
 
 .feedback-icon {
   width: 40px;
-  margin: 0;
+
   aspect-ratio: 1;
   position: absolute;
   right: 10px;

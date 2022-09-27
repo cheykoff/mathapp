@@ -1,16 +1,24 @@
-<div class="header">
-  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }} von {{ exercises.length }}</h1>
-</div>
+<ng-container *ngIf="exercises$ | async as exercises">
+  <div class="header">
+    <h1 class="headerTitle">
+      Frage {{ currentQuestion + 1 }} von {{ exercises.length }}
+    </h1>
+  </div>
+  <p class="question">{{ exercises[currentQuestion].question }}</p>
 
-<div class="question">
-    <p>{{exercises[currentQuestion].question}}</p>
-</div>
-<div class="options" *ngFor='let option of exercises[currentQuestion].answers; let i = index'>
+  <div class="options">
     <ul class="answerList">
-        <li (click)="onClickAnswer(option, i)" class="answerListItem">
-            <button id="{{ 'option' + i }}" class="answerButton btn">
-                {{ option }}
-            </button>
-        </li>
+      <li
+        *ngFor="let option of exercises[currentQuestion].answers; let i = index"
+        class="answerListItem"
+        (click)="
+          onClickAnswer(option, exercises.length, exercises[currentQuestion])
+        "
+      >
+        <button [id]="'option' + i" class="answerButton btn">
+          {{ option }}
+        </button>
+      </li>
     </ul>
   </div>
+</ng-container>
