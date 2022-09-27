@@ -46,9 +46,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(option: any, i: number): void {
-    if (option === this.exercises[0].correctAnswer) {
+    if (option === this.exercises[this.currentQuestion].correctAnswer) {
       this._shared.points += 1;
       this._shared.correctAnswer++;
+      console.log('correct');
     } else {
       this._shared.incorrectAnswer++;
     }
