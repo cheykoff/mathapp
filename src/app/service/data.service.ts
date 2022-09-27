@@ -97,9 +97,23 @@ export class DataService {
       .collection('exercises', (ref) =>
         ref
           .where('classLevel', '==', classLevel)
-          .where('orderNumber', '==', questionNumber)
+          // .where('orderNumber', '==', questionNumber)
+          .orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result))); // return an observable
+  }
+
+  getAllExercises(classLevel: number): Observable<Exercise[]> {
+    console.log('getExercise() in data.service.ts, classLevel: ' + classLevel);
+    return this._store
+      .collection('exercises', (ref) =>
+        ref
+          .where('classLevel', '==', classLevel)
+          // .where('orderNumber', '==', questionNumber)
+          .orderBy('orderNumber')
+      )
+      .get() // return an Observable id and data seperately
+      .pipe(map((result) => convertSnaps<Exercise>(result))); // return an observable
   }
 }
