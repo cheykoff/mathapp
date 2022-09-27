@@ -1,0 +1,502 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif‣;
+}
+
+:root {
+  --hue-primary: 183;
+  --hue-secondary: 55;
+  --hue-correct: 93;
+  --hue-incorrect: 8;
+  --hue-team-red: 0;
+  --hue-team-blue: 200;
+
+  --clr-shadow: rgba(19, 15, 48, 0.6);
+
+  --clr-correct: hsl(var(--hue-correct), 70%, 35%);
+  --clr-incorrect: hsl(var(--hue-incorrect), 100%, 33%);
+
+  --clr-light: hsl(var(--hue-primary), 50%, 98%);
+  --clr-dark: hsl(var(--hue-primary), 10%, 10%);
+
+  --clr-grey: hsl(var(--hue-primary), 2%, 50%);
+  --clr-grey-light: hsl(var(--hue-primary), 2%, 65%);
+  --clr-grey-lighter: hsl(var(--hue-primary), 2%, 80%);
+  --clr-grey-dark: hsl(var(--hue-primary), 2%, 35%);
+  --clr-grey-darker: hsl(var(--hue-primary), 2%, 20%);
+
+  --clr-primary: hsl(var(--hue-primary), 100%, 30%);
+  --clr-primary-light: hsl(var(--hue-primary), 95%, 45%);
+  --clr-primary-lighter: hsl(var(--hue-primary), 59%, 51%);
+  --clr-primary-lightest: hsl(var(--hue-primary), 59%, 70%);
+  --clr-primary-dark: hsl(var(--hue-primary), 100%, 15%);
+  --clr-primary-darker: hsl(var(--hue-primary), 75%, 8%);
+
+  --clr-secondary: hsl(var(--hue-secondary), 68%, 47%);
+  --clr-secondary-light: hsl(var(--hue-secondary), 100%, 55%);
+  --clr-secondary-lighter: hsl(var(--hue-secondary), 100%, 71%);
+  --clr-secondary-lighter: hsl(var(--hue-secondary), 100%, 80%);
+  --clr-secondary-dark: hsl(var(--hue-secondary), 72%, 37%);
+  --clr-secondary-darker: hsl(var(--hue-secondary), 78%, 28%);
+
+  --clr-text-dark: hsl(var(--hue-primary), 20%, 5%);
+  --clr-text-light: hsl(var(--hue-primary), 95%, 99%);
+
+  --fs-normal: 1.125rem;
+  --fw-normal: 400;
+  --fw-bold: 700;
+  --fw-black: 900;
+}
+
+body {
+  --hue: var(--hue-primary);
+  margin: 0px;
+  padding: 16px;
+  background-color: white;
+  margin: 0px auto;
+  position: relative;
+  font-size: var(--fs-normal);
+  line-height: 1.6;
+}
+
+header {
+  background-color: var(--clr-light);
+  padding: 1px 24px;
+  font-weight: var(--fw-normal);
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  position: relative;
+}
+
+.header {
+  background-color: var(--clr-light);
+  padding: 1px 16px;
+  margin: -16px -16px 20px -16px;
+  font-weight: var(--fw-normal);
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+}
+
+h1 {
+  font-weight: var(--fw-bold);
+  color: var(--clr-dark);
+  display: inline-block;
+}
+
+h1.headerTitle {
+  font-size: larger;
+}
+
+.countdown {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-grey-light);
+  display: inline-block;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#header-small {
+  display: block;
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 4fr 3fr 4fr;
+  padding: 4px 4px;
+  grid-gap: 4px;
+  width: 100%;
+  margin: 4px 0px;
+}
+
+.header-item {
+  text-align: center;
+  font-size: 1rem;
+}
+
+#title-small {
+  font-weight: var(--fw-bold);
+  color: var(--clr-dark);
+  display: inline-block;
+  text-align: left;
+  margin: 4px 0px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  color: var(--clr-grey-darker);
+  padding: 16px;
+  text-align: center;
+}
+
+#team-name-small {
+  font-size: 1rem;
+  display: inline-block;
+  text-align: center;
+  margin: 4px 0px;
+}
+
+#countdown-small {
+  display: inline-block;
+  text-align: right;
+  margin: 4px 0px;
+  position: absolute;
+  top: 40%;
+  right: 0px;
+}
+
+.level-countdown {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-grey-light);
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  right: 24px;
+}
+
+#team-name {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  color: gray;
+  display: inline-block;
+  position: absolute;
+  right: 24px;
+  top: 8px;
+}
+
+.instruction,
+.description {
+  padding: 0px 4px;
+  font-size: 1rem;
+}
+
+#level-number {
+  font-size: 15rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary);
+  margin: 12px 16px;
+  text-align: center;
+  line-height: 100%;
+}
+
+.question {
+  border: 1px solid var(--clr-primary-dark);
+  border-radius: 5px;
+  padding: 0px 8px;
+  background-color: var(--clr-light);
+  font-size: 1.4rem;
+  margin: 30px 0px;
+  position: relative;
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.answer {
+  position: relative;
+  margin-top: 12px;
+}
+
+#plus-minus-btn {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+  font-size: 3rem;
+  border-radius: 4px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  background-color: var(--clr-light);
+  border: 1px solid var(--clr-dark);
+  width: 82%;
+  height: 60px;
+  margin: 12px 0px 12px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: var(--fw-bold);
+  box-shadow: inset 0px 2px 5px 0px var(--clr-shadow);
+}
+
+#code-input {
+  width: 100%;
+}
+
+.answer-unit {
+  width: 40px;
+  margin: 0;
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+}
+
+.result {
+  border: 2px solid var(--clr-primary-dark);
+  border-radius: 5px;
+  padding: 20px 8px;
+  background-color: var(--clr-light);
+  font-size: 1.4rem;
+  margin: auto 0px;
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  color: var(--clr-text-dark);
+}
+
+.result-table {
+  margin-top: 12px;
+  font-size: 1rem;
+  border-collapse: collapse;
+  width: 100%;
+  color: rgba(19, 15, 48, 0.6);
+}
+
+.result-table img {
+  width: 15px;
+}
+
+td {
+  padding: 5px 0px;
+}
+
+tr:nth-child(even) {
+  background-color: #eee;
+}
+
+#success-gif {
+  margin: 12px auto;
+  width: 100%;
+}
+
+.answerList {
+  padding: 0px;
+  margin: 0px;
+}
+.answerListItem {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+button {
+  width: 100%;
+}
+
+.controls {
+  position: fixed;
+  bottom: 0px;
+  margin: 8px 16px;
+  left: 0px;
+  right: 0px;
+}
+
+.btn {
+  text-transform: uppercase;
+  background-color: var(--clr-primary-light);
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  min-height: 48px;
+  height: auto;
+  font-size: 1.3rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.5px;
+  border: 1px solid var(--clr-dark);
+  border-radius: 4px;
+  margin: 4px 0px;
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  color: var(--clr-text-dark);
+}
+
+.answerButton {
+  background-color: var(--clr-secondary-light);
+  color: black;
+  text-transform: none;
+}
+
+.btn-mc {
+  margin: 4px 0px;
+  background-color: var(--clr-grey);
+}
+
+button {
+  &:not([disabled]) {
+    &:hover,
+    &:active,
+    &:focus,
+    &:visited {
+      background-color: var(--clr-primary-lighter);
+    }
+
+    &:hover {
+      transform: scale(1.02) perspective(1px);
+      cursor: pointer;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--clr-grey-lighter);
+    border: 1px solid var(--clr-grey-dark);
+    color: var(--clr-text-dark);
+  }
+}
+
+#team-red-btn {
+  background-color: hsl(var(--hue-team-red), 100%, 50%);
+}
+
+#team-blue-btn {
+  background-color: hsl(var(--hue-team-blue), 100%, 50%);
+}
+
+.feedback {
+  background-color: lightseagreen;
+  margin: 4px 0px 12px 0px;
+  padding: 8px 8px;
+  border-radius: 5px;
+}
+
+.feedback-icon {
+  width: 40px;
+  margin: 0;
+  aspect-ratio: 1;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.feedback-text {
+  color: var(--clr-text-light);
+}
+
+.controlBtn {
+  margin-top: 30px;
+}
+
+.feedback.correct {
+  background-color: var(--clr-correct);
+  color: var(--clr-text-light);
+}
+
+.feedback.incorrect {
+  background-color: var(--clr-incorrect);
+  color: var(--clr-text-light);
+}
+
+.bonus-page {
+  position: relative;
+}
+
+#wheel-of-fortune {
+  position: relative;
+}
+
+#wheel {
+  position: relative;
+  width: 80%;
+  left: 10%;
+}
+
+.marker {
+  position: absolute;
+  width: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -20px;
+  z-index: 2;
+}
+
+@keyframes blur {
+  0% {
+    filter: blur(1.5px);
+  }
+  80% {
+    filter: blur(1.5px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fs-normal: 1.25rem;
+  }
+
+  html {
+    padding: 0px;
+    margin: 0px auto;
+    background-color: var(--clr-dark);
+  }
+
+  body {
+    width: 375px;
+    height: 800px;
+    position: relative;
+    margin: 20px auto;
+  }
+
+  header {
+    display: block;
+  }
+
+  #header-small {
+    display: none;
+  }
+
+  .instruction,
+  .description {
+    padding: 0px 12px;
+    font-size: 1.4rem;
+  }
+
+  #plus-minus-btn {
+    display: none;
+  }
+
+  .btn {
+    height: 80px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    margin: 4px 0px;
+  }
+
+  .feedback {
+    background-color: lightseagreen;
+    margin: 4px 0px 24px 0px;
+    padding: 12px 8px;
+    border-radius: 5px;
+  }
+
+  .controls {
+    position: absolute;
+    bottom: 0px;
+    margin: 16px 16px;
+    left: 0px;
+    right: 0px;
+  }
+
+  .controlBtn {
+    margin-top: 30px;
+  }
+}
+
+.hide {
+  display: none !important;
+}
