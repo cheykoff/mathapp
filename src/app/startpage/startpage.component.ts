@@ -20,6 +20,6 @@ export class StartpageComponent implements OnInit {
   }
 
   getExercise(): void {
-    this.exercisesClass5$ = this._dataService.getExercise(5, 1);
+    this.exercisesClass5$ = this._dataService.getAllExercises(5);
   }
 }

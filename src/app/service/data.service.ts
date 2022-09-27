@@ -83,63 +83,7 @@ export class DataService {
     });
   }
 
-  getExercise(
-    classLevel: number,
-    questionNumber: number
-  ): Observable<Exercise[]> {
-    console.log(
-      'getExercise() in data.service.ts, classLevel: ' +
-        classLevel +
-        ' questionNumber: ' +
-        questionNumber
-    );
-    return this._store
-      .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', classLevel)
-          // .where('orderNumber', '==', questionNumber)
-          .orderBy('orderNumber')
-      )
-      .get() // return an Observable id and data seperately
-      .pipe(map((result) => convertSnaps<Exercise>(result))); // return an observable
-  }
-
-  getAllExercises2(classLevel: number): Observable<Exercise[]> {
-    console.log('getExercise() in data.service.ts, classLevel: ' + classLevel);
-
-    return this._store
-      .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', classLevel)
-          // .where('orderNumber', '==', questionNumber)
-          .orderBy('orderNumber')
-      )
-      .get() // return an Observable id and data seperately
-      .pipe(map((result) => convertSnaps<Exercise>(result))); // return an observable id and data in one object
-  }
-
-  getAllExercises3(classLevel: number) {
-    console.log('getExercise() in data.service.ts, classLevel: ' + classLevel);
-
-    return this._store
-      .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', classLevel)
-          // .where('orderNumber', '==', questionNumber)
-          .orderBy('orderNumber')
-      )
-      .get() // return an Observable id and data seperately
-      .subscribe((snaps) => {
-        snaps.forEach((snap) => {
-          console.log('snap: ' + snap.id);
-          console.log('snap: ' + snap.data());
-          // console.log('snap: ' + ...<any>snap.data());
-        });
-      });
-  }
-
   getAllExercises(classLevel: number): Observable<Exercise[]> {
-    console.log('getExercise() in data.service.ts, classLevel: ' + classLevel);
     return this._store
       .collection('exercises', (ref) =>
         ref
@@ -158,25 +102,5 @@ export class DataService {
           });
         })
       );
-    /*
-      .subscribe((snaps) => {
-        snaps.forEach((snap) => {
-          console.log('snap: ' + snap.id);
-          console.log(snap.data());
-          // console.log(snap.data.question);
-        });
-      });
-      /*
-
-    /* 
-      .pipe(map(results) => {
-        results.docs.map(snap => {
-          console.log(snap.id);
-          console.log(snap.data());
-        })
-        
-
-      });
-      */
   }
 }
