@@ -75,10 +75,11 @@ export class DataService {
       });
   }
 
-  storeAnswer() {
+  storeAnswer(exerciseId: string, answerIsCorrect: boolean) {
     console.log('storeAnswer');
     this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
-      test: 'test5',
+      exerciseId: exerciseId,
+      answerIsCorrect: answerIsCorrect,
     });
   }
 

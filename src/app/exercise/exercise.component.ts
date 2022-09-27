@@ -17,6 +17,7 @@ export class ExerciseComponent implements OnInit {
 
   public currentQuestion: number = 0;
   public givenAnswers: any = [];
+  answerIsCorrect: boolean = false;
 
   public exercises: Exercise[] = [];
 
@@ -49,14 +50,19 @@ export class ExerciseComponent implements OnInit {
     if (option === this.exercises[this.currentQuestion].correctAnswer) {
       this._shared.points += 1;
       this._shared.correctAnswer++;
+      this.answerIsCorrect = true;
       console.log('correct');
     } else {
       this._shared.incorrectAnswer++;
+      this.answerIsCorrect = false;
     }
   }
 
   storeAnswer(): void {
-    this._dataService.storeAnswer();
+    this._dataService.storeAnswer(
+      this.exercises[this.currentQuestion].id,
+      this.answerIsCorrect
+    );
   }
 
   compare(a: any, b: any): number {
