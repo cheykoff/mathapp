@@ -73,6 +73,40 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ngOnInit() in exercise.component.ts');
+    this.exercisesClass5$ = this._dataService.getAllExercises(5);
+    this.exercisesClass5$.subscribe((results) => {
+      results.forEach((result) => {
+        console.log(result);
+        console.log(result.id);
+        console.log(result.classLevel);
+        console.log(result.question);
+        this.exercises.push(result);
+      });
+    });
+
+    /*
+    console.log(
+      this._dataService.getAllExercises(5).subscribe((results) => {
+        results.forEach((result) => {
+          console.log(result);
+          console.log(result.id);
+          console.log(result.classLevel);
+          console.log(typeof result);
+        });
+      })
+    );
+    */
+
+    /*
+    this.exercisesClass5$.subscribe((exercises) => {
+      exercises.forEach((exercise) => {
+        console.log(exercise.id);
+        console.log(exercise.question);
+        console.log(exercise.answers);
+      });
+    });
+    */
+    // console.log('this.exercisesClass5$: ' + this.exercisesClass5$.subscribe());
 
     // this.getNextQuestion();
     /*
@@ -226,7 +260,7 @@ export class ExerciseComponent implements OnInit {
     )[0];
   }
   */
-  /*
+
   getAllExercises(): void {
     console.log(
       'getExercise() in exercise.component.ts, exerciseClass5$: ' +
@@ -234,16 +268,32 @@ export class ExerciseComponent implements OnInit {
         ' currentQuestion: ' +
         this.currentQuestion
     );
-    this.exercisesClass5$ = this._dataService.getAllExercises(5);
+    // this.exercisesClass5$ = this._dataService.getAllExercises(5);
+    /*
+    this._dataService.getAllExercises(5);
+    this.exercisesClass5$.subscribe((data) => {
+      console.log('data: ' + data);
+    });
+
+    const a = this.exercisesClass5$.subscribe();
+    console.log('a: ' + a + typeof a);
+    console.log(
+      'result: ' + this.exercisesClass5$.forEach((data) => console.log(data))
+    );
+
+
+    this.exercises.push(this.exercisesClass5$[0]);
+    */
+    /* 
     console.log(this.exercisesClass5$.subscribe((data) => console.log(data)));
-    /*console.log(
+    console.log(
       this.exercisesClass5$.subscribe((data) => console.log(data))
     )[0];
     
     this.exercises = this.exercisesClass5$.subscribe();
     console.log(this.exercises);
+    */
   }
-  */
 
   showResult(): void {
     this.quizCompleted = true;
