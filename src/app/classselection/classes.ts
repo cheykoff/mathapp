@@ -5,8 +5,8 @@ export interface SchoolClass {
 
 export const schoolClasses: SchoolClass[] = [
   { level: 5 },
-  { level: 6 },
-  { level: 7 },
+  { level: 6, disabled: true },
+  { level: 7, disabled: true },
   { level: 8, disabled: true },
   { level: 9, disabled: true },
   { level: 10, disabled: true },
