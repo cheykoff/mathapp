@@ -9,9 +9,9 @@ export class SharedService {
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
   points: number = 0;
-  docId: string = '';
-  sessionId: string = '';
-  quizId: string = '';
+  docId: string = 'abc';
+  sessionId: string = 'abc';
+  quizId: string = 'abc';
   parameters = {};
 
   constructor() {}

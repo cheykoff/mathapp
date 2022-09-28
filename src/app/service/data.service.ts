@@ -55,6 +55,7 @@ export class DataService {
     });
   }
 
+  // TODO: Change to setQuizId to the new quizId (currently getting the first quizId of the sessionId)
   storeSchoolClass(className: number) {
     this._store.collection(`quizzes`).add({
       schoolClass: className,
@@ -95,7 +96,10 @@ export class DataService {
   getAllExercises(classLevel: number): Observable<Exercise[]> {
     return this._store
       .collection('exercises', (ref) =>
-        ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
+        ref
+          .where('classLevel', '<=', classLevel)
+          .orderBy('classLevel')
+          .orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
       .pipe(

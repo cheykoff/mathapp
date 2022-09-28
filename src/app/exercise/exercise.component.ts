@@ -30,16 +30,12 @@ export class ExerciseComponent implements OnInit {
     this.exercises$ = this._dataService.getAllExercises(5);
   }
 
-  onClickAnswer(
-    option: any,
-    exercisesLength: number,
-    { correctAnswer, id }: Exercise
-  ): void {
+  onClickAnswer(option: any, exercisesLength: number, { id }: Exercise): void {
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
-    const isCorrect = this._checkAnswer(option, correctAnswer);
-    this.storeAnswer(isCorrect, id);
+    // const isCorrect = this._checkAnswer(option.isCorrect);
+    this.storeAnswer(this._checkAnswer(option.isCorrect), id);
     this.currentQuestion++;
     this.startTime = new Date();
 
@@ -48,8 +44,8 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
-  private _checkAnswer(option: any, correctAnswer: string): boolean {
-    if (option === correctAnswer) {
+  private _checkAnswer(isCorrect: boolean): boolean {
+    if (isCorrect) {
       // TODO: check if this is needed or can be fetched from correctAnswer
       this._shared.points++;
       this._shared.correctAnswer++;
@@ -64,6 +60,10 @@ export class ExerciseComponent implements OnInit {
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
     this._dataService.storeAnswer(currentQuestionId, isCorrect, this.duration);
+  }
+
+  public compare2(a: any, b: any): any {
+    return a - b;
   }
 
   compare(a: any, b: any): number {
@@ -98,7 +98,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   // TODO: test
-  sortAnswerOptions(options: any): void {
+  public sortAnswerOptions(options: any): any {
     if (!options) {
       return undefined;
     }

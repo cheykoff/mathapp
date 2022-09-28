@@ -9,14 +9,17 @@
   <div class="options">
     <ul class="answerList">
       <li
-        *ngFor="let option of exercises[currentQuestion].answers; let i = index"
+        *ngFor="
+          let option of exercises[currentQuestion].answerOptions;
+          let i = index
+        "
         class="answerListItem"
         (click)="
           onClickAnswer(option, exercises.length, exercises[currentQuestion])
         "
       >
         <button [id]="'option' + i" class="answerButton btn">
-          {{ option }}
+          {{ option.answerText }}
         </button>
       </li>
     </ul>
