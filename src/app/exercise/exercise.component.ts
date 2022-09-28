@@ -41,6 +41,7 @@ export class ExerciseComponent implements OnInit {
     const isCorrect = this._checkAnswer(option, correctAnswer);
     this.storeAnswer(isCorrect, id);
     this.currentQuestion++;
+    this.startTime = new Date();
 
     if (this.currentQuestion >= exercisesLength) {
       this.showResult();
