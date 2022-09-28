@@ -75,6 +75,15 @@ export class DataService {
       });
   }
 
+  storeAnswer(exerciseId: string, answerIsCorrect: boolean, duration: number) {
+    this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
+      startTime: serverTimestamp(),
+      exerciseId: exerciseId,
+      answerIsCorrect: answerIsCorrect,
+      duration: duration,
+    });
+  }
+
   storeResult() {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
       correctAnswers: this._shared.correctAnswer,
@@ -83,23 +92,21 @@ export class DataService {
     });
   }
 
-  getExercise(
-    classLevel: number,
-    questionNumber: number
-  ): Observable<Exercise[]> {
-    console.log(
-      'getExercise() in data.service.ts, classLevel: ' +
-        classLevel +
-        ' questionNumber: ' +
-        questionNumber
-    );
+  getAllExercises(classLevel: number): Observable<Exercise[]> {
     return this._store
       .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', classLevel)
-          .where('orderNumber', '==', questionNumber)
+        ref.where('classLevel', '==', classLevel).orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
+      .pipe(
+        map((results) => {
+          return results.docs.map((snap) => {
+            return {
+              id: snap.id,
+              ...(<any>snap.data()),
+            };
+          });
+        })
+      );
   }
 }

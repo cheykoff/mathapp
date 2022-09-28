@@ -1,32 +1,14 @@
 <div class="header">
-    <h1 class="headerTitle">Wähle deine Klasse</h1>
+  <h1 class="headerTitle">Wähle deine Klasse</h1>
 </div>
 
-<div class="classes">
-    <ul class="classList">
-        <li class="classListItem" (click)="selectSchoolClass(5)">
-            <button class='btn classBtn'>5. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(6)">
-            <button class='btn classBtn'>6. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(7)">
-            <button class='btn classBtn'>7. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(8)">
-            <button class='btn classBtn' disabled>8. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(9)">
-            <button class='btn classBtn' disabled>9. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(10)">
-            <button class='btn classBtn' disabled>10. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(11)">
-            <button class='btn classBtn' disabled>11. Klasse</button>
-        </li>
-        <li class="classListItem" (click)="selectSchoolClass(12)">
-            <button class='btn classBtn' disabled>12. Klasse</button>
-        </li>
-    </ul>
-</div>
+<ul>
+  <li
+    *ngFor="let schoolClass of schoolClasses"
+    (click)="selectSchoolClass(schoolClass.level)"
+  >
+    <button class="btn classBtn" [disabled]="schoolClass.disabled">
+      {{ schoolClass.level }}. Klasse
+    </button>
+  </li>
+</ul>

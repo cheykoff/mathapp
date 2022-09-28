@@ -42,8 +42,6 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
-import { ExercisesListComponent } from './exercises-list/exercises-list.component';
-import { ExerciseAnswerOptionsComponent } from './exercise-answer-options/exercise-answer-options.component';
 
 @NgModule({
   declarations: [
@@ -54,8 +52,6 @@ import { ExerciseAnswerOptionsComponent } from './exercise-answer-options/exerci
     ChangeBgDirective,
     LoadingpageComponent,
     StartpageComponent,
-    ExercisesListComponent,
-    ExerciseAnswerOptionsComponent,
   ],
   imports: [
     BrowserModule,

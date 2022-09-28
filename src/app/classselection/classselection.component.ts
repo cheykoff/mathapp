@@ -1,35 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { DataService } from '../service/data.service';
 import { SharedService } from '../shared/shared.service';
+import { SchoolClass, schoolClasses } from './classes';
 
 @Component({
   selector: 'app-classselection',
   templateUrl: './classselection.component.html',
-  styleUrls: ['./classselection.component.css'],
+  styleUrls: ['./classselection.component.scss'],
 })
-export class ClassselectionComponent implements OnInit {
-  schoolClass: number = 0;
+export class ClassselectionComponent {
+  schoolClasses: SchoolClass[] = schoolClasses;
 
   constructor(
     private _shared: SharedService,
     private _router: Router,
-    private _store: AngularFirestore,
     private _dataService: DataService
   ) {}
 
-  ngOnInit(): void {}
-
-  selectSchoolClass(className: number): void {
-    this.schoolClass = className;
-    this._dataService.storeSchoolClass(className);
-    this._shared.setSchoolClass(className);
-    this.goToExercise();
+  selectSchoolClass(level: number): void {
+    this._dataService.storeSchoolClass(level);
+    this._shared.setSchoolClass(level);
+    this._goToExercise();
   }
 
-  goToExercise(): void {
+  private _goToExercise(): void {
+    // TODO: implement with level routing
     this._router.navigate(['/', 'exercise']);
   }
 }

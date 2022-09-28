@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router, TitleStrategy } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 
-import { QuestionService } from '../service/question.service';
 import { SharedService } from '../shared/shared.service';
 import { Exercise } from '../shared/exercise';
 import { DataService } from '../service/data.service';
@@ -13,107 +12,64 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./exercise.component.css'],
 })
 export class ExerciseComponent implements OnInit {
-  // @Input() exercise: Exercise;
+  exercises$: Observable<Exercise[]>;
 
-  exercisesClass5$: Observable<Exercise[]>;
-
-  // TODO: Check type of questionlist and if we need it at all?
-  public questionList: any = [];
-  public currentQuestion: number = 1;
-  quizCompleted: boolean = false;
-  public givenAnswers: any = [];
-  isAnswered: boolean = false;
-
-  public exercise: Exercise = {
-    id: 'teistae',
-    classLevel: 5,
-    question: 'Wie viele Zähne hat ein Erwachsener?',
-    answers: [5, 10, 12, 232],
-    correctAnswer: 10,
-    orderNumber: 1,
-  };
-
-  public exercise2: Exercise = {
-    id: 'teistae',
-    classLevel: 5,
-    question: 'Wie viele Beine hat ein Erwachsener?',
-    answers: [2, 10, 12, 232],
-    correctAnswer: 2,
-    orderNumber: 1,
-  };
-  // exercise.question = 'test';
+  currentQuestion: number = 0;
+  givenAnswers: any = [];
+  startTime: Date = new Date();
+  endTime: Date;
+  duration: number;
 
   constructor(
-    private _questionService: QuestionService,
     private _shared: SharedService,
     private _router: Router,
     private _dataService: DataService
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit() in exercise.component.ts');
-    this.getNextQuestion();
-    /*
-    if (this._shared.getSchoolClass()) {
-      this.getAllQuestions(this._shared.getSchoolClass());
-    } else {
-      this._router.navigate(['/', 'startpage']);
-    }
-    this.exercisesClass5$ = this._dataService.getExercise(
-      5,
-      this.currentQuestion
-    );
-    */
+    this.exercises$ = this._dataService.getAllExercises(5);
   }
 
-  getAllQuestions(schoolClass: number): void {
-    this._questionService.getQuestionJson(schoolClass).subscribe((data) => {
-      this.questionList = data.questions.filter((question: any) => {
-        return question.schoolClass === this._shared.getSchoolClass() - 1;
-      });
-    });
-  }
+  onClickAnswer(
+    option: any,
+    exercisesLength: number,
+    { correctAnswer, id }: Exercise
+  ): void {
+    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
+    this.endTime = new Date();
+    this.duration = this.endTime.getTime() - this.startTime.getTime();
+    const isCorrect = this._checkAnswer(option, correctAnswer);
+    this.storeAnswer(isCorrect, id);
+    this.currentQuestion++;
+    this.startTime = new Date();
 
-  onClickAnswer(option: any, i: number): void {
-    this.checkAnswer(option, i);
-    this.storeAnswer();
-    this.getNextQuestion();
-  }
-
-  checkAnswer(option: any, i: number): void {
-    console.log('checkAnswer() in exercise.component.ts');
-    console.log('option ' + i + 'selected: ' + option);
-    if (option === this.exercise.correctAnswer) {
-      console.log('correct answer');
-      // this.points += 1;
-      this._shared.points += 1;
-      this._shared.correctAnswer++;
-    } else {
-      console.log('incorrect answer');
-      this._shared.incorrectAnswer++;
-    }
-    this.isAnswered = true;
-
-    // this.shared.setPoints(this.points);
-    /*
-    if (this.currentQuestion < this.questionList.length - 1) {
-      this.nextQuestion();
-    } else {
+    if (this.currentQuestion >= exercisesLength) {
       this.showResult();
     }
-    */
   }
 
-  storeAnswer(): void {
-    console.log('storeAnswer() in exercise.component.ts');
+  private _checkAnswer(option: any, correctAnswer: string): boolean {
+    if (option === correctAnswer) {
+      // TODO: check if this is needed or can be fetched from correctAnswer
+      this._shared.points++;
+      this._shared.correctAnswer++;
+
+      return true;
+    }
+
+    this._shared.incorrectAnswer++;
+
+    return false;
   }
 
-  getNextQuestion(): void {
-    console.log('getNextQuestion() in exercise.component.ts');
-    this.getExercise();
+  storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    this._dataService.storeAnswer(currentQuestionId, isCorrect, this.duration);
   }
 
   compare(a: any, b: any): number {
+    if (a.text === 'Keine Antwort ist richtig') {
+      return 1;
+    }
     if (parseInt(a.text) < parseInt(b.text)) {
       return -1;
     }
@@ -129,11 +85,11 @@ export class ExerciseComponent implements OnInit {
     return 0;
   }
 
-  contains(arr, value): number {
-    if (arr && value) {
-      let i = arr.length;
+  contains(options, value): number {
+    if (options && value) {
+      let i = options.length;
       while (i--) {
-        if (arr[i].text === value) {
+        if (options[i].text === value) {
           return i;
         }
       }
@@ -141,49 +97,15 @@ export class ExerciseComponent implements OnInit {
     return -1;
   }
 
-  sortAnswerOptions(arr: any): void {
-    const indexOfNoAnswer = this.contains(arr, 'Keine Antwort ist richtig');
-    if (!arr) {
+  // TODO: test
+  sortAnswerOptions(options: any): void {
+    if (!options) {
       return undefined;
     }
-    if (indexOfNoAnswer >= 0) {
-      const temp = arr[indexOfNoAnswer];
-      arr[indexOfNoAnswer] = arr[arr.length - 1];
-      arr[arr.length - 1] = temp;
 
-      const arr2 = arr.slice(0, -1).sort(this.compare);
-      arr2.push(arr[arr.length - 1]);
-      arr = arr2;
-    } else {
-      arr.sort(this.compare);
-    }
-    return arr;
-  }
+    options.sort(this.compare);
 
-  nextQuestion(): void {
-    this.currentQuestion++;
-    this.isAnswered = false;
-    this.questionList[this.currentQuestion].options = this.sortAnswerOptions(
-      this.questionList[this.currentQuestion].options
-    );
-    if (this.currentQuestion >= this.questionList.length - 1) {
-      this.quizCompleted = true;
-    }
-    this.getExercise();
-  }
-
-  getExercise(): void {
-    console.log(
-      'getExercise() in exercise.component.ts, exerciseClass5$: ' +
-        this.exercisesClass5$ +
-        ' currentQuestion: ' +
-        this.currentQuestion
-    );
-    this.exercisesClass5$ = this._dataService.getExercise(
-      5,
-      this.currentQuestion
-    );
-    console.log(this.exercisesClass5$);
+    return options;
   }
 
   showResult(): void {

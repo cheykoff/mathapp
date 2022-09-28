@@ -35,4 +35,9 @@ export class ResultpageComponent implements OnInit {
   ngOnInit(): void {
     this._dataService.storeResult();
   }
+
+  repeatQuiz(): void {
+    this.shared.correctAnswer = 0;
+    this.shared.incorrectAnswer = 0;
+  }
 }
