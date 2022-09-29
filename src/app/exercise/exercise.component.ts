@@ -47,6 +47,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.countDown.unsubscribe();
     this.countDown = null;
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-codepage',
@@ -8,7 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./codepage.component.css'],
 })
 export class CodepageComponent implements OnInit {
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _dataService: DataService) {}
 
   ngOnInit(): void {}
   wrongCode: boolean = false;
@@ -17,6 +18,7 @@ export class CodepageComponent implements OnInit {
   submitCode(form: NgForm): void {
     const value = form.value;
     if (value.code === 300922) {
+      this._dataService.storeQuizId();
       this.goToExercise();
     } else {
       this.wrongCode = true;

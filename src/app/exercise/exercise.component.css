@@ -11,15 +11,28 @@
 .question {
     border: 1px solid var(--clr-primary-dark);
     border-radius: 5px;
-    padding: 0px 8px;
+    padding: 12px 8px;
     background-color: var(--clr-light);
     font-size: 1.4rem;
+    /*min-height: 160px;*
+    /*height: 250px; */
     margin: 30px 0px;
     position: relative;
     box-shadow: 0px 2px 5px 0px var(--clr-shadow);
     overflow: auto;
     white-space: pre-wrap;
-  }
+}
+
+#countdown {
+    font-size: 1rem;
+    font-weight: var(--fw-bold);
+    color: var(--clr-grey-light);
+    display: inline-block;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 h3 {
     font-size: 0.8em;

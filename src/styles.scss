@@ -105,6 +105,15 @@ h1.headerTitle {
   transform: translateY(-50%);
 }
 
+.header {
+  position: relative;
+  background-color: var(--clr-light);
+  padding: 12px 16px;
+  font-weight: var(--fw-normal);
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  border: none;
+}
+
 #header-small {
   display: block;
   width: 100%;

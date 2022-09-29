@@ -55,7 +55,6 @@ export class DataService {
     });
   }
 
-  // TODO: Change to setQuizId to the new quizId (currently getting the first quizId of the sessionId)
   storeSchoolClass(className: number) {
     this._store.collection(`quizzes`).add({
       schoolClass: className,
@@ -63,9 +62,15 @@ export class DataService {
       url: window.location.href,
       startTime: serverTimestamp(),
     });
-    this._store // TODO: Get exactly the right document
+  }
+
+  storeQuizId() {
+    this._store
       .collection('quizzes', (ref) =>
-        ref.where('sessionId', '==', this._shared.getSessionId())
+        ref
+          .where('sessionId', '==', this._shared.getSessionId())
+          .orderBy('startTime', 'desc')
+          .limit(1)
       )
       .get()
       .subscribe((snaps) => {
