@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'formatTime',
+  name: 'countDown',
 })
-export class FormatTimePipe implements PipeTransform {
+export class CountDownPipe implements PipeTransform {
   transform(value: number): string {
     const minutes: number = Math.floor(value / 60);
     return (

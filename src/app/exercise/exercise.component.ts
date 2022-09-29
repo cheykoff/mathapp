@@ -11,7 +11,6 @@ import { Observable, Subscription, timer } from 'rxjs';
 import { SharedService } from '../shared/shared.service';
 import { Exercise } from '../shared/exercise';
 import { DataService } from '../service/data.service';
-import { FormatTimePipe } from '../timeformat/timeformat.pipe';
 
 @Component({
   selector: 'app-exercise',
@@ -28,7 +27,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   duration: number;
 
   countDown: Subscription;
-  counter = 1800;
+  counter = 65;
   tick = 1000;
 
   constructor(

@@ -46,6 +46,8 @@ import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 
+import { CountDownPipe } from './countdown.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +58,7 @@ import { CodepageComponent } from './codepage/codepage.component';
     LoadingpageComponent,
     StartpageComponent,
     CodepageComponent,
+    CountDownPipe,
   ],
   imports: [
     BrowserModule,
