@@ -6,6 +6,7 @@ import { ExerciseComponent } from './exercise/exercise.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/startpage', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'codepage', component: CodepageComponent },
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
+  { path: 'puzzle', component: PuzzleComponent },
   { path: '**', redirectTo: '/startpage' },
 ];
 

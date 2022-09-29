@@ -2,7 +2,11 @@
   <h1 class="headerTitle">Die Mathe App</h1>
 </div>
 
-<button class="btn menuBtn" routerLink="/classselection" (click)="setMode()">
+<button
+  class="btn menuBtn"
+  routerLink="/classselection"
+  (click)="setMode('quiz')"
+>
   Quiz
 </button>
 <a href="https://diematheapp.de/team-duell">
@@ -10,4 +14,11 @@
 </a>
 
 <button class="btn menuBtn" routerLink="/" disabled>Hausaufgaben</button>
-<button class="btn menuBtn" routerLink="/" disabled>Knobelaufgaben</button>
+<button
+  class="btn menuBtn"
+  routerLink="/puzzle"
+  (click)="setMode('puzzle')"
+  disabled
+>
+  Knobelaufgaben
+</button>

@@ -8,6 +8,7 @@ import { CollectionReference, serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
+import { Puzzle } from '../shared/puzzle';
 import { convertSnaps } from './db-utils';
 
 @Injectable({
@@ -49,9 +50,9 @@ export class DataService {
       });
   }
 
-  storeMode() {
+  storeMode(mode: string): void {
     this._store.doc(`/sessions/${this._shared.getDocId()}`).update({
-      mode: 'quiz',
+      mode: mode,
     });
   }
 
@@ -91,6 +92,16 @@ export class DataService {
     });
   }
 
+  storePuzzleAnswer(duration: number, attempts: number) {
+    this._store
+      .collection(`quizzes/${this._shared.getQuizId()}/puzzleanswers`)
+      .add({
+        startTime: serverTimestamp(),
+        attempts: attempts,
+        duration: duration,
+      });
+  }
+
   storeResult() {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
       correctAnswers: this._shared.correctAnswer,
@@ -109,5 +120,17 @@ export class DataService {
       )
       .get() // return an Observable id and data seperately
       .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
+  getAllPuzzles(classLevel: number): Observable<Puzzle[]> {
+    return this._store
+      .collection('puzzles', (ref) =>
+        ref
+          .where('classLevel', '<=', classLevel)
+          .orderBy('classLevel')
+          .orderBy('orderNumber')
+      )
+      .get() // return an Observable id and data seperately
+      .pipe(map((result) => convertSnaps<Puzzle>(result)));
   }
 }

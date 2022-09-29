@@ -1,20 +1,38 @@
 <div class="header">
-    <h1 class="headerTitle">Dein Ergebnis</h1>
-  </div>
-
-<div class="results">
-    <p>Geschafft!</p>
-    
-    <div class="imgContainer">
-        <img [src]="getStars()" id="starsGif" class="starsGif">
-      </div>
-    <div class="resultContainer">
-        <div class="bigNumber">{{ this.shared.correctAnswer }}/{{ this.shared.correctAnswer + this.shared.incorrectAnswer }}</div>
-        <p class="labelBigNumber">Fragen richtig beantwortet</p>
-    </div>
-      
-    <p *ngIf="this.shared.incorrectAnswer !== 0">Willst du dein Ergebnis verbessern?</p>
+  <h1 class="headerTitle">Dein Ergebnis</h1>
 </div>
 
+<div class="results">
+  <p>Geschafft!</p>
 
-<button routerLink="/startpage" class="btn" (click)="repeatQuiz()">Neuer Versuch</button>
+  <div class="imgContainer">
+    <img [src]="getStars()" id="starsGif" class="starsGif" />
+  </div>
+  <div class="resultContainer">
+    <div class="bigNumber">
+      {{ this.shared.correctAnswer }}/{{
+        this.shared.correctAnswer + this.shared.incorrectAnswer
+      }}
+    </div>
+    <p class="labelBigNumber">Fragen richtig beantwortet</p>
+  </div>
+</div>
+
+<div *ngIf="this.shared.correctAnswer >= 18">
+  <p>Du hast die Bonusfragen freigeschaltet!</p>
+  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
+  <p>Oder du kannst versuchen dein Ergebnis zu verbessern.</p>
+</div>
+
+<p *ngIf="this.shared.correctAnswer <= 15">
+  Schau dir die Aufgaben noch mal an, da waren noch ein paar Fehler dabei.
+</p>
+
+<p *ngIf="this.shared.correctAnswer > 15 && this.shared.correctAnswer < 18">
+  Das war schon ganz gut. Geh die Fragen noch mal durch und verbessere dein
+  Ergebnis.
+</p>
+
+<button routerLink="/startpage" class="btn" (click)="repeatQuiz()">
+  Neuer Versuch
+</button>

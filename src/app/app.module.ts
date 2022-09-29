@@ -47,6 +47,7 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
+import { PuzzleComponent } from './puzzle/puzzle.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CountDownPipe } from './countdown.pipe';
     StartpageComponent,
     CodepageComponent,
     CountDownPipe,
+    PuzzleComponent,
   ],
   imports: [
     BrowserModule,

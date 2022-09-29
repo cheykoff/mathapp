@@ -1,0 +1,17 @@
+<ng-container *ngIf="puzzles$ | async as puzzles">
+  <div class="header">
+    <h1 class="headerTitle">Bonusfrage {{ currentQuestion + 1 }}</h1>
+  </div>
+  <p class="question">{{ puzzles[currentQuestion].question }}</p>
+  <form (ngSubmit)="onClickAnswer(f, puzzles)" #f="ngForm">
+    <input
+      class="answerText"
+      type="number"
+      id="givenAnswer"
+      name="givenAnswer"
+      ngModel
+      required
+    />
+    <button class="btn classBtn" type="submit">Antwort prüfen</button>
+  </form>
+</ng-container>
