@@ -18,13 +18,11 @@
   </div>
 </div>
 
-<div *ngIf="this.shared.correctAnswer >= 18">
-  <p>Du hast die Bonusfragen freigeschaltet!</p>
-  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
-  <p>Oder du kannst versuchen dein Ergebnis zu verbessern.</p>
+<div *ngIf="this.shared.correctAnswer < 10">
+  <p>Du hast doch geraten, oder?</p>
 </div>
 
-<p *ngIf="this.shared.correctAnswer <= 15">
+<p *ngIf="this.shared.correctAnswer <= 15 && this.shared.correctAnswer >= 10">
   Schau dir die Aufgaben noch mal an, da waren noch ein paar Fehler dabei.
 </p>
 
@@ -32,6 +30,17 @@
   Das war schon ganz gut. Geh die Fragen noch mal durch und verbessere dein
   Ergebnis.
 </p>
+
+<div *ngIf="this.shared.correctAnswer >= 18 && this.shared.correctAnswer < 20">
+  <p>Du hast die Bonusfragen freigeschaltet!</p>
+  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
+  <p>Oder du kannst versuchen dein Ergebnis zu verbessern.</p>
+</div>
+
+<div *ngIf="this.shared.correctAnswer === 20">
+  <p>Perfekt! Jetzt wirds kniffliger.</p>
+  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
+</div>
 
 <button routerLink="/startpage" class="btn" (click)="repeatQuiz()">
   Neuer Versuch
