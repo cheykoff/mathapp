@@ -17,4 +17,10 @@ Leg dir Papier und Stift für Nebenrechnungen bereit.
   </button>
 </form>
 <p *ngIf="wrongCode">Der Code ist leider falsch. Bitte versuche es erneut.</p>
-<p *ngIf="wrongCodeCounter >= 10">Du gibst wohl nicht so leicht auf :)</p>
+<div *ngIf="wrongCodeCounter >= 10">
+  <p>Du gibst wohl nicht so leicht auf :)</p>
+  <p>
+    Das ist super. Dann ist Mathe genau das Richtige für dich. Da darf man auch
+    nicht zu schnell aufgeben.
+  </p>
+</div>
