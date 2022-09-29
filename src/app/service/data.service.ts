@@ -108,15 +108,6 @@ export class DataService {
           .orderBy('orderNumber')
       )
       .get() // return an Observable id and data seperately
-      .pipe(
-        map((results) => {
-          return results.docs.map((snap) => {
-            return {
-              id: snap.id,
-              ...(<any>snap.data()),
-            };
-          });
-        })
-      );
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 }
