@@ -10,7 +10,7 @@ export class SharedService {
   incorrectAnswer: number = 0;
   docId: string = 'abc';
   sessionId: string = 'session_' + Math.random().toString(36).substr(2, 9);
-  quizId: string = 'abc';
+  quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
 
   constructor() {}
