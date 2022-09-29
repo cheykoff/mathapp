@@ -26,6 +26,8 @@ Refactoring
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -42,6 +44,7 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
+import { CodepageComponent } from './codepage/codepage.component';
 
 @NgModule({
   declarations: [
@@ -52,10 +55,12 @@ import { StartpageComponent } from './startpage/startpage.component';
     ChangeBgDirective,
     LoadingpageComponent,
     StartpageComponent,
+    CodepageComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),

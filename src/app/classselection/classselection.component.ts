@@ -22,11 +22,17 @@ export class ClassselectionComponent {
   selectSchoolClass(level: number): void {
     this._dataService.storeSchoolClass(level);
     this._shared.setSchoolClass(level);
-    this._goToExercise();
+    this._goToCodePage();
+    //this._goToExercise();
   }
 
   private _goToExercise(): void {
     // TODO: implement with level routing
     this._router.navigate(['/', 'exercise']);
+  }
+
+  private _goToCodePage(): void {
+    // TODO: implement with level routing
+    this._router.navigate(['/', 'codepage']);
   }
 }
