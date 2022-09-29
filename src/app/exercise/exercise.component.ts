@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, timer } from 'rxjs';
 
@@ -19,7 +13,7 @@ import { DataService } from '../service/data.service';
 })
 export class ExerciseComponent implements OnInit, OnDestroy {
   exercises$: Observable<Exercise[]>;
-
+  // TODO: Should I store the currentQuestion in sharedService? How do I access it in the template?
   currentQuestion: number = 0;
   givenAnswers: any = [];
   startTime: Date = new Date();
@@ -27,7 +21,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   duration: number;
 
   countDown: Subscription;
-  counter = 65;
+  counter = 1800;
   tick = 1000;
 
   constructor(
@@ -68,7 +62,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   private _checkAnswer(isCorrect: boolean): boolean {
     if (isCorrect) {
       // TODO: check if this is needed or can be fetched from correctAnswer
-      this._shared.points++;
       this._shared.correctAnswer++;
 
       return true;

@@ -77,6 +77,7 @@ export class DataService {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
           this._shared.setQuizId(snap.id);
+          // localStorage.setItem('quizId', this._shared.getQuizId());
         });
       });
   }

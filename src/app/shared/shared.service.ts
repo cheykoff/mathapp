@@ -8,21 +8,12 @@ export class SharedService {
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  points: number = 0;
   docId: string = 'abc';
-  sessionId: string = 'abc';
+  sessionId: string = 'session_' + Math.random().toString(36).substr(2, 9);
   quizId: string = 'abc';
   parameters = {};
 
   constructor() {}
-
-  setPoints(data: any): void {
-    this.points = data;
-  }
-
-  getPoints(): number {
-    return this.points;
-  }
 
   setCorrectAnswer(data: any): void {
     this.correctAnswer = data;
@@ -56,8 +47,8 @@ export class SharedService {
     return this.docId;
   }
 
-  setSessionId(): void {
-    this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9); // TODO: Should I just use the firebase id?
+  setSessionId(data: string): void {
+    this.sessionId = data;
   }
 
   getSessionId(): string {
@@ -86,4 +77,13 @@ export class SharedService {
       return null;
     }
   }
+  /*
+  resetLocalStorage(): void {
+    localStorage.setItem('quizId', '');
+    // localStorage.setItem('sessionId', '');
+    localStorage.setItem('correctAnswer', '');
+    localStorage.setItem('incorrectAnswer', '');
+    localStorage.setItem('currentQuestion', '');
+  }
+  */
 }
