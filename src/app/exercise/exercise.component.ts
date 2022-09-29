@@ -1,6 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, TitleStrategy } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Pipe,
+  PipeTransform,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, Subscription, timer } from 'rxjs';
 
 import { SharedService } from '../shared/shared.service';
 import { Exercise } from '../shared/exercise';
@@ -11,7 +17,7 @@ import { DataService } from '../service/data.service';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.css'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   exercises$: Observable<Exercise[]>;
 
   currentQuestion: number = 0;
@@ -19,6 +25,10 @@ export class ExerciseComponent implements OnInit {
   startTime: Date = new Date();
   endTime: Date;
   duration: number;
+
+  countDown: Subscription;
+  counter = 10;
+  tick = 1000;
 
   constructor(
     private _shared: SharedService,
@@ -28,6 +38,16 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     this.exercises$ = this._dataService.getAllExercises(5);
+    this.countDown = timer(0, this.tick).subscribe(() => {
+      --this.counter;
+      if (this.counter === 0) {
+        this.showResult();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.countDown = null;
   }
 
   onClickAnswer(option: any, exercisesLength: number, { id }: Exercise): void {
@@ -110,5 +130,19 @@ export class ExerciseComponent implements OnInit {
 
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
+  }
+}
+
+@Pipe({
+  name: 'formatTime',
+})
+export class FormatTimePipe implements PipeTransform {
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ('00' + minutes).slice(-2) +
+      ':' +
+      ('00' + Math.floor(value - minutes * 60)).slice(-2)
+    );
   }
 }
