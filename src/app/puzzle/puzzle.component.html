@@ -6,12 +6,16 @@
   <form (ngSubmit)="onClickAnswer(f, puzzles)" #f="ngForm">
     <input
       class="answerText"
-      type="number"
+      type="text"
       id="givenAnswer"
       name="givenAnswer"
-      ngModel
+      placeholder=""
+      [(ngModel)]="givenAnswer"
       required
+      autofocus
     />
+    <p *ngIf="this.isIncorrectAnswer">Leider nicht richtig.</p>
+    <p *ngIf="this.isCorrectAnswer">Sehr gut.</p>
     <button class="btn classBtn" type="submit">Antwort prüfen</button>
   </form>
 </ng-container>

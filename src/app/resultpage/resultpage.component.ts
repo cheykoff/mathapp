@@ -39,5 +39,6 @@ export class ResultpageComponent implements OnInit {
   repeatQuiz(): void {
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
+    this._dataService.storeSchoolClass(this.shared.getSchoolClass());
   }
 }

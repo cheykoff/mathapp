@@ -35,6 +35,7 @@ export class DataService {
       url: window.location.href,
       startTime: serverTimestamp(),
       parameters: this._shared.getParameters(),
+      studentId: this._shared.getStudentId(),
     });
 
     this._store // TODO: Get exactly the right document
@@ -62,6 +63,7 @@ export class DataService {
       sessionId: this._shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
+      studentId: this._shared.getStudentId(),
     });
   }
 
@@ -92,13 +94,15 @@ export class DataService {
     });
   }
 
-  storePuzzleAnswer(duration: number, attempts: number) {
+  storePuzzleAnswer(puzzleId: string, duration: number, attempts: number) {
+    console.log('storePuzzleAnswer');
     this._store
       .collection(`quizzes/${this._shared.getQuizId()}/puzzleanswers`)
       .add({
         startTime: serverTimestamp(),
         attempts: attempts,
         duration: duration,
+        puzzleId: puzzleId,
       });
   }
 

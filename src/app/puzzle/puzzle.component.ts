@@ -20,6 +20,11 @@ export class PuzzleComponent implements OnInit {
   endTime: Date;
   duration: number;
 
+  isIncorrectAnswer: boolean = false;
+  isCorrectAnswer: boolean = false;
+
+  givenAnswer: string = '';
+
   constructor(private _router: Router, private _dataService: DataService) {}
 
   ngOnInit(): void {
@@ -31,8 +36,8 @@ export class PuzzleComponent implements OnInit {
     console.log(this.currentQuestion);
     this.attempts++;
     if (
-      value.givenAnswer.toString() ===
-      puzzles[this.currentQuestion].correctAnswer
+      parseInt(value.givenAnswer.toString().trim()) ===
+      parseInt(puzzles[this.currentQuestion].correctAnswer)
     ) {
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
@@ -41,21 +46,30 @@ export class PuzzleComponent implements OnInit {
         this.showResult();
         return;
       }
-      this.storePuzzleAnswer();
+      this.storePuzzleAnswer(puzzles[this.currentQuestion]);
+      this.isCorrectAnswer = true;
       this.currentQuestion++;
+      setTimeout(() => {
+        this.givenAnswer = '';
+        this.isCorrectAnswer = false;
+      }, 1000);
 
       return;
     }
+    this.isIncorrectAnswer = true;
+    setTimeout(() => {
+      this.isIncorrectAnswer = false;
+    }, 2000);
     return;
   }
 
-  storePuzzleAnswer(): void {
-    this._dataService.storePuzzleAnswer(this.duration, this.attempts);
+  storePuzzleAnswer({ id }: Puzzle): void {
+    this._dataService.storePuzzleAnswer(id, this.duration, this.attempts);
     this.attempts = 0;
   }
 
   showResult(): void {
     console.log('done');
-    this._router.navigate(['/', 'resultpage']);
+    this._router.navigate(['/', 'puzzleresultpage']);
   }
 }

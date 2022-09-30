@@ -12,8 +12,25 @@ export class SharedService {
   sessionId: string = 'session_' + Math.random().toString(36).substr(2, 9);
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
+  studentId: number = Math.floor(100000 + Math.random() * 900000);
 
   constructor() {}
+
+  setStudentId(data: number): void {
+    // this.studentId = data;
+    if (localStorage.getItem('studentId')) {
+      return;
+    }
+    localStorage.setItem('studentId', this.studentId.toString());
+  }
+
+  getStudentId(): number {
+    if (localStorage.getItem('studentId')) {
+      return parseInt(localStorage.getItem('studentId'));
+    } else {
+      return this.studentId;
+    }
+  }
 
   setCorrectAnswer(data: any): void {
     this.correctAnswer = data;

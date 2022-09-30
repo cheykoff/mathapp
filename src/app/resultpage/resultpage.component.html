@@ -42,6 +42,11 @@
   <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
 </div>
 
-<button routerLink="/startpage" class="btn" (click)="repeatQuiz()">
+<button routerLink="/exercise" class="btn" (click)="repeatQuiz()">
   Neuer Versuch
 </button>
+
+<div *ngIf="this.shared.correctAnswer < 18">
+  <p>Oder probier die Bonusfragen (die sind allerdings kniffliger).</p>
+  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
+</div>
