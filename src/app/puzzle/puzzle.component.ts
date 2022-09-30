@@ -33,7 +33,6 @@ export class PuzzleComponent implements OnInit {
 
   onClickAnswer(form: NgForm, puzzles: Puzzle[]): void {
     const value = form.value;
-    console.log(this.currentQuestion);
     this.attempts++;
     if (
       parseInt(value.givenAnswer.toString().trim()) ===
@@ -42,11 +41,11 @@ export class PuzzleComponent implements OnInit {
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
       this.startTime = new Date();
+      this.storePuzzleAnswer(puzzles[this.currentQuestion]);
       if (this.currentQuestion >= puzzles.length - 1) {
         this.showResult();
         return;
       }
-      this.storePuzzleAnswer(puzzles[this.currentQuestion]);
       this.isCorrectAnswer = true;
       this.currentQuestion++;
       setTimeout(() => {
@@ -69,7 +68,6 @@ export class PuzzleComponent implements OnInit {
   }
 
   showResult(): void {
-    console.log('done');
     this._router.navigate(['/', 'puzzleresultpage']);
   }
 }
