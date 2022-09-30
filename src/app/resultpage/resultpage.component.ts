@@ -18,7 +18,7 @@ export class ResultpageComponent implements OnInit {
   getPercentage(): number {
     return (
       (this.shared.correctAnswer /
-        (this.shared.correctAnswer + this.shared.incorrectAnswer)) *
+        (this.shared.correctAnswer + this.shared.incorrectAnswer - 2)) * // -2 because of the last two feedback questions
       100
     );
   }
