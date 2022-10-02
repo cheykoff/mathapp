@@ -9,7 +9,7 @@ export class SharedService {
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
   docId: string = 'abc';
-  sessionId: string = 'session_' + Math.random().toString(36).substr(2, 9);
+  sessionId: string = '';
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
   studentId: number = Math.floor(100000 + Math.random() * 900000);
@@ -64,8 +64,13 @@ export class SharedService {
     return this.docId;
   }
 
-  setSessionId(data: string): void {
+  setSessionId(data?: string): void {
+    if (this.sessionId === '') {
+      this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+      return;
+    }
     this.sessionId = data;
+    
   }
 
   getSessionId(): string {
