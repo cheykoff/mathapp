@@ -78,12 +78,8 @@ export class DataService {
           .limit(1)
       )
       .get()
-      .subscribe((snaps) => {
-        snaps.forEach((snap) => {
-          // TODO: Is it possible without the loop?
-          this._shared.setQuizId(snap.id);
-          // localStorage.setItem('quizId', this._shared.getQuizId());
-        });
+      .subscribe((snap) => {
+        this._shared.setQuizId(snap.docs[0].id);
       });
   }
 
