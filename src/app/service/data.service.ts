@@ -89,7 +89,6 @@ export class DataService {
   }
 
   storePuzzleAnswer(puzzleId: string, duration: number, attempts: number) {
-    console.log('storePuzzleAnswer');
     this._store
       .collection(`quizzes/${this._shared.getQuizId()}/puzzleanswers`)
       .add({
