@@ -14,9 +14,9 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._shared.setSessionId();
+    // this._shared.setSessionId();
     this._shared.setParameters();
-    this._dataService.storeSessionId();
+    // this._dataService.storeSessionId();
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -26,13 +26,13 @@ export class AppComponent implements OnInit {
       'schoolClass',
       this._shared.getSchoolClass().toString()
     );
-    localStorage.setItem('sessionId', this._shared.getSessionId());
+    // localStorage.setItem('sessionId', this._shared.getSessionId());
   }
 
   @HostListener('window:load', ['$event'])
   loadHandler(event: Event) {
     this._shared.setStudentId(parseInt(localStorage.getItem('studentId')));
     this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass')));
-    this._shared.setSessionId(localStorage.getItem('sessionId'));
+    // this._shared.setSessionId(localStorage.getItem('sessionId'));
   }
 }

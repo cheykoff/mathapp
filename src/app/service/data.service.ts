@@ -34,7 +34,7 @@ export class DataService {
       sessionId: this._shared.getSessionId(),
       url: window.location.href,
       startTime: serverTimestamp(),
-      parameters: this._shared.getParameters(),
+      // parameters: this._shared.getParameters(),
       studentId: this._shared.getStudentId(),
     });
 
