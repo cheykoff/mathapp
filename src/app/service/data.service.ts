@@ -47,12 +47,14 @@ export class DataService {
         snaps.forEach((snap) => {
           // TODO: Is it possible without the loop?
           this._shared.setDocId(snap.id);
+          // this._shared.setDocId('eee');
         });
       });
   }
 
   storeMode(mode: string): void {
     this._store.doc(`/sessions/${this._shared.getDocId()}`).update({
+      // this._store.doc(`/sessions/fff`).update({
       mode: mode,
     });
   }
@@ -107,7 +109,8 @@ export class DataService {
   }
 
   storeResult() {
-    this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
+    // this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
+    this._store.doc(`/quizzes/eee`).update({
       correctAnswers: this._shared.correctAnswer,
       totalQuestions: this._shared.correctAnswer + this._shared.incorrectAnswer,
       endTime: serverTimestamp(),
