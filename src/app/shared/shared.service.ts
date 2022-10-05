@@ -8,7 +8,7 @@ export class SharedService {
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  docId: string = 'ddd';
+  docId: string = 'mjAHUQYd5uc3Bt4jWUpQ'; // Default id for session (startTime is set to 1.1.2022, studentId is 111111)
   sessionId: string = '';
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
