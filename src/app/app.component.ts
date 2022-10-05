@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this._shared.setSessionId();
+    this._shared.setSessionId();
     this._shared.setParameters();
     this._dataService.storeSessionId();
   }
