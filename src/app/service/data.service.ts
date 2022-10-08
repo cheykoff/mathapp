@@ -116,6 +116,7 @@ export class DataService {
           .where('classLevel', '<=', classLevel)
           .orderBy('classLevel')
           .orderBy('orderNumber')
+          .limit(20)
       )
       .get() // return an Observable id and data seperately
       .pipe(map((result) => convertSnaps<Exercise>(result)));
