@@ -85,6 +85,8 @@ export class DataService {
       exerciseId: exerciseId,
       answerIsCorrect: answerIsCorrect,
       duration: duration,
+      studentId: this._shared.getStudentId(),
+      sessionId: this._shared.getSessionId(),
     });
   }
 
