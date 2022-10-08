@@ -19,6 +19,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   startTime: Date = new Date();
   endTime: Date;
   duration: number;
+  answerIsCorrect: boolean = false;
+  answerIsIncorrect: boolean = false;
+  correctAnswer: string = '';
+  isDisabled: boolean;
+  attempts: number = 0;
 
   countDown: Subscription;
   counter = 1800;
@@ -46,29 +51,57 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.countDown = null;
   }
 
-  onClickAnswer(option: any, exercisesLength: number, { id }: Exercise): void {
+  getCorrectAnswer(exercise: any): string {
+    exercise.answerOptions.forEach((answerOption) => {
+      if (answerOption.isCorrect) {
+        this.correctAnswer = answerOption.answerText;
+      }
+    });
+    return this.correctAnswer;
+  }
+
+  onClickAnswer(
+    option: any,
+    exercisesLength: number,
+    exercise: Exercise
+  ): void {
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
+    this.attempts++;
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
+    this.getCorrectAnswer(exercise);
     // const isCorrect = this._checkAnswer(option.isCorrect);
-    this.storeAnswer(this._checkAnswer(option.isCorrect), id);
-    this.currentQuestion++;
+    this.storeAnswer(this._checkAnswer(option.isCorrect), exercise.id);
+
     this.startTime = new Date();
 
-    if (this.currentQuestion >= exercisesLength) {
+    if (this.currentQuestion >= exercisesLength - 1) {
       this.showResult();
     }
   }
 
   private _checkAnswer(isCorrect: boolean): boolean {
     if (isCorrect) {
-      // TODO: check if this is needed or can be fetched from correctAnswer
-      this._shared.correctAnswer++;
-
+      this.isDisabled = true;
+      if (this.attempts === 1) {
+        // TODO: check if this is needed or can be fetched from correctAnswer
+        this._shared.correctAnswer++;
+      }
+      this.answerIsCorrect = true;
+      this.answerIsIncorrect = false;
+      setTimeout(() => {
+        this.currentQuestion++;
+        this.answerIsCorrect = false;
+        this.isDisabled = false;
+        this.attempts = 0;
+      }, 1000);
       return true;
     }
-
-    this._shared.incorrectAnswer++;
+    if (this.attempts === 1) {
+      this._shared.incorrectAnswer++;
+    }
+    this.answerIsIncorrect = true;
+    this.answerIsCorrect = false;
 
     return false;
   }

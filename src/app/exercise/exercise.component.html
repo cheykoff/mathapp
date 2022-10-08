@@ -19,10 +19,20 @@
           onClickAnswer(option, exercises.length, exercises[currentQuestion])
         "
       >
-        <button [id]="'option' + i" class="answerButton btn">
+        <button
+          [id]="'option' + i"
+          class="answerButton btn"
+          [disabled]="isDisabled"
+        >
           {{ option.answerText }}
         </button>
       </li>
     </ul>
+  </div>
+  <div *ngIf="answerIsCorrect" class="correct">
+    <p class="correctText feedback">Richtig!</p>
+  </div>
+  <div *ngIf="answerIsIncorrect" class="wrong">
+    <p class="incorrectText feedback">Leider falsch! Probier es nochmal.</p>
   </div>
 </ng-container>
