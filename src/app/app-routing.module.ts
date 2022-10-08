@@ -8,6 +8,7 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { PuzzleresultpageComponent } from './puzzleresultpage/puzzleresultpage.component';
+import { DynamicexerciseComponent } from './dynamicexercise/dynamicexercise.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/startpage', pathMatch: 'full' },
@@ -22,6 +23,7 @@ const routes: Routes = [
   },
   { path: 'codepage', component: CodepageComponent },
   { path: 'exercise', component: ExerciseComponent },
+  { path: 'dynamicexercise', component: DynamicexerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
   { path: 'puzzle', component: PuzzleComponent },
   { path: 'puzzleresultpage', component: PuzzleresultpageComponent },
