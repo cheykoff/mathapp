@@ -24,7 +24,6 @@
     "@lottiefiles/lottie-player": "^1.5.7",
     "firebase": "^9.9.2",
     "mathjax": "^3.2.2",
-    "mathjax-angular": "^1.4.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
