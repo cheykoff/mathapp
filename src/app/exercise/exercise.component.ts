@@ -45,12 +45,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     });
   }
-  /*
-  storeCorrectAnswer(exercises: Exercise[]): void {
-    this.correctAnswer =
-      exercises[this.currentQuestion].answerOptions[0].answerText;
-  }
-*/
 
   ngOnDestroy(): void {
     this.countDown.unsubscribe();
@@ -65,24 +59,13 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   nextQuestion(): void {
     this.currentQuestion++;
   }
-  getCorrectAnswer(exercises: Exercise[]): void {
-    console.log('getCorrectAnswer');
-    exercises[this.currentQuestion].answerOptions.forEach((answerOption) => {
-      if (answerOption.isCorrect) {
-        this.correctAnswer = answerOption.answerText;
-      }
-    });
-  }
 
-  getCorrectAnswer1(exercise: Exercise): void {
-    console.log('getCorrectAnswer1');
-
+  getCorrectAnswer(exercise: Exercise): void {
     exercise.answerOptions.forEach((answerOption) => {
       if (answerOption.isCorrect) {
         this.correctAnswer = answerOption.answerText;
       }
     });
-    console.log(this.correctAnswer);
   }
 
   onClickAnswer(
@@ -90,18 +73,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     exercisesLength: number,
     exercise: Exercise
   ): void {
-    console.log('onClickAnswer');
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.attempts++;
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
-    console.log('Frage: ' + exercise.question);
-    exercise.answerOptions.forEach((answerOption) => {
-      console.log('Antwort: ' + answerOption.answerText);
-    });
-
-    this.getCorrectAnswer1(exercise);
-    // const isCorrect = this._checkAnswer(option.isCorrect);
+    this.getCorrectAnswer(exercise);
     this.storeAnswer(this._checkAnswer(option.isCorrect), exercise.id);
 
     this.startTime = new Date();
