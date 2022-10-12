@@ -1,4 +1,3 @@
-/* quizapp */
 export const environment = {
   firebase: {
     projectId: 'quizapp-d018b',
@@ -11,19 +10,3 @@ export const environment = {
   },
   production: true,
 };
-
-/* dieMatheApp 
-export const environment = {
-  firebase: {
-    apiKey: 'AIzaSyAGeK95I3ngD1MGtWgWp9-MttOTLxzOcaI',
-    authDomain: 'diematheapp.firebaseapp.com',
-    databaseURL:
-      'https://diematheapp-default-rtdb.europe-west1.firebasedatabase.app',
-    projectId: 'diematheapp',
-    storageBucket: 'diematheapp.appspot.com',
-    messagingSenderId: '580806819836',
-    appId: '1:580806819836:web:14377c7aa05731bc1cfc79',
-  },
-  production: true,
-};
-*/

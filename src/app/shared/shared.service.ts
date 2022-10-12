@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SharedService {
-  // TODO: Should I initialize these variables in the constructor?
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
@@ -17,7 +16,6 @@ export class SharedService {
   constructor() {}
 
   setStudentId(data: number): void {
-    // this.studentId = data;
     if (localStorage.getItem('studentId')) {
       return;
     }
@@ -56,24 +54,12 @@ export class SharedService {
     return this.schoolClass;
   }
 
-  setDocId(data: string): void {
+  setSessionId(data: string): void {
     this.docId = data;
   }
 
-  getDocId(): string {
-    return this.docId;
-  }
-
-  setSessionId(data?: string): void {
-    if (this.sessionId === '') {
-      this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
-      return;
-    }
-    this.sessionId = data;
-  }
-
   getSessionId(): string {
-    return this.sessionId;
+    return this.docId;
   }
 
   setQuizId(data: string): void {
@@ -98,13 +84,4 @@ export class SharedService {
       return null;
     }
   }
-  /*
-  resetLocalStorage(): void {
-    localStorage.setItem('quizId', '');
-    // localStorage.setItem('sessionId', '');
-    localStorage.setItem('correctAnswer', '');
-    localStorage.setItem('incorrectAnswer', '');
-    localStorage.setItem('currentQuestion', '');
-  }
-  */
 }

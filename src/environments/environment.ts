@@ -1,9 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
-// Old Realtime Database
-/* quizApp */
 export const environment = {
   firebase: {
     apiKey: 'AIzaSyC9VBHxz2xe5x2V5LJB87VpQVrtwSWioEI',
@@ -17,39 +11,3 @@ export const environment = {
   },
   production: false,
 };
-/* dieMatheApp 
-export const environment = {
-  firebase: {
-    apiKey: 'AIzaSyAGeK95I3ngD1MGtWgWp9-MttOTLxzOcaI',
-    authDomain: 'diematheapp.firebaseapp.com',
-    databaseURL:
-      'https://diematheapp-default-rtdb.europe-west1.firebasedatabase.app',
-    projectId: 'diematheapp',
-    storageBucket: 'diematheapp.appspot.com',
-    messagingSenderId: '580806819836',
-    appId: '1:580806819836:web:14377c7aa05731bc1cfc79',
-  },
-  production: false,
-};
-*/
-
-/*
-// New Firestore Database
-export const environment = {
-  apiKey: 'AIzaSyDLy5AegnDsygE2tL2zimtUBmVWuG9LsD0',
-  authDomain: 'prod-test-603fa.firebaseapp.com',
-  projectId: 'prod-test-603fa',
-  storageBucket: 'prod-test-603fa.appspot.com',
-  messagingSenderId: '426874288773',
-  appId: '1:426874288773:web:6723f92f9bead0a83fc7ec',
-};
-*/
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // TODO: Not used
 import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import 'firebase/firestore';
-import { CollectionReference, serverTimestamp } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
@@ -15,67 +14,43 @@ import { convertSnaps } from './db-utils';
   providedIn: 'root',
 })
 export class DataService {
-  // col = collection(this._store, 'sessions');
   constructor(
     private _store: AngularFirestore,
     private _store2: Firestore,
-    private _shared: SharedService // private _store: Firestore //private _col: collection
+    private _shared: SharedService
   ) {}
-  /*
-  storeTest() {
-    this._store2.collection(`tests`).add({
-      test: 'test',
-    });
-  }
-  */
 
   storeSessionId() {
-    this._store.collection(`sessions`).add({
-      sessionId: this._shared.getSessionId(),
-      url: window.location.href,
-      startTime: serverTimestamp(),
-      // parameters: this._shared.getParameters(),
-      studentId: this._shared.getStudentId(),
-    });
-
-    this._store // TODO: Get exactly the right document
-      .collection('sessions', (ref) =>
-        ref.where('sessionId', '==', this._shared.getSessionId())
-      )
-      .get()
-      .subscribe((snap) => {
-        this._shared.setDocId(snap.docs[0].id); // Is there a better solution?
+    this._store
+      .collection(`sessions`)
+      .add({
+        url: window.location.href,
+        startTime: serverTimestamp(),
+        studentId: this._shared.getStudentId(),
+      })
+      .then((docRef) => {
+        this._shared.setSessionId(docRef.id);
       });
   }
 
   storeMode(mode: string): void {
-    this._store.doc(`/sessions/${this._shared.getDocId()}`).update({
-      // this._store.doc(`/sessions/fff`).update({
+    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
       mode: mode,
     });
   }
 
   storeSchoolClass(className: number) {
-    this._store.collection(`quizzes`).add({
-      schoolClass: className,
-      sessionId: this._shared.getSessionId(),
-      url: window.location.href,
-      startTime: serverTimestamp(),
-      studentId: this._shared.getStudentId(),
-    });
-  }
-
-  storeQuizId() {
     this._store
-      .collection('quizzes', (ref) =>
-        ref
-          .where('sessionId', '==', this._shared.getSessionId())
-          .orderBy('startTime', 'desc')
-          .limit(1)
-      )
-      .get()
-      .subscribe((snap) => {
-        this._shared.setQuizId(snap.docs[0].id);
+      .collection(`quizzes`)
+      .add({
+        schoolClass: className,
+        sessionId: this._shared.getSessionId(),
+        url: window.location.href,
+        startTime: serverTimestamp(),
+        studentId: this._shared.getStudentId(),
+      })
+      .then((docRef) => {
+        this._shared.setQuizId(docRef.id);
       });
   }
 
@@ -119,6 +94,12 @@ export class DataService {
     });
   }
 
+  addEndTime() {
+    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
+      endTime: serverTimestamp(),
+    });
+  }
+
   getAllExercises(classLevel: number): Observable<Exercise[]> {
     return this._store
       .collection('exercises', (ref) =>
@@ -128,7 +109,7 @@ export class DataService {
           .orderBy('orderNumber')
           .limit(20)
       )
-      .get() // return an Observable id and data seperately
+      .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
@@ -140,7 +121,7 @@ export class DataService {
           .orderBy('classLevel')
           .orderBy('orderNumber')
       )
-      .get() // return an Observable id and data seperately
+      .get()
       .pipe(map((result) => convertSnaps<Puzzle>(result)));
   }
 }
