@@ -1,4 +1,7 @@
-<ng-container *ngIf="exercises$ | async as exercises">
+<ng-container
+  *ngIf="exercises$ | async as exercises; else loading"
+  (load)="getCorrectAnswer1(exercises)"
+>
   <div class="header">
     <h1 class="headerTitle">
       Frage {{ currentQuestion + 1 }} von {{ exercises.length }}
@@ -6,8 +9,10 @@
     <div id="countdown">{{ counter | countDown }}</div>
   </div>
   <p class="question">{{ exercises[currentQuestion].question }}</p>
+  <p>Richtige Antwort: {{ correctAnswer }}</p>
 
-  <div class="options" *ngIf="currentQuestion % 2 === 0; else written">
+  <!--<div class="options" *ngIf="currentQuestion % 2 === 0; else written">-->
+  <div class="options">
     <ul class="answerList">
       <li
         *ngFor="
@@ -40,6 +45,11 @@
     <app-writtenanswer
       [currentQuestion]="currentQuestion"
       [exercises$]="exercises$"
+      (answered)="onAnswered($event)"
     ></app-writtenanswer>
   </ng-template>
 </ng-container>
+<ng-template #loading>
+  <p class="loading">Lade die nächste Aufgabe ...</p>
+</ng-template>
+<button (click)="nextQuestion()">Next</button>

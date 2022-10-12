@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Exercise } from 'src/app/shared/exercise';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ export class WrittenanswerComponent implements OnInit {
   @Input() currentQuestion: number;
   @Input() givenAnswer: string;
   @Input() correctAnswer: string;
+  @Output() answered = new EventEmitter<boolean>();
 
   attempts: number = 0;
 
@@ -24,7 +25,11 @@ export class WrittenanswerComponent implements OnInit {
   }
 
   getCorrectAnswer(): void {
-    this.correctAnswer = '72';
+    console.log('correctAnswer', this.correctAnswer);
+    this.exercises$.subscribe((exercises) => {
+      console.log(exercises[this.currentQuestion].question);
+      return;
+    });
   }
 
   onClickAnswer(form: NgForm): void {
@@ -43,20 +48,21 @@ export class WrittenanswerComponent implements OnInit {
       this.duration = this.endTime.getTime() - this.startTime.getTime();
       this.startTime = new Date();
       this.storePuzzleAnswer(puzzles[this.currentQuestion]);
+      
       if (this.currentQuestion >= puzzles.length - 1) {
         this.showResult();
         return;
       }
       this.isCorrectAnswer = true;
-      this.currentQuestion++;
+      */
+      // this.currentQuestion++;
       setTimeout(() => {
         this.givenAnswer = '';
-        this.isCorrectAnswer = false;
+        // this.isCorrectAnswer = false;
       }, 1000);
-      */
-
-      return;
+    } else {
+      console.log('incorrect');
     }
-    console.log('incorrect');
+    this.answered.emit(true);
   }
 }

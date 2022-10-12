@@ -1,17 +1,3 @@
-<ul>
-  <ng-container *ngIf="exercises$ | async as exercises">
-    Current Question:{{ currentQuestion }}
-
-    <p>{{ exercises[currentQuestion].question }}</p>
-    <p>Correct Answer: {{ correctAnswer }}</p>
-  </ng-container>
-  <!--
-  <li *ngFor="let exercise of exercises$ | async">
-    {{ exercise.question }}
-  </li>
-  -->
-</ul>
-
 <form (ngSubmit)="onClickAnswer(f)" #f="ngForm">
   <input
     class="answerText"
@@ -24,21 +10,4 @@
     autofocus
   />
   <button class="btn classBtn" type="submit">Antwort prüfen</button>
-  <!--<ng-container *ngIf="exercises$ | async as exercises">
-  <form (ngSubmit)="onClickAnswer(f, puzzles)" #f="ngForm">
-    <input
-      class="answerText"
-      type="text"
-      id="givenAnswer"
-      name="givenAnswer"
-      placeholder=""
-      [(ngModel)]="givenAnswer"
-      required
-      autofocus
-    />
-    <p *ngIf="this.isIncorrectAnswer">Leider nicht richtig.</p>
-    <p *ngIf="this.isCorrectAnswer">Sehr gut.</p>
-    <
-  </form>
-</ng-container>
---></form>
+</form>
