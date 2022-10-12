@@ -20,13 +20,11 @@ export class WrittenanswerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.correctAnswer);
-    this.getCorrectAnswer;
-    console.log(this.currentExercise);
+    this.getCorrectAnswer();
   }
 
   getCorrectAnswer(): void {
-    this.correctAnswer = '300';
+    this.correctAnswer = '72';
   }
 
   onClickAnswer(form: NgForm): void {
@@ -39,6 +37,7 @@ export class WrittenanswerComponent implements OnInit {
       parseInt(value.givenAnswer.toString().trim()) ===
       parseInt(this.correctAnswer)
     ) {
+      console.log('correct');
       /*
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
@@ -58,5 +57,6 @@ export class WrittenanswerComponent implements OnInit {
 
       return;
     }
+    console.log('incorrect');
   }
 }
