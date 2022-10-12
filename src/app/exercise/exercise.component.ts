@@ -51,11 +51,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.countDown = null;
   }
 
-  onAnswered(answered: boolean): void {
-    console.log('answered', answered);
-    this.currentQuestion++;
-  }
-
   nextQuestion(): void {
     this.currentQuestion++;
   }
@@ -114,7 +109,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    this._dataService.storeAnswer(currentQuestionId, isCorrect, this.duration);
+    this._dataService.storeAnswer(
+      currentQuestionId,
+      isCorrect,
+      this.duration,
+      this.attempts
+    );
   }
 
   public compare2(a: any, b: any): any {

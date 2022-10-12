@@ -79,15 +79,25 @@ export class DataService {
       });
   }
 
-  storeAnswer(exerciseId: string, answerIsCorrect: boolean, duration: number) {
-    this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
-      startTime: serverTimestamp(),
-      exerciseId: exerciseId,
-      answerIsCorrect: answerIsCorrect,
-      duration: duration,
-      studentId: this._shared.getStudentId(),
-      sessionId: this._shared.getSessionId(),
-    });
+  storeAnswer(
+    exerciseId: string,
+    answerIsCorrect: boolean,
+    duration: number,
+    attempts: number
+  ) {
+    if (attempts === 1) {
+      this._store
+        .collection(`quizzes/${this._shared.getQuizId()}/answers`)
+        .add({
+          startTime: serverTimestamp(),
+          exerciseId: exerciseId,
+          answerIsCorrect: answerIsCorrect,
+          duration: duration,
+          studentId: this._shared.getStudentId(),
+          sessionId: this._shared.getSessionId(),
+          quizId: this._shared.getQuizId(),
+        });
+    }
   }
 
   storePuzzleAnswer(puzzleId: string, duration: number, attempts: number) {
