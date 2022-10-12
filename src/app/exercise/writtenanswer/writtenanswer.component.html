@@ -1,9 +1,15 @@
-{{ currentQuestion }}
-{{ correctAnswer }}
 <ul>
+  <ng-container *ngIf="exercises$ | async as exercises">
+    Current Question:{{ currentQuestion }}
+
+    <p>{{ exercises[currentQuestion].question }}</p>
+    <p>{{ correctAnswer }}</p>
+  </ng-container>
+  <!--
   <li *ngFor="let exercise of exercises$ | async">
     {{ exercise.question }}
   </li>
+  -->
 </ul>
 
 <form (ngSubmit)="onClickAnswer(f)" #f="ngForm">

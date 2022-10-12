@@ -6,12 +6,8 @@
     <div id="countdown">{{ counter | countDown }}</div>
   </div>
   <p class="question">{{ exercises[currentQuestion].question }}</p>
-  <app-writtenanswer
-    [currentQuestion]="currentQuestion"
-    [exercises$]="exercises$"
-  ></app-writtenanswer>
-  <!--
-  <div class="options">
+
+  <div class="options" *ngIf="currentQuestion % 2 === 0; else written">
     <ul class="answerList">
       <li
         *ngFor="
@@ -40,5 +36,10 @@
   <div *ngIf="answerIsIncorrect" class="wrong">
     <p class="incorrectText feedback">Leider falsch! Probier es nochmal.</p>
   </div>
-  -->
+  <ng-template #written>
+    <app-writtenanswer
+      [currentQuestion]="currentQuestion"
+      [exercises$]="exercises$"
+    ></app-writtenanswer>
+  </ng-template>
 </ng-container>

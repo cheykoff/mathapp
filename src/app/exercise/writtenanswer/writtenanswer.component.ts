@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class WrittenanswerComponent implements OnInit {
   @Input() exercises$: Observable<Exercise[]>;
+  @Input() currentExercise: Exercise;
   @Input() currentQuestion: number;
   @Input() givenAnswer: string;
   @Input() correctAnswer: string;
@@ -18,10 +19,21 @@ export class WrittenanswerComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.correctAnswer);
+    this.getCorrectAnswer;
+    console.log(this.currentExercise);
+  }
+
+  getCorrectAnswer(): void {
+    this.correctAnswer = '300';
+  }
 
   onClickAnswer(form: NgForm): void {
+    console.log('onClickAnswer');
     const value = form.value;
+    console.log(value);
+    console.log(this.correctAnswer);
     this.attempts++;
     if (
       parseInt(value.givenAnswer.toString().trim()) ===
