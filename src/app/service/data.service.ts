@@ -29,13 +29,28 @@ export class DataService {
       })
       .then((docRef) => {
         this._shared.setSessionId(docRef.id);
+      })
+      .then(() => {
+        localStorage.setItem('sessionId', this._shared.getSessionId());
+        localStorage.setItem(
+          'studentId',
+          this._shared.getStudentId().toString()
+        );
       });
   }
 
   updateStudentId() {
-    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
-      studentId: this._shared.studentId,
-    });
+    this._store
+      .doc(`/sessions/${this._shared.getSessionId()}`)
+      .update({
+        studentId: this._shared.studentId,
+      })
+      .then(() => {
+        localStorage.setItem(
+          'studentId',
+          this._shared.getStudentId().toString()
+        );
+      });
   }
 
   storeMode(mode: string): void {
@@ -57,6 +72,10 @@ export class DataService {
       .then((docRef) => {
         this._shared.setQuizId(docRef.id);
       });
+    localStorage.setItem(
+      'schoolClass',
+      this._shared.getSchoolClass().toString()
+    );
   }
 
   storeAnswer(

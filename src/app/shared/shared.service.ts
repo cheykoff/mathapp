@@ -51,6 +51,10 @@ export class SharedService {
     localStorage.setItem('studentId', this.studentId.toString());
   }
 
+  storeStudentIdInLocalStorage(): void {
+    localStorage.setItem('studentId', this.getStudentId().toString());
+  }
+
   getStudentId(): number {
     return this.studentId;
     /*

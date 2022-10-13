@@ -26,10 +26,9 @@ export class LoginComponent implements OnInit {
     if (value.studentId) {
       this.validStudentId = true;
       this.shared.studentId = value.studentId;
-      // this.shared.setStudentId();
       this.goToClassSelection();
-      // this._data.updateStudentId(form.value);
       this._data.updateStudentId();
+      this.shared.storeStudentIdInLocalStorage();
     } else {
       this.validStudentId = false;
     }
@@ -41,8 +40,8 @@ export class LoginComponent implements OnInit {
 
   generateId(): void {
     this.shared.setStudentId();
-    // this._data.updateStudentId(this.shared.getStudentId());
     this._data.updateStudentId();
     this.idWasGenerated = true;
+    this.shared.storeStudentIdInLocalStorage();
   }
 }
