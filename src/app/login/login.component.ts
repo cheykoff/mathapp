@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   submitId(form: NgForm): void {
     const value = form.value;
-    console.log(value.studentId);
     if (value.studentId) {
       this.validStudentId = true;
       this.shared.studentId = value.studentId;
@@ -43,6 +42,5 @@ export class LoginComponent implements OnInit {
     this.shared.setStudentId();
     this._data.updateStudentId(this.shared.getStudentId());
     this.idWasGenerated = true;
-    console.log(this.shared.studentId);
   }
 }

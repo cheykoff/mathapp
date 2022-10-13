@@ -44,7 +44,9 @@ export class PuzzleComponent implements OnInit {
       parseInt(value.givenAnswer.toString().trim()) ===
       parseInt(puzzles[this.currentQuestion].correctAnswer)
     ) {
-      this.shared.correctPuzzles++;
+      if (this.attempts === 1) {
+        this.shared.correctPuzzles++;
+      }
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
       this.startTime = new Date();
@@ -62,7 +64,10 @@ export class PuzzleComponent implements OnInit {
 
       return;
     }
-    this.shared.incorrectPuzzles++;
+    if (this.attempts === 1) {
+      this.shared.incorrectPuzzles++;
+    }
+
     this.isIncorrectAnswer = true;
     setTimeout(() => {
       this.isIncorrectAnswer = false;
