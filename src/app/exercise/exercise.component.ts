@@ -36,7 +36,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.exercises$ = this._dataService.getAllExercises(5);
+    // this.exercises$ = this._dataService.getAllExercises(5);
+    this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
     this.countDown = timer(0, this.tick).subscribe(() => {
       --this.counter;
       if (this.counter === 0) {

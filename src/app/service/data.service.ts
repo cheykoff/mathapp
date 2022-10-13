@@ -113,6 +113,20 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
+  getAllExercisesByTestNumber(testNumber: number): Observable<Exercise[]> {
+    return this._store
+      .collection('exercises2', (ref) =>
+        ref
+          .where('testNumber', '==', testNumber)
+          .orderBy('classLevel')
+          .orderBy('chapterNumber')
+          .orderBy('topicNumber')
+          .orderBy('questionNumber')
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
   getAllPuzzles(classLevel: number): Observable<Puzzle[]> {
     return this._store
       .collection('puzzles', (ref) =>
