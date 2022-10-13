@@ -25,9 +25,9 @@
   "
 >
   <p *ngIf="this.shared.correctPuzzles > 0; else noCorrectPuzzles">
-    Du hast {{ this.shared.correctPuzzles }} Bonusfragen von
-    {{ this.shared.correctPuzzles + this.shared.incorrectPuzzles }} richtig
-    beantwortet.
+    Du hast {{ this.shared.correctPuzzles }} von
+    {{ this.shared.correctPuzzles + this.shared.incorrectPuzzles }} Bonusfragen
+    richtig beantwortet.
   </p>
   <ng-template #noCorrectPuzzles>
     Du hast

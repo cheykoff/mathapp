@@ -76,6 +76,6 @@ export class PuzzleComponent implements OnInit {
   }
 
   showResult(): void {
-    this._router.navigate(['/', 'puzzleresultpage']);
+    this._router.navigate(['/', 'resultpage']);
   }
 }

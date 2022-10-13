@@ -18,7 +18,7 @@ export class SharedService {
   incorrectPuzzles: number = 0;
 
   countDown: Subscription;
-  counter = 60; // 30 minutes
+  counter = 1800; // 30 minutes
   tick = 1000;
 
   countDownTimer() {
@@ -33,11 +33,7 @@ export class SharedService {
   }
 
   showResult(): void {
-    if (this.correctPuzzles + this.incorrectPuzzles > 0) {
-      this._router.navigate(['/', 'puzzleresultpage']);
-    } else {
-      this._router.navigate(['/', 'resultpage']);
-    }
+    this._router.navigate(['/', 'resultpage']);
   }
 
   constructor(private _router: Router) {}
