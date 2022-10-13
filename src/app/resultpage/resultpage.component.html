@@ -18,35 +18,44 @@
   </div>
 </div>
 
-<div *ngIf="this.shared.correctAnswer < 10">
-  <p>Du hast doch geraten, oder?</p>
+<div
+  *ngIf="
+    this.shared.correctPuzzles + this.shared.incorrectPuzzles > 0;
+    else noPuzzles
+  "
+>
+  <p *ngIf="this.shared.correctPuzzles > 0; else noCorrectPuzzles">
+    Du hast {{ this.shared.correctPuzzles }} Bonusfragen von
+    {{ this.shared.correctPuzzles + this.shared.incorrectPuzzles }} richtig
+    beantwortet.
+  </p>
+  <ng-template #noCorrectPuzzles>
+    Du hast
+    {{ this.shared.correctPuzzles + this.shared.incorrectPuzzles }} Bonusfragen
+    probiert.
+  </ng-template>
 </div>
+<ng-template #noPuzzles>
+  <div *ngIf="percentage < 50">
+    <p>Du hast doch geraten, oder?</p>
+  </div>
 
-<p *ngIf="this.shared.correctAnswer <= 15 && this.shared.correctAnswer >= 10">
-  Schau dir die Aufgaben noch mal an, da waren noch ein paar Fehler dabei.
-</p>
+  <p *ngIf="percentage >= 50 && percentage < 75">
+    Schau dir die Aufgaben noch mal an, da waren noch ein paar Fehler dabei.
+  </p>
 
-<p *ngIf="this.shared.correctAnswer > 15 && this.shared.correctAnswer < 18">
-  Das war schon ganz gut. Geh die Fragen noch mal durch und verbessere dein
-  Ergebnis.
-</p>
+  <p *ngIf="percentage >= 75 && percentage < 90">Das war schon ganz gut.</p>
 
-<div *ngIf="this.shared.correctAnswer >= 18 && this.shared.correctAnswer < 20">
-  <p>Du hast die Bonusfragen freigeschaltet!</p>
+  <div *ngIf="percentage >= 90 && percentage < 100">
+    <p>Sehr gut. Du kannst mit deiner Leistung wirklich zufrieden sein.</p>
+  </div>
+
+  <div *ngIf="percentage === 100">
+    <p>Das war perfekt! Bist du Einstein?</p>
+  </div>
+
+  <button routerLink="/exercise" class="btn" (click)="repeatQuiz()">
+    Neuer Versuch
+  </button>
   <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
-  <p>Oder du kannst versuchen dein Ergebnis zu verbessern.</p>
-</div>
-
-<div *ngIf="this.shared.correctAnswer === 20">
-  <p>Perfekt! Jetzt wirds kniffliger.</p>
-  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
-</div>
-
-<button routerLink="/exercise" class="btn" (click)="repeatQuiz()">
-  Neuer Versuch
-</button>
-
-<div *ngIf="this.shared.correctAnswer < 18">
-  <p>Oder probier die Bonusfragen (die sind allerdings kniffliger).</p>
-  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
-</div>
+</ng-template>

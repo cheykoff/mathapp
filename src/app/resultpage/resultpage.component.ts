@@ -13,16 +13,18 @@ export class ResultpageComponent implements OnInit {
     private _dataService: DataService
   ) {}
 
-  getPercentage(): number {
-    return (
+  percentage: number = 0;
+
+  getPercentage(): void {
+    this.percentage =
       (this.shared.correctAnswer /
         (this.shared.correctAnswer + this.shared.incorrectAnswer)) *
-      100
-    );
+      100;
   }
 
   getStars(): string {
-    const stars = Math.floor(this.getPercentage() / 20);
+    this.getPercentage();
+    const stars = Math.floor(this.percentage / 20);
     let imgUrl = 'assets/img/' + stars + 'stars.gif';
     if (!stars) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';
