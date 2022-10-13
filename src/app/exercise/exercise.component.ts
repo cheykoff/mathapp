@@ -57,11 +57,12 @@ export class ExerciseComponent implements OnInit {
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
     this.getCorrectAnswer(exercise);
-    this.storeAnswer(this._checkAnswer(option.isCorrect), exercise.id);
+    const exerciseSolved = this._checkAnswer(option.isCorrect);
+    this.storeAnswer(exerciseSolved, exercise.id);
 
     this.startTime = new Date();
 
-    if (this.currentQuestion >= exercisesLength - 1) {
+    if (this.currentQuestion >= exercisesLength - 1 && exerciseSolved) {
       this.showResult();
     }
   }

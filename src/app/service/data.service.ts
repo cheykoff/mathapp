@@ -95,6 +95,8 @@ export class DataService {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
       correctAnswers: this._shared.correctAnswer,
       totalQuestions: this._shared.correctAnswer + this._shared.incorrectAnswer,
+      correctPuzzles: this._shared.correctPuzzles,
+      totalPuzzles: this._shared.correctPuzzles + this._shared.incorrectPuzzles,
       endTime: serverTimestamp(),
     });
   }
