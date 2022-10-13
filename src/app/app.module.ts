@@ -38,6 +38,7 @@ import { CodepageComponent } from './codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
 import { PuzzleComponent } from './puzzle/puzzle.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
     CodepageComponent,
     CountDownPipe,
     PuzzleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
