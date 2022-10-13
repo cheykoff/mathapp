@@ -32,9 +32,9 @@ export class DataService {
       });
   }
 
-  updateStudentId(studentId: number) {
+  updateStudentId() {
     this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
-      studentId: studentId,
+      studentId: this._shared.studentId,
     });
   }
 
