@@ -16,7 +16,6 @@ import { convertSnaps } from './db-utils';
 export class DataService {
   constructor(
     private _store: AngularFirestore,
-    private _store2: Firestore,
     private _shared: SharedService
   ) {}
 
@@ -31,6 +30,12 @@ export class DataService {
       .then((docRef) => {
         this._shared.setSessionId(docRef.id);
       });
+  }
+
+  updateStudentId(studentId: number) {
+    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
+      studentId: studentId,
+    });
   }
 
   storeMode(mode: string): void {

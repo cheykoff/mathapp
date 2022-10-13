@@ -7,9 +7,11 @@ import { ResultpageComponent } from './resultpage/resultpage.component';
 import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/startpage', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'loadingpage', component: LoadingpageComponent },
   {
     path: 'startpage',

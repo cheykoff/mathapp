@@ -13,7 +13,7 @@ export class SharedService {
   sessionId: string = '';
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
-  studentId: number = Math.floor(100000 + Math.random() * 900000);
+  studentId: number = 100000;
   correctPuzzles: number = 0;
   incorrectPuzzles: number = 0;
 
@@ -38,19 +38,25 @@ export class SharedService {
 
   constructor(private _router: Router) {}
 
-  setStudentId(data: number): void {
-    if (localStorage.getItem('studentId')) {
-      return;
+  setStudentId(): void {
+    if (!this.studentId) {
+      if (localStorage.getItem('studentId')) {
+        this.studentId = parseInt(localStorage.getItem('studentId'));
+        return;
+      }
+      this.studentId = Math.floor(100000 + Math.random() * 900000);
     }
     localStorage.setItem('studentId', this.studentId.toString());
   }
 
   getStudentId(): number {
+    return this.studentId;
+    /*
     if (localStorage.getItem('studentId')) {
       return parseInt(localStorage.getItem('studentId'));
     } else {
-      return this.studentId;
     }
+    */
   }
 
   setCorrectAnswer(data: any): void {

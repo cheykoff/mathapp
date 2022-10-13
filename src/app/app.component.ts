@@ -15,9 +15,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this._shared.setParameters();
+    /*
     if (!localStorage.getItem('sessionId')) {
       this._dataService.storeSessionId();
-    }
+    }*/
+
+    this._dataService.storeSessionId();
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -33,7 +36,7 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:load', ['$event'])
   loadHandler(event: Event) {
-    this._shared.setStudentId(parseInt(localStorage.getItem('studentId')));
+    // this._shared.setStudentId(parseInt(localStorage.getItem('studentId')));
     this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass')));
     this._shared.setSessionId(localStorage.getItem('sessionId'));
   }

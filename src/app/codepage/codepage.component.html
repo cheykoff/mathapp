@@ -1,10 +1,6 @@
 <div class="header">
   <h1 class="headerTitle">Mach dich bereit</h1>
 </div>
-<p>
-  Schreib dir bitte diese Nummer auf. Jede*r Schüler*in hat eine andere Nummer.
-</p>
-<h2 style="text-align: center">{{ studentId }}</h2>
 <p style="color: rgb(196, 33, 33); margin-top: 12px">
   Leg dir Papier und Stift für Nebenrechnungen bereit.
 </p>
@@ -15,7 +11,7 @@
 <form (ngSubmit)="submitCode(f)" #f="ngForm">
   <input
     class="code-input"
-    type="number"
+    type="text"
     id="code"
     name="code"
     ngModel

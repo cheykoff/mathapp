@@ -1,1 +1,43 @@
-<p>login works!</p>
+<div class="header">
+  <h1 class="headerTitle">DieMatheApp</h1>
+</div>
+<div *ngIf="!idWasGenerated">
+  <p>
+    Hast du schon eine ID (sechsstellige Nummer)? Wenn ja, dann gib sie bitte
+    hier ein.
+  </p>
+  <form (ngSubmit)="submitId(f)" #f="ngForm">
+    <input
+      class="studentId-input"
+      type="number"
+      id="studentId"
+      name="studentId"
+      ngModel
+      required
+    />
+    <button class="btn classBtn" type="submit" [disabled]="!f.valid">
+      Los geht's
+    </button>
+  </form>
+  <p *ngIf="!validStudentId; else start">
+    Die ID ist leider falsch. Bitte versuche es nochmal. Wenn du deine ID nicht
+    mehr weißt, kannst du auch eine neue erstellen.
+  </p>
+  <ng-template #start>
+    <p style="margin-top: 20px">
+      Wenn du noch keine ID hast, dann erstell dir eine.
+    </p></ng-template
+  >
+  <button class="btn classBtn" (click)="generateId()">ID erstellen</button>
+</div>
+
+<div *ngIf="idWasGenerated">
+  <p>
+    Bitte schreib dir folgende ID auf. Damit kannst du dich das nächste Mal
+    anmelden.
+  </p>
+  <h2 style="text-align: center">{{ this.shared.studentId }}</h2>
+  <button class="btn classBtn" (click)="goToClassSelection()">
+    Los geht's
+  </button>
+</div>
