@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { DataService } from '../service/data.service';
 import { SharedService } from '../shared/shared.service';
 
 @Component({
@@ -10,11 +9,7 @@ import { SharedService } from '../shared/shared.service';
   styleUrls: ['./codepage.component.css'],
 })
 export class CodepageComponent implements OnInit {
-  constructor(
-    private _router: Router,
-    private _dataService: DataService,
-    private _shared: SharedService
-  ) {}
+  constructor(private _router: Router, private _shared: SharedService) {}
 
   ngOnInit(): void {}
   wrongCode: boolean = false;
@@ -33,5 +28,6 @@ export class CodepageComponent implements OnInit {
 
   goToExercise(): void {
     this._router.navigate(['/', 'exercise']);
+    this._shared.countDownTimer();
   }
 }

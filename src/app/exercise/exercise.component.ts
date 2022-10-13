@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, timer } from 'rxjs';
 
@@ -11,9 +11,8 @@ import { DataService } from '../service/data.service';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.css'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
-  // TODO: Should I store the currentQuestion in sharedService? How do I access it in the template?
   currentQuestion: number = 0;
   givenAnswers: any = [];
   startTime: Date = new Date();
@@ -25,12 +24,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   isDisabled: boolean;
   attempts: number = 0;
 
-  countDown: Subscription;
-  counter = 60; // 30 minutes
-  tick = 1000;
-
   constructor(
-    private _shared: SharedService,
+    public shared: SharedService,
     private _router: Router,
     private _dataService: DataService
   ) {}
@@ -38,17 +33,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.exercises$ = this._dataService.getAllExercises(5);
     this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
-    this.countDown = timer(0, this.tick).subscribe(() => {
-      --this.counter;
-      if (this.counter === 0) {
-        this.showResult();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.countDown.unsubscribe();
-    this.countDown = null;
   }
 
   nextQuestion(): void {
@@ -87,7 +71,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       this.isDisabled = true;
       if (this.attempts === 1) {
         // TODO: check if this is needed or can be fetched from correctAnswer
-        this._shared.correctAnswer++;
+        this.shared.correctAnswer++;
       }
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
@@ -100,7 +84,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       return true;
     }
     if (this.attempts === 1) {
-      this._shared.incorrectAnswer++;
+      this.shared.incorrectAnswer++;
     }
     this.answerIsIncorrect = true;
     this.answerIsCorrect = false;

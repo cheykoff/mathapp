@@ -1,6 +1,7 @@
 <ng-container *ngIf="puzzles$ | async as puzzles">
   <div class="header">
     <h1 class="headerTitle">Bonusfrage {{ currentQuestion + 1 }}</h1>
+    <div id="countdown">{{ this.shared.counter | countDown }}</div>
   </div>
   <p class="question">{{ puzzles[currentQuestion].question }}</p>
   <form (ngSubmit)="onClickAnswer(f, puzzles)" #f="ngForm">

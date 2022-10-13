@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, Subscription, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,30 @@ export class SharedService {
   correctPuzzles: number = 0;
   incorrectPuzzles: number = 0;
 
-  constructor() {}
+  countDown: Subscription;
+  counter = 60; // 30 minutes
+  tick = 1000;
+
+  countDownTimer() {
+    this.countDown = timer(0, this.tick).subscribe(() => {
+      --this.counter;
+      if (this.counter === 0) {
+        this.showResult();
+        this.countDown.unsubscribe();
+        this.countDown = null;
+      }
+    });
+  }
+
+  showResult(): void {
+    if (this.correctPuzzles + this.incorrectPuzzles > 0) {
+      this._router.navigate(['/', 'puzzleresultpage']);
+    } else {
+      this._router.navigate(['/', 'resultpage']);
+    }
+  }
+
+  constructor(private _router: Router) {}
 
   setStudentId(data: number): void {
     if (localStorage.getItem('studentId')) {

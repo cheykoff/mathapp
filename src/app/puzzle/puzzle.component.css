@@ -1,3 +1,14 @@
 #givenAnswer {
     width: 100%;
   }
+
+  #countdown {
+    font-size: 1rem;
+    font-weight: var(--fw-bold);
+    color: var(--clr-grey-light);
+    display: inline-block;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}

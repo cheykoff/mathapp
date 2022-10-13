@@ -6,7 +6,7 @@
     <h1 class="headerTitle">
       Frage {{ currentQuestion + 1 }} von {{ exercises.length }}
     </h1>
-    <div id="countdown">{{ counter | countDown }}</div>
+    <div id="countdown">{{ this.shared.counter | countDown }}</div>
   </div>
   <p class="question">{{ exercises[currentQuestion].question }}</p>
 
