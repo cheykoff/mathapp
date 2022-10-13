@@ -29,6 +29,8 @@
   <p>Gut gemacht. Beim nächsten Mal schaffst du alle.</p>
 </div>
 
-<div *ngIf="this.shared.incorrectPuzzles === 0">
+<div
+  *ngIf="this.shared.correctPuzzles > 0 && this.shared.incorrectPuzzles === 0"
+>
   <p>Klasse. Das war eine Meisterleistung!</p>
 </div>
