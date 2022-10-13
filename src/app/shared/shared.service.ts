@@ -39,7 +39,9 @@ export class SharedService {
   constructor(private _router: Router) {}
 
   setStudentId(): void {
-    if (!this.studentId) {
+    this.studentId = Math.floor(100000 + Math.random() * 900000);
+    return;
+    if (this.studentId === 100000 || !this.studentId) {
       if (localStorage.getItem('studentId')) {
         this.studentId = parseInt(localStorage.getItem('studentId'));
         return;
