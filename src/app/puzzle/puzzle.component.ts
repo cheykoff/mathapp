@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Puzzle } from '../shared/puzzle';
-import { DataService } from '../service/data.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { Puzzle } from '../shared/puzzle';
+import { DataService } from '../service/data.service';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -25,7 +27,11 @@ export class PuzzleComponent implements OnInit {
 
   givenAnswer: string = '';
 
-  constructor(private _router: Router, private _dataService: DataService) {}
+  constructor(
+    private _router: Router,
+    private _dataService: DataService,
+    private _shared: SharedService
+  ) {}
 
   ngOnInit(): void {
     this.puzzles$ = this._dataService.getAllPuzzles(5);
@@ -38,6 +44,7 @@ export class PuzzleComponent implements OnInit {
       parseInt(value.givenAnswer.toString().trim()) ===
       parseInt(puzzles[this.currentQuestion].correctAnswer)
     ) {
+      this._shared.correctPuzzles++;
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
       this.startTime = new Date();
@@ -55,6 +62,7 @@ export class PuzzleComponent implements OnInit {
 
       return;
     }
+    this._shared.incorrectPuzzles++;
     this.isIncorrectAnswer = true;
     setTimeout(() => {
       this.isIncorrectAnswer = false;

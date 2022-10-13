@@ -26,7 +26,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   attempts: number = 0;
 
   countDown: Subscription;
-  counter = 1800;
+  counter = 60; // 30 minutes
   tick = 1000;
 
   constructor(

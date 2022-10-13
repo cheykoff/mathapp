@@ -8,8 +8,6 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./resultpage.component.css'],
 })
 export class ResultpageComponent implements OnInit {
-  percentage: number = 0;
-
   constructor(
     public shared: SharedService,
     private _dataService: DataService

@@ -9,9 +9,26 @@
     <img [src]="getStars()" id="starsGif" class="starsGif" />
   </div>
   <div class="resultContainer">
-    <div class="bigNumber">6</div>
+    <div class="bigNumber">
+      {{ this.shared.correctPuzzles }}/{{
+        this.shared.correctPuzzles + this.shared.incorrectPuzzles
+      }}
+    </div>
     <p class="labelBigNumber">Bonusfragen richtig beantwortet</p>
   </div>
 </div>
 
-<p>Klasse. Das war eine Meisterleistung!</p>
+<div *ngIf="this.shared.correctPuzzles === 0">
+  <p>
+    Die waren aber auch schwierig. Lass dich nicht entmutigen. Beim nächsten Mal
+    schaffst du bestimmt schon ein paar.
+  </p>
+</div>
+
+<div *ngIf="this.shared.correctPuzzles > 0 && this.shared.incorrectPuzzles > 0">
+  <p>Gut gemacht. Beim nächsten Mal schaffst du alle.</p>
+</div>
+
+<div *ngIf="this.shared.incorrectPuzzles === 0">
+  <p>Klasse. Das war eine Meisterleistung!</p>
+</div>

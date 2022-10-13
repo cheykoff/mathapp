@@ -12,6 +12,8 @@ export class SharedService {
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
   studentId: number = Math.floor(100000 + Math.random() * 900000);
+  correctPuzzles: number = 0;
+  incorrectPuzzles: number = 0;
 
   constructor() {}
 
