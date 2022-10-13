@@ -19,10 +19,15 @@
       Los geht's
     </button>
   </form>
-  <p *ngIf="!validStudentId; else start">
-    Die ID ist leider falsch. Bitte versuche es nochmal. Wenn du deine ID nicht
-    mehr weißt, kannst du auch eine neue erstellen.
-  </p>
+  <div *ngIf="!validStudentId; else start">
+    <p>
+      Die ID ist leider falsch. Bitte versuche es nochmal. Tipp: Die ID hat 6
+      Ziffern.
+    </p>
+    <p style="margin-top: 20px">
+      Wenn du deine ID nicht mehr weißt, kannst du auch eine neue erstellen.
+    </p>
+  </div>
   <ng-template #start>
     <p style="margin-top: 20px">
       Wenn du noch keine ID hast, dann erstell dir eine.

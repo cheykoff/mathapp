@@ -23,6 +23,10 @@ export class LoginComponent implements OnInit {
 
   submitId(form: NgForm): void {
     const value = form.value;
+    if (value.studentId < 100000 || value.studentId > 999999) {
+      this.validStudentId = false;
+      return;
+    }
     if (value.studentId) {
       this.validStudentId = true;
       this.shared.studentId = value.studentId;
