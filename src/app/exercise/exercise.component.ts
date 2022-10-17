@@ -32,7 +32,8 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     // this.exercises$ = this._dataService.getAllExercises(5);
-    this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
+    // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
+    this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 14.10.2022
   }
 
   nextQuestion(): void {

@@ -16,6 +16,7 @@ export class SharedService {
   studentId: number = 100000;
   correctPuzzles: number = 0;
   incorrectPuzzles: number = 0;
+  testNumber: number = 0;
 
   countDown: Subscription;
   counter = 1800; // 30 minutes

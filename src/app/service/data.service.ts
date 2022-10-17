@@ -153,6 +153,58 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
+  getAllExercisesByClassLevel(): Observable<Exercise[]> {
+    if (this._shared.schoolClass === 5) {
+      // First test per schoolClass (prototype)
+      if (this._shared.testNumber === 1) {
+        return this._store
+          .collection('exercises', (ref) =>
+            ref
+              .where('classLevel', '<=', this._shared.schoolClass)
+              .orderBy('classLevel')
+              .orderBy('orderNumber')
+              .limit(20)
+          )
+          .get()
+          .pipe(map((result) => convertSnaps<Exercise>(result)));
+      } else if (this._shared.testNumber === 2) {
+        // Second test per schoolClass (prototype)
+        return this._store
+          .collection('exercises2', (ref) =>
+            ref
+              .where('testNumber', '==', 2)
+              .orderBy('classLevel')
+              .orderBy('chapterNumber')
+              .orderBy('topicNumber')
+              .orderBy('questionNumber')
+          )
+          .get()
+          .pipe(map((result) => convertSnaps<Exercise>(result)));
+      }
+    } else if (this._shared.schoolClass === 6) {
+      return this._store
+        .collection('exercises6', (ref) =>
+          ref
+            .orderBy('classLevel')
+            .orderBy('chapterNumber')
+            .orderBy('topicNumber')
+            .orderBy('questionNumber')
+        )
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)));
+    }
+    return this._store
+      .collection('exercises', (ref) =>
+        ref
+          .where('classLevel', '<=', this._shared.schoolClass)
+          .orderBy('classLevel')
+          .orderBy('orderNumber')
+          .limit(5)
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
   getAllPuzzles(classLevel: number): Observable<Puzzle[]> {
     return this._store
       .collection('puzzles', (ref) =>

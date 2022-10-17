@@ -18,7 +18,14 @@ export class CodepageComponent implements OnInit {
 
   submitCode(form: NgForm): void {
     const value = form.value;
-    if (value.code === 'Elefant') {
+    if (value.code === 'Gorilla') {
+      this._shared.testNumber = 1;
+      this.goToExercise();
+    } else if (value.code === 'Elefant') {
+      this._shared.testNumber = 2;
+      this.goToExercise();
+    } else if (value.code === 'Panda') {
+      this._shared.testNumber = 3;
       this.goToExercise();
     } else {
       this.wrongCode = true;

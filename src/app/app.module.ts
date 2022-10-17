@@ -1,6 +1,7 @@
 /*
 Refactoring
 - break ExerciseComponent into smaller components
+- fetch exercises based on classLevel and topics
 - reuse code
 - enable strict mode?
 - consistent css styles (use scss)
