@@ -40,23 +40,7 @@ export class ExerciseComponent implements OnInit {
     // this.exercises$ = this._dataService.getAllExercises(5);
     // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
     this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 14.10.2022
-    this.randomizeExerciseOrder();
   }
-
-  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  randomizeExerciseOrder(): void {
-    console.log(this.arr);
-    let array = this.arr;
-    {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-    console.log(this.arr);
-  }
-
   penaltyTimer(): void {
     this.penaltyCount++;
     this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
