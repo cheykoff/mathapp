@@ -1,20 +1,3 @@
-/*
-Refactoring
-- break ExerciseComponent into smaller components
-- fetch exercises based on classLevel and topics
-- reuse code
-- enable strict mode?
-- consistent css styles (use scss)
-- use layout/core compenents (e.g. header)
-- try routing for exercises and use services and resolvers
-- refreshing on exercise page should keep the user on the same exercise
-- add tests
-- add comments
-- store end date of session (leaving the page)
-- enable prod mode
-- define rules for firebase
-*/
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
