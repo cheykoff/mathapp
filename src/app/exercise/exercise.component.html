@@ -32,10 +32,25 @@
   </div>
 
   <div *ngIf="answerIsCorrect" class="correct">
-    <p class="correctText feedback">Richtig!</p>
+    <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
+      Richtig!
+    </p>
+    <ng-template #streak>
+      <p class="correctText feedback">
+        Richtig! Du hast {{ streakCount }} Fragen in Folge richtig beantwortet!
+      </p>
+    </ng-template>
   </div>
   <div *ngIf="answerIsIncorrect" class="wrong">
-    <p class="incorrectText feedback">Leider falsch! Probier es nochmal.</p>
+    <div class="incorrectText feedback">
+      <div *ngIf="!answerPossible; else tryAgain">
+        <p>Leider falsch!</p>
+        <p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>
+      </div>
+      <ng-template #tryAgain>
+        <p>Versuch es jetzt noch einmal.</p>
+      </ng-template>
+    </div>
   </div>
 </ng-container>
 <ng-template #loading>

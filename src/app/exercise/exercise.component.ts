@@ -23,6 +23,12 @@ export class ExerciseComponent implements OnInit {
   correctAnswer: string = '';
   isDisabled: boolean;
   attempts: number = 0;
+  penaltyCountDown: Subscription;
+  penalty: number = 5;
+  penaltyCount: number = 0;
+  answerPossible: boolean = true;
+  tick = 1000;
+  streakCount: number = 0;
 
   constructor(
     public shared: SharedService,
@@ -33,7 +39,20 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     // this.exercises$ = this._dataService.getAllExercises(5);
     // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
-    this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 14.10.2022
+    this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
+  }
+
+  penaltyTimer(): void {
+    this.penaltyCount++;
+    this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
+      --this.penalty;
+      if (this.penalty === 0) {
+        this.answerPossible = true;
+        this.isDisabled = false;
+        this.penaltyCountDown.unsubscribe();
+        this.penalty = Math.min(5 * (1 + this.penaltyCount), 30);
+      }
+    });
   }
 
   nextQuestion(): void {
@@ -69,11 +88,12 @@ export class ExerciseComponent implements OnInit {
   }
 
   private _checkAnswer(isCorrect: boolean): boolean {
+    this.isDisabled = true;
     if (isCorrect) {
-      this.isDisabled = true;
       if (this.attempts === 1) {
         // TODO: check if this is needed or can be fetched from correctAnswer
         this.shared.correctAnswer++;
+        this.streakCount++;
       }
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
@@ -87,9 +107,12 @@ export class ExerciseComponent implements OnInit {
     }
     if (this.attempts === 1) {
       this.shared.incorrectAnswer++;
+      this.streakCount = 0;
     }
     this.answerIsIncorrect = true;
     this.answerIsCorrect = false;
+    this.answerPossible = false;
+    this.penaltyTimer();
 
     return false;
   }

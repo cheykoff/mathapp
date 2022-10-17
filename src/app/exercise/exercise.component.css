@@ -36,6 +36,12 @@ h3 {
     font-size: 0.8em;
 }
 
+button:disabled {
+    background-color: var(--clr-grey-light)!important;
+    color: var(--clr-grey-dark)!important;
+    cursor: not-allowed!important;
+}
+
 #option0 {
     background-color : hsl(350, 100%, 70%);
 }
