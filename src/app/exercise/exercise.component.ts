@@ -93,6 +93,9 @@ export class ExerciseComponent implements OnInit {
         // TODO: check if this is needed or can be fetched from correctAnswer
         this.shared.correctAnswer++;
         this.streakCount++;
+        if (this.streakCount >= 3) {
+          this.penaltyCount = 0;
+        }
       }
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;

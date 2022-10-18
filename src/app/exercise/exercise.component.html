@@ -4,6 +4,7 @@
 >
   <div class="header">
     <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
+    <span id="studentId">ID: {{ this.shared.studentId }}</span>
     <div id="countdown">{{ this.shared.counter | countDown }}</div>
   </div>
   <p class="question">{{ exercises[currentQuestion].question }}</p>
@@ -42,8 +43,11 @@
     </ng-template>
   </div>
   <div *ngIf="answerIsIncorrect" class="wrong">
-    <div class="incorrectText feedback">
-      <div *ngIf="!answerPossible; else tryAgain">
+    <div>
+      <div
+        class="incorrectText feedback"
+        *ngIf="!answerPossible; else tryAgain"
+      >
         <p>Leider falsch!</p>
         <p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>
       </div>
