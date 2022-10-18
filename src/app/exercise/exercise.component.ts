@@ -42,16 +42,16 @@ export class ExerciseComponent implements OnInit {
     this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 14.10.2022
   }
   penaltyTimer(): void {
-    this.penaltyCount++;
     this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
       --this.penalty;
       if (this.penalty === 0) {
         this.answerPossible = true;
         this.isDisabled = false;
         this.penaltyCountDown.unsubscribe();
-        this.penalty = Math.min(5 * (1 + this.penaltyCount), 30);
       }
     });
+    this.penalty = Math.min(5 * (1 + this.penaltyCount), 30);
+    this.penaltyCount++;
   }
 
   nextQuestion(): void {
