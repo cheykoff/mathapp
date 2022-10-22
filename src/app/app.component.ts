@@ -32,6 +32,9 @@ export class AppComponent implements OnInit {
     );
     localStorage.setItem('sessionId', this._shared.getSessionId());
     this._dataService.addEndTime();
+    if (this._shared.counter > 0) {
+      window.opener.location.reload();
+    }
   }
 
   @HostListener('window:load', ['$event'])

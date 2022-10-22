@@ -53,6 +53,13 @@
   <div *ngIf="percentage === 100">
     <p>Das war perfekt! Bist du Einstein?</p>
   </div>
-
-  <button class="btn menuBtn" routerLink="/puzzle">Bonusfragen</button>
+  <div *ngIf="this.shared.counter > 0">
+    <p>
+      Du hast die Bonusfragen freigeschaltet. Vorsicht, die sind deutlich
+      schwieriger.
+    </p>
+    <button class="btn menuBtn" routerLink="/puzzle">
+      Bonusfragen starten
+    </button>
+  </div>
 </ng-template>
