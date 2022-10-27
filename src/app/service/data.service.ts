@@ -180,6 +180,19 @@ export class DataService {
           )
           .get()
           .pipe(map((result) => convertSnaps<Exercise>(result)));
+      } else if (this._shared.testNumber === 3) {
+        // Third test per schoolClass (prototype)
+        return this._store
+          .collection('exercises2', (ref) =>
+            ref
+              .where('testNumber', '==', 2) // TODO: needs to be adapted
+              .orderBy('classLevel')
+              .orderBy('chapterNumber')
+              .orderBy('topicNumber')
+              .orderBy('questionNumber')
+          )
+          .get()
+          .pipe(map((result) => convertSnaps<Exercise>(result)));
       }
     } else if (this._shared.schoolClass === 6) {
       return this._store

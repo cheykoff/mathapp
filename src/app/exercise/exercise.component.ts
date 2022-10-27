@@ -41,8 +41,19 @@ export class ExerciseComponent implements OnInit {
     // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
     // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
-    this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 28.10.2022
+    this.exercises$ = this._dataService
+      .getAllExercisesByClassLevel()
+      .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises))); // For test at 28.10.2022
   }
+
+  shuffleExercises(exercises: Exercise[]): Exercise[] {
+    for (let i = exercises.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
+    }
+    return exercises;
+  }
+
   penaltyTimer(): void {
     this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
       --this.penalty;
