@@ -40,8 +40,8 @@ export class ExerciseComponent implements OnInit {
     // this.exercises$ = this._dataService.getAllExercises(5);
     // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
-    // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next
-    this.exercises$ = this._dataService.getAllExercisesByClassLevel();
+    // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
+    this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 28.10.2022
   }
   penaltyTimer(): void {
     this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
