@@ -1,0 +1,78 @@
+// get properties
+  async showLog(): Promise<void> {
+    this.exercises$
+      .pipe(
+        take(1),
+        tap((exercises: Exercise[]) => console.log(exercises[0].topicName)),
+        takeUntil(this._destroy$)
+      )
+      .subscribe();
+  }
+
+
+ // shuffle exercises
+    this.exercises$ = this._dataService
+      .getAllExercisesPitch()
+      .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises))); // For pitch at EdTech Next
+
+// Combine exercises and puzzles
+const exercisesWithPuzzles$ =  this._dataService.getAllExercisesPitch().pipe(
+      map((exercises: Exercise[]) => shuffleExercises(exercises),
+      combineLatest(this._puzzleService.puzzles$),
+      map(([exercises, puzzles]) => {
+        const te
+        for (const exercise of exercises) {
+          exercise.puzzle = puzzles.find((puzzle) => puzzle.exerciseId === exercise.id)
+        }
+
+        return exercises
+      })
+    );
+
+
+  const exercise: any = {
+      a: 1,
+      b: 2,
+      c: 3,
+    };
+
+    exercise.c = 'puzzle';
+
+    const tempExercise = { ...exercise };
+
+
+    const exercise: any = {
+      a: 1,
+      b: 2,
+      c: 3,
+      subObject: {
+        a: 1,
+      }
+    };
+
+    exercise.c = 'puzzle';
+
+    const tempExercise = { ...exercise, subObject: {...exercise.subObject} };
+    */
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+  
+  private _destroy$: Subject<void> = new Subject<void>();
+
+
+
+        /*
+  showLog(){
+    this.exercises$
+      .pipe(
+        take(1),
+        tap((exercises: Exercise[]) => console.log(exercises[0].topicName))
+      )
+      .subscribe();
+
+    const exercises = await firstValueFrom(this.exercises$);
+  }
+  */
