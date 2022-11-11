@@ -99,14 +99,25 @@ export class DataService {
     }
   }
 
-  storePuzzleAnswer(puzzleId: string, duration: number, attempts: number) {
+  storePuzzleAnswer(
+    puzzleId: string,
+    duration: number,
+    // firstTryDuration: number,
+    attempts: number
+    // wrongAnswers: any[]
+  ) {
     this._store
       .collection(`quizzes/${this._shared.getQuizId()}/puzzleanswers`)
       .add({
         startTime: serverTimestamp(),
         attempts: attempts,
         duration: duration,
+        // firstTryDuration: firstTryDuration,
         puzzleId: puzzleId,
+        studentId: this._shared.getStudentId(),
+        sessionId: this._shared.getSessionId(),
+        quizId: this._shared.getQuizId(),
+        // wrongAnswers: wrongAnswers,
       });
   }
 
@@ -183,9 +194,9 @@ export class DataService {
       } else if (this._shared.testNumber === 3) {
         // Third test per schoolClass (prototype)
         return this._store
-          .collection('exercises2', (ref) =>
+          .collection('exercises3', (ref) =>
             ref
-              .where('testNumber', '==', 2) // TODO: needs to be adapted
+              .where('testNumber', '==', 3)
               .orderBy('classLevel')
               .orderBy('chapterNumber')
               .orderBy('topicNumber')
@@ -202,6 +213,7 @@ export class DataService {
             .orderBy('chapterNumber')
             .orderBy('topicNumber')
             .orderBy('questionNumber')
+            .limit(5)
         )
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)));
@@ -221,6 +233,18 @@ export class DataService {
   getAllPuzzles(classLevel: number): Observable<Puzzle[]> {
     return this._store
       .collection('puzzles', (ref) =>
+        ref
+          .where('classLevel', '<=', classLevel)
+          .orderBy('classLevel')
+          .orderBy('orderNumber')
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Puzzle>(result)));
+  }
+
+  getAllPuzzles3(classLevel: number): Observable<Puzzle[]> {
+    return this._store
+      .collection('puzzles3', (ref) =>
         ref
           .where('classLevel', '<=', classLevel)
           .orderBy('classLevel')

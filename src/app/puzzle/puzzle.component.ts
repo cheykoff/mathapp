@@ -21,6 +21,8 @@ export class PuzzleComponent implements OnInit {
   startTime: Date = new Date();
   endTime: Date;
   duration: number;
+  // firstTryDuration: number;
+  // wrongAnswers: any[];
 
   isIncorrectAnswer: boolean = false;
   isCorrectAnswer: boolean = false;
@@ -46,6 +48,9 @@ export class PuzzleComponent implements OnInit {
     ) {
       if (this.attempts === 1) {
         this.shared.correctPuzzles++;
+        /*this.firstTryDuration =
+          this.endTime.getTime() - this.startTime.getTime();
+          */
       }
       this.endTime = new Date();
       this.duration = this.endTime.getTime() - this.startTime.getTime();
@@ -66,9 +71,11 @@ export class PuzzleComponent implements OnInit {
     }
     if (this.attempts === 1) {
       this.shared.incorrectPuzzles++;
+      // this.firstTryDuration = this.endTime.getTime() - this.startTime.getTime();
     }
 
     this.isIncorrectAnswer = true;
+    // this.wrongAnswers.push(parseInt(value.givenAnswer.toString().trim()));
     setTimeout(() => {
       this.isIncorrectAnswer = false;
     }, 2000);
@@ -76,7 +83,13 @@ export class PuzzleComponent implements OnInit {
   }
 
   storePuzzleAnswer({ id }: Puzzle): void {
-    this._dataService.storePuzzleAnswer(id, this.duration, this.attempts);
+    this._dataService.storePuzzleAnswer(
+      id,
+      this.duration,
+      // this.firstTryDuration,
+      this.attempts
+      // this.wrongAnswers
+    );
     this.attempts = 0;
   }
 
