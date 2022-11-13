@@ -9,6 +9,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { RouterModule } from '@angular/router';
+import { MathjaxModule } from 'mathjax-angular';
 
 import { AppComponent } from './app.component';
 import { ClassselectionComponent } from './classselection/classselection.component';
@@ -21,8 +22,10 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
+import { EquationPipe } from './mathequation.pipe';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { LoginComponent } from './login/login.component';
+import { FractionComponent } from './fraction/fraction.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +38,10 @@ import { LoginComponent } from './login/login.component';
     StartpageComponent,
     CodepageComponent,
     CountDownPipe,
+    EquationPipe,
     PuzzleComponent,
     LoginComponent,
+    FractionComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,7 @@ import { LoginComponent } from './login/login.component';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule,
+    MathjaxModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,6 +8,7 @@ import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
 import { Puzzle } from '../shared/puzzle';
+import { Fraction } from '../shared/fraction';
 import { convertSnaps } from './db-utils';
 
 @Injectable({
@@ -240,6 +241,13 @@ export class DataService {
       )
       .get()
       .pipe(map((result) => convertSnaps<Puzzle>(result)));
+  }
+
+  getFractions(): Observable<Fraction[]> {
+    return this._store
+      .collection('fractions')
+      .get()
+      .pipe(map((result) => convertSnaps<Fraction>(result)));
   }
 
   getAllPuzzles3(classLevel: number): Observable<Puzzle[]> {

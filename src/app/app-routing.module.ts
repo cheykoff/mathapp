@@ -8,9 +8,10 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { LoginComponent } from './login/login.component';
+import { FractionComponent } from './fraction/fraction.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/fraction', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'loadingpage', component: LoadingpageComponent },
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
   { path: 'puzzle', component: PuzzleComponent },
+  { path: 'fraction', component: FractionComponent },
   { path: '**', redirectTo: '/startpage' },
 ];
 
