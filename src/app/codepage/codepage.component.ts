@@ -34,7 +34,7 @@ export class CodepageComponent implements OnInit {
   }
 
   goToExercise(): void {
-    this._router.navigate(['/', 'exercise']);
+    this._router.navigate(['/', 'exercise2']);
     this._shared.countDownTimer();
   }
 }

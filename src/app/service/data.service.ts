@@ -7,6 +7,7 @@ import { serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
+import { Exercise2 } from '../shared/exercise2';
 import { Puzzle } from '../shared/puzzle';
 import { Fraction } from '../shared/fraction';
 import { convertSnaps } from './db-utils';
@@ -260,5 +261,12 @@ export class DataService {
       )
       .get()
       .pipe(map((result) => convertSnaps<Puzzle>(result)));
+  }
+
+  getAllExercises2(): Observable<Exercise2[]> {
+    return this._store
+      .collection('exercises-all')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise2>(result)));
   }
 }

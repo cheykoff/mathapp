@@ -1,0 +1,149 @@
+.questionNo {
+  padding: 0 8px;
+}
+
+.questionNo {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 0.8em;
+}
+
+.question {
+  border: 1px solid var(--clr-primary-dark);
+  border-radius: 5px;
+  padding: 12px 8px;
+  background-color: var(--clr-light);
+  font-size: 1.4rem;
+  margin: 30px 0px;
+  position: relative;
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+#countdown {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-grey-light);
+  display: inline-block;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#studentId {
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-grey-light);
+  display: inline-block;
+  position: absolute;
+  right: 16px;
+  top: 4px;
+}
+
+h3 {
+  font-size: 0.8em;
+}
+
+button:disabled {
+  background-color: var(--clr-grey-light) !important;
+  color: var(--clr-grey-dark) !important;
+  cursor: not-allowed !important;
+}
+
+#option0 {
+  background-color: hsl(350, 100%, 70%);
+}
+
+#option0:hover {
+  background-color: hsl(350, 100%, 60%);
+}
+
+#option1 {
+  background-color: hsl(210, 100%, 55%);
+}
+
+#option1:hover {
+  background-color: hsl(210, 100%, 45%);
+}
+
+#option2 {
+  background-color: hsl(150, 72%, 63%);
+}
+
+#option2:hover {
+  background-color: hsl(150, 72%, 43%);
+}
+
+#option3 {
+  background-color: hsl(50, 100%, 50%);
+}
+
+#option3:hover {
+  background-color: hsl(50, 100%, 35%);
+}
+
+button:hover,
+button:focus {
+  transform: scale(1.02) perspective(1px);
+  cursor: pointer;
+  color: white;
+  border: 3px solid black;
+}
+
+.tableWrapper {
+  width: 100%;
+  text-align: center;
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 200px;
+  padding: 10 px;
+}
+
+tr {
+  width: 300px;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+}
+
+td {
+  margin: 20;
+  width: 100%;
+  background-color: white;
+}
+
+input {
+  width: 100%;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid gray;
+}
+
+tr:first-child {
+  border-bottom: 3pt solid black;
+}
+
+#denominator,
+#numerator {
+  width: 80%;
+}
+
+.feedback {
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.correctText {
+  background-color: lightgreen;
+}
+
+.incorrectText {
+  background-color: lightcoral;
+}

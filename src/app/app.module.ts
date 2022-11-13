@@ -26,6 +26,7 @@ import { EquationPipe } from './mathequation.pipe';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { LoginComponent } from './login/login.component';
 import { FractionComponent } from './fraction/fraction.component';
+import { Exercise2Component } from './exercise2/exercise2.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FractionComponent } from './fraction/fraction.component';
     PuzzleComponent,
     LoginComponent,
     FractionComponent,
+    Exercise2Component,
   ],
   imports: [
     BrowserModule,
