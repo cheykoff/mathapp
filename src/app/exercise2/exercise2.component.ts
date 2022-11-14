@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { from, map, Observable, Subscription, timer } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../shared/shared.service';
 import { Exercise2 } from '../shared/exercise2';
@@ -66,16 +67,69 @@ export class Exercise2Component implements OnInit {
     this.penaltyCount++;
   }
 
-  nextQuestion(): void {
-    this.currentQuestion++;
-  }
-
   getCorrectAnswer(exercise: Exercise2): void {
     exercise.answerOptions.forEach((answerOption) => {
       if (answerOption.isCorrect) {
         this.correctAnswer = answerOption.answerText;
       }
     });
+  }
+
+  onSubmitAnswer(form: NgForm, exercise: Exercise2) {
+    console.log('onSubmitAnswer');
+    console.log(exercise);
+    if (exercise.answerType === 'fraction') {
+      const correctDenominator = exercise.denominator;
+      const correctNumerator = exercise.numerator;
+      const givenDenominator = form.value.denominator;
+      const givenNumerator = form.value.numerator;
+
+      if (
+        parseInt(givenDenominator) === parseInt(correctDenominator) &&
+        parseInt(givenNumerator) === parseInt(correctNumerator)
+      ) {
+        this.shared.correctAnswer++;
+        this.streakCount++;
+        this.answerIsCorrect = true;
+
+        setTimeout(() => {
+          this.currentQuestion++;
+          this.answerIsCorrect = false;
+          this.isDisabled = false;
+          this.attempts = 0;
+          if (this.currentQuestion >= 3) {
+            this.showResult();
+          }
+        }, 1000);
+        return true;
+      }
+      this.answerIsIncorrect = true;
+      this.answerIsCorrect = false;
+      this.answerPossible = false;
+      this.penaltyTimer();
+      return false;
+    }
+
+    const givenAnswer = form.value.givenAnswer;
+    console.log(givenAnswer);
+
+    if (
+      parseInt(givenAnswer.toString().trim()) ===
+      parseInt(exercise.correctAnswer)
+    ) {
+      this.currentQuestion++;
+      this.streakCount++;
+      this.answerIsCorrect = true;
+      if (this.currentQuestion >= 3) {
+        this.showResult();
+      }
+      return true;
+    }
+    this.answerIsIncorrect = true;
+    this.answerIsCorrect = false;
+    this.answerPossible = false;
+    this.penaltyTimer();
+    return false;
   }
 
   onClickAnswer(

@@ -7,7 +7,7 @@
     <span id="studentId">ID: {{ this.shared.studentId }}</span>
     <div id="countdown">{{ this.shared.counter | countDown }}</div>
   </div>
-  <p class="question">{{ exercises[currentQuestion].question }}</p>
+  <p class="question" [mathjax]="exercises[currentQuestion].question"></p>
 
   <div class="options" *ngIf="exercises[currentQuestion].answerType === 'mc'">
     <ul class="answerList">
@@ -32,7 +32,7 @@
     </ul>
   </div>
   <form
-    (ngSubmit)="onClickAnswer(f, puzzles)"
+    (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
     #f="ngForm"
     *ngIf="exercises[currentQuestion].answerType === 'integer'"
   >
@@ -51,7 +51,7 @@
     <button class="btn classBtn" type="submit">Antwort prüfen</button>
   </form>
   <form
-    (ngSubmit)="onClickAnswer(f, fractions)"
+    (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
     #f="ngForm"
     *ngIf="exercises[currentQuestion].answerType === 'fraction'"
   >
