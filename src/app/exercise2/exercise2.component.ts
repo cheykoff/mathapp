@@ -78,9 +78,12 @@ export class Exercise2Component implements OnInit {
   onSubmitAnswer(form: NgForm, exercise: Exercise2) {
     console.log('onSubmitAnswer');
     console.log(exercise);
-    if (exercise.answerType === 'fraction') {
-      const correctDenominator = exercise.denominator;
-      const correctNumerator = exercise.numerator;
+    if (
+      exercise.answerType === 'fraction' &&
+      typeof exercise.correctAnswer !== 'string'
+    ) {
+      const correctDenominator = exercise.correctAnswer.denominator;
+      const correctNumerator = exercise.correctAnswer.numerator;
       const givenDenominator = form.value.denominator;
       const givenNumerator = form.value.numerator;
 
@@ -112,23 +115,25 @@ export class Exercise2Component implements OnInit {
 
     const givenAnswer = form.value.givenAnswer;
     console.log(givenAnswer);
-
-    if (
-      parseInt(givenAnswer.toString().trim()) ===
-      parseInt(exercise.correctAnswer)
-    ) {
-      this.currentQuestion++;
-      this.streakCount++;
-      this.answerIsCorrect = true;
-      if (this.currentQuestion >= 3) {
-        this.showResult();
+    if (typeof exercise.correctAnswer === 'string') {
+      if (
+        parseInt(givenAnswer.toString().trim()) ===
+        parseInt(exercise.correctAnswer)
+      ) {
+        this.currentQuestion++;
+        this.streakCount++;
+        this.answerIsCorrect = true;
+        if (this.currentQuestion >= 3) {
+          this.showResult();
+        }
+        return true;
       }
-      return true;
+      this.answerIsIncorrect = true;
+      this.answerIsCorrect = false;
+      this.answerPossible = false;
+      this.penaltyTimer();
+      return false;
     }
-    this.answerIsIncorrect = true;
-    this.answerIsCorrect = false;
-    this.answerPossible = false;
-    this.penaltyTimer();
     return false;
   }
 
