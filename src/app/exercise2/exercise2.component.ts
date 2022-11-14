@@ -199,52 +199,6 @@ export class Exercise2Component implements OnInit {
     );
   }
 
-  public compare2(a: any, b: any): any {
-    return a - b;
-  }
-
-  compare(a: any, b: any): number {
-    if (a.text === 'Keine Antwort ist richtig') {
-      return 1;
-    }
-    if (parseInt(a.text) < parseInt(b.text)) {
-      return -1;
-    }
-    if (parseInt(a.text) > parseInt(b.text)) {
-      return 1;
-    }
-    if (a.text < b.text) {
-      return -1;
-    }
-    if (a.text > b.text) {
-      return 1;
-    }
-    return 0;
-  }
-
-  contains(options, value): number {
-    if (options && value) {
-      let i = options.length;
-      while (i--) {
-        if (options[i].text === value) {
-          return i;
-        }
-      }
-    }
-    return -1;
-  }
-
-  // TODO: test
-  public sortAnswerOptions(options: any): any {
-    if (!options) {
-      return undefined;
-    }
-
-    options.sort(this.compare);
-
-    return options;
-  }
-
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
