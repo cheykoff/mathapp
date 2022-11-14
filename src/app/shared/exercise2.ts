@@ -2,7 +2,8 @@ export interface Exercise2 {
   id: string;
   question: string;
   answerType?: string;
-  correctAnswer?: string | { numerator: string; denominator: string };
+  correctAnswer?: string;
+  correctAnswerFraction?: { numerator: string; denominator: string };
   incorrectAnswers?: [string];
   answerOptions?: [{ answerText: string; isCorrect: boolean }];
   classLevel?: number;
@@ -12,7 +13,7 @@ export interface Exercise2 {
       chapter?: number;
       subchapter?: number;
       page?: number;
-      questionNumber?: number;
+      questionNumber?: string;
     }
   ];
 }

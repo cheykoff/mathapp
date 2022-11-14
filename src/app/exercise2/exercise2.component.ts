@@ -15,6 +15,9 @@ import { DataService } from '../service/data.service';
 export class Exercise2Component implements OnInit {
   exercises$: Observable<Exercise2[]>;
   currentQuestion: number = 0;
+  givenAnswer = '';
+  numerator: string = '';
+  denominator: string = '';
   givenAnswers: any = [];
   startTime: Date = new Date();
   endTime: Date;
@@ -44,6 +47,7 @@ export class Exercise2Component implements OnInit {
     // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel().pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises))); // For test at 28.10.2022
     this.exercises$ = this._dataService.getAllExercises2();
+    // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // For homework at 16.11.2022
   }
 
   shuffleExercises(exercises: Exercise2[]): Exercise2[] {
@@ -82,8 +86,8 @@ export class Exercise2Component implements OnInit {
       exercise.answerType === 'fraction' &&
       typeof exercise.correctAnswer !== 'string'
     ) {
-      const correctDenominator = exercise.correctAnswer.denominator;
-      const correctNumerator = exercise.correctAnswer.numerator;
+      const correctDenominator = exercise.correctAnswerFraction.denominator;
+      const correctNumerator = exercise.correctAnswerFraction.numerator;
       const givenDenominator = form.value.denominator;
       const givenNumerator = form.value.numerator;
 
@@ -91,16 +95,19 @@ export class Exercise2Component implements OnInit {
         parseInt(givenDenominator) === parseInt(correctDenominator) &&
         parseInt(givenNumerator) === parseInt(correctNumerator)
       ) {
+        this.isDisabled = true;
         this.shared.correctAnswer++;
         this.streakCount++;
         this.answerIsCorrect = true;
 
         setTimeout(() => {
           this.currentQuestion++;
+          this.denominator = '';
+          this.numerator = '';
           this.answerIsCorrect = false;
           this.isDisabled = false;
           this.attempts = 0;
-          if (this.currentQuestion >= 3) {
+          if (this.currentQuestion >= 20) {
             this.showResult();
           }
         }, 1000);
@@ -120,10 +127,23 @@ export class Exercise2Component implements OnInit {
         parseInt(givenAnswer.toString().trim()) ===
         parseInt(exercise.correctAnswer)
       ) {
-        this.currentQuestion++;
         this.streakCount++;
         this.answerIsCorrect = true;
-        if (this.currentQuestion >= 3) {
+        this.shared.correctAnswer++;
+        this.isDisabled = true;
+
+        setTimeout(() => {
+          this.currentQuestion++;
+          this.answerIsCorrect = false;
+          this.isDisabled = false;
+          this.givenAnswer = '';
+          this.attempts = 0;
+          if (this.currentQuestion >= 20) {
+            this.showResult();
+          }
+        }, 1000);
+
+        if (this.currentQuestion >= 20) {
           this.showResult();
         }
         return true;

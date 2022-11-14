@@ -25,9 +25,8 @@
           [id]="'option' + i"
           class="answerButton btn"
           [disabled]="isDisabled"
-        >
-          {{ option.answerText }}
-        </button>
+          [mathjax]="option.answerText"
+        ></button>
       </li>
     </ul>
   </div>
@@ -64,8 +63,9 @@
                 type="text"
                 id="numerator"
                 name="numerator"
-                ngModel
+                [(ngModel)]="numerator"
                 required
+                autofocus
               />
             </td>
           </tr>
@@ -75,7 +75,7 @@
                 type="text"
                 id="denominator"
                 name="denominator"
-                ngModel
+                [(ngModel)]="denominator"
                 required
               />
             </td>
