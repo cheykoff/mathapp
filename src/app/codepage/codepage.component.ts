@@ -27,6 +27,8 @@ export class CodepageComponent implements OnInit {
     } else if (value.code === 'Panda') {
       this._shared.testNumber = 3;
       this.goToExercise();
+    } else if (value.code === 'Nashorn') {
+      this.goToExercise();
     } else {
       this.wrongCode = true;
       this.wrongCodeCounter++;

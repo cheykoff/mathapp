@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!idWasGenerated">
   <p>
-    Hast du schon eine ID (sechsstellige Nummer)? Wenn ja, dann gib sie bitte
-    hier ein.
+    Dein*e Lehrer*in hat dir eine ID (sechsstellige Nummer) gegeben? Gib sie
+    bitte hier ein.
   </p>
   <form (ngSubmit)="submitId(f)" #f="ngForm">
     <input
@@ -28,6 +28,7 @@
       Wenn du deine ID nicht mehr weißt, kannst du auch eine neue erstellen.
     </p>
   </div>
+  <!--
   <ng-template #start>
     <p style="margin-top: 20px">
       Wenn du noch keine ID hast, dann erstell dir eine.
@@ -45,4 +46,5 @@
   <button class="btn classBtn" (click)="goToClassSelection()">
     Los geht's
   </button>
+  -->
 </div>

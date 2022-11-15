@@ -15,6 +15,7 @@ import { DataService } from '../service/data.service';
 export class Exercise2Component implements OnInit {
   exercises$: Observable<Exercise2[]>;
   currentQuestion: number = 0;
+  totalQuestions: number = 20;
   givenAnswer = '';
   numerator: string = '';
   denominator: string = '';
@@ -27,9 +28,10 @@ export class Exercise2Component implements OnInit {
   correctAnswer: string = '';
   isDisabled: boolean;
   attempts: number = 0;
-  penaltyCountDown: Subscription;
-  penalty: number = 5;
-  penaltyCount: number = 0;
+  maxAttempts: number = 3;
+  // penaltyCountDown: Subscription;
+  // penalty: number = 5;
+  // penaltyCount: number = 0;
   answerPossible: boolean = true;
   tick = 1000;
   streakCount: number = 0;
@@ -46,8 +48,8 @@ export class Exercise2Component implements OnInit {
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
     // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel().pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises))); // For test at 28.10.2022
-    this.exercises$ = this._dataService.getAllExercises2();
-    // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // For homework at 16.11.2022
+    this.exercises$ = this._dataService.getAllExercises2(); // For homework at 16.11.2022
+    // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
   }
 
   shuffleExercises(exercises: Exercise2[]): Exercise2[] {
@@ -57,7 +59,7 @@ export class Exercise2Component implements OnInit {
     }
     return exercises;
   }
-
+  /*
   penaltyTimer(): void {
     this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
       --this.penalty;
@@ -70,6 +72,7 @@ export class Exercise2Component implements OnInit {
     this.penalty = Math.min(5 * (1 + this.penaltyCount), 30);
     this.penaltyCount++;
   }
+  */
 
   getCorrectAnswer(exercise: Exercise2): void {
     exercise.answerOptions.forEach((answerOption) => {
@@ -82,10 +85,9 @@ export class Exercise2Component implements OnInit {
   onSubmitAnswer(form: NgForm, exercise: Exercise2) {
     console.log('onSubmitAnswer');
     console.log(exercise);
-    if (
-      exercise.answerType === 'fraction' &&
-      typeof exercise.correctAnswer !== 'string'
-    ) {
+    this.endTime = new Date();
+    this.duration = this.endTime.getTime() - this.startTime.getTime();
+    if (exercise.answerType === 'fraction') {
       const correctDenominator = exercise.correctAnswerFraction.denominator;
       const correctNumerator = exercise.correctAnswerFraction.numerator;
       const givenDenominator = form.value.denominator;
@@ -96,9 +98,15 @@ export class Exercise2Component implements OnInit {
         parseInt(givenNumerator) === parseInt(correctNumerator)
       ) {
         this.isDisabled = true;
-        this.shared.correctAnswer++;
-        this.streakCount++;
+        if (this.attempts === 0) {
+          this.shared.correctAnswer++;
+          this.streakCount++;
+          this.storeAnswer(true, exercise.id);
+        } else {
+          this.storeAnswer(false, exercise.id);
+        }
         this.answerIsCorrect = true;
+        this.answerIsIncorrect = false;
 
         setTimeout(() => {
           this.currentQuestion++;
@@ -107,29 +115,46 @@ export class Exercise2Component implements OnInit {
           this.answerIsCorrect = false;
           this.isDisabled = false;
           this.attempts = 0;
-          if (this.currentQuestion >= 20) {
+          if (this.currentQuestion >= this.totalQuestions) {
             this.showResult();
           }
         }, 1000);
         return true;
       }
+      if (this.attempts === 0) {
+        this.shared.incorrectAnswer++;
+      }
+      this.attempts++;
+      if (this.attempts >= this.maxAttempts) {
+        this.isDisabled = true;
+        this.storeAnswer(false, exercise.id);
+      }
       this.answerIsIncorrect = true;
       this.answerIsCorrect = false;
       this.answerPossible = false;
-      this.penaltyTimer();
+      this.streakCount = 0;
+      // this.penaltyTimer();
       return false;
     }
 
     const givenAnswer = form.value.givenAnswer;
     console.log(givenAnswer);
-    if (typeof exercise.correctAnswer === 'string') {
+    console.log(givenAnswer.toString().replace('.', ',').trim());
+    if (exercise.answerType === 'integer') {
       if (
-        parseInt(givenAnswer.toString().trim()) ===
-        parseInt(exercise.correctAnswer)
+        givenAnswer.toString().replace('.', ',').trim() ===
+        exercise.correctAnswer
       ) {
-        this.streakCount++;
+        if (this.attempts === 0) {
+          this.streakCount++;
+          this.shared.correctAnswer++;
+          this.storeAnswer(true, exercise.id);
+        } else {
+          this.storeAnswer(false, exercise.id);
+        }
+
         this.answerIsCorrect = true;
-        this.shared.correctAnswer++;
+        this.answerIsIncorrect = false;
         this.isDisabled = true;
 
         setTimeout(() => {
@@ -138,20 +163,29 @@ export class Exercise2Component implements OnInit {
           this.isDisabled = false;
           this.givenAnswer = '';
           this.attempts = 0;
-          if (this.currentQuestion >= 20) {
+          if (this.currentQuestion >= this.totalQuestions) {
             this.showResult();
           }
         }, 1000);
 
-        if (this.currentQuestion >= 20) {
+        if (this.currentQuestion >= this.totalQuestions) {
           this.showResult();
         }
         return true;
       }
+      if (this.attempts === 0) {
+        this.shared.incorrectAnswer++;
+      }
+      this.attempts++;
+      if (this.attempts >= this.maxAttempts) {
+        this.isDisabled = true;
+        this.storeAnswer(false, exercise.id);
+      }
       this.answerIsIncorrect = true;
       this.answerIsCorrect = false;
       this.answerPossible = false;
-      this.penaltyTimer();
+      this.streakCount = 0;
+      // this.penaltyTimer();
       return false;
     }
     return false;
@@ -185,7 +219,7 @@ export class Exercise2Component implements OnInit {
         this.shared.correctAnswer++;
         this.streakCount++;
         if (this.streakCount >= 3) {
-          this.penaltyCount = 0;
+          // this.penaltyCount = 0;
         }
       }
       this.answerIsCorrect = true;
@@ -205,18 +239,40 @@ export class Exercise2Component implements OnInit {
     this.answerIsIncorrect = true;
     this.answerIsCorrect = false;
     this.answerPossible = false;
-    this.penaltyTimer();
+    setTimeout(() => {
+      this.answerPossible = true;
+      this.isDisabled = false;
+    }, 1000);
+    // this.penaltyTimer();
 
     return false;
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    console.log('storeAnswer');
+    console.log(isCorrect);
+    console.log(currentQuestionId);
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
       this.duration,
       this.attempts
     );
+  }
+
+  nextExercise(): void {
+    if (this.currentQuestion >= this.totalQuestions - 1) {
+      this.showResult();
+    }
+    this.currentQuestion++;
+    this.answerIsCorrect = false;
+    this.answerIsIncorrect = false;
+    this.isDisabled = false;
+    this.attempts = 0;
+    this.answerPossible = true;
+    this.givenAnswer = '';
+    this.numerator = '';
+    this.denominator = '';
   }
 
   showResult(): void {

@@ -12,7 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { FractionComponent } from './fraction/fraction.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/exercise2', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'loadingpage', component: LoadingpageComponent },
   {
