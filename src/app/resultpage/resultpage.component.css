@@ -31,3 +31,7 @@
     color: var(--clr-primary-dark);
 
 }
+
+input {
+    width: 100%;
+}

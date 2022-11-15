@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared/shared.service';
 import { DataService } from '../service/data.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-resultpage',
@@ -14,6 +15,8 @@ export class ResultpageComponent implements OnInit {
   ) {}
 
   percentage: number = 0;
+  selfReflection: number;
+  selfReflectionGiven: boolean = false;
 
   getPercentage(): void {
     this.percentage =
@@ -34,6 +37,11 @@ export class ResultpageComponent implements OnInit {
 
   ngOnInit(): void {
     this._dataService.storeResult();
+  }
+
+  onSubmitSelfReflection(form: NgForm): void {
+    this._dataService.storeSelfReflection(form.value.selfReflection);
+    this.selfReflectionGiven = true;
   }
 
   repeatQuiz(): void {

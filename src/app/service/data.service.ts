@@ -131,6 +131,12 @@ export class DataService {
     });
   }
 
+  storeSelfReflection(selfReflection: number) {
+    this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
+      selfReflection: selfReflection,
+    });
+  }
+
   getAllExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercises-all')

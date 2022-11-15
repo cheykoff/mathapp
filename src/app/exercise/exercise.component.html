@@ -42,7 +42,7 @@
       name="givenAnswer"
       placeholder=""
       [(ngModel)]="givenAnswer"
-      [disabled]="attempts >= 3"
+      [disabled]="attempts >= maxAttempts"
       required
       autofocus
     />

@@ -19,7 +19,7 @@ export class SharedService {
   testNumber: number = 0;
 
   countDown: Subscription;
-  counter = 180; // 1800 s = 30 minutes
+  counter = 2700; // 1800 s = 30 minutes
   tick = 1000;
 
   countDownTimer() {
