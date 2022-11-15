@@ -110,6 +110,7 @@ export class Exercise2Component implements OnInit {
 
         setTimeout(() => {
           this.currentQuestion++;
+          this.startTime = new Date();
           this.denominator = '';
           this.numerator = '';
           this.answerIsCorrect = false;
@@ -159,6 +160,7 @@ export class Exercise2Component implements OnInit {
 
         setTimeout(() => {
           this.currentQuestion++;
+          this.startTime = new Date();
           this.answerIsCorrect = false;
           this.isDisabled = false;
           this.givenAnswer = '';
@@ -226,6 +228,7 @@ export class Exercise2Component implements OnInit {
       this.answerIsIncorrect = false;
       setTimeout(() => {
         this.currentQuestion++;
+        this.startTime = new Date();
         this.answerIsCorrect = false;
         this.isDisabled = false;
         this.attempts = 0;
