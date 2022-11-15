@@ -13,36 +13,28 @@ import { MathjaxModule } from 'mathjax-angular';
 
 import { AppComponent } from './app.component';
 import { ClassselectionComponent } from './classselection/classselection.component';
-import { ExerciseComponent } from './exercise/exercise.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
 import { LoadingpageComponent } from './loadingpage/loadingpage.component';
-import { StartpageComponent } from './startpage/startpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
 import { EquationPipe } from './mathequation.pipe';
-import { PuzzleComponent } from './puzzle/puzzle.component';
 import { LoginComponent } from './login/login.component';
-import { FractionComponent } from './fraction/fraction.component';
 import { Exercise2Component } from './exercise2/exercise2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClassselectionComponent,
-    ExerciseComponent,
     ResultpageComponent,
     ChangeBgDirective,
     LoadingpageComponent,
-    StartpageComponent,
     CodepageComponent,
     CountDownPipe,
     EquationPipe,
-    PuzzleComponent,
     LoginComponent,
-    FractionComponent,
     Exercise2Component,
   ],
   imports: [
