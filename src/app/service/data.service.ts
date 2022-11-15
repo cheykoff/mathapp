@@ -58,7 +58,6 @@ export class DataService {
   }
 
   storeSchoolClass(className: number) {
-    console.log('data.service.ts: storeSchoolClass');
     this._store
       .collection(`quizzes`)
       .add({
@@ -83,9 +82,6 @@ export class DataService {
     duration: number,
     attempts: number
   ) {
-    console.log('data.service.ts: storeAnswer');
-    console.log(this._shared.getQuizId());
-
     this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
       startTime: serverTimestamp(),
       exerciseId: exerciseId,

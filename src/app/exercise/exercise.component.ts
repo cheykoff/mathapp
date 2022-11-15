@@ -83,8 +83,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise: Exercise) {
-    console.log('onSubmitAnswer');
-    console.log(exercise);
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
     if (exercise.answerType === 'fraction') {
@@ -139,8 +137,6 @@ export class ExerciseComponent implements OnInit {
     }
 
     const givenAnswer = form.value.givenAnswer;
-    console.log(givenAnswer);
-    console.log(givenAnswer.toString().replace('.', ',').trim());
     if (exercise.answerType === 'integer') {
       if (
         givenAnswer.toString().replace('.', ',').trim() ===
@@ -252,9 +248,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    console.log('storeAnswer');
-    console.log(isCorrect);
-    console.log(currentQuestionId);
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
