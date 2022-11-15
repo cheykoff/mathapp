@@ -16,7 +16,6 @@ import { ClassselectionComponent } from './classselection/classselection.compone
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
-import { LoadingpageComponent } from './loadingpage/loadingpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
@@ -30,7 +29,6 @@ import { Exercise2Component } from './exercise2/exercise2.component';
     ClassselectionComponent,
     ResultpageComponent,
     ChangeBgDirective,
-    LoadingpageComponent,
     CodepageComponent,
     CountDownPipe,
     EquationPipe,
