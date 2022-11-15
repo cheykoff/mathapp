@@ -43,11 +43,6 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.exercises$ = this._dataService.getAllExercises(5);
-    // this.exercises$ = this._dataService.getAllExercisesByTestNumber(2); // For test at 14.10.2022
-    // this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
-    // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
-    // this.exercises$ = this._dataService.getAllExercisesByClassLevel().pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises))); // For test at 28.10.2022
     this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
   }
