@@ -21,7 +21,7 @@ import { CodepageComponent } from './codepage/codepage.component';
 import { CountDownPipe } from './countdown.pipe';
 import { EquationPipe } from './mathequation.pipe';
 import { LoginComponent } from './login/login.component';
-import { Exercise2Component } from './exercise2/exercise2.component';
+import { ExerciseComponent } from './exercise/exercise.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { Exercise2Component } from './exercise2/exercise2.component';
     CountDownPipe,
     EquationPipe,
     LoginComponent,
-    Exercise2Component,
+    ExerciseComponent,
   ],
   imports: [
     BrowserModule,

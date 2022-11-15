@@ -1,4 +1,4 @@
-export interface Exercise2 {
+export interface Exercise {
   id: string;
   question: string;
   answerType?: string;

@@ -4,16 +4,16 @@ import { from, map, Observable, Subscription, timer } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../shared/shared.service';
-import { Exercise2 } from '../shared/exercise2';
+import { Exercise } from '../shared/exercise';
 import { DataService } from '../service/data.service';
 
 @Component({
-  selector: 'app-exercise2',
-  templateUrl: './exercise2.component.html',
-  styleUrls: ['./exercise2.component.scss'],
+  selector: 'app-exercise',
+  templateUrl: './exercise.component.html',
+  styleUrls: ['./exercise.component.scss'],
 })
-export class Exercise2Component implements OnInit {
-  exercises$: Observable<Exercise2[]>;
+export class ExerciseComponent implements OnInit {
+  exercises$: Observable<Exercise[]>;
   currentQuestion: number = 0;
   totalQuestions: number = 20;
   givenAnswer = '';
@@ -48,11 +48,11 @@ export class Exercise2Component implements OnInit {
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel(); // For test at 18.10.2022
     // this.exercises$ = this._dataService.getAllExercisesPitch(); // For pitch at EdTech Next 25.10.2022
     // this.exercises$ = this._dataService.getAllExercisesByClassLevel().pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises))); // For test at 28.10.2022
-    this.exercises$ = this._dataService.getAllExercises2(); // For homework at 16.11.2022
+    this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
   }
 
-  shuffleExercises(exercises: Exercise2[]): Exercise2[] {
+  shuffleExercises(exercises: Exercise[]): Exercise[] {
     for (let i = exercises.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
@@ -74,7 +74,7 @@ export class Exercise2Component implements OnInit {
   }
   */
 
-  getCorrectAnswer(exercise: Exercise2): void {
+  getCorrectAnswer(exercise: Exercise): void {
     exercise.answerOptions.forEach((answerOption) => {
       if (answerOption.isCorrect) {
         this.correctAnswer = answerOption.answerText;
@@ -82,7 +82,7 @@ export class Exercise2Component implements OnInit {
     });
   }
 
-  onSubmitAnswer(form: NgForm, exercise: Exercise2) {
+  onSubmitAnswer(form: NgForm, exercise: Exercise) {
     console.log('onSubmitAnswer');
     console.log(exercise);
     this.endTime = new Date();
@@ -196,7 +196,7 @@ export class Exercise2Component implements OnInit {
   onClickAnswer(
     option: any,
     exercisesLength: number,
-    exercise: Exercise2
+    exercise: Exercise
   ): void {
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.attempts++;

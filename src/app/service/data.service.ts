@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Firestore } from '@angular/fire/firestore';
 import 'firebase/firestore';
 import { serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
-import { Exercise2 } from '../shared/exercise2';
-import { Puzzle } from '../shared/puzzle';
-import { Fraction } from '../shared/fraction';
+import { Exercise } from '../shared/exercise';
 import { convertSnaps } from './db-utils';
 
 @Injectable({
@@ -138,10 +135,10 @@ export class DataService {
     });
   }
 
-  getAllExercises2(): Observable<Exercise2[]> {
+  getAllExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercises-all')
       .get()
-      .pipe(map((result) => convertSnaps<Exercise2>(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 }

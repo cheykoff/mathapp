@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClassselectionComponent } from './classselection/classselection.component';
-import { Exercise2Component } from './exercise2/exercise2.component';
+import { ExerciseComponent } from './exercise/exercise.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import { CodepageComponent } from './codepage/codepage.component';
 import { LoginComponent } from './login/login.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ClassselectionComponent,
   },
   { path: 'codepage', component: CodepageComponent },
-  { path: 'exercise2', component: Exercise2Component },
+  { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
   { path: '**', redirectTo: '/startpage' },
 ];
