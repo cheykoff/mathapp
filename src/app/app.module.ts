@@ -22,6 +22,8 @@ import { CountDownPipe } from './countdown.pipe';
 import { EquationPipe } from './mathequation.pipe';
 import { LoginComponent } from './login/login.component';
 import { ExerciseComponent } from './exercise/exercise.component';
+import { LevelpageComponent } from './levelpage/levelpage.component';
+import { DynamicExerciseComponent } from './dynamic-exercise/dynamic-exercise.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { ExerciseComponent } from './exercise/exercise.component';
     EquationPipe,
     LoginComponent,
     ExerciseComponent,
+    LevelpageComponent,
+    DynamicExerciseComponent,
   ],
   imports: [
     BrowserModule,

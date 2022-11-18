@@ -125,6 +125,30 @@ export class DataService {
     });
   }
 
+  storeDynamicAnswer(
+    question: string,
+    correctAnswer: number,
+    givenAnswer: number,
+    answerIsCorrect: boolean,
+    duration: number,
+    level: number
+  ) {
+    this._store
+      .collection(`quizzes/${this._shared.getQuizId()}/dynamicanswers`)
+      .add({
+        startTime: serverTimestamp(),
+        question: question,
+        correctAnswer: correctAnswer,
+        givenAnswer: givenAnswer,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+        level: level,
+        studentId: this._shared.getStudentId(),
+        sessionId: this._shared.getSessionId(),
+        quizId: this._shared.getQuizId(),
+      });
+  }
+
   addEndTime() {
     this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
       endTime: serverTimestamp(),

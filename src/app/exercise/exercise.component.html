@@ -1,3 +1,58 @@
+<div class="header">
+  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
+  <span id="studentId">ID: {{ this.shared.studentId }}</span>
+  <div id="countdown">{{ this.shared.counter | countDown }}</div>
+</div>
+<div class="question">
+  <p [mathjax]="question"></p>
+</div>
+<form
+  (ngSubmit)="onSubmitAnswer(f)"
+  #f="ngForm"
+  *ngIf="answerType === 'dynamic'"
+>
+  <div>
+    <input
+      class="answerText"
+      type="number"
+      id="givenAnswer"
+      name="givenAnswer"
+      placeholder=""
+      [(ngModel)]="givenAnswer"
+      [disabled]="isDisabled"
+      required
+      autofocus
+      (focus)="onFocusEvent($event)"
+    />
+  </div>
+
+  <p *ngIf="this.answerIsIncorrect" class="incorrectText feedback">
+    Leider nicht richtig.
+  </p>
+  <div *ngIf="answerIsCorrect" class="correct">
+    <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
+      Richtig!
+    </p>
+    <ng-template #streak>
+      <p class="correctText feedback">
+        Richtig! Du hast {{ streakCount }} Fragen in Folge richtig beantwortet!
+      </p>
+    </ng-template>
+  </div>
+  <button class="btn classBtn" type="submit" *ngIf="!this.isCorrect">
+    Antwort prüfen
+  </button>
+</form>
+<button
+  *ngIf="this.showNextButton"
+  class="btn classBtn"
+  (click)="nextExercise()"
+  type="submit"
+>
+  Nächste Frage
+</button>
+
+<!--
 <ng-container
   *ngIf="exercises$ | async as exercises; else loading"
   (load)="getCorrectAnswer1(exercises)"
@@ -7,7 +62,14 @@
     <span id="studentId">ID: {{ this.shared.studentId }}</span>
     <div id="countdown">{{ this.shared.counter | countDown }}</div>
   </div>
-  <p class="question" [mathjax]="exercises[currentQuestion].question"></p>
+  <div class="question">
+    <p [mathjax]="exercises[currentQuestion].question"></p>
+    <img
+      class="questionImg"
+      src="assets/img/geometry/parallelogram.png"
+      *ngIf="exercises[currentQuestion].questionType === 'image'"
+    />
+  </div>
 
   <div class="options" *ngIf="exercises[currentQuestion].answerType === 'mc'">
     <ul class="answerList">
@@ -35,17 +97,25 @@
     #f="ngForm"
     *ngIf="exercises[currentQuestion].answerType === 'integer'"
   >
-    <input
-      class="answerText"
-      type="text"
-      id="givenAnswer"
-      name="givenAnswer"
-      placeholder=""
-      [(ngModel)]="givenAnswer"
-      [disabled]="attempts >= maxAttempts"
-      required
-      autofocus
-    />
+    <div>
+      <input
+        class="answerText"
+        type="text"
+        id="givenAnswer"
+        name="givenAnswer"
+        placeholder=""
+        [(ngModel)]="givenAnswer"
+        [disabled]="attempts >= maxAttempts"
+        required
+        autofocus
+        [hasUnit]="exercises[currentQuestion].unit"
+      />
+      <p
+        class="unit"
+        *ngIf="exercises[currentQuestion].unit"
+        [mathjax]="exercises[currentQuestion].unit"
+      ></p>
+    </div>
     <p *ngIf="this.isIncorrectAnswer">Leider nicht richtig.</p>
     <p *ngIf="this.isCorrectAnswer">Sehr gut.</p>
     <button class="btn classBtn" type="submit" [disabled]="isDisabled">
@@ -116,8 +186,9 @@
         class="incorrectText feedback"
         *ngIf="!answerPossible; else tryAgain"
       >
-        <p>Leider falsch!</p>
-        <!--<p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>-->
+        <p>Leider falsch!</p>-->
+<!--<p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>-->
+<!--
       </div>
       <ng-template #tryAgain>
         <p>Versuch es jetzt noch einmal.</p>
@@ -147,3 +218,4 @@
 <ng-template #loading>
   <p class="loading">Lade die nächste Aufgabe ...</p>
 </ng-template>
+-->

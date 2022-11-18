@@ -21,6 +21,19 @@
   white-space: pre-wrap;
 }
 
+.questionImg {
+  width: 100%;
+}
+
+.answerText[hasUnit="true"] {
+  width: 80%;
+}
+
+.unit {
+  display: inline-block;
+  margin: auto 8px;
+}
+
 #countdown {
   font-size: 1rem;
   font-weight: var(--fw-bold);

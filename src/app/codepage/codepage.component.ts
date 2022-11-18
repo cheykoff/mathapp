@@ -18,17 +18,8 @@ export class CodepageComponent implements OnInit {
 
   submitCode(form: NgForm): void {
     const value = form.value;
-    if (value.code === 'Gorilla') {
-      this._shared.testNumber = 1;
-      this.goToExercise();
-    } else if (value.code === 'Elefant') {
-      this._shared.testNumber = 2;
-      this.goToExercise();
-    } else if (value.code === 'Panda') {
-      this._shared.testNumber = 3;
-      this.goToExercise();
-    } else if (value.code === 'Nashorn') {
-      this.goToExercise();
+    if (value.code === 'Tiger') {
+      this.goToLevelPage();
     } else {
       this.wrongCode = true;
       this.wrongCodeCounter++;
@@ -37,6 +28,10 @@ export class CodepageComponent implements OnInit {
 
   goToExercise(): void {
     this._router.navigate(['/', 'exercise']);
+    this._shared.countDownTimer();
+  }
+  goToLevelPage(): void {
+    this._router.navigate(['/', 'levelpage']);
     this._shared.countDownTimer();
   }
 }

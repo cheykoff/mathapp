@@ -15,8 +15,8 @@ import { DataService } from '../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   currentQuestion: number = 0;
-  totalQuestions: number = 20;
-  givenAnswer = '';
+  totalQuestions: number = 10;
+  givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
   givenAnswers: any = [];
@@ -35,6 +35,8 @@ export class ExerciseComponent implements OnInit {
   answerPossible: boolean = true;
   tick = 1000;
   streakCount: number = 0;
+  isCorrect: boolean;
+  showNextButton: boolean = false;
 
   constructor(
     public shared: SharedService,
@@ -42,9 +44,66 @@ export class ExerciseComponent implements OnInit {
     private _dataService: DataService
   ) {}
 
+  onFocusEvent(event: any) {
+    this.answerIsIncorrect = false;
+  }
+
   ngOnInit(): void {
-    this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
+    // this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
+    this.createExercise(this.shared.chosenLevel);
+    this.shared.correctAnswer = 0;
+    this.shared.incorrectAnswer = 0;
+  }
+
+  question: string = '';
+  answer: number;
+  answerType: string = 'dynamic';
+
+  createExercise(level: number): void {
+    this.startTime = new Date();
+    let minNum = undefined;
+    let maxNum = undefined;
+    if (level <= 4) {
+      minNum = 1;
+      maxNum = 10;
+    } else if (level <= 6) {
+      minNum = 1;
+      maxNum = 100;
+    } else if (level <= 8) {
+      minNum = 1;
+      maxNum = 20;
+    } else {
+      minNum = 1;
+      maxNum = 10000;
+    }
+    const a = this.getRandInteger(minNum, maxNum);
+    const b = this.getRandInteger(minNum, maxNum);
+    if (level % 4 === 1) {
+      this.question = `${a} + ${b} = ?`;
+      this.answer = a + b;
+    } else if (level % 4 === 2) {
+      if (a > b) {
+        this.question = `${a} - ${b} = ?`;
+        this.answer = a - b;
+      } else {
+        this.question = `${b} - ${a} = ?`;
+        this.answer = b - a;
+      }
+    } else if (level % 4 === 3) {
+      this.question = `${a} ⋅ ${b} = ?`;
+      this.answer = a * b;
+    } else if (level % 4 === 0) {
+      const c = a * b;
+      this.question = `${c} : ${a} = ?`;
+      this.answer = b;
+    }
+
+    return;
+  }
+
+  getRandInteger(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
   }
 
   shuffleExercises(exercises: Exercise[]): Exercise[] {
@@ -77,9 +136,48 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-  onSubmitAnswer(form: NgForm, exercise: Exercise) {
+  onSubmitAnswer(form: NgForm, exercise?: Exercise) {
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
+
+    if (this.answerType === 'dynamic') {
+      this.givenAnswer = form.value.givenAnswer;
+      console.log('correct answer: ', this.answer);
+      console.log('given answer: ', form.value.givenAnswer);
+      if (this.givenAnswer === this.answer) {
+        this.isCorrect = true;
+        this.answerIsCorrect = true;
+        this.answerIsIncorrect = false;
+        console.log('correct');
+        this.shared.correctAnswer++;
+        this.isDisabled = true;
+        this.streakCount++;
+      } else {
+        console.log('incorrect');
+        this.isCorrect = false;
+        this.answerIsIncorrect = true;
+        this.shared.incorrectAnswer++;
+        this.streakCount = 0;
+        setTimeout(() => {
+          this.answerIsIncorrect = false;
+        }, 1000);
+      }
+    }
+    console.log(this.shared.correctAnswer);
+    console.log(this.shared.incorrectAnswer);
+    this._dataService.storeDynamicAnswer(
+      this.question,
+      this.answer,
+      this.givenAnswer,
+      this.isCorrect,
+      this.duration,
+      this.shared.chosenLevel
+    );
+    this.showNextButton = true;
+
+    return;
+
+    /*
     if (exercise.answerType === 'fraction') {
       const correctDenominator = exercise.correctAnswerFraction.denominator;
       const correctNumerator = exercise.correctAnswerFraction.numerator;
@@ -182,6 +280,7 @@ export class ExerciseComponent implements OnInit {
       return false;
     }
     return false;
+    */
   }
 
   onClickAnswer(
@@ -252,20 +351,48 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    if (this.currentQuestion >= this.totalQuestions - 1) {
+    this.isCorrect = false;
+    this.isDisabled = false;
+    this.showNextButton = false;
+    this.answerIsIncorrect = false;
+    this.answerIsCorrect = false;
+    this.currentQuestion++;
+    if (this.shared.correctAnswer >= this.totalQuestions) {
+      if (this.shared.incorrectAnswer === 0) {
+        this.shared.levelStars[this.shared.chosenLevel] = 5;
+      } else if (this.shared.incorrectAnswer <= 1) {
+        this.shared.levelStars[this.shared.chosenLevel] = 4;
+      } else if (this.shared.incorrectAnswer <= 2) {
+        this.shared.levelStars[this.shared.chosenLevel] = 3;
+      } else if (this.shared.incorrectAnswer <= 3) {
+        this.shared.levelStars[this.shared.chosenLevel] = 2;
+      } else if (this.shared.incorrectAnswer <= 4) {
+        this.shared.levelStars[this.shared.chosenLevel] = 1;
+      } else {
+        this.shared.levelStars[this.shared.chosenLevel] = 0;
+      }
+      if (this.shared.chosenLevel === this.shared.currentLevel) {
+        this.shared.currentLevel++;
+      }
       this.showResult();
+    } else {
+      this.createExercise(this.shared.currentLevel);
+      this.isCorrect;
+      this.givenAnswer = undefined;
     }
+  }
+  /*
     this.currentQuestion++;
     this.answerIsCorrect = false;
     this.answerIsIncorrect = false;
     this.isDisabled = false;
     this.attempts = 0;
     this.answerPossible = true;
-    this.givenAnswer = '';
+    // this.givenAnswer = 0;
     this.numerator = '';
     this.denominator = '';
   }
-
+  */
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }

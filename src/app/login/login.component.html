@@ -2,10 +2,7 @@
   <h1 class="headerTitle">DieMatheApp</h1>
 </div>
 <div *ngIf="!idWasGenerated">
-  <p>
-    Dein*e Lehrer*in hat dir eine ID (sechsstellige Nummer) gegeben? Gib sie
-    bitte hier ein.
-  </p>
+  <p>Gib bitte deine ID (sechsstellige Nummer) ein.</p>
   <form (ngSubmit)="submitId(f)" #f="ngForm">
     <input
       class="studentId-input"
@@ -28,7 +25,7 @@
       Wenn du deine ID nicht mehr weißt, kannst du auch eine neue erstellen.
     </p>
   </div>
-  <!--
+
   <ng-template #start>
     <p style="margin-top: 20px">
       Wenn du noch keine ID hast, dann erstell dir eine.
@@ -46,5 +43,4 @@
   <button class="btn classBtn" (click)="goToClassSelection()">
     Los geht's
   </button>
-  -->
 </div>

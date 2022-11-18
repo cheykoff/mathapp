@@ -17,16 +17,23 @@ export class SharedService {
   correctPuzzles: number = 0;
   incorrectPuzzles: number = 0;
   testNumber: number = 0;
+  quizFinished: boolean = false;
 
   countDown: Subscription;
-  counter = 2700; // 1800 s = 30 minutes
+  counter = 1800; // 1800 s = 30 minutes
   tick = 1000;
+
+  currentLevel = 1;
+  chosenLevel = 1;
+  levelStars: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   countDownTimer() {
     this.countDown = timer(0, this.tick).subscribe(() => {
       --this.counter;
       if (this.counter === 0) {
-        this.showResult();
+        this.quizFinished = true;
+        this._router.navigate(['/', 'levelpage']);
+        // this.showResult();
         this.countDown.unsubscribe();
         this.countDown = null;
       }
