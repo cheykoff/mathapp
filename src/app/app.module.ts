@@ -28,6 +28,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
+import { TrainingComponent } from './components/training/training.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component
     DemoComponent,
     QuizComponent,
     QuizIntroComponent,
+    TrainingComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,12 @@
+<div class="header">
+  <h1 class="headerTitle">{{ header }}</h1>
+</div>
+<div class="main">
+  <ul>
+    <li *ngFor="let topic of topics">
+      <button class="btn btn-primary" routerLink="/exercise">
+        {{ topic.name }}
+      </button>
+    </li>
+  </ul>
+</div>
