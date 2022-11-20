@@ -24,6 +24,10 @@ import { LoginComponent } from './components/login/login.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
 import { StartComponent } from './components/start/start.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { DemoComponent } from './components/demo/demo.component';
+import { QuizComponent } from './components/quiz/quiz.component';
+import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,10 @@ import { StartComponent } from './components/start/start.component';
     ExerciseComponent,
     LevelpageComponent,
     StartComponent,
+    MenuComponent,
+    DemoComponent,
+    QuizComponent,
+    QuizIntroComponent,
   ],
   imports: [
     BrowserModule,

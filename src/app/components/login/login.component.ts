@@ -7,7 +7,7 @@ import { DataService } from '../../service/data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   constructor(
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   submitId(form: NgForm): void {
+    console.log('submitId() called');
     const value = form.value;
     if (value.studentId < 100000 || value.studentId > 999999) {
       this.validStudentId = false;
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
     if (value.studentId) {
       this.validStudentId = true;
       this.shared.studentId = value.studentId;
-      this.goToClassSelection();
+      // this.goToClassSelection();
+      this.goToMenu();
       this._data.updateStudentId();
       this.shared.storeStudentIdInLocalStorage();
     } else {
@@ -40,6 +42,10 @@ export class LoginComponent implements OnInit {
 
   goToClassSelection(): void {
     this._router.navigate(['/', 'classselection']);
+  }
+
+  goToMenu(): void {
+    this._router.navigate(['/', 'menu']);
   }
 
   generateId(): void {

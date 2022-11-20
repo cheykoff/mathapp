@@ -3,56 +3,58 @@
   <span id="studentId">ID: {{ this.shared.studentId }}</span>
   <div id="countdown">{{ this.shared.counter | countDown }}</div>
 </div>
-<div class="question">
-  <p [mathjax]="question"></p>
-</div>
-<form
-  (ngSubmit)="onSubmitAnswer(f)"
-  #f="ngForm"
-  *ngIf="answerType === 'dynamic'"
->
-  <div>
-    <input
-      class="answerText"
-      type="number"
-      id="givenAnswer"
-      name="givenAnswer"
-      placeholder=""
-      [(ngModel)]="givenAnswer"
-      [disabled]="isDisabled"
-      required
-      autofocus
-      (focus)="onFocusEvent($event)"
-    />
+<div class="main">
+  <div class="question">
+    <p [mathjax]="question"></p>
   </div>
+  <form
+    (ngSubmit)="onSubmitAnswer(f)"
+    #f="ngForm"
+    *ngIf="answerType === 'dynamic'"
+  >
+    <div>
+      <input
+        class="answerText"
+        type="number"
+        id="givenAnswer"
+        name="givenAnswer"
+        placeholder=""
+        [(ngModel)]="givenAnswer"
+        [disabled]="isDisabled"
+        required
+        autofocus
+        (focus)="onFocusEvent($event)"
+      />
+    </div>
 
-  <p *ngIf="this.answerIsIncorrect" class="incorrectText feedback">
-    Leider nicht richtig.
-  </p>
-  <div *ngIf="answerIsCorrect" class="correct">
-    <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
-      Richtig!
+    <p *ngIf="this.answerIsIncorrect" class="incorrectText feedback">
+      Leider nicht richtig.
     </p>
-    <ng-template #streak>
-      <p class="correctText feedback">
-        Richtig! Du hast {{ streakCount }} Fragen in Folge richtig beantwortet!
+    <div *ngIf="answerIsCorrect" class="correct">
+      <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
+        Richtig!
       </p>
-    </ng-template>
-  </div>
-  <button class="btn classBtn" type="submit" *ngIf="!this.isCorrect">
-    Antwort prüfen
+      <ng-template #streak>
+        <p class="correctText feedback">
+          Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
+          beantwortet!
+        </p>
+      </ng-template>
+    </div>
+    <button class="btn classBtn" type="submit" *ngIf="!this.isCorrect">
+      Antwort prüfen
+    </button>
+  </form>
+  <button
+    *ngIf="this.showNextButton"
+    class="btn classBtn"
+    (click)="nextExercise()"
+    type="submit"
+  >
+    Nächste Frage
   </button>
-</form>
-<button
-  *ngIf="this.showNextButton"
-  class="btn classBtn"
-  (click)="nextExercise()"
-  type="submit"
->
-  Nächste Frage
-</button>
 
-<!--
+  <!--
 <ng-container
   *ngIf="exercises$ | async as exercises; else loading"
   (load)="getCorrectAnswer1(exercises)"
@@ -187,8 +189,8 @@
         *ngIf="!answerPossible; else tryAgain"
       >
         <p>Leider falsch!</p>-->
-<!--<p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>-->
-<!--
+  <!--<p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>-->
+  <!--
       </div>
       <ng-template #tryAgain>
         <p>Versuch es jetzt noch einmal.</p>
@@ -218,4 +220,4 @@
 <ng-template #loading>
   <p class="loading">Lade die nächste Aufgabe ...</p>
 </ng-template>
--->
+--></div>

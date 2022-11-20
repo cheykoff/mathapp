@@ -1,0 +1,19 @@
+<div class="header">
+  <h1 class="headerTitle">{{ header }}</h1>
+</div>
+<div class="main">
+  <ul>
+    <li
+      *ngFor="let menuItem of menuItems"
+      (click)="selectSchoolClass(schoolClass.level)"
+    >
+      <button
+        class="btn classBtn"
+        [disabled]="menuItem.disabled"
+        routerLink="{{ menuItem.route }}"
+      >
+        {{ menuItem.name }}
+      </button>
+    </li>
+  </ul>
+</div>

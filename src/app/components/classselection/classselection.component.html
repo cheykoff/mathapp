@@ -1,14 +1,15 @@
 <div class="header">
   <h1 class="headerTitle">Wähle deine Klasse</h1>
 </div>
-
-<ul>
-  <li
-    *ngFor="let schoolClass of schoolClasses"
-    (click)="selectSchoolClass(schoolClass.level)"
-  >
-    <button class="btn classBtn" [disabled]="schoolClass.disabled">
-      {{ schoolClass.level }}. Klasse
-    </button>
-  </li>
-</ul>
+<div class="main">
+  <ul>
+    <li
+      *ngFor="let schoolClass of schoolClasses"
+      (click)="selectSchoolClass(schoolClass.level)"
+    >
+      <button class="btn classBtn" [disabled]="schoolClass.disabled">
+        {{ schoolClass.level }}. Klasse
+      </button>
+    </li>
+  </ul>
+</div>

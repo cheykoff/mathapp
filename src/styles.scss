@@ -60,12 +60,25 @@
 body {
   --hue: var(--hue-primary);
   margin: 0px;
-  padding: 16px;
   background-color: white;
   margin: 0px auto;
   position: relative;
   font-size: var(--fs-normal);
   line-height: 1.6;
+}
+
+.main {
+  padding: 16px;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+
+  :hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 header {
@@ -79,7 +92,7 @@ header {
 .header {
   background-color: var(--clr-light);
   padding: 1px 16px;
-  margin: -16px -16px 20px -16px;
+  /*margin: -16px -16px 20px -16px; */
   font-weight: var(--fw-normal);
   box-shadow: 0px 2px 5px 0px var(--clr-shadow);
 }
@@ -147,6 +160,29 @@ h1.headerTitle {
   color: var(--clr-grey-darker);
   padding: 16px;
   text-align: center;
+}
+
+:host {
+}
+
+ul {
+  list-style-type: none;
+  margin: 0 -16px;
+
+  overflow: hidden;
+
+  li {
+    margin: 0 16px;
+
+    button {
+      height: 45px;
+      color: black;
+
+      &:not([disabled]):focus {
+        background-color: var(--clr-primary-lighter);
+      }
+    }
+  }
 }
 
 #team-name-small {

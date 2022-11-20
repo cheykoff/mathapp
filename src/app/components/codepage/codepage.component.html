@@ -1,31 +1,37 @@
 <div class="header">
   <h1 class="headerTitle">Mach dich bereit</h1>
 </div>
-<p style="color: rgb(196, 33, 33); margin-top: 12px">
-  Leg dir Papier und Stift für Nebenrechnungen bereit.
-</p>
-<p style="margin-top: 12px">
-  Dein/e Lehrer*in hat dir das Passwort gegeben. Gib es bitte hier ein.
-</p>
+<div class="main">
+  <p style="color: rgb(196, 33, 33); margin-top: 12px">
+    Leg dir Papier und Stift für Nebenrechnungen bereit.
+  </p>
+  <p style="margin-top: 12px">
+    Dein/e Lehrer*in hat dir das Passwort gegeben. Gib es bitte hier ein.
+  </p>
 
-<form (ngSubmit)="submitCode(f)" #f="ngForm">
-  <input
-    class="code-input"
-    type="text"
-    id="code"
-    name="code"
-    ngModel
-    required
-  />
-  <button class="btn classBtn" type="submit" [disabled]="!f.valid">
-    Start Quiz
-  </button>
-</form>
-<p *ngIf="wrongCode">Der Code ist leider falsch. Bitte versuche es erneut.</p>
-<div *ngIf="wrongCodeCounter >= 10">
-  <p>Du gibst wohl nicht so leicht auf :)</p>
+  <form (ngSubmit)="submitCode(f)" #f="ngForm">
+    <input
+      class="code-input"
+      type="text"
+      id="code"
+      name="code"
+      ngModel
+      required
+    />
+    <button class="btn classBtn" type="submit" [disabled]="!f.valid">
+      Start Quiz
+    </button>
+  </form>
+  <p *ngIf="wrongCode">Der Code ist leider falsch. Bitte versuche es erneut.</p>
+  <div *ngIf="wrongCodeCounter >= 10">
+    <p>Du gibst wohl nicht so leicht auf :)</p>
+    <p>
+      Das ist super. Dann ist Mathe genau das Richtige für dich. Da darf man
+      auch nicht zu schnell aufgeben.
+    </p>
+  </div>
   <p>
-    Das ist super. Dann ist Mathe genau das Richtige für dich. Da darf man auch
-    nicht zu schnell aufgeben.
+    Du hast kein Passwort? Dann kannst du gerne die
+    <a routerLink="/demo">Demo</a> ausprobieren.
   </p>
 </div>
