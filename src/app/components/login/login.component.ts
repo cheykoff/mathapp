@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedService } from '../shared/shared.service';
-import { DataService } from '../service/data.service';
+import { SharedService } from '../../shared/shared.service';
+import { DataService } from '../../service/data.service';
 
 @Component({
   selector: 'app-login',

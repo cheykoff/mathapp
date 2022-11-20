@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { from, map, Observable, Subscription, timer } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
-import { SharedService } from '../shared/shared.service';
-import { Exercise } from '../shared/exercise';
-import { DataService } from '../service/data.service';
+import { SharedService } from '../../shared/shared.service';
+import { Exercise } from '../../shared/exercise';
+import { DataService } from '../../service/data.service';
 
 @Component({
   selector: 'app-exercise',

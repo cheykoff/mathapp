@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Level, levels } from './levels';
 import { Router } from '@angular/router';
-import { SharedService } from '../shared/shared.service';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-levelpage',

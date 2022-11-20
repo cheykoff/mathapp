@@ -12,19 +12,18 @@ import { RouterModule } from '@angular/router';
 import { MathjaxModule } from 'mathjax-angular';
 
 import { AppComponent } from './app.component';
-import { ClassselectionComponent } from './classselection/classselection.component';
+import { ClassselectionComponent } from './components/classselection/classselection.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ResultpageComponent } from './resultpage/resultpage.component';
+import { ResultpageComponent } from './components/resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
-import { CodepageComponent } from './codepage/codepage.component';
+import { CodepageComponent } from './components/codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
 import { EquationPipe } from './mathequation.pipe';
-import { LoginComponent } from './login/login.component';
-import { ExerciseComponent } from './exercise/exercise.component';
-import { LevelpageComponent } from './levelpage/levelpage.component';
-import { DynamicExerciseComponent } from './dynamic-exercise/dynamic-exercise.component';
-import { StartComponent } from './start/start.component';
+import { LoginComponent } from './components/login/login.component';
+import { ExerciseComponent } from './components/exercise/exercise.component';
+import { LevelpageComponent } from './components/levelpage/levelpage.component';
+import { StartComponent } from './components/start/start.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,6 @@ import { StartComponent } from './start/start.component';
     LoginComponent,
     ExerciseComponent,
     LevelpageComponent,
-    DynamicExerciseComponent,
     StartComponent,
   ],
   imports: [

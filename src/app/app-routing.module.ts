@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClassselectionComponent } from './classselection/classselection.component';
-import { ExerciseComponent } from './exercise/exercise.component';
-import { ResultpageComponent } from './resultpage/resultpage.component';
-import { CodepageComponent } from './codepage/codepage.component';
-import { LoginComponent } from './login/login.component';
-import { LevelpageComponent } from './levelpage/levelpage.component';
-import { DynamicExerciseComponent } from './dynamic-exercise/dynamic-exercise.component';
+import { ClassselectionComponent } from './components/classselection/classselection.component';
+import { ExerciseComponent } from './components/exercise/exercise.component';
+import { ResultpageComponent } from './components/resultpage/resultpage.component';
+import { CodepageComponent } from './components/codepage/codepage.component';
+import { LoginComponent } from './components/login/login.component';
+import { LevelpageComponent } from './components/levelpage/levelpage.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,7 +18,6 @@ const routes: Routes = [
   { path: 'levelpage', component: LevelpageComponent },
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
-  { path: 'dynamic-exercise', component: DynamicExerciseComponent },
   { path: '**', redirectTo: '/startpage' },
 ];
 
