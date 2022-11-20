@@ -24,6 +24,7 @@ import { LoginComponent } from './login/login.component';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { LevelpageComponent } from './levelpage/levelpage.component';
 import { DynamicExerciseComponent } from './dynamic-exercise/dynamic-exercise.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DynamicExerciseComponent } from './dynamic-exercise/dynamic-exercise.co
     ExerciseComponent,
     LevelpageComponent,
     DynamicExerciseComponent,
+    StartComponent,
   ],
   imports: [
     BrowserModule,
