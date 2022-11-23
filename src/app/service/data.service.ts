@@ -187,35 +187,4 @@ export class DataService {
       .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
       .valueChanges() as Observable<Quiz2>;
   }
-
-  /*
-  async getExercisesByQuiz(): Promise<void> {
-    const docSnap = this._store.doc('/quizzes2/3ebk6z4nj8wGCKqPiPZp').get();
-    // const docSnap = await getDoc(docRef);
-    docSnap.subscribe((val) => {
-      console.log(this.test);
-      console.log(this.test.exerciseIds);
-      console.log(this.test.exerciseIds[0]);
-      const data: Quiz2 = val.data();
-      console.log(data);
-      console.log(data.exerciseIds);
-      /*
-      console.log(val.data());
-      if (
-        val.data() &&
-        val.data().exerciseIds &&
-        typeof val.data().exerciseIds[0] === 'string'
-      )
-        console.log(val.data().exerciseIds);
-      console.log(val.data().exerciseIds[0]);
-      console.log(typeof val.data());
-       
-    });
-    */
-
-  /*
-      .collection('users/G2vP9ZCoZNEDwnr4JsgG/sessions/3zDdvscA1GkZDzkmr0Ji/quizzes/')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-      */
 }
