@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { getDoc, serverTimestamp } from 'firebase/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
 import { Quiz } from '../shared/quiz';
@@ -190,7 +190,8 @@ export class DataService {
     return this._store
       .collection('quizzes2', (ref) => ref.where('test2', '==', 'test2'))
       .get()
-      .pipe(map((result) => convertSnaps<Quiz2>(result)));
+      .pipe(map((result) => convertSnaps<Quiz2>(result)))
+      .pipe(take(1));
   }
   /*
   async getExercisesByQuiz(): Promise<void> {
