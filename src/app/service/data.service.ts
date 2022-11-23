@@ -182,19 +182,7 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
 
-  test = {
-    exerciseIds: ['1', '2'],
-  };
-
-  getExercisesByQuiz(): Observable<Quiz2[]> {
-    return this._store
-      .collection('quizzes2', (ref) => ref.where('test2', '==', 'test2'))
-      .get()
-      .pipe(map((result) => convertSnaps<Quiz2>(result)))
-      .pipe(first());
-  }
-
-  getExercisesByQuiz2(): Observable<Quiz2> {
+  getExercisesByQuizId(): Observable<Quiz2> {
     return this._store
       .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
       .valueChanges() as Observable<Quiz2>;
