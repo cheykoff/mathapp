@@ -8,6 +8,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
 import { TrainingComponent } from './components/training/training.component';
+import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 
 import { ClassselectionComponent } from './components/classselection/classselection.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'quiz', component: QuizComponent },
   { path: 'quiz-intro', component: QuizIntroComponent },
   { path: 'training', component: TrainingComponent },
+  { path: 'training-setup', component: TrainingSetupComponent },
 
   {
     path: 'classselection',

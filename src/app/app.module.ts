@@ -29,6 +29,7 @@ import { DemoComponent } from './components/demo/demo.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
 import { TrainingComponent } from './components/training/training.component';
+import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TrainingComponent } from './components/training/training.component';
     QuizComponent,
     QuizIntroComponent,
     TrainingComponent,
+    TrainingSetupComponent,
   ],
   imports: [
     BrowserModule,

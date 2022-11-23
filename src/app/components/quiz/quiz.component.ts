@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { DataService } from '../../service/data.service';
+
 import { Quiz } from 'src/app/shared/quiz';
 
 @Component({
@@ -7,6 +11,9 @@ import { Quiz } from 'src/app/shared/quiz';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit {
+  quizzes$: Observable<Quiz[]>;
+
+  /*
   quizzes: Quiz[] = [
     {
       id: '1',
@@ -27,7 +34,10 @@ export class QuizComponent implements OnInit {
       disabled: true,
     },
   ];
-  constructor() {}
+  */
+  constructor(private _dataService: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.quizzes$ = this._dataService.getQuizzes();
+  }
 }

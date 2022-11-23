@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { DataService } from '../../service/data.service';
+
+import { Exercise } from 'src/app/shared/exercise';
+import { Quiz2 } from 'src/app/shared/quiz2';
 
 @Component({
   selector: 'app-quiz-intro',
@@ -6,10 +12,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quiz-intro.component.css'],
 })
 export class QuizIntroComponent implements OnInit {
+  exercises$: Observable<Exercise[]>;
+  quizzes2$: Observable<Quiz2[]>;
+
   header = 'DieMatheApp - Quiz';
   totalExercises = 10;
   quizTimeLimit = 1800;
-  constructor() {}
+  constructor(private _dataService: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.quizzes2$ = this._dataService.getExercisesByQuiz();
+  }
 }

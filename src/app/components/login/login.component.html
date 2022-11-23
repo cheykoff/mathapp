@@ -3,7 +3,7 @@
 </div>
 <div class="main">
   <div *ngIf="!idWasGenerated">
-    <p>Gib bitte deine ID (sechsstellige Nummer) ein.</p>
+    <p>Gib bitte deine ID (6 Ziffern) ein.</p>
     <form (ngSubmit)="submitId(f)" #f="ngForm">
       <input
         class="studentId-input"

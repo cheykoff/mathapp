@@ -3,10 +3,7 @@
 </div>
 <div class="main">
   <ul>
-    <li
-      *ngFor="let menuItem of menuItems"
-      (click)="selectSchoolClass(schoolClass.level)"
-    >
+    <li *ngFor="let menuItem of menuItems" (click)="onMenuItemClick(menuItem)">
       <button
         class="btn classBtn"
         [disabled]="menuItem.disabled"

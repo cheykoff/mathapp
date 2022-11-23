@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from '../shared/shared.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  validateEventsArray,
+} from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
-import { serverTimestamp } from 'firebase/firestore';
+import { getDoc, serverTimestamp } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
+import { Quiz } from '../shared/quiz';
+import { Quiz2 } from '../shared/quiz2';
 import { convertSnaps } from './db-utils';
 
 @Injectable({
@@ -167,4 +172,54 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
+
+  getQuizzes(): Observable<Quiz[]> {
+    return this._store
+      .collection(
+        'users/G2vP9ZCoZNEDwnr4JsgG/sessions/3zDdvscA1GkZDzkmr0Ji/quizzes'
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Quiz>(result)));
+  }
+
+  test = {
+    exerciseIds: ['1', '2'],
+  };
+
+  getExercisesByQuiz(): Observable<Quiz2[]> {
+    return this._store
+      .collection('quizzes2', (ref) => ref.where('test', '==', 'test'))
+      .get()
+      .pipe(map((result) => convertSnaps<Quiz2>(result)));
+  }
+  /*
+  async getExercisesByQuiz(): Promise<void> {
+    const docSnap = this._store.doc('/quizzes2/3ebk6z4nj8wGCKqPiPZp').get();
+    // const docSnap = await getDoc(docRef);
+    docSnap.subscribe((val) => {
+      console.log(this.test);
+      console.log(this.test.exerciseIds);
+      console.log(this.test.exerciseIds[0]);
+      const data: Quiz2 = val.data();
+      console.log(data);
+      console.log(data.exerciseIds);
+      /*
+      console.log(val.data());
+      if (
+        val.data() &&
+        val.data().exerciseIds &&
+        typeof val.data().exerciseIds[0] === 'string'
+      )
+        console.log(val.data().exerciseIds);
+      console.log(val.data().exerciseIds[0]);
+      console.log(typeof val.data());
+       
+    });
+    */
+
+  /*
+      .collection('users/G2vP9ZCoZNEDwnr4JsgG/sessions/3zDdvscA1GkZDzkmr0Ji/quizzes/')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+      */
 }

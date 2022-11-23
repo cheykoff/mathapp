@@ -2,11 +2,14 @@
   <h1 class="headerTitle">{{ header }}</h1>
 </div>
 <div class="main">
-  <p class="quiz-intro-text">
-    Das Quiz enthält {{ totalExercises }}. Du hast {{ quizTimeLimit / 60 }} min
-    Zeit, um die Fragen zu beantworten. Danach siehst du dein Ergebnis.
-  </p>
-  <p class="hint">Bitte verlasse die Seite währenddessen nicht.</p>
-  <p>Bereit?</p>
-  <button class="btn btn-primary" routerLink="/exercise">Los geht's</button>
+  <ng-container *ngIf="quizzes2$ | async as quizzes">
+    <p class="quiz-intro-text">
+      Das Quiz enthält {{ quizzes.length }} Aufgaben. Du hast
+      {{ quizTimeLimit / 60 }} min Zeit, um die Fragen zu beantworten. Danach
+      siehst du dein Ergebnis.
+    </p>
+    <p class="hint">Bitte verlasse die Seite währenddessen nicht.</p>
+    <p>Bereit?</p>
+    <button class="btn btn-primary" routerLink="/exercise">Los geht's</button>
+  </ng-container>
 </div>

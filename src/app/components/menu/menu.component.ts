@@ -13,4 +13,14 @@ export class MenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onMenuClick(menuItem: MenuListItem) {
+    if (menuItem.name === 'Quiz') {
+      this.loadQuizzes();
+      return;
+    }
+  }
+  loadQuizzes() {
+    console.log('loadQuizzes');
+  }
 }

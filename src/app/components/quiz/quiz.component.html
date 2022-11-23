@@ -2,15 +2,17 @@
   <h1 class="headerTitle">Quiz</h1>
 </div>
 <div class="main">
-  <ul>
-    <li *ngFor="let quiz of quizzes">
-      <button
-        class="btn classBtn"
-        [disabled]="quiz.disabled"
-        routerLink="/quiz-intro"
-      >
-        {{ quiz.name }}
-      </button>
-    </li>
-  </ul>
+  <ng-container *ngIf="quizzes$ | async as quizzes">
+    <ul>
+      <li *ngFor="let quiz of quizzes">
+        <button
+          class="btn classBtn"
+          [disabled]="quiz.disabled"
+          routerLink="/quiz-intro"
+        >
+          {{ quiz.name }}
+        </button>
+      </li>
+    </ul>
+  </ng-container>
 </div>
