@@ -188,7 +188,7 @@ export class DataService {
 
   getExercisesByQuiz(): Observable<Quiz2[]> {
     return this._store
-      .collection('quizzes2', (ref) => ref.where('test', '==', 'test'))
+      .collection('quizzes2', (ref) => ref.where('test2', '==', 'test2'))
       .get()
       .pipe(map((result) => convertSnaps<Quiz2>(result)));
   }

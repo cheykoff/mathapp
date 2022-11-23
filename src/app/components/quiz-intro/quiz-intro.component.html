@@ -4,12 +4,27 @@
 <div class="main">
   <ng-container *ngIf="quizzes2$ | async as quizzes">
     <p class="quiz-intro-text">
-      Das Quiz enthält {{ quizzes.length }} Aufgaben. Du hast
+      Das Quiz enthält {{ quizzes[0].exerciseIds.length }} Aufgaben. Du hast
       {{ quizTimeLimit / 60 }} min Zeit, um die Fragen zu beantworten. Danach
       siehst du dein Ergebnis.
     </p>
+    <p>Liste mit exerciseIds</p>
+    <ul>
+      <li *ngFor="let exerciseId of quizzes[0].exerciseIds">
+        {{ exerciseId }}
+      </li>
+    </ul>
     <p class="hint">Bitte verlasse die Seite währenddessen nicht.</p>
     <p>Bereit?</p>
     <button class="btn btn-primary" routerLink="/exercise">Los geht's</button>
+  </ng-container>
+  <ng-container *ngIf="exercises$ | async as exercises">
+    <ul>
+      <li *ngFor="let exercise of exercises">
+        <button class="btn btn-primary">
+          {{ exercise.id }}
+        </button>
+      </li>
+    </ul>
   </ng-container>
 </div>
