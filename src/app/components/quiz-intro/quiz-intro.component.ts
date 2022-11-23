@@ -14,6 +14,7 @@ import { Quiz2 } from 'src/app/shared/quiz2';
 export class QuizIntroComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   quizzes2$: Observable<Quiz2[]>;
+  quiz3$: Observable<Quiz2>;
 
   header = 'DieMatheApp - Quiz';
   totalExercises = 10;
@@ -22,5 +23,6 @@ export class QuizIntroComponent implements OnInit {
 
   ngOnInit(): void {
     this.quizzes2$ = this._dataService.getExercisesByQuiz();
+    this.quiz3$ = this._dataService.getExercisesByQuiz2();
   }
 }

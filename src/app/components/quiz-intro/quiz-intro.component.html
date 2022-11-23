@@ -27,4 +27,12 @@
       </li>
     </ul>
   </ng-container>
+  <ng-container *ngIf="quiz3$ | async as quiz3">
+    <p>Quiz3</p>
+    <ul>
+      <li *ngFor="let exerciseId of quiz3.exerciseIds">
+        {{ exerciseId }}
+      </li>
+    </ul>
+  </ng-container>
 </div>
