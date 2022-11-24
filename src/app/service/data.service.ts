@@ -11,7 +11,7 @@ import { Observable, map, take, first } from 'rxjs';
 import { Exercise } from '../shared/exercise';
 import { Quiz } from '../shared/quiz';
 import { Quiz2 } from '../shared/quiz2';
-import { convertSnaps } from './db-utils';
+import { convertSnaps, convertSnap } from './db-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -183,8 +183,13 @@ export class DataService {
   }
 
   getExercisesByQuizId(): Observable<Quiz2> {
-    return this._store
-      .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
-      .valueChanges() as Observable<Quiz2>;
+    return (
+      this._store
+        .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
+        .get()
+        //.pipe(map(results => results.docs ))
+        .pipe(map((result) => convertSnap<Quiz2>(result)))
+    ); // does not work
+    //.valueChanges() as Observable<Quiz2> // does work
   }
 }
