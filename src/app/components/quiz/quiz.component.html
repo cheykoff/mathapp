@@ -10,7 +10,9 @@
           [disabled]="quiz.disabled"
           routerLink="/quiz-intro"
         >
-          {{ quiz.name }}
+          {{ quiz.name }} ({{
+            quiz.startTime.toDate() | date: "shortDate":"de-DE"
+          }})
         </button>
       </li>
     </ul>
