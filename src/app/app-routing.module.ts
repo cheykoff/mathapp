@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { WebsiteComponent } from './website/website.component';
+
 import { StartComponent } from './components/start/start.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,7 +20,8 @@ import { CodepageComponent } from './components/codepage/codepage.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/start', pathMatch: 'full' },
+  { path: '', redirectTo: '/website', pathMatch: 'full' },
+  { path: 'website', component: WebsiteComponent },
   { path: 'start', component: StartComponent },
   { path: 'demo', component: DemoComponent },
   { path: 'login', component: LoginComponent },

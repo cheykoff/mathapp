@@ -36,6 +36,7 @@ import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
 import { TrainingComponent } from './components/training/training.component';
 import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
+import { WebsiteComponent } from './website/website.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { TrainingSetupComponent } from './components/training-setup/training-set
     QuizIntroComponent,
     TrainingComponent,
     TrainingSetupComponent,
+    WebsiteComponent,
   ],
   imports: [
     BrowserModule,

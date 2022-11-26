@@ -15,7 +15,7 @@ import { DataService } from '../../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   currentQuestion: number = 0;
-  totalQuestions: number = 10;
+  totalQuestions: number = 2;
   givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
