@@ -9,10 +9,29 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 registerLocaleData(localeDe, localeDeExtra);
 
+// import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+
+import {
+  AngularFireAuthModule,
+  USE_EMULATOR as USE_AUTH_EMULATOR,
+} from '@angular/fire/compat/auth';
+import {
+  AngularFirestoreModule,
+  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
+} from '@angular/fire/compat/firestore';
+import {
+  AngularFireFunctionsModule,
+  USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
+} from '@angular/fire/compat/functions';
+
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  provideFirestore,
+  getFirestore,
+  connectFirestoreEmulator,
+} from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat'; // TODO: Remove compat
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // I might need this later
 import { RouterModule } from '@angular/router';
@@ -72,7 +91,27 @@ import { WebsiteComponent } from './website/website.component';
     RouterModule,
     MathjaxModule.forRoot(),
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'de-DE' },
+    {
+      provide: USE_AUTH_EMULATOR,
+      useValue: environment.useEmulators
+        ? ['http://localhost', 9099]
+        : undefined,
+    },
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators
+        ? ['http://localhost', 8080]
+        : undefined,
+    },
+    {
+      provide: USE_FUNCTIONS_EMULATOR,
+      useValue: environment.useEmulators
+        ? ['http://localhost', 5001]
+        : undefined,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

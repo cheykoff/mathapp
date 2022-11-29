@@ -22,6 +22,34 @@ export class DataService {
     private _shared: SharedService
   ) {}
 
+  writeIntoDB() {
+    console.log('writeIntoDB');
+    this._store.collection(`test`).add({
+      name: 'test',
+      startTime: serverTimestamp(),
+    });
+  }
+
+  readFromDB() {
+    console.log('readFromDB');
+    console.log(
+      this._store
+        .collection('test')
+        .get()
+        .pipe(map((result) => convertSnaps<Quiz>(result)))
+    );
+    /*
+    this._store
+      .collection(`test`)
+      .get()
+      .subscribe((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+        });
+      });
+      */
+  }
+
   storeSessionId() {
     this._store
       .collection(`sessions`)
