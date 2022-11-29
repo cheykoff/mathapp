@@ -13,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireModule } from '@angular/fire/compat'; // TODO: Remove compat
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // I might need this later
 import { RouterModule } from '@angular/router';
 import { MathjaxModule } from 'mathjax-angular';
 
