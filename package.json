@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "lite-server",
-    "compodoc": "npx compodoc -p tsconfig.doc.json"
+    "compodoc": "npx compodoc -p tsconfig.doc.json",
+    "local-dev": "firebase emulators:start --only firestore --import sample-quizzes",
+    "export": "firebase emulators:export sample-quizzes"
   },
   "private": true,
   "dependencies": {

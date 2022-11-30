@@ -88,6 +88,7 @@ import { WebsiteComponent } from './website/website.component';
     provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
+    // AngularFirestoreModule, TODO: Do I need this?
     RouterModule,
     MathjaxModule.forRoot(),
   ],
