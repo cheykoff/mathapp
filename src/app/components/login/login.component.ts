@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   idWasGenerated: boolean;
 
   ngOnInit(): void {
-    this._data.writeIntoDB();
-    this._data.readFromDB();
+    // this._data.writeIntoDB();
+    // this._data.readFromDB();
   }
 
   submitId(form: NgForm): void {
