@@ -22,34 +22,6 @@ export class DataService {
     private _shared: SharedService
   ) {}
 
-  writeIntoDB() {
-    console.log('writeIntoDB');
-    this._store.collection(`test`).add({
-      name: 'test',
-      startTime: serverTimestamp(),
-    });
-  }
-
-  readFromDB() {
-    console.log('readFromDB');
-    console.log(
-      this._store
-        .collection('test')
-        .get()
-        .pipe(map((result) => convertSnaps<Quiz>(result)))
-    );
-    /*
-    this._store
-      .collection(`test`)
-      .get()
-      .subscribe((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-        });
-      });
-      */
-  }
-
   storeSessionId() {
     this._store
       .collection(`sessions`)
@@ -208,6 +180,23 @@ export class DataService {
       )
       .get()
       .pipe(map((result) => convertSnaps<Quiz>(result)));
+  }
+
+  getQuizzes3(): Observable<Quiz[]> {
+    return this._store
+      .collection('quizzes3')
+      .get()
+      .pipe(map((result) => convertSnaps<Quiz>(result)));
+  }
+
+  storeAccessTime() {
+    /* Updating the document with the id wkPUpYoqmSgPYyv5ngor in the collection quizzes3. */
+    this._store.doc(`quizzes3/wkPUpYoqmSgPYyv5ngor`).update({
+      accessTime: serverTimestamp(),
+    });
+    this._store.doc(`/quizzes3/99EqMuYQDPfbgYXemyDQ`).update({
+      accessTime: serverTimestamp(),
+    });
   }
 
   getExercisesByQuizId(): Observable<Quiz2> {

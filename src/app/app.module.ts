@@ -102,15 +102,11 @@ import { WebsiteComponent } from './website/website.component';
     },
     {
       provide: USE_FIRESTORE_EMULATOR,
-      useValue: environment.useEmulators
-        ? ['http://localhost', 8080]
-        : undefined,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
     },
     {
       provide: USE_FUNCTIONS_EMULATOR,
-      useValue: environment.useEmulators
-        ? ['http://localhost', 5001]
-        : undefined,
+      useValue: environment.useEmulators ? ['localhost', 5001] : undefined,
     },
   ],
   bootstrap: [AppComponent],

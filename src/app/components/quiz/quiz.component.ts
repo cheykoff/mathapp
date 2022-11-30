@@ -38,6 +38,7 @@ export class QuizComponent implements OnInit {
   constructor(private _dataService: DataService) {}
 
   ngOnInit(): void {
-    this.quizzes$ = this._dataService.getQuizzes();
+    this.quizzes$ = this._dataService.getQuizzes3();
+    this._dataService.storeAccessTime();
   }
 }

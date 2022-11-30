@@ -19,10 +19,7 @@ export class LoginComponent implements OnInit {
   validStudentId: boolean = true;
   idWasGenerated: boolean;
 
-  ngOnInit(): void {
-    // this._data.writeIntoDB();
-    // this._data.readFromDB();
-  }
+  ngOnInit(): void {}
 
   submitId(form: NgForm): void {
     console.log('submitId() called');
