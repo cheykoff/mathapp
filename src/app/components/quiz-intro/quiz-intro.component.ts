@@ -20,6 +20,6 @@ export class QuizIntroComponent implements OnInit {
   constructor(private _dataService: DataService) {}
 
   ngOnInit(): void {
-    this.quiz$ = this._dataService.getExercisesByQuizId();
+    this.quiz$ = this._dataService.getExercisesByQuizId2();
   }
 }

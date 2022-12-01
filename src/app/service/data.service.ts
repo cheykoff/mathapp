@@ -197,6 +197,22 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
 
+  getExercisesByQuizId2() {
+    console.log('getExercisesByQuizId2');
+    return this._store
+      .doc(`quizTemplates/TY1wRNj2Bq71aCvGgf0v`)
+      .get()
+      .pipe(map((result) => convertSnap<Quiz2>(result)));
+  }
+
+  getExercisesByQuizTemplateId() {
+    console.log('getExercisesByQuizTemplateId');
+    return this._store
+      .collection(`exerciseTemplates`)
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
   storeAccessTime() {
     /* Updating the document with the id wkPUpYoqmSgPYyv5ngor in the collection quizzes3. */
     this._store.doc(`quizzes3/wkPUpYoqmSgPYyv5ngor`).update({

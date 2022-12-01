@@ -4,8 +4,8 @@
 <div class="main">
   <ng-container *ngIf="quiz$ | async as quiz">
     <p class="quiz-intro-text">
-      Das Quiz enthält {{ quiz.exerciseIds.length }} Aufgaben. Du hast
-      {{ quiz.timeLimit }} min Zeit, um die Fragen zu beantworten. Danach siehst
+      Das Quiz enthält {{ quiz.maxQuestions }} Aufgaben. Du hast
+      {{ quiz.maxTime }} min Zeit, um die Fragen zu beantworten. Danach siehst
       du dein Ergebnis.
     </p>
     <p class="hint">Bitte verlasse die Seite währenddessen nicht.</p>

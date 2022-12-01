@@ -51,7 +51,9 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     // this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
-    this.createExercise(this.shared.chosenLevel);
+    this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
+
+    // this.createExercise(this.shared.chosenLevel);
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
   }

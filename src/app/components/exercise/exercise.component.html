@@ -1,3 +1,4 @@
+<!--
 <div class="header">
   <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
   <span id="studentId">ID: {{ this.shared.studentId }}</span>
@@ -53,17 +54,27 @@
   >
     Nächste Frage
   </button>
+-->
 
-  <!--
+<!--
 <ng-container
   *ngIf="exercises$ | async as exercises; else loading"
   (load)="getCorrectAnswer1(exercises)"
 >
-  <div class="header">
-    <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
-    <span id="studentId">ID: {{ this.shared.studentId }}</span>
-    <div id="countdown">{{ this.shared.counter | countDown }}</div>
-  </div>
+-->
+<div class="header">
+  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
+  <span id="studentId">ID: {{ this.shared.studentId }}</span>
+  <div id="countdown">{{ this.shared.counter | countDown }}</div>
+</div>
+<ng-container *ngIf="exercises$ | async as exercises; else loading">
+  <p>{{ exercises[0].question }}</p>
+</ng-container>
+<ng-template #loading>
+  <p class="loading">Lade die nächste Aufgabe ...</p>
+</ng-template>
+
+<!--
   <div class="question">
     <p [mathjax]="exercises[currentQuestion].question"></p>
     <img
@@ -188,9 +199,9 @@
         class="incorrectText feedback"
         *ngIf="!answerPossible; else tryAgain"
       >
-        <p>Leider falsch!</p>-->
-  <!--<p>In {{ penalty | countDown }} kannst du es wieder versuchen.</p>-->
-  <!--
+        <p>Leider falsch!</p>
+       
+
       </div>
       <ng-template #tryAgain>
         <p>Versuch es jetzt noch einmal.</p>
@@ -216,8 +227,4 @@
       Nächste Aufgabe
     </button>
   </div>
-</ng-container>
-<ng-template #loading>
-  <p class="loading">Lade die nächste Aufgabe ...</p>
-</ng-template>
---></div>
+   -->
