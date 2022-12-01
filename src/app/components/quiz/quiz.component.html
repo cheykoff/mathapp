@@ -2,7 +2,7 @@
   <h1 class="headerTitle">Quiz</h1>
 </div>
 <div class="main">
-  <ng-container *ngIf="quizzes$ | async as quizzes">
+  <ng-container *ngIf="quizzes$ | async as quizzes; else loading">
     <ul>
       <li *ngFor="let quiz of quizzes">
         <button
@@ -10,11 +10,14 @@
           [disabled]="quiz.disabled"
           routerLink="/quiz-intro"
         >
-          {{ quiz.name }} ({{
+          Quiz {{ quiz.quizNumber }} ({{
             quiz.startTime.toDate() | date: "shortDate":"de-DE"
           }})
         </button>
       </li>
     </ul>
   </ng-container>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
 </div>
