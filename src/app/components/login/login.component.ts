@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
+import { LoginValidation } from '../../components/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     public shared: SharedService,
-    private _data: DataService
+    private _data: DataService,
+    private _login: LoginValidation
   ) {}
 
   validStudentId: boolean = true;
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   submitId(form: NgForm): void {
     console.log('submitId() called');
+    this._login.validateStudentId();
     const value = form.value;
     if (value.studentId < 100000 || value.studentId > 999999) {
       this.validStudentId = false;
