@@ -15,7 +15,7 @@ import { DataService } from '../../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   currentQuestion: number = 0;
-  totalQuestions: number = 3;
+  totalQuestions: number = 4;
   givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
@@ -59,8 +59,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   question: string = '';
-  answer: number;
-  answerType: string = 'dynamic';
+  answer: number = 2;
+  // answerType: string = 'dynamic';
 
   createExercise(level: number): void {
     this.startTime = new Date();
@@ -142,20 +142,45 @@ export class ExerciseComponent implements OnInit {
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
 
-    if (this.answerType === 'dynamic') {
-      this.givenAnswer = form.value.givenAnswer;
+    if (exercise.answerType === 'dynamic') {
+      console.log('dynamic');
+      const givenAnswer = form.value.givenAnswer;
       console.log('correct answer: ', this.answer);
       console.log('given answer: ', form.value.givenAnswer);
-      if (this.givenAnswer === this.answer) {
+      if (givenAnswer === exercise.correctAnswer) {
+        console.log('dynamic correct');
         this.isCorrect = true;
         this.answerIsCorrect = true;
         this.answerIsIncorrect = false;
-        console.log('correct');
         this.shared.correctAnswer++;
         this.isDisabled = true;
         this.streakCount++;
+
+        setTimeout(() => {
+          this.currentQuestion++;
+          this.startTime = new Date();
+          this.answerIsCorrect = false;
+          this.isDisabled = false;
+          //this.showNextButton = true;
+          this.attempts = 0;
+
+          if (this.currentQuestion >= this.totalQuestions) {
+            this.showResult();
+          }
+        }, 1000);
+
+        return true;
       } else {
-        console.log('incorrect');
+        console.log('dynamic incorrect');
+        this.attempts++;
+        if (this.attempts >= this.maxAttempts) {
+          console.log('dynamic incorrect: max attempts reached');
+          this.isDisabled = true;
+          this.storeAnswer(false, exercise.id);
+          this.showNextButton = true;
+          this.attempts = 0;
+          return false;
+        }
         this.isCorrect = false;
         this.answerIsIncorrect = true;
         this.shared.incorrectAnswer++;
@@ -163,6 +188,7 @@ export class ExerciseComponent implements OnInit {
         setTimeout(() => {
           this.answerIsIncorrect = false;
         }, 1000);
+        return false;
       }
 
       console.log(this.shared.correctAnswer);
@@ -177,10 +203,10 @@ export class ExerciseComponent implements OnInit {
         this.shared.chosenLevel
       );
       */
-      this.showNextButton = true;
     }
 
     if (exercise.answerType === 'fraction') {
+      console.log('fraction');
       const correctDenominator = exercise.correctAnswerFraction.denominator;
       const correctNumerator = exercise.correctAnswerFraction.numerator;
       const givenDenominator = form.value.denominator;
@@ -190,6 +216,7 @@ export class ExerciseComponent implements OnInit {
         parseInt(givenDenominator) === parseInt(correctDenominator) &&
         parseInt(givenNumerator) === parseInt(correctNumerator)
       ) {
+        console.log('fraction correct');
         this.isDisabled = true;
         if (this.attempts === 0) {
           this.shared.correctAnswer++;
@@ -202,12 +229,10 @@ export class ExerciseComponent implements OnInit {
         this.answerIsIncorrect = false;
 
         setTimeout(() => {
-          this.currentQuestion++;
           this.startTime = new Date();
           this.denominator = '';
           this.numerator = '';
           this.answerIsCorrect = false;
-          this.isDisabled = false;
           this.attempts = 0;
           if (this.currentQuestion >= this.totalQuestions) {
             this.showResult();
@@ -215,28 +240,40 @@ export class ExerciseComponent implements OnInit {
         }, 1000);
         return true;
       }
+      console.log('fraction incorrect');
       if (this.attempts === 0) {
         this.shared.incorrectAnswer++;
       }
       this.attempts++;
       if (this.attempts >= this.maxAttempts) {
+        console.log('fraction incorrect: max attempts reached');
         this.isDisabled = true;
         this.storeAnswer(false, exercise.id);
+        this.attempts = 0;
+        this.showNextButton = true;
       }
       this.answerIsIncorrect = true;
       this.answerIsCorrect = false;
       this.answerPossible = false;
       this.streakCount = 0;
+      setTimeout(() => {
+        this.answerIsIncorrect = false;
+        this.answerIsCorrect = false;
+        this.answerPossible = true;
+      }, 1000);
+
       // this.penaltyTimer();
       return false;
     }
 
     const givenAnswer = form.value.givenAnswer;
     if (exercise.answerType === 'integer') {
+      console.log('integer');
       if (
         givenAnswer.toString().replace('.', ',').trim() ===
         exercise.correctAnswer
       ) {
+        console.log('integer correct');
         if (this.attempts === 0) {
           this.streakCount++;
           this.shared.correctAnswer++;
@@ -248,36 +285,48 @@ export class ExerciseComponent implements OnInit {
         this.answerIsCorrect = true;
         this.answerIsIncorrect = false;
         this.isDisabled = true;
+        this.answerPossible = true;
 
         setTimeout(() => {
           this.currentQuestion++;
           this.startTime = new Date();
           this.answerIsCorrect = false;
-          this.isDisabled = false;
           // this.givenAnswer = '';
           this.attempts = 0;
           if (this.currentQuestion >= this.totalQuestions) {
+            console.log('total questions reached');
             this.showResult();
           }
         }, 1000);
 
         if (this.currentQuestion >= this.totalQuestions) {
+          console.log('total questions reached');
           this.showResult();
         }
         return true;
       }
+      console.log('integer incorrect');
       if (this.attempts === 0) {
         this.shared.incorrectAnswer++;
       }
       this.attempts++;
       if (this.attempts >= this.maxAttempts) {
+        console.log('integer - max attempts reached');
         this.isDisabled = true;
         this.storeAnswer(false, exercise.id);
+        this.showNextButton = true;
+        this.attempts = 0;
       }
       this.answerIsIncorrect = true;
       this.answerIsCorrect = false;
       this.answerPossible = false;
       this.streakCount = 0;
+      setTimeout(() => {
+        this.answerIsIncorrect = false;
+        this.answerIsCorrect = false;
+        this.answerPossible = true;
+        this.isDisabled = false;
+      }, 1000);
       // this.penaltyTimer();
       return false;
     }
@@ -289,6 +338,7 @@ export class ExerciseComponent implements OnInit {
     exercisesLength: number,
     exercise: Exercise
   ): void {
+    console.log('onClickAnswer - mc');
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.attempts++;
     this.endTime = new Date();
@@ -296,6 +346,9 @@ export class ExerciseComponent implements OnInit {
     this.getCorrectAnswer(exercise);
     const exerciseSolved = this._checkAnswer(option.isCorrect);
     this.storeAnswer(exerciseSolved, exercise.id);
+    if (exerciseSolved) {
+      this.nextExercise();
+    }
 
     this.startTime = new Date();
 
@@ -352,12 +405,18 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
+    if (this.currentQuestion >= this.totalQuestions) {
+      console.log('total questions reached');
+      this.showResult();
+    }
+    console.log('nextExercise');
     this.isCorrect = false;
     this.isDisabled = false;
     this.showNextButton = false;
     this.answerIsIncorrect = false;
     this.answerIsCorrect = false;
     this.currentQuestion++;
+    /*
     if (this.shared.correctAnswer >= this.totalQuestions) {
       if (this.shared.incorrectAnswer === 0) {
         this.shared.levelStars[this.shared.chosenLevel] = 5;
@@ -380,6 +439,10 @@ export class ExerciseComponent implements OnInit {
       this.createExercise(this.shared.currentLevel);
       this.isCorrect;
       this.givenAnswer = undefined;
+    }
+    */
+    if (this.shared.correctAnswer >= this.totalQuestions) {
+      this.showResult();
     }
   }
   /*
