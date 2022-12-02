@@ -14,7 +14,7 @@
   padding: 12px 8px;
   background-color: var(--clr-light);
   font-size: 1.4rem;
-  margin: 30px 0px;
+  margin: 0px 0px 16px;
   position: relative;
   box-shadow: 0px 2px 5px 0px var(--clr-shadow);
   overflow: auto;
@@ -99,10 +99,13 @@ button:disabled {
 
 button:hover,
 button:focus {
-  transform: scale(1.02) perspective(1px);
   cursor: pointer;
   color: white;
-  border: 3px solid black;
+
+  &:not([disabled]) {
+    transform: scale(1.02) perspective(1px);
+    border: 3px solid black;
+  }
 }
 
 .tableWrapper {

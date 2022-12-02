@@ -59,7 +59,6 @@
 
 body {
   --hue: var(--hue-primary);
-  margin: 0px;
   background-color: white;
   margin: 0px auto;
   position: relative;
@@ -92,7 +91,6 @@ header {
 .header {
   background-color: var(--clr-light);
   padding: 1px 16px;
-  /*margin: -16px -16px 20px -16px; */
   font-weight: var(--fw-normal);
   box-shadow: 0px 2px 5px 0px var(--clr-shadow);
 }
@@ -358,7 +356,7 @@ button {
   letter-spacing: 0.5px;
   border: 1px solid var(--clr-dark);
   border-radius: 4px;
-  margin: 4px 0px;
+  margin: 8px 0px;
   box-shadow: 0px 2px 5px 0px var(--clr-shadow);
   color: var(--clr-text-dark);
 }
@@ -516,12 +514,28 @@ button {
     font-size: 1.4rem;
     letter-spacing: 1px;
     border-radius: 10px;
+    margin: 12px 0px;
+  }
+
+  .btnList {
+    margin: 4px 0px;
+  }
+
+  .btn-mc {
+    margin: 4px 0px;
+    background-color: var(--clr-grey);
+  }
+
+  .answerButton {
+    background-color: var(--clr-secondary-light);
+    color: black;
+    text-transform: none;
     margin: 4px 0px;
   }
 
   .feedback {
     background-color: lightseagreen;
-    margin: 4px 0px 24px 0px;
+    margin: 4px 0px 16px 0px;
     padding: 12px 8px;
     border-radius: 5px;
   }

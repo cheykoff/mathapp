@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-resultpage',
   templateUrl: './resultpage.component.html',
-  styleUrls: ['./resultpage.component.css'],
+  styleUrls: ['./resultpage.component.scss'],
 })
 export class ResultpageComponent implements OnInit {
   constructor(

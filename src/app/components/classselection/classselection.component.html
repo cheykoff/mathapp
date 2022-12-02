@@ -7,7 +7,7 @@
       *ngFor="let schoolClass of schoolClasses"
       (click)="selectSchoolClass(schoolClass.level)"
     >
-      <button class="btn classBtn" [disabled]="schoolClass.disabled">
+      <button class="btn btnList classBtn" [disabled]="schoolClass.disabled">
         {{ schoolClass.level }}. Klasse
       </button>
     </li>

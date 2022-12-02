@@ -6,7 +6,7 @@ import { SharedService } from '../../shared/shared.service';
 @Component({
   selector: 'app-codepage',
   templateUrl: './codepage.component.html',
-  styleUrls: ['./codepage.component.css'],
+  styleUrls: ['./codepage.component.scss'],
 })
 export class CodepageComponent implements OnInit {
   constructor(private _router: Router, private _shared: SharedService) {}

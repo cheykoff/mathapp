@@ -9,7 +9,7 @@ import { Quiz2 } from 'src/app/shared/quiz2';
 @Component({
   selector: 'app-quiz-intro',
   templateUrl: './quiz-intro.component.html',
-  styleUrls: ['./quiz-intro.component.css'],
+  styleUrls: ['./quiz-intro.component.scss'],
 })
 export class QuizIntroComponent implements OnInit {
   quiz$: Observable<Quiz2>;

@@ -1,18 +1,10 @@
-:host {
-}
-
 ul {
   list-style-type: none;
-  margin: 0 -16px;
-
   overflow: hidden;
 
   li {
-    margin: 0 16px;
-
     button {
-      height: 45px;
-      color: black;
+      height: 48px;
 
       &:not([disabled]):focus {
         background-color: var(--clr-primary-lighter);

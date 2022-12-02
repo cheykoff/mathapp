@@ -5,7 +5,7 @@ import { MenuListItem, menuListItems } from './menulist';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
   header = 'DieMatheApp';
