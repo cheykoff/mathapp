@@ -15,7 +15,7 @@ import { DataService } from '../../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   currentQuestion: number = 0;
-  totalQuestions: number = 2;
+  totalQuestions: number = 3;
   givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
@@ -164,22 +164,22 @@ export class ExerciseComponent implements OnInit {
           this.answerIsIncorrect = false;
         }, 1000);
       }
+
+      console.log(this.shared.correctAnswer);
+      console.log(this.shared.incorrectAnswer);
+      /*
+      this._dataService.storeDynamicAnswer(
+        this.question,
+        this.answer,
+        this.givenAnswer,
+        this.isCorrect,
+        this.duration,
+        this.shared.chosenLevel
+      );
+      */
+      this.showNextButton = true;
     }
-    console.log(this.shared.correctAnswer);
-    console.log(this.shared.incorrectAnswer);
-    this._dataService.storeDynamicAnswer(
-      this.question,
-      this.answer,
-      this.givenAnswer,
-      this.isCorrect,
-      this.duration,
-      this.shared.chosenLevel
-    );
-    this.showNextButton = true;
 
-    return;
-
-    /*
     if (exercise.answerType === 'fraction') {
       const correctDenominator = exercise.correctAnswerFraction.denominator;
       const correctNumerator = exercise.correctAnswerFraction.numerator;
@@ -254,7 +254,7 @@ export class ExerciseComponent implements OnInit {
           this.startTime = new Date();
           this.answerIsCorrect = false;
           this.isDisabled = false;
-          this.givenAnswer = '';
+          // this.givenAnswer = '';
           this.attempts = 0;
           if (this.currentQuestion >= this.totalQuestions) {
             this.showResult();
@@ -282,7 +282,6 @@ export class ExerciseComponent implements OnInit {
       return false;
     }
     return false;
-    */
   }
 
   onClickAnswer(

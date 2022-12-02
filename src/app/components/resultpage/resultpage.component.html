@@ -1,23 +1,24 @@
 <div class="header">
   <h1 class="headerTitle">Level {{ this.shared.currentLevel }} geschafft</h1>
 </div>
+<div class="main">
+  <div class="results">
+    <p>Geschafft!</p>
 
-<div class="results">
-  <p>Geschafft!</p>
-
-  <div class="imgContainer">
-    <img [src]="getStars()" id="starsGif" class="starsGif" />
-  </div>
-  <div class="resultContainer">
-    <div class="bigNumber">
-      {{ this.shared.correctAnswer }}/{{
-        this.shared.correctAnswer + this.shared.incorrectAnswer
-      }}
+    <div class="imgContainer">
+      <img [src]="getStars()" id="starsGif" class="starsGif" />
     </div>
-    <p class="labelBigNumber">Fragen richtig beantwortet</p>
+    <div class="resultContainer">
+      <div class="bigNumber">
+        {{ this.shared.correctAnswer }}/{{
+          this.shared.correctAnswer + this.shared.incorrectAnswer
+        }}
+      </div>
+      <p class="labelBigNumber">Fragen richtig beantwortet</p>
+    </div>
   </div>
+  <button class="btn classBtn" routerLink="/levelpage">Nächstes Level</button>
 </div>
-<button class="btn classBtn" routerLink="/levelpage">Nächstes Level</button>
 
 <!--
 <div *ngIf="!selfReflectionGiven">
