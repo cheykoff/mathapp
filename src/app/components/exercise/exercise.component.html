@@ -51,6 +51,7 @@
           required
           autofocus
           [hasUnit]="exercises[currentQuestion].unit"
+          (focus)="onFocusEvent($event)"
         />
         <p
           class="unit"
@@ -81,6 +82,7 @@
                   required
                   autofocus
                   [disabled]="isDisabled"
+                  (focus)="onFocusEvent($event)"
                 />
               </td>
             </tr>
@@ -93,6 +95,7 @@
                   [(ngModel)]="denominator"
                   required
                   [disabled]="isDisabled"
+                  (focus)="onFocusEvent($event)"
                 />
               </td>
             </tr>
@@ -156,7 +159,12 @@
     </div>
 
     <div *ngIf="attempts >= maxAttempts">
-      <p *ngIf="exercises[currentQuestion].answerType === 'integer'">
+      <p
+        *ngIf="
+          exercises[currentQuestion].answerType === 'integer' ||
+          exercises[currentQuestion].answerType === 'dynamic'
+        "
+      >
         Die richtige Antwort wäre
         {{ exercises[currentQuestion].correctAnswer }} gewesen.
       </p>
