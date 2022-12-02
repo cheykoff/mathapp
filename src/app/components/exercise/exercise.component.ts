@@ -130,70 +130,58 @@ export class ExerciseComponent implements OnInit {
   }
   */
 
-  getCorrectAnswer(exercise: Exercise): void {
-    exercise.answerOptions.forEach((answerOption) => {
-      if (answerOption.isCorrect) {
-        this.correctAnswer = answerOption.answerText;
-      }
-    });
-  }
+  checkDynamicAnswer(form: NgForm, exercise?: Exercise): boolean {
+    console.log('dynamic');
+    const givenAnswer = form.value.givenAnswer;
+    console.log('correct answer: ', this.answer);
+    console.log('given answer: ', form.value.givenAnswer);
+    if (givenAnswer === exercise.correctAnswer) {
+      console.log('dynamic correct');
+      this.isCorrect = true;
+      this.answerIsCorrect = true;
+      this.answerIsIncorrect = false;
+      this.shared.correctAnswer++;
+      this.isDisabled = true;
+      this.streakCount++;
 
-  onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    this.endTime = new Date();
-    this.duration = this.endTime.getTime() - this.startTime.getTime();
+      setTimeout(() => {
+        this.currentQuestion++;
+        this.startTime = new Date();
+        this.answerIsCorrect = false;
+        this.isDisabled = false;
+        //this.showNextButton = true;
+        this.attempts = 0;
 
-    if (exercise.answerType === 'dynamic') {
-      console.log('dynamic');
-      const givenAnswer = form.value.givenAnswer;
-      console.log('correct answer: ', this.answer);
-      console.log('given answer: ', form.value.givenAnswer);
-      if (givenAnswer === exercise.correctAnswer) {
-        console.log('dynamic correct');
-        this.isCorrect = true;
-        this.answerIsCorrect = true;
-        this.answerIsIncorrect = false;
-        this.shared.correctAnswer++;
-        this.isDisabled = true;
-        this.streakCount++;
-
-        setTimeout(() => {
-          this.currentQuestion++;
-          this.startTime = new Date();
-          this.answerIsCorrect = false;
-          this.isDisabled = false;
-          //this.showNextButton = true;
-          this.attempts = 0;
-
-          if (this.currentQuestion >= this.totalQuestions) {
-            this.showResult();
-          }
-        }, 1000);
-
-        return true;
-      } else {
-        console.log('dynamic incorrect');
-        this.attempts++;
-        if (this.attempts >= this.maxAttempts) {
-          console.log('dynamic incorrect: max attempts reached');
-          this.isDisabled = true;
-          this.storeAnswer(false, exercise.id);
-          this.showNextButton = true;
-          this.attempts = 0;
-          return false;
+        if (this.currentQuestion >= this.totalQuestions) {
+          this.showResult();
         }
-        this.isCorrect = false;
-        this.answerIsIncorrect = true;
-        this.shared.incorrectAnswer++;
-        this.streakCount = 0;
-        setTimeout(() => {
-          this.answerIsIncorrect = false;
-        }, 1000);
+      }, 1000);
+
+      return true;
+    } else {
+      console.log('dynamic incorrect');
+      this.attempts++;
+      if (this.attempts >= this.maxAttempts) {
+        console.log('dynamic incorrect: max attempts reached');
+        this.isDisabled = true;
+        this.storeAnswer(false, exercise.id);
+        this.showNextButton = true;
+        this.attempts = 0;
         return false;
       }
+      this.isCorrect = false;
+      this.answerIsIncorrect = true;
+      this.shared.incorrectAnswer++;
+      this.streakCount = 0;
+      setTimeout(() => {
+        this.answerIsIncorrect = false;
+      }, 1000);
+      return false;
+    }
 
-      console.log(this.shared.correctAnswer);
-      console.log(this.shared.incorrectAnswer);
-      /*
+    console.log(this.shared.correctAnswer);
+    console.log(this.shared.incorrectAnswer);
+    /*
       this._dataService.storeDynamicAnswer(
         this.question,
         this.answer,
@@ -203,196 +191,114 @@ export class ExerciseComponent implements OnInit {
         this.shared.chosenLevel
       );
       */
-    }
-
-    if (exercise.answerType === 'fraction') {
-      console.log('fraction');
-      const correctDenominator = exercise.correctAnswerFraction.denominator;
-      const correctNumerator = exercise.correctAnswerFraction.numerator;
-      const givenDenominator = form.value.denominator;
-      const givenNumerator = form.value.numerator;
-
-      if (
-        parseInt(givenDenominator) === parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === parseInt(correctNumerator)
-      ) {
-        console.log('fraction correct');
-        this.isDisabled = true;
-        if (this.attempts === 0) {
-          this.shared.correctAnswer++;
-          this.streakCount++;
-          this.storeAnswer(true, exercise.id);
-        } else {
-          this.storeAnswer(false, exercise.id);
-        }
-        this.answerIsCorrect = true;
-        this.answerIsIncorrect = false;
-
-        setTimeout(() => {
-          this.startTime = new Date();
-          this.denominator = '';
-          this.numerator = '';
-          this.answerIsCorrect = false;
-          this.attempts = 0;
-          if (this.currentQuestion >= this.totalQuestions) {
-            this.showResult();
-          }
-        }, 1000);
-        return true;
-      }
-      console.log('fraction incorrect');
-      if (this.attempts === 0) {
-        this.shared.incorrectAnswer++;
-      }
-      this.attempts++;
-      if (this.attempts >= this.maxAttempts) {
-        console.log('fraction incorrect: max attempts reached');
-        this.isDisabled = true;
-        this.storeAnswer(false, exercise.id);
-        this.attempts = 0;
-        this.showNextButton = true;
-      }
-      this.answerIsIncorrect = true;
-      this.answerIsCorrect = false;
-      this.answerPossible = false;
-      this.streakCount = 0;
-      setTimeout(() => {
-        this.answerIsIncorrect = false;
-        this.answerIsCorrect = false;
-        this.answerPossible = true;
-      }, 1000);
-
-      // this.penaltyTimer();
-      return false;
-    }
-
-    const givenAnswer = form.value.givenAnswer;
-    if (exercise.answerType === 'integer') {
-      console.log('integer');
-      if (
-        givenAnswer.toString().replace('.', ',').trim() ===
-        exercise.correctAnswer
-      ) {
-        console.log('integer correct');
-        if (this.attempts === 0) {
-          this.streakCount++;
-          this.shared.correctAnswer++;
-          this.storeAnswer(true, exercise.id);
-        } else {
-          this.storeAnswer(false, exercise.id);
-        }
-
-        this.answerIsCorrect = true;
-        this.answerIsIncorrect = false;
-        this.isDisabled = true;
-        this.answerPossible = true;
-
-        setTimeout(() => {
-          this.currentQuestion++;
-          this.startTime = new Date();
-          this.answerIsCorrect = false;
-          // this.givenAnswer = '';
-          this.attempts = 0;
-          if (this.currentQuestion >= this.totalQuestions) {
-            console.log('total questions reached');
-            this.showResult();
-          }
-        }, 1000);
-
-        if (this.currentQuestion >= this.totalQuestions) {
-          console.log('total questions reached');
-          this.showResult();
-        }
-        return true;
-      }
-      console.log('integer incorrect');
-      if (this.attempts === 0) {
-        this.shared.incorrectAnswer++;
-      }
-      this.attempts++;
-      if (this.attempts >= this.maxAttempts) {
-        console.log('integer - max attempts reached');
-        this.isDisabled = true;
-        this.storeAnswer(false, exercise.id);
-        this.showNextButton = true;
-        this.attempts = 0;
-      }
-      this.answerIsIncorrect = true;
-      this.answerIsCorrect = false;
-      this.answerPossible = false;
-      this.streakCount = 0;
-      setTimeout(() => {
-        this.answerIsIncorrect = false;
-        this.answerIsCorrect = false;
-        this.answerPossible = true;
-        this.isDisabled = false;
-      }, 1000);
-      // this.penaltyTimer();
-      return false;
-    }
-    return false;
   }
 
-  onClickAnswer(
-    option: any,
-    exercisesLength: number,
-    exercise: Exercise
-  ): void {
-    console.log('onClickAnswer - mc');
-    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
-    this.attempts++;
-    this.endTime = new Date();
-    this.duration = this.endTime.getTime() - this.startTime.getTime();
-    this.getCorrectAnswer(exercise);
-    const exerciseSolved = this._checkAnswer(option.isCorrect);
-    this.storeAnswer(exerciseSolved, exercise.id);
-    if (exerciseSolved) {
-      this.nextExercise();
-    }
-
-    this.startTime = new Date();
-
-    if (this.currentQuestion >= exercisesLength - 1 && exerciseSolved) {
-      this.showResult();
-    }
-  }
-
-  private _checkAnswer(isCorrect: boolean): boolean {
-    this.isDisabled = true;
-    if (isCorrect) {
-      if (this.attempts === 1) {
-        // TODO: check if this is needed or can be fetched from correctAnswer
-        this.shared.correctAnswer++;
-        this.streakCount++;
-        if (this.streakCount >= 3) {
-          // this.penaltyCount = 0;
-        }
-      }
+  showFeedback(correctAnswer: boolean): void {
+    if (correctAnswer) {
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
-      setTimeout(() => {
-        this.currentQuestion++;
-        this.startTime = new Date();
-        this.answerIsCorrect = false;
-        this.isDisabled = false;
-        this.attempts = 0;
-      }, 1000);
-      return true;
+    } else {
+      this.answerIsCorrect = false;
+      this.answerIsIncorrect = true;
     }
-    if (this.attempts === 1) {
-      this.shared.incorrectAnswer++;
-      this.streakCount = 0;
-    }
-    this.answerIsIncorrect = true;
-    this.answerIsCorrect = false;
-    this.answerPossible = false;
-    setTimeout(() => {
-      this.answerPossible = true;
-      this.isDisabled = false;
-    }, 1000);
-    // this.penaltyTimer();
+  }
 
-    return false;
+  checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
+    console.log('fraction');
+    const correctDenominator = exercise.correctAnswerFraction.denominator;
+    const correctNumerator = exercise.correctAnswerFraction.numerator;
+    const givenDenominator = form.value.denominator;
+    const givenNumerator = form.value.numerator;
+
+    if (
+      parseInt(givenDenominator) === parseInt(correctDenominator) &&
+      parseInt(givenNumerator) === parseInt(correctNumerator)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkIntegerAnswer(form: NgForm, exercise?: Exercise): boolean {
+    console.log('integer');
+    const givenAnswer = form.value.givenAnswer;
+    if (
+      givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  saveAnswer(isCorrect: boolean, exercise: Exercise): void {
+    if (isCorrect) {
+      if (this.attempts === 1) {
+        this.streakCount++;
+        this.shared.correctAnswer++;
+        this.storeAnswer(true, exercise.id);
+      }
+      this.isDisabled = true;
+      this.showFeedback(true);
+      this.showNextButton = true;
+      return;
+    } else {
+      console.log('integer incorrect');
+      if (this.attempts === 1) {
+        this.shared.incorrectAnswer++;
+        this.streakCount = 0;
+        this.storeAnswer(false, exercise.id);
+      }
+
+      this.showFeedback(false);
+
+      if (this.attempts >= this.maxAttempts) {
+        console.log('integer incorrect: max attempts reached');
+        this.showNextButton = true;
+        this.isDisabled = true;
+      }
+      return;
+    }
+  }
+
+  checkAnswer(form: NgForm, exercise?: Exercise): void {
+    if (
+      exercise.answerType === 'dynamic' ||
+      exercise.answerType === 'integer'
+    ) {
+      this.saveAnswer(this.checkIntegerAnswer(form, exercise), exercise);
+    } else {
+      this.saveAnswer(this.checkFractionAnswer(form, exercise), exercise);
+    }
+  }
+
+  onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    this.trackDurationAndAttempts();
+    this.checkAnswer(form, exercise);
+  }
+
+  trackDurationAndAttempts(): void {
+    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
+    this.endTime = new Date();
+    this.duration = this.endTime.getTime() - this.startTime.getTime();
+    this.attempts++;
+  }
+
+  getCorrectAnswer(exercise: Exercise): void {
+    exercise.answerOptions.forEach((answerOption) => {
+      if (answerOption.isCorrect) {
+        this.correctAnswer = answerOption.answerText;
+      }
+    });
+  }
+
+  onClickAnswer(option: any, exercise: Exercise): void {
+    console.log('onClickAnswer - mc');
+    this.trackDurationAndAttempts();
+
+    this.getCorrectAnswer(exercise);
+    this.saveAnswer(option.isCorrect, exercise);
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
@@ -410,12 +316,14 @@ export class ExerciseComponent implements OnInit {
       this.showResult();
     }
     console.log('nextExercise');
+    this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
     this.showNextButton = false;
     this.answerIsIncorrect = false;
     this.answerIsCorrect = false;
     this.currentQuestion++;
+    this.startTime = new Date();
     /*
     if (this.shared.correctAnswer >= this.totalQuestions) {
       if (this.shared.incorrectAnswer === 0) {

@@ -3,17 +3,6 @@
   <span id="studentId">ID: {{ this.shared.studentId }}</span>
   <div id="countdown">{{ this.shared.counter | countDown }}</div>
 </div>
-<!--
-  
-  <button
-    *ngIf="this.showNextButton"
-    class="btn classBtn"
-    (click)="nextExercise()"
-    type="submit"
-  >
-    Nächste Frage
-  </button>
--->
 
 <div class="main">
   <ng-container *ngIf="exercises$ | async as exercises; else loading">
@@ -33,9 +22,7 @@
             let i = index
           "
           class="answerListItem"
-          (click)="
-            onClickAnswer(option, exercises.length, exercises[currentQuestion])
-          "
+          (click)="onClickAnswer(option, exercises[currentQuestion])"
         >
           <button
             [id]="'option' + i"
@@ -161,15 +148,9 @@
       </div>
       <div *ngIf="answerIsIncorrect" class="wrong">
         <div>
-          <div
-            class="incorrectText feedback"
-            *ngIf="!answerPossible; else tryAgain"
-          >
+          <div class="incorrectText feedback">
             <p>Leider falsch!</p>
           </div>
-          <ng-template #tryAgain>
-            <p>Versuch es jetzt noch einmal.</p>
-          </ng-template>
         </div>
       </div>
     </div>
@@ -188,11 +169,6 @@
           gewesen.
         </p>
       </div>
-      <!--
-      <button class="btn classBtn" (click)="nextExercise()">
-        Nächste Aufgabe
-      </button>
-      -->
     </div>
     <button
       *ngIf="this.showNextButton"
