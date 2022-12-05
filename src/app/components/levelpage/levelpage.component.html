@@ -3,48 +3,50 @@
   <h1 *ngIf="this.shared.quizFinished" sclass="headerTitle">Dein Ergebnis</h1>
 </div>
 
-<ul>
-  <li
-    *ngFor="let level of levels"
-    (click)="selectSchoolClass(schoolClass.level)"
-  >
-    <button
-      class="btn classBtn"
-      [disabled]="
-        level.level > this.shared.currentLevel || this.shared.quizFinished
-      "
-      (click)="goToDynamicExercise(level)"
+<div class="main">
+  <ul>
+    <li
+      *ngFor="let level of levels"
+      (click)="selectSchoolClass(schoolClass.level)"
     >
-      Level {{ level.level }}
-      <img
-        src="assets/img/star.png"
-        class="star"
-        *ngIf="this.shared.levelStars[level.level] >= 1"
-      />
-      <img
-        style="right: 30px"
-        src="assets/img/star.png"
-        class="star"
-        *ngIf="this.shared.levelStars[level.level] >= 2"
-      />
-      <img
-        style="right: 50px"
-        src="assets/img/star.png"
-        class="star"
-        *ngIf="this.shared.levelStars[level.level] >= 3"
-      />
-      <img
-        style="right: 70px"
-        src="assets/img/star.png"
-        class="star"
-        *ngIf="this.shared.levelStars[level.level] >= 4"
-      />
-      <img
-        style="right: 90px"
-        src="assets/img/star.png"
-        class="star"
-        *ngIf="this.shared.levelStars[level.level] >= 5"
-      />
-    </button>
-  </li>
-</ul>
+      <button
+        class="btn classBtn btnList"
+        [disabled]="
+          level.level > this.shared.currentLevel || this.shared.quizFinished
+        "
+        (click)="goToDynamicExercise(level)"
+      >
+        Level {{ level.level }}
+        <img
+          src="assets/img/star.png"
+          class="star"
+          *ngIf="this.shared.levelStars[level.level] >= 1"
+        />
+        <img
+          style="right: 30px"
+          src="assets/img/star.png"
+          class="star"
+          *ngIf="this.shared.levelStars[level.level] >= 2"
+        />
+        <img
+          style="right: 50px"
+          src="assets/img/star.png"
+          class="star"
+          *ngIf="this.shared.levelStars[level.level] >= 3"
+        />
+        <img
+          style="right: 70px"
+          src="assets/img/star.png"
+          class="star"
+          *ngIf="this.shared.levelStars[level.level] >= 4"
+        />
+        <img
+          style="right: 90px"
+          src="assets/img/star.png"
+          class="star"
+          *ngIf="this.shared.levelStars[level.level] >= 5"
+        />
+      </button>
+    </li>
+  </ul>
+</div>

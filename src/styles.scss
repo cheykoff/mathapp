@@ -163,26 +163,6 @@ h1.headerTitle {
 :host {
 }
 
-ul {
-  list-style-type: none;
-  margin: 0 -16px;
-
-  overflow: hidden;
-
-  li {
-    margin: 0 16px;
-
-    button {
-      height: 45px;
-      color: black;
-
-      &:not([disabled]):focus {
-        background-color: var(--clr-primary-lighter);
-      }
-    }
-  }
-}
-
 #team-name-small {
   font-size: 1rem;
   display: inline-block;
@@ -343,7 +323,7 @@ button {
   right: 0px;
 }
 
-.btn {
+button {
   text-transform: uppercase;
   background-color: var(--clr-primary-light);
   padding: 4px;
@@ -360,6 +340,51 @@ button {
   box-shadow: 0px 2px 5px 0px var(--clr-shadow);
   color: var(--clr-text-dark);
 }
+
+ul {
+  list-style-type: none;
+  margin: 0 -16px;
+
+  overflow: hidden;
+
+  li {
+    margin: 0 16px;
+
+    button {
+      height: 48px;
+      color: black;
+      margin: 4x 0px;
+
+      &:not([disabled]):focus {
+        background-color: var(--clr-primary-lighter);
+      }
+    }
+  }
+}
+
+.btnList {
+  margin: 4px 0px;
+}
+
+/*
+.btn {
+  text-transform: uppercase;
+  background-color: var(--clr-primary-light);
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  min-height: 48px;
+  height: auto;
+  font-size: 1.3rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.5px;
+  border: 1px solid var(--clr-dark);
+  border-radius: 4px;
+  margin: 4px 0px;
+  box-shadow: 0px 2px 5px 0px var(--clr-shadow);
+  color: var(--clr-text-dark);
+}
+*/
 
 .answerButton {
   background-color: var(--clr-secondary-light);
@@ -510,7 +535,7 @@ button {
   }
 
   .btn {
-    height: 80px;
+    height: 48px;
     font-size: 1.4rem;
     letter-spacing: 1px;
     border-radius: 10px;
