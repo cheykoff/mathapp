@@ -160,9 +160,6 @@ h1.headerTitle {
   text-align: center;
 }
 
-:host {
-}
-
 #team-name-small {
   font-size: 1rem;
   display: inline-block;
@@ -345,7 +342,7 @@ ul {
   list-style-type: none;
   margin: 0 -16px;
 
-  overflow: hidden;
+  // overflow: hidden;
 
   li {
     margin: 0 16px;

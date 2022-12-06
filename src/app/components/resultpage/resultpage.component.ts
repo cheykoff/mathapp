@@ -36,7 +36,7 @@ export class ResultpageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._dataService.storeResult();
+    this._dataService.storeQuizEnd();
   }
 
   onSubmitSelfReflection(form: NgForm): void {

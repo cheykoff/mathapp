@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../../service/data.service';
+import { SharedService } from '../../shared/shared.service';
 
 import { Exercise } from 'src/app/shared/exercise';
 import { Quiz2 } from 'src/app/shared/quiz2';
@@ -17,9 +18,19 @@ export class QuizIntroComponent implements OnInit {
   header = 'DieMatheApp - Quiz';
   totalExercises = 10;
   quizTimeLimit = 1800;
-  constructor(private _dataService: DataService) {}
+  constructor(
+    private _dataService: DataService,
+    private _shared: SharedService
+  ) {}
 
   ngOnInit(): void {
     this.quiz$ = this._dataService.getExercisesByQuizId2();
+  }
+
+  onStartQuiz() {
+    console.log('studentDocumentId: ' + this._shared.studentDocumentId);
+    const quizStartDate = new Date();
+    this._dataService.storeQuizStart();
+    this._shared.setQuizStartTime(quizStartDate);
   }
 }

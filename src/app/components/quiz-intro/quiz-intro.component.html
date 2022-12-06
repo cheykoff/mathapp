@@ -10,6 +10,12 @@
     </p>
     <p class="hint">Bitte verlasse die Seite währenddessen nicht.</p>
     <p>Bereit?</p>
-    <button class="btn btn-primary" routerLink="/exercise">Los geht's</button>
+    <button
+      class="btn btn-primary"
+      routerLink="/exercise"
+      (click)="onStartQuiz()"
+    >
+      Los geht's
+    </button>
   </ng-container>
 </div>

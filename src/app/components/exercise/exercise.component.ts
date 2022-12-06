@@ -55,6 +55,7 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit');
     // this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
     this.resetCounts();
@@ -64,6 +65,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   resetCounts(): void {
+    console.log('resetCounts');
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
     this.streakCount = 0;
@@ -71,6 +73,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   shuffleExercises(exercises: Exercise[]): Exercise[] {
+    console.log('shuffleExercises');
     for (let i = exercises.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
@@ -79,12 +82,14 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    console.log('onSubmitAnswer');
     this.trackDurationAndAttempts();
     this.checkAnswer(form, exercise);
     form.reset();
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
+    console.log('checkAnswer');
     if (
       exercise.answerType === 'dynamic' ||
       exercise.answerType === 'integer'
@@ -96,7 +101,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('fraction');
+    console.log('check fraction');
     const correctDenominator = exercise.correctAnswerFraction.denominator;
     const correctNumerator = exercise.correctAnswerFraction.numerator;
     const givenDenominator = form.value.denominator;
@@ -113,7 +118,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkIntegerAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('integer');
+    console.log('check integer');
     const givenAnswer = form.value.givenAnswer;
     if (
       givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
@@ -141,19 +146,22 @@ export class ExerciseComponent implements OnInit {
   }
 
   trackDurationAndAttempts(): void {
+    console.log('trackDurationAndAttempts');
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
+    console.log(this.startTime);
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
     this.attempts++;
   }
 
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
+    console.log('saveAnswer');
     if (isCorrect) {
       if (this.attempts === 1) {
         this.streakCount++;
         this.shared.correctAnswer++;
-        this.storeAnswer(true, exercise.id);
       }
+      this.storeAnswer(true, exercise.id);
       this.isDisabled = true;
       this.showFeedback(true);
       this.showNextButton = true;
@@ -163,9 +171,8 @@ export class ExerciseComponent implements OnInit {
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
-        this.storeAnswer(false, exercise.id);
       }
-
+      this.storeAnswer(false, exercise.id);
       this.showFeedback(false);
 
       if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
@@ -178,15 +185,24 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    console.log('storeAnswer');
+    console.log('currentQuestionId: ' + currentQuestionId);
+    console.log('isCorrect: ' + isCorrect);
+    console.log('duration: ' + this.duration);
+    console.log('attempts: ' + this.attempts);
+
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
       this.duration,
-      this.attempts
+      this.attempts,
+      this.startTime,
+      this.endTime
     );
   }
 
   showFeedback(correctAnswer: boolean): void {
+    console.log('showFeedback');
     if (correctAnswer) {
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
@@ -197,6 +213,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
+    console.log('nextExercise');
     if (this.currentQuestion >= this.totalQuestions - 1) {
       console.log('total questions reached');
       this.showResult();
@@ -212,6 +229,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   clearForm() {
+    console.log('clearForm');
     this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
@@ -221,14 +239,17 @@ export class ExerciseComponent implements OnInit {
   }
 
   showResult(): void {
+    console.log('showResult');
     this._router.navigate(['/', 'resultpage']);
   }
 
   onFocusEvent(event: any) {
+    console.log('onFocusEvent');
     this.answerIsIncorrect = false;
   }
 
   createExercise(level: number): void {
+    console.log('createExercise');
     this.startTime = new Date();
     let minNum = undefined;
     let maxNum = undefined;
@@ -271,6 +292,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   getRandInteger(min, max) {
+    console.log('getRandInteger');
     return Math.round(Math.random() * (max - min) + min);
   }
 }

@@ -5,9 +5,10 @@ import {
   validateEventsArray,
 } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
-import { getDoc, serverTimestamp } from 'firebase/firestore';
+import { getDoc, serverTimestamp, orderBy } from 'firebase/firestore';
 import { Observable, map, take, tap, first } from 'rxjs';
 
+import { Student } from '../shared/student';
 import { Exercise } from '../shared/exercise';
 import { Quiz } from '../shared/quiz';
 import { Quiz2 } from '../shared/quiz2';
@@ -21,6 +22,21 @@ export class DataService {
     private _store: AngularFirestore,
     private _shared: SharedService
   ) {}
+
+  // called from login
+  getStudentDocumentIds() {
+    return this._store
+      .collection('students', (ref) =>
+        // ref.where('studentId', '==', this._shared.getStudentId())
+        ref.where('studentId', '==', this._shared.getStudentId())
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Student>(result)))
+      .subscribe((data: Student[]) => {
+        console.log(data[0].id); // TODO: Get only one document
+        this._shared.setStudentDocumentId(data[0].id);
+      });
+  }
 
   storeSessionId() {
     this._store
@@ -41,7 +57,7 @@ export class DataService {
         );
       });
   }
-
+  /*
   updateStudentId() {
     this._store
       .doc(`/sessions/${this._shared.getSessionId()}`)
@@ -55,12 +71,14 @@ export class DataService {
         );
       });
   }
-
+  */
+  /*
   storeMode(mode: string): void {
     this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
       mode: mode,
     });
   }
+  */
 
   storeSchoolClass(className: number) {
     this._store
@@ -81,21 +99,69 @@ export class DataService {
     );
   }
 
+  storeQuizStart() {
+    this._store
+      .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
+      .add({
+        quizTemplateId: 'TY1wRNj2Bq71aCvGgf0v',
+        url: window.location.href,
+        startTime: serverTimestamp(),
+        studentId: this._shared.getStudentId(),
+      })
+      .then((docRef) => {
+        this._shared.setQuizId(docRef.id);
+      });
+    localStorage.setItem(
+      'schoolClass',
+      this._shared.getSchoolClass().toString()
+    );
+  }
+
+  storeQuizEnd() {
+    const quizEndTime = new Date();
+    this._store
+      .doc(
+        `/students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}`
+      )
+      .update({
+        correctAnswers: this._shared.correctAnswer,
+        totalQuestions:
+          this._shared.correctAnswer + this._shared.incorrectAnswer,
+        duration: quizEndTime.getTime() - this._shared.getQuizStartTime(),
+      });
+  }
+
   storeAnswer(
     exerciseId: string,
     answerIsCorrect: boolean,
     duration: number,
-    attempts: number
+    attempts: number,
+    startTime: Date,
+    endTime: Date
   ) {
-    this._store.collection(`quizzes/${this._shared.getQuizId()}/answers`).add({
-      startTime: serverTimestamp(),
-      exerciseId: exerciseId,
-      answerIsCorrect: answerIsCorrect,
-      duration: duration,
-      studentId: this._shared.getStudentId(),
-      sessionId: this._shared.getSessionId(),
-      quizId: this._shared.getQuizId(),
-    });
+    console.log('studentId: ' + this._shared.getStudentId());
+    console.log('sessionId: ' + this._shared.getSessionId());
+    console.log('quizId: ' + this._shared.getQuizId());
+    console.log('exerciseId: ' + exerciseId);
+    console.log('startTime: ' + startTime);
+    console.log('endTime: ' + endTime);
+    console.log('serverTimestamp: ' + serverTimestamp());
+    console.log('answerIsCorrect: ' + answerIsCorrect);
+    console.log('duration: ' + duration);
+    console.log('attempts: ' + attempts);
+    this._store
+      .collection(
+        `students/${
+          this._shared.studentDocumentId
+        }/quizzes/${this._shared.getQuizId()}/answers`
+      )
+      .add({
+        startTime: startTime,
+        exerciseId: exerciseId,
+        attempt: attempts,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+      });
   }
 
   storePuzzleAnswer(
@@ -117,21 +183,6 @@ export class DataService {
         sessionId: this._shared.getSessionId(),
         quizId: this._shared.getQuizId(),
         // wrongAnswers: wrongAnswers,
-      });
-  }
-
-  storeResult() {
-    // this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
-    this._store
-      .doc(`/students/BbWzvQmUIMpytT5G5bUI/quizzes/ITAolU7eXoOh6t1OeKcP`)
-      .update({
-        correctAnswers: this._shared.correctAnswer,
-        totalQuestions:
-          this._shared.correctAnswer + this._shared.incorrectAnswer,
-        correctPuzzles: this._shared.correctPuzzles,
-        totalPuzzles:
-          this._shared.correctPuzzles + this._shared.incorrectPuzzles,
-        endTime: serverTimestamp(),
       });
   }
 
@@ -194,10 +245,13 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
 
+  // called from Quiz Page
   getQuizzes4(): Observable<Quiz[]> {
     console.log('getQuizzes4');
     return this._store
-      .collection('students/BbWzvQmUIMpytT5G5bUI/quizzes')
+      .collection(`students/${this._shared.studentDocumentId}/quizzes`, (ref) =>
+        ref.where('quizNumber', '==', 1)
+      )
       .get()
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }

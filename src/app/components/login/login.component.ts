@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
+
+import { Student } from 'src/app/shared/student';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +22,11 @@ export class LoginComponent implements OnInit {
 
   validStudentId: boolean = true;
   idWasGenerated: boolean;
+  studentDocumentIds$: Observable<Student[]>;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.studentDocumentIds$ = this._data.getStudentDocumentIds();
+  }
 
   submitId(form: NgForm): void {
     console.log('submitId() called');
@@ -29,15 +36,24 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (value.studentId) {
+      // TODO: Need to ensure that the id is unique
+      console.log('value.studentId: ' + value.studentId);
       this.validStudentId = true;
-      this.shared.studentId = value.studentId;
+      this.shared.setStudentId(value.studentId);
+      this._data.getStudentDocumentIds();
+
       // this.goToClassSelection();
       this.goToMenu();
-      this._data.updateStudentId();
+      // this._data.updateStudentId();
       this.shared.storeStudentIdInLocalStorage();
+      // this.getStudentDocumentId();
     } else {
       this.validStudentId = false;
     }
+  }
+
+  getStudentDocumentId(): void {
+    this.shared.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
   }
 
   goToClassSelection(): void {
@@ -47,11 +63,12 @@ export class LoginComponent implements OnInit {
   goToMenu(): void {
     this._router.navigate(['/', 'menu']);
   }
-
-  generateId(): void {
+  /*
+  generateId(): void { // TODO: allow users to generate their own id (which needs to be unique)
     this.shared.setStudentId();
-    this._data.updateStudentId();
+    // this._data.updateStudentId();
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }
+  */
 }

@@ -5,7 +5,7 @@
   <ul>
     <li *ngFor="let menuItem of menuItems" (click)="onMenuItemClick(menuItem)">
       <button
-        class="btn classBtn"
+        class="btn btnList"
         [disabled]="menuItem.disabled"
         routerLink="{{ menuItem.route }}"
       >

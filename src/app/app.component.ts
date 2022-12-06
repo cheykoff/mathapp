@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
       this._dataService.storeSessionId();
     }*/
 
-    this._dataService.storeSessionId();
+    // this._dataService.storeSessionId();
   }
 
   @HostListener('window:beforeunload', ['$event'])

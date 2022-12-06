@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, timer } from 'rxjs';
 
+import { DataService } from '../service/data.service';
+
+import { Student } from '../shared/student';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +22,8 @@ export class SharedService {
   incorrectPuzzles: number = 0;
   testNumber: number = 0;
   quizFinished: boolean = false;
+  quizStartTime: Date = null;
+  studentDocumentId: string = 'abc';
 
   countDown: Subscription;
   counter = 1800; // 1800 s = 30 minutes
@@ -26,6 +32,8 @@ export class SharedService {
   currentLevel = 1;
   chosenLevel = 1;
   levelStars: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  constructor(private _router: Router) {}
 
   countDownTimer() {
     this.countDown = timer(0, this.tick).subscribe(() => {
@@ -39,15 +47,27 @@ export class SharedService {
       }
     });
   }
+  /*
+  getStudentDocumentId(): void {
+    this._data.getStudentDocumentIds().subscribe((data: Student[]) => {
+      this.studentDocumentId = data[0].id;
+    });
+  }
+  */
+  /*
+  getStudentDocumentId(): void {
+    this.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
+  }
 
+  */
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
 
-  constructor(private _router: Router) {}
-
-  setStudentId(): void {
-    this.studentId = Math.floor(100000 + Math.random() * 900000);
+  // called from login
+  setStudentId(studentId: number): void {
+    this.studentId = studentId;
+    // this.studentId = Math.floor(100000 + Math.random() * 900000);
     return;
     if (this.studentId === 100000 || !this.studentId) {
       if (localStorage.getItem('studentId')) {
@@ -57,6 +77,21 @@ export class SharedService {
       this.studentId = Math.floor(100000 + Math.random() * 900000);
     }
     localStorage.setItem('studentId', this.studentId.toString());
+  }
+
+  // called from login
+  setStudentDocumentId(data: string): void {
+    this.studentDocumentId = data;
+    console.log('synchronous');
+    console.log('this.shared.studentDocumentId: ' + this.studentDocumentId);
+    setTimeout(() => {
+      console.log('after 1 second');
+      console.log('this.shared.studentDocumentId: ' + this.studentDocumentId);
+    }, 1000);
+  }
+
+  getStudentDocumentId(): string {
+    return this.studentDocumentId;
   }
 
   storeStudentIdInLocalStorage(): void {
@@ -71,6 +106,14 @@ export class SharedService {
     } else {
     }
     */
+  }
+
+  setQuizStartTime(data: any) {
+    this.quizStartTime = data;
+  }
+
+  getQuizStartTime(): any {
+    return this.quizStartTime;
   }
 
   setCorrectAnswer(data: any): void {
