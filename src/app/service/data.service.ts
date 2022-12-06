@@ -37,7 +37,7 @@ export class DataService {
         this._shared.setStudentDocumentId(data[0].id);
       });
   }
-
+  /*
   storeSessionId() {
     this._store
       .collection(`sessions`)
@@ -57,6 +57,8 @@ export class DataService {
         );
       });
   }
+  */
+
   /*
   updateStudentId() {
     this._store
@@ -85,7 +87,7 @@ export class DataService {
       .collection(`quizzes`)
       .add({
         schoolClass: className,
-        sessionId: this._shared.getSessionId(),
+        // sessionId: this._shared.getSessionId(),
         url: window.location.href,
         startTime: serverTimestamp(),
         studentId: this._shared.getStudentId(),
@@ -99,6 +101,7 @@ export class DataService {
     );
   }
 
+  // called from quiz-intro
   storeQuizStart() {
     this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
@@ -117,6 +120,7 @@ export class DataService {
     );
   }
 
+  // called from resultpage
   storeQuizEnd() {
     const quizEndTime = new Date();
     this._store
@@ -131,6 +135,7 @@ export class DataService {
       });
   }
 
+  // called from exercise
   storeAnswer(
     exerciseId: string,
     answerIsCorrect: boolean,
@@ -140,7 +145,7 @@ export class DataService {
     endTime: Date
   ) {
     console.log('studentId: ' + this._shared.getStudentId());
-    console.log('sessionId: ' + this._shared.getSessionId());
+    // console.log('sessionId: ' + this._shared.getSessionId());
     console.log('quizId: ' + this._shared.getQuizId());
     console.log('exerciseId: ' + exerciseId);
     console.log('startTime: ' + startTime);
@@ -164,6 +169,7 @@ export class DataService {
       });
   }
 
+  /*
   storePuzzleAnswer(
     puzzleId: string,
     duration: number,
@@ -185,7 +191,10 @@ export class DataService {
         // wrongAnswers: wrongAnswers,
       });
   }
+  */
 
+  // called from exercise
+  // TODO: Refactor
   storeDynamicAnswer(
     question: string,
     correctAnswer: number,
@@ -205,30 +214,36 @@ export class DataService {
         duration: duration,
         level: level,
         studentId: this._shared.getStudentId(),
-        sessionId: this._shared.getSessionId(),
         quizId: this._shared.getQuizId(),
       });
   }
 
+  /*
   addEndTime() {
     this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
       endTime: serverTimestamp(),
     });
   }
+  */
 
+  // called from resultpage
+  // TODO: Decide if I want to keep it
   storeSelfReflection(selfReflection: number) {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
       selfReflection: selfReflection,
     });
   }
 
+  /*
   getAllExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercises-all')
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
+  */
 
+  /*
   getQuizzes(): Observable<Quiz[]> {
     return this._store
       .collection(
@@ -237,13 +252,16 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
+  */
 
+  /*
   getQuizzes3(): Observable<Quiz[]> {
     return this._store
       .collection('quizzes3')
       .get()
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
+  */
 
   // called from Quiz Page
   getQuizzes4(): Observable<Quiz[]> {
@@ -256,6 +274,7 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
 
+  // called from quiz-intro
   getExercisesByQuizId2() {
     console.log('getExercisesByQuizId2');
     return this._store
@@ -264,6 +283,8 @@ export class DataService {
       .pipe(map((result) => convertSnap<Quiz2>(result)));
   }
 
+  // called from exercise
+  // TODO: Can I call it from quiz-intro?
   getExercisesByQuizTemplateId() {
     console.log('getExercisesByQuizTemplateId');
     return this._store
@@ -272,8 +293,9 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
+  /*
   storeAccessTime() {
-    /* Updating the document with the id wkPUpYoqmSgPYyv5ngor in the collection quizzes3. */
+    // Updating the document with the id wkPUpYoqmSgPYyv5ngor in the collection quizzes3.
     this._store.doc(`quizzes3/wkPUpYoqmSgPYyv5ngor`).update({
       accessTime: serverTimestamp(),
     });
@@ -281,7 +303,10 @@ export class DataService {
       accessTime: serverTimestamp(),
     });
   }
+  */
 
+  // called from quiz-intro
+  // TODO: use dynamic document id
   getExercisesByQuizId(): Observable<Quiz2> {
     return (
       this._store

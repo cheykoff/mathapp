@@ -14,7 +14,7 @@ export class SharedService {
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
   docId: string = 'mjAHUQYd5uc3Bt4jWUpQ'; // Default id for session (startTime is set to 1.1.2022, studentId is 111111)
-  sessionId: string = '';
+  // sessionId: string = '';
   quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
   parameters = {};
   studentId: number = 100000;
@@ -28,13 +28,7 @@ export class SharedService {
   countDown: Subscription;
   counter = 1800; // 1800 s = 30 minutes
   tick = 1000;
-
-  currentLevel = 1;
-  chosenLevel = 1;
-  levelStars: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
   constructor(private _router: Router) {}
-
   countDownTimer() {
     this.countDown = timer(0, this.tick).subscribe(() => {
       --this.counter;
@@ -47,19 +41,7 @@ export class SharedService {
       }
     });
   }
-  /*
-  getStudentDocumentId(): void {
-    this._data.getStudentDocumentIds().subscribe((data: Student[]) => {
-      this.studentDocumentId = data[0].id;
-    });
-  }
-  */
-  /*
-  getStudentDocumentId(): void {
-    this.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
-  }
 
-  */
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
@@ -79,6 +61,42 @@ export class SharedService {
     localStorage.setItem('studentId', this.studentId.toString());
   }
 
+  currentLevel = 1;
+  chosenLevel = 1;
+  levelStars: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  // called from codepage
+  // TODO: call from quiz-intro
+  // TODO: Fix error
+
+  /*
+  getStudentDocumentId(): void {
+    this._data.getStudentDocumentIds().subscribe((data: Student[]) => {
+      this.studentDocumentId = data[0].id;
+    });
+  }
+  */
+  /*
+  getStudentDocumentId(): void {
+    this.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
+  }
+
+  */
+
+  // called from exercise
+  // TODO: just use router in the button
+
+  // called from app.component, codepage, data.service
+  getStudentId(): number {
+    return this.studentId;
+    /*
+    if (localStorage.getItem('studentId')) {
+      return parseInt(localStorage.getItem('studentId'));
+    } else {
+    }
+    */
+  }
+
   // called from login
   setStudentDocumentId(data: string): void {
     this.studentDocumentId = data;
@@ -90,22 +108,14 @@ export class SharedService {
     }, 1000);
   }
 
+  // called from login and data.service
   getStudentDocumentId(): string {
     return this.studentDocumentId;
   }
 
+  // TODO: Store all important variables in local storage
   storeStudentIdInLocalStorage(): void {
     localStorage.setItem('studentId', this.getStudentId().toString());
-  }
-
-  getStudentId(): number {
-    return this.studentId;
-    /*
-    if (localStorage.getItem('studentId')) {
-      return parseInt(localStorage.getItem('studentId'));
-    } else {
-    }
-    */
   }
 
   setQuizStartTime(data: any) {
@@ -139,7 +149,7 @@ export class SharedService {
   getSchoolClass(): number {
     return this.schoolClass;
   }
-
+  /*
   setSessionId(data: string): void {
     this.docId = data;
   }
@@ -147,6 +157,7 @@ export class SharedService {
   getSessionId(): string {
     return this.docId;
   }
+  */
 
   setQuizId(data: string): void {
     this.quizId = data;
@@ -156,6 +167,7 @@ export class SharedService {
     return this.quizId;
   }
 
+  /*
   setParameters(): void {
     let paramString = window.location.href.split('?')[1];
     if (paramString) {
@@ -170,4 +182,5 @@ export class SharedService {
       return null;
     }
   }
+  */
 }

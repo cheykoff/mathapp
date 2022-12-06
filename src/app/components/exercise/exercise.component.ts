@@ -338,6 +338,7 @@ export class ExerciseComponent implements OnInit {
   }
   */
 
+// TODO: Enable Dynamic questions and answers
 /*
   checkDynamicAnswer(form: NgForm, exercise?: Exercise): boolean {
     console.log('dynamic');
