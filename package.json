@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev": "lite-server",
     "compodoc": "npx compodoc -p tsconfig.doc.json",
-    "local-dev": "firebase emulators:start --only firestore --import mockdata-v10",
+    "local-dev": "firebase emulators:start --only firestore --import mockdata-v11",
     "export": "firebase emulators:export sample-quizzes"
   },
   "private": true,

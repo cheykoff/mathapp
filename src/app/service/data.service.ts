@@ -12,6 +12,7 @@ import { Student } from '../shared/student';
 import { Exercise } from '../shared/exercise';
 import { Quiz } from '../shared/quiz';
 import { Quiz2 } from '../shared/quiz2';
+import { QuizTemplate } from '../shared/quiz-template';
 import { convertSnaps, convertSnap } from './db-utils';
 
 @Injectable({
@@ -25,6 +26,8 @@ export class DataService {
 
   // called from login
   getStudentDocumentIds() {
+    console.log('getStudentDocumentIds');
+    console.log(this._shared.getStudentId());
     return this._store
       .collection('students', (ref) =>
         // ref.where('studentId', '==', this._shared.getStudentId())
@@ -267,11 +270,17 @@ export class DataService {
   getQuizzes4(): Observable<Quiz[]> {
     console.log('getQuizzes4');
     return this._store
-      .collection(`students/${this._shared.studentDocumentId}/quizzes`, (ref) =>
-        ref.where('quizNumber', '==', 1)
-      )
+      .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
       .get()
       .pipe(map((result) => convertSnaps<Quiz>(result)));
+  }
+
+  getQuizzes5(): Observable<QuizTemplate[]> {
+    console.log('getQuizzes5');
+    return this._store
+      .collection(`quizTemplates`)
+      .get()
+      .pipe(map((result) => convertSnaps<QuizTemplate>(result)));
   }
 
   // called from quiz-intro

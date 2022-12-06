@@ -2,6 +2,22 @@
   <h1 class="headerTitle">Quiz</h1>
 </div>
 <div class="main">
+  <ng-container *ngIf="quizTemplates$ | async as quizTemplates; else loading">
+    <ul>
+      <li *ngFor="let quizTemplate of quizTemplates">
+        <p>
+          Quiz zu Kapitel {{ quizTemplate.books[0].chapters[0].chapter }}/{{
+            quizTemplate.books[0].chapters[0].subChapters[0]
+          }}
+        </p>
+        <button class="btn classBtn" routerLink="/quiz-intro">
+          Los geht's
+        </button>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!--
   <ng-container *ngIf="quizzes$ | async as quizzes; else loading">
     <ul>
       <li *ngFor="let quiz of quizzes">
@@ -17,6 +33,7 @@
       </li>
     </ul>
   </ng-container>
+  -->
   <ng-template #loading>
     <p>Loading...</p>
   </ng-template>
