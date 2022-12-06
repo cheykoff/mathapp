@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
 
-import { Student } from 'src/app/shared/student';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,7 +20,6 @@ export class LoginComponent implements OnInit {
 
   validStudentId: boolean = true;
   idWasGenerated: boolean;
-  studentDocumentIds$: Observable<Student[]>;
 
   ngOnInit(): void {
     // this.studentDocumentIds$ = this._data.getStudentDocumentIds();

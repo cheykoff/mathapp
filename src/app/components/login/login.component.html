@@ -45,11 +45,4 @@
       Los geht's
     </button>
   </div>
-  <ng-container *ngIf="studentDocumentIds$ | async as students">
-    <ul>
-      <li *ngFor="let student of students">
-        {{ student.id }}
-      </li>
-    </ul>
-  </ng-container>
 </div>
