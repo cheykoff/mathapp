@@ -35,9 +35,14 @@ export class LoginComponent implements OnInit {
     if (value.studentId) {
       // TODO: Need to ensure that the id is unique
       console.log('value.studentId: ' + value.studentId);
+
       this.validStudentId = true;
       this.shared.setStudentId(value.studentId);
       this._data.getStudentDocumentIds();
+      setTimeout(() => {
+        this._data.getSchoolClassId();
+        this._data.retrieveStudentDataFromFirestore(value.studentId);
+      }, 1000);
 
       // this.goToClassSelection();
       this.goToMenu();
@@ -48,10 +53,11 @@ export class LoginComponent implements OnInit {
       this.validStudentId = false;
     }
   }
-
+  /*
   getStudentDocumentId(): void {
     this.shared.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
   }
+  */
 
   goToClassSelection(): void {
     this._router.navigate(['/', 'classselection']);

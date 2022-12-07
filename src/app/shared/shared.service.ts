@@ -10,6 +10,17 @@ import { Student } from '../shared/student';
   providedIn: 'root',
 })
 export class SharedService {
+  studentData: Student = {
+    id: '',
+    studentId: 0,
+    totalQuestions: 0,
+    correctAnswers: 0,
+    emailStudent: '',
+    emailsParents: [''],
+    schoolClasses: [{ classId: '', currentClass: false }],
+    skillLevel: 0,
+  };
+
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
@@ -24,26 +35,25 @@ export class SharedService {
   quizFinished: boolean = false;
   quizStartTime: Date = null;
   studentDocumentId: string = 'abc';
+  schoolClassDocumentId: string;
+  quizTemplateIds: string[] = [];
 
   countDown: Subscription;
   counter = 1800; // 1800 s = 30 minutes
   tick = 1000;
   constructor(private _router: Router) {}
-  countDownTimer() {
-    this.countDown = timer(0, this.tick).subscribe(() => {
-      --this.counter;
-      if (this.counter === 0) {
-        this.quizFinished = true;
-        this._router.navigate(['/', 'levelpage']);
-        // this.showResult();
-        this.countDown.unsubscribe();
-        this.countDown = null;
-      }
-    });
-  }
 
-  showResult(): void {
-    this._router.navigate(['/', 'resultpage']);
+  setStudentData(studentData: Student): void {
+    console.log('setStudentData()');
+    this.studentData.id = studentData.id;
+    this.studentData.correctAnswers = studentData.correctAnswers;
+    this.studentData.totalQuestions = studentData.totalQuestions;
+    this.studentData.schoolClasses = studentData.schoolClasses;
+    this.studentData.emailStudent = studentData.emailStudent;
+    this.studentData.emailsParents = studentData.emailsParents;
+    this.studentData.skillLevel = studentData.skillLevel;
+    console.log('studentData');
+    console.log(this.studentData);
   }
 
   // called from login
@@ -59,6 +69,23 @@ export class SharedService {
       this.studentId = Math.floor(100000 + Math.random() * 900000);
     }
     localStorage.setItem('studentId', this.studentId.toString());
+  }
+
+  countDownTimer() {
+    this.countDown = timer(0, this.tick).subscribe(() => {
+      --this.counter;
+      if (this.counter === 0) {
+        this.quizFinished = true;
+        this._router.navigate(['/', 'levelpage']);
+        // this.showResult();
+        this.countDown.unsubscribe();
+        this.countDown = null;
+      }
+    });
+  }
+
+  showResult(): void {
+    this._router.navigate(['/', 'resultpage']);
   }
 
   currentLevel = 1;
@@ -100,11 +127,14 @@ export class SharedService {
   // called from login
   setStudentDocumentId(data: string): void {
     this.studentDocumentId = data;
-    console.log('synchronous');
-    console.log('this.shared.studentDocumentId: ' + this.studentDocumentId);
+    console.log(
+      'this.shared.studentDocumentId (synchronous): ' + this.studentDocumentId
+    );
     setTimeout(() => {
       console.log('after 1 second');
-      console.log('this.shared.studentDocumentId: ' + this.studentDocumentId);
+      console.log(
+        'this.shared.studentDocumentId (1 s delay): ' + this.studentDocumentId
+      );
     }, 1000);
   }
 
@@ -116,6 +146,32 @@ export class SharedService {
   // TODO: Store all important variables in local storage
   storeStudentIdInLocalStorage(): void {
     localStorage.setItem('studentId', this.getStudentId().toString());
+  }
+
+  setSchoolClassDocumentId(data: string): void {
+    this.schoolClassDocumentId = data;
+    console.log(
+      'this.schoolClassDocumentId (syncronous): ' + this.schoolClassDocumentId
+    );
+    setTimeout(() => {
+      console.log(
+        'this.shared.schoolClassDocumentId (1 s delay): ' +
+          this.schoolClassDocumentId
+      );
+    }, 1000);
+    return;
+  }
+
+  getSchoolClassDocumentId(): string {
+    return this.schoolClassDocumentId;
+  }
+
+  setQuizTemplateIds(data: string[]): void {
+    this.quizTemplateIds = data;
+    console.log('this.quizTemplateIds (syncronous): ' + this.quizTemplateIds);
+    setTimeout(() => {
+      console.log('this.quizTemplateIds (1 s delay): ' + this.quizTemplateIds);
+    }, 1000);
   }
 
   setQuizStartTime(data: any) {

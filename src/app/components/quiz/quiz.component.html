@@ -16,6 +16,25 @@
       </li>
     </ul>
   </ng-container>
+  <!--
+  <ng-container *ngIf="schoolClass$ | async as schoolClass">
+    <p>Schulklasse</p>
+    <p>{{ schoolClass.schoolYear }}</p>
+    <p>{{ schoolClass.className }}</p>
+    <ul>
+      <li *ngFor="let quizTemplateId of schoolClass.quizTemplateIds">
+        <p>{{ quizTemplateId }}</p>
+      </li>
+    </ul>
+  </ng-container>
+  <ng-container *ngIf="student$ | async as student">
+    <p>StudentId: {{ student.studentId }}</p>
+  </ng-container>
+  <ng-container *ngIf="schoolClass2$ | async as schoolClass2">
+    <p>SchoolClass 2</p>
+    <p>{{ schoolClass2.className }}</p>
+  </ng-container>
+  -->
 
   <!--
   <ng-container *ngIf="quizzes$ | async as quizzes; else loading">

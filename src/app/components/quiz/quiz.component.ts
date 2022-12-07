@@ -5,6 +5,8 @@ import { DataService } from '../../service/data.service';
 
 import { Quiz } from 'src/app/shared/quiz';
 import { QuizTemplate } from 'src/app/shared/quiz-template';
+import { SchoolClass2 } from 'src/app/shared/schoolClass';
+import { Student } from 'src/app/shared/student';
 
 @Component({
   selector: 'app-quiz',
@@ -13,7 +15,12 @@ import { QuizTemplate } from 'src/app/shared/quiz-template';
 })
 export class QuizComponent implements OnInit {
   quizzes$: Observable<Quiz[]>;
+
   quizTemplates$: Observable<QuizTemplate[]>;
+  quizTemplates2$: Observable<QuizTemplate[]>;
+  schoolClass$: Observable<SchoolClass2>;
+  student$: Observable<Student>;
+  schoolClass2$: Observable<SchoolClass2>;
 
   /*
   quizzes: Quiz[] = [
@@ -42,7 +49,12 @@ export class QuizComponent implements OnInit {
   ngOnInit(): void {
     console.log('QuizComponent.ngOnInit()');
     // this.quizzes$ = this._dataService.getQuizzes4();
-    this.quizTemplates$ = this._dataService.getQuizzes5();
+    this.quizTemplates$ = this._dataService.getQuizTemplates();
     // this._dataService.storeAccessTime();
+    this.schoolClass$ = this._dataService.getQuizTemplates2();
+    // this.student$ = this._dataService.getSchoolClassId();
+    // this._dataService.getQuizTemplates3();
+    // this.schoolClass2$ = this._dataService.getSchoolClassByStudentId();
+    this._dataService.getQuizTemplateIDs();
   }
 }

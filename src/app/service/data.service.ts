@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { getDoc, serverTimestamp, orderBy } from 'firebase/firestore';
-import { Observable, map, take, tap, first } from 'rxjs';
+import { Observable, map, of, take, tap, first, switchMap, pipe } from 'rxjs';
 
 import { Student } from '../shared/student';
 import { Exercise } from '../shared/exercise';
@@ -14,6 +14,7 @@ import { Quiz } from '../shared/quiz';
 import { Quiz2 } from '../shared/quiz2';
 import { QuizTemplate } from '../shared/quiz-template';
 import { convertSnaps, convertSnap } from './db-utils';
+import { SchoolClass2 } from '../shared/schoolClass';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,19 @@ export class DataService {
   ) {}
 
   // called from login
+
+  retrieveStudentDataFromFirestore(studentId: number): void {
+    console.log('retrieveStudentDataFromFirestore');
+    console.log(studentId);
+    this._store
+      .doc(`students/${this._shared.getStudentDocumentId()}`)
+      .get()
+      .pipe(map((result) => convertSnap<Student>(result)))
+      .subscribe((data: Student) => {
+        this._shared.setStudentData(data);
+      });
+  }
+
   getStudentDocumentIds() {
     console.log('getStudentDocumentIds');
     console.log(this._shared.getStudentId());
@@ -38,8 +52,21 @@ export class DataService {
       .subscribe((data: Student[]) => {
         console.log(data[0].id); // TODO: Get only one document
         this._shared.setStudentDocumentId(data[0].id);
+        this._shared.setSchoolClassDocumentId(data[0].schoolClasses[0].classId);
       });
   }
+
+  getQuizTemplateIDs() {
+    console.log('getQuizTemplateIDs');
+    return this._store
+      .doc(`schoolClasses/${this._shared.getSchoolClassDocumentId()}`)
+      .get()
+      .pipe(map((result) => convertSnap<SchoolClass2>(result)))
+      .subscribe((data: SchoolClass2) => {
+        this._shared.setQuizTemplateIds(data.quizTemplateIds);
+      });
+  }
+
   /*
   storeSessionId() {
     this._store
@@ -275,21 +302,110 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Quiz>(result)));
   }
 
-  getQuizzes5(): Observable<QuizTemplate[]> {
-    console.log('getQuizzes5');
+  getQuizTemplates(): Observable<QuizTemplate[]> {
+    console.log('getQuizTemplates');
     return this._store
       .collection(`quizTemplates`)
       .get()
       .pipe(map((result) => convertSnaps<QuizTemplate>(result)));
   }
 
+  getQuizTemplates2(): Observable<SchoolClass2> {
+    console.log('getQuizTemplates2');
+    return this._store
+      .doc(`schoolClasses/qurzXjuNZYu48TS03O2g`)
+      .get()
+      .pipe(map((result) => convertSnap<SchoolClass2>(result)));
+  }
+
+  getSchoolClassId(): void {
+    console.log('getSchoolClassId');
+    console.log(this._shared.getStudentDocumentId());
+    this._store
+      // .doc('students/' + this._shared.getStudentDocumentId())
+      .doc('students/BbWzvQmUIMpytT5G5bUI')
+      .get()
+      .pipe(map((result) => convertSnap<Student>(result)))
+      .pipe(tap(console.log))
+      .pipe(
+        tap((student) => {
+          console.log(student);
+          this._shared.schoolClassDocumentId = student.schoolClasses[0].classId;
+        })
+      );
+  }
+
+  /*
+  getSchoolClassByStudentId(): Observable<SchoolClass2> {
+    const studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
+    const schoolClassId = 'qurzXjuNZYu48TS03O2g';
+    return this._store.doc(`students/${studentDocumentId}`)
+    .get()
+    .pipe(map((result) => convertSnap<Student>(result)))
+    .pipe(switchMap((student: Student): SchoolClass2 => {
+      this._store.doc(`schoolClasses/${student.schoolClass}`)
+      .get()
+      .pipe(map((result) => convertSnap<SchoolClass2>(result)))
+  }))
+   }
+  */
+
+  /*
+    return this._store
+      .doc(`schoolClasses/${schoolClassId}`)
+      .get()
+      .pipe(map((result) => convertSnap<SchoolClass2>(result)));
+      */
+
+  /* 
+  getQuizTemplates3(): void {
+    console.log('getQuizTemplate3');
+    const switched = of(1, 2, 3).pipe(switchMap((x) => of(x, x ** 2, x ** 3)));
+    switched.subscribe((x) => console.log(x));
+
+    let schoolClassId: any;
+
+    const mySchoolClasses$ = this._store
+      .collection(`students`, (ref) => ref.where('studentId', '==', 123456))
+      .get()
+      .pipe(map((result) => convertSnaps<Student>(result)))
+      .pipe(
+        switchMap((result) => {
+          schoolClassId = this._store
+            .doc(`schoolClasses/${result[0].schoolClassId}`)
+            .get()
+            .pipe(map((result) => convertSnaps<SchoolClass2>(result)));
+        })
+      );
+    mySchoolClasses$.subscribe((result) => console.log(result));
+    */
+
+  /*
+    return this._store
+      .collection(`schoolClasses`, (ref) =>
+        ref.where(
+          'studentIds',
+          'array-contains',
+          this._shared.getStudentDocumentId()
+        )
+      )
+      .get()
+      .pipe(
+        switchMap((schoolClasses) => this.getQuizTemplates4(schoolClasses))
+      );
+      
+  }
+  */
+
   // called from quiz-intro
-  getExercisesByQuizId2() {
+  getExercisesByQuizId2(): void {
     console.log('getExercisesByQuizId2');
+    /*
     return this._store
       .doc(`quizTemplates/TY1wRNj2Bq71aCvGgf0v`)
       .get()
       .pipe(map((result) => convertSnap<Quiz2>(result)));
+      */
   }
 
   // called from exercise

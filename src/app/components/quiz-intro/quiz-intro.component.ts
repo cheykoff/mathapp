@@ -24,7 +24,7 @@ export class QuizIntroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.quiz$ = this._dataService.getExercisesByQuizId2();
+    // this.quiz$ = this._dataService.getExercisesByQuizId2();
   }
 
   onStartQuiz() {
