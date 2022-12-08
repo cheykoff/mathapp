@@ -29,7 +29,7 @@ export class ResultpageComponent implements OnInit {
 
   getStars(): string {
     this.getPercentage();
-    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0); // TODO: Use this.shared.currentLevelStars
+    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0); // TODO: Use this.shared.currentLevelStars?
     let imgUrl = 'assets/img/' + this.stars + 'stars.gif';
     if (!this.stars) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';

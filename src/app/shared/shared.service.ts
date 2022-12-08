@@ -66,6 +66,24 @@ export class SharedService {
   tick = 1000;
   constructor(private _router: Router) {}
 
+  setStudentData(studentData: Student): void {
+    console.log('setStudentData()');
+    this.studentData.id = studentData.id;
+    this.studentData.studentId = studentData.studentId;
+    this.studentData.correctAnswers = studentData.correctAnswers;
+    this.studentData.totalQuestions = studentData.totalQuestions;
+    this.studentData.schoolClasses = studentData.schoolClasses;
+    this.studentData.emailStudent = studentData.emailStudent;
+    this.studentData.emailsParents = studentData.emailsParents;
+    this.studentData.skillLevel = studentData.skillLevel;
+    this.levelStars = studentData.levelStars;
+    this.setCurrentLevels();
+    console.log('studentData');
+    console.log(this.studentData);
+    console.log('levelStars');
+    console.log(this.levelStars);
+    console.log(this.currentLevel);
+  }
   // called from login
   setStudentId(studentId: number): void {
     this.studentId = studentId;
@@ -98,25 +116,6 @@ export class SharedService {
 
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
-  }
-
-  setStudentData(studentData: Student): void {
-    console.log('setStudentData()');
-    this.studentData.id = studentData.id;
-    this.studentData.studentId = studentData.studentId;
-    this.studentData.correctAnswers = studentData.correctAnswers;
-    this.studentData.totalQuestions = studentData.totalQuestions;
-    this.studentData.schoolClasses = studentData.schoolClasses;
-    this.studentData.emailStudent = studentData.emailStudent;
-    this.studentData.emailsParents = studentData.emailsParents;
-    this.studentData.skillLevel = studentData.skillLevel;
-    this.levelStars = studentData.levelStars;
-    this.setCurrentLevels();
-    console.log('studentData');
-    console.log(this.studentData);
-    console.log('levelStars');
-    console.log(this.levelStars);
-    console.log(this.currentLevel);
   }
 
   // called from codepage
