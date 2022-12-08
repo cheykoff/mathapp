@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
+import { TopicsComponent } from './components/topics/topics.component';
 import { TrainingComponent } from './components/training/training.component';
 import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'quiz', component: QuizComponent },
   { path: 'quiz-intro', component: QuizIntroComponent },
+  { path: 'topics', component: TopicsComponent },
   { path: 'training', component: TrainingComponent },
   { path: 'training-setup', component: TrainingSetupComponent },
 

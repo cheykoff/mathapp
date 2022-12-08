@@ -14,6 +14,8 @@ export class ResultpageComponent implements OnInit {
     private _dataService: DataService
   ) {}
 
+  stars: number;
+
   percentage: number = 0;
   selfReflection: number;
   selfReflectionGiven: boolean = false;
@@ -27,16 +29,24 @@ export class ResultpageComponent implements OnInit {
 
   getStars(): string {
     this.getPercentage();
-    const stars = Math.max(5 - this.shared.incorrectAnswer, 0);
-    let imgUrl = 'assets/img/' + stars + 'stars.gif';
-    if (!stars) {
+    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
+    let imgUrl = 'assets/img/' + this.stars + 'stars.gif';
+    if (!this.stars) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';
     }
     return imgUrl;
   }
 
   ngOnInit(): void {
-    this._dataService.storeQuizEnd();
+    this.getStars();
+    console.log('correctAnswer: ' + this.shared.correctAnswer);
+    console.log('incorrectAnswer: ' + this.shared.incorrectAnswer);
+    if (this.shared.mode === 'quiz') {
+      this._dataService.storeQuizEnd();
+    } else if (this.shared.mode === 'practice') {
+      // this.shared.updateLevelStars(this.stars);
+      this._dataService.storeLevelEnd();
+    }
   }
 
   onSubmitSelfReflection(form: NgForm): void {

@@ -25,34 +25,15 @@ export class DataService {
     private _shared: SharedService
   ) {}
 
-  // called from login
-
-  retrieveStudentDataFromFirestore(studentId: number): void {
-    console.log('retrieveStudentDataFromFirestore');
-    console.log(studentId);
-    this._store
-      .doc(`students/${this._shared.getStudentDocumentId()}`)
-      .get()
-      .pipe(map((result) => convertSnap<Student>(result)))
-      .subscribe((data: Student) => {
-        this._shared.setStudentData(data);
-      });
-  }
-
-  getStudentDocumentIds() {
+  getStudentDocument(studentId: number) {
     console.log('getStudentDocumentIds');
     console.log(this._shared.getStudentId());
-    return this._store
-      .collection('students', (ref) =>
-        // ref.where('studentId', '==', this._shared.getStudentId())
-        ref.where('studentId', '==', this._shared.getStudentId())
-      )
+    this._store
+      .collection('students', (ref) => ref.where('studentId', '==', studentId))
       .get()
       .pipe(map((result) => convertSnaps<Student>(result)))
       .subscribe((data: Student[]) => {
-        console.log(data[0].id); // TODO: Get only one document
-        this._shared.setStudentDocumentId(data[0].id);
-        this._shared.setSchoolClassDocumentId(data[0].schoolClasses[0].classId);
+        this._shared.setStudentData(data[0]);
       });
   }
 
@@ -139,7 +120,6 @@ export class DataService {
         quizTemplateId: 'TY1wRNj2Bq71aCvGgf0v',
         url: window.location.href,
         startTime: serverTimestamp(),
-        studentId: this._shared.getStudentId(),
       })
       .then((docRef) => {
         this._shared.setQuizId(docRef.id);
@@ -153,11 +133,37 @@ export class DataService {
   // called from resultpage
   storeQuizEnd() {
     const quizEndTime = new Date();
+
     this._store
       .doc(
         `/students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}`
       )
       .update({
+        correctAnswers: this._shared.correctAnswer,
+        totalQuestions:
+          this._shared.correctAnswer + this._shared.incorrectAnswer,
+        duration: quizEndTime.getTime() - this._shared.getQuizStartTime(),
+      });
+  }
+
+  storePracticeStart() {
+    this._store
+      .collection(`students/${this._shared.getStudentDocumentId()}/practices`)
+      .add({
+        level: this._shared.chosenLevel,
+        startTime: serverTimestamp(),
+        url: window.location.href,
+      })
+      .then((docRef) => {
+        this._shared.setPracticeId(docRef.id);
+      });
+  }
+
+  storeLevelEnd() {
+    const quizEndTime = new Date();
+    this._store
+      .collection(`/students/${this._shared.getStudentDocumentId()}/practices`)
+      .add({
         correctAnswers: this._shared.correctAnswer,
         totalQuestions:
           this._shared.correctAnswer + this._shared.incorrectAnswer,
@@ -231,10 +237,21 @@ export class DataService {
     givenAnswer: number,
     answerIsCorrect: boolean,
     duration: number,
-    level: number
+    level: number,
+    attempt: number
   ) {
+    console.log('storeDynamicAnswer (data.service.ts)');
+    console.log('studentId: ' + this._shared.studentData.id);
+    console.log('question: ' + question);
+    console.log('correctAnswer: ' + correctAnswer);
+    console.log('givenAnswer: ' + givenAnswer);
+    console.log('answerIsCorrect: ' + answerIsCorrect);
+    console.log('duration: ' + duration);
+    console.log('level: ' + level);
+    console.log('attempt: ' + attempt);
+    console.log('topic: ' + this._shared.topic);
     this._store
-      .collection(`quizzes/${this._shared.getQuizId()}/dynamicanswers`)
+      .collection(`students/${this._shared.studentData.id}/dynamicanswers`)
       .add({
         startTime: serverTimestamp(),
         question: question,
@@ -243,8 +260,8 @@ export class DataService {
         answerIsCorrect: answerIsCorrect,
         duration: duration,
         level: level,
-        studentId: this._shared.getStudentId(),
-        quizId: this._shared.getQuizId(),
+        attempt: attempt,
+        topic: this._shared.topic,
       });
   }
 

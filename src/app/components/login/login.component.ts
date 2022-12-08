@@ -37,12 +37,14 @@ export class LoginComponent implements OnInit {
       console.log('value.studentId: ' + value.studentId);
 
       this.validStudentId = true;
-      this.shared.setStudentId(value.studentId);
-      this._data.getStudentDocumentIds();
+      // this.shared.setStudentId(value.studentId);
+      this._data.getStudentDocument(value.studentId);
+      /*
       setTimeout(() => {
         this._data.getSchoolClassId();
-        this._data.retrieveStudentDataFromFirestore(value.studentId);
+        // this._data.retrieveStudentDataFromFirestore(value.studentId);
       }, 1000);
+      */
 
       // this.goToClassSelection();
       this.goToMenu();

@@ -15,7 +15,7 @@ import { DataService } from '../../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
 
-  totalQuestions: number = 5;
+  totalQuestions: number = 10;
   maxAttempts: number = 3;
 
   currentQuestion: number = 0;
@@ -59,7 +59,14 @@ export class ExerciseComponent implements OnInit {
     // this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
     // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
     this.resetCounts();
-    this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
+
+    if (this.shared.mode === 'practice') {
+      this.createExercise();
+      this._dataService.storePracticeStart();
+    } else {
+      this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
+      this._dataService.storeQuizStart();
+    }
 
     // this.createExercise(this.shared.chosenLevel);
   }
@@ -90,10 +97,9 @@ export class ExerciseComponent implements OnInit {
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
     console.log('checkAnswer');
-    if (
-      exercise.answerType === 'dynamic' ||
-      exercise.answerType === 'integer'
-    ) {
+    if (this.shared.mode === 'practice') {
+      this.saveDynamicAnswer(this.checkDynamicAnswer(form));
+    } else if (exercise.answerType === 'integer') {
       this.saveAnswer(this.checkIntegerAnswer(form, exercise), exercise);
     } else {
       this.saveAnswer(this.checkFractionAnswer(form, exercise), exercise);
@@ -161,18 +167,15 @@ export class ExerciseComponent implements OnInit {
         this.streakCount++;
         this.shared.correctAnswer++;
       }
-      this.storeAnswer(true, exercise.id);
       this.isDisabled = true;
       this.showFeedback(true);
       this.showNextButton = true;
-      return;
     } else {
       console.log('integer incorrect');
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
       }
-      this.storeAnswer(false, exercise.id);
       this.showFeedback(false);
 
       if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
@@ -180,8 +183,9 @@ export class ExerciseComponent implements OnInit {
         this.showNextButton = true;
         this.isDisabled = true;
       }
-      return;
     }
+    this.storeAnswer(isCorrect, exercise.id);
+    return;
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
@@ -198,6 +202,52 @@ export class ExerciseComponent implements OnInit {
       this.attempts,
       this.startTime,
       this.endTime
+    );
+  }
+
+  saveDynamicAnswer(isCorrect: boolean): void {
+    console.log('saveDynamicAnswer');
+    if (isCorrect) {
+      console.log('correct answer');
+      if (this.attempts === 1) {
+        this.streakCount++;
+        this.shared.correctAnswer++;
+      }
+      this.storeDynamicAnswer(true);
+      this.isDisabled = true;
+      this.showFeedback(true);
+      this.showNextButton = true;
+      return;
+    } else {
+      console.log('incorrect answer');
+      if (this.attempts === 1) {
+        this.shared.incorrectAnswer++;
+        this.streakCount = 0;
+      }
+      this.streakCount = 0;
+      this.storeDynamicAnswer(false);
+      this.showFeedback(false);
+
+      if (this.attempts >= this.maxAttempts) {
+        console.log('dynamic incorrect: max attempts reached');
+        this.showNextButton = true;
+        this.isDisabled = true;
+      }
+      this.storeDynamicAnswer(isCorrect);
+      return;
+    }
+  }
+
+  storeDynamicAnswer(isCorrect: boolean): void {
+    console.log('storeDynamicAnswer');
+    this._dataService.storeDynamicAnswer(
+      this.question,
+      this.answer,
+      this.givenAnswer,
+      isCorrect,
+      this.duration,
+      this.shared.chosenLevel,
+      this.attempts
     );
   }
 
@@ -220,10 +270,17 @@ export class ExerciseComponent implements OnInit {
     }
     console.log('nextExercise');
     this.clearForm();
+    if ((this.shared.mode = 'practice')) {
+      this.createExercise();
+    }
     this.currentQuestion++;
     this.startTime = new Date();
 
-    if (this.shared.correctAnswer >= this.totalQuestions) {
+    if (
+      this.shared.correctAnswer + this.shared.incorrectAnswer >=
+      this.totalQuestions
+    ) {
+      this.calculateStars();
       this.showResult();
     }
   }
@@ -248,30 +305,55 @@ export class ExerciseComponent implements OnInit {
     this.answerIsIncorrect = false;
   }
 
-  createExercise(level: number): void {
+  createExercise(): void {
     console.log('createExercise');
+    const level = this.shared.chosenLevel;
+    const topic = this.shared.topic;
+    console.log('topic: ' + topic);
+    console.log('level: ' + level);
     this.startTime = new Date();
-    let minNum = undefined;
-    let maxNum = undefined;
-    if (level <= 4) {
+    let minNum = 0;
+    let maxNum = 0;
+    if (level === 1) {
       minNum = 1;
       maxNum = 10;
-    } else if (level <= 6) {
-      minNum = 1;
-      maxNum = 100;
-    } else if (level <= 8) {
-      minNum = 1;
-      maxNum = 20;
+    } else if (level === 2) {
+      if (topic === 'Addition' || topic === 'Subtraction') {
+        minNum = 1;
+        maxNum = 100;
+      } else {
+        minNum = 1;
+        maxNum = 20;
+      }
+    } else if (level === 3) {
+      if (topic === 'Addition' || topic === 'Subtraction') {
+        minNum = 1;
+        maxNum = 1000;
+      } else {
+        minNum = 1;
+        maxNum = 50;
+      }
     } else {
-      minNum = 1;
-      maxNum = 10000;
+      if (topic === 'Addition' || topic === 'Subtraction') {
+        minNum = 1;
+        maxNum = 10000;
+      } else {
+        minNum = 1;
+        maxNum = 100;
+      }
     }
+    console.log('minNum: ' + minNum);
+    console.log('maxNum: ' + maxNum);
     const a = this.getRandInteger(minNum, maxNum);
     const b = this.getRandInteger(minNum, maxNum);
-    if (level % 4 === 1) {
+    console.log('a: ' + a);
+    console.log('b: ' + b);
+    if (topic === 'Addition') {
       this.question = `${a} + ${b} = ?`;
+      console.log('question: ' + this.question);
       this.answer = a + b;
-    } else if (level % 4 === 2) {
+      console.log('answer: ' + this.answer);
+    } else if (topic === 'Subtraktion') {
       if (a > b) {
         this.question = `${a} - ${b} = ?`;
         this.answer = a - b;
@@ -279,10 +361,10 @@ export class ExerciseComponent implements OnInit {
         this.question = `${b} - ${a} = ?`;
         this.answer = b - a;
       }
-    } else if (level % 4 === 3) {
+    } else if (topic === 'Multiplikation') {
       this.question = `${a} ⋅ ${b} = ?`;
       this.answer = a * b;
-    } else if (level % 4 === 0) {
+    } else if (topic === 'Division') {
       const c = a * b;
       this.question = `${c} : ${a} = ?`;
       this.answer = b;
@@ -295,57 +377,61 @@ export class ExerciseComponent implements OnInit {
     console.log('getRandInteger');
     return Math.round(Math.random() * (max - min) + min);
   }
-}
 
-/*
-    if (this.shared.correctAnswer >= this.totalQuestions) {
-      if (this.shared.incorrectAnswer === 0) {
-        this.shared.levelStars[this.shared.chosenLevel] = 5;
-      } else if (this.shared.incorrectAnswer <= 1) {
-        this.shared.levelStars[this.shared.chosenLevel] = 4;
-      } else if (this.shared.incorrectAnswer <= 2) {
-        this.shared.levelStars[this.shared.chosenLevel] = 3;
-      } else if (this.shared.incorrectAnswer <= 3) {
-        this.shared.levelStars[this.shared.chosenLevel] = 2;
-      } else if (this.shared.incorrectAnswer <= 4) {
-        this.shared.levelStars[this.shared.chosenLevel] = 1;
-      } else {
-        this.shared.levelStars[this.shared.chosenLevel] = 0;
-      }
-      if (this.shared.chosenLevel === this.shared.currentLevel) {
-        this.shared.currentLevel++;
-      }
-      this.showResult();
+  calculateStars(): void {
+    console.log('calculateStars');
+    console.log('topic: ' + this.shared.topic);
+    console.log('level: ' + this.shared.chosenLevel);
+    console.log(
+      'levelstars before:' +
+        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1]
+    );
+    if (this.shared.incorrectAnswer === 0) {
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 5;
+    } else if (this.shared.incorrectAnswer <= 1) {
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 4;
+    } else if (this.shared.incorrectAnswer <= 2) {
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 3;
+    } else if (this.shared.incorrectAnswer <= 3) {
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 2;
+    } else if (this.shared.incorrectAnswer <= 4) {
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 1;
     } else {
-      this.createExercise(this.shared.currentLevel);
-      this.isCorrect;
-      this.givenAnswer = undefined;
+      this.shared.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ] = 0;
     }
-    */
-
-/*
-  penaltyTimer(): void {
-    this.penaltyCountDown = timer(0, this.tick).subscribe(() => {
-      --this.penalty;
-      if (this.penalty === 0) {
-        this.answerPossible = true;
-        this.isDisabled = false;
-        this.penaltyCountDown.unsubscribe();
-      }
-    });
-    this.penalty = Math.min(5 * (1 + this.penaltyCount), 30);
-    this.penaltyCount++;
+    if (
+      this.shared.chosenLevel === this.shared.currentLevel[this.shared.topic]
+    ) {
+      this.shared.currentLevel[this.shared.topic]++;
+    }
+    console.log(
+      'levelstars after:' +
+        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1]
+    );
   }
-  */
 
-// TODO: Enable Dynamic questions and answers
-/*
-  checkDynamicAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('dynamic');
+  checkDynamicAnswer(form: NgForm): boolean {
+    console.log('check dynamic');
     const givenAnswer = form.value.givenAnswer;
-    console.log('correct answer: ', this.answer);
-    console.log('given answer: ', form.value.givenAnswer);
-    if (givenAnswer === exercise.correctAnswer) {
+
+    if (givenAnswer === this.answer) {
+      return true;
+    } else {
+      return false;
+    }
+    /*
       console.log('dynamic correct');
       this.isCorrect = true;
       this.answerIsCorrect = true;
@@ -366,18 +452,15 @@ export class ExerciseComponent implements OnInit {
           this.showResult();
         }
       }, 1000);
-
-      return true;
     } else {
       console.log('dynamic incorrect');
       this.attempts++;
       if (this.attempts >= this.maxAttempts) {
         console.log('dynamic incorrect: max attempts reached');
         this.isDisabled = true;
-        this.storeAnswer(false, exercise.id);
+        // this.storeAnswer(false, givenAnswer);
         this.showNextButton = true;
         this.attempts = 0;
-        return false;
       }
       this.isCorrect = false;
       this.answerIsIncorrect = true;
@@ -386,20 +469,28 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.answerIsIncorrect = false;
       }, 1000);
-      return false;
     }
+    this.trackDurationAndAttempts();
+    console.log(this.question);
+    console.log(this.answer);
+    console.log(this.givenAnswer);
+    console.log(this.isCorrect);
+    console.log(this.duration);
+    console.log(this.shared.chosenLevel);
+
+    this._dataService.storeDynamicAnswer(
+      this.question,
+      this.answer,
+      this.givenAnswer,
+      this.isCorrect,
+      this.duration,
+      this.shared.chosenLevel,
+      this.attempts
+    );
 
     console.log(this.shared.correctAnswer);
     console.log(this.shared.incorrectAnswer);
-
-      this._dataService.storeDynamicAnswer(
-        this.question,
-        this.answer,
-        this.givenAnswer,
-        this.isCorrect,
-        this.duration,
-        this.shared.chosenLevel
-      );
-
+    return;
+    */
   }
-  */
+}

@@ -30,7 +30,6 @@ export class QuizIntroComponent implements OnInit {
   onStartQuiz() {
     console.log('studentDocumentId: ' + this._shared.studentDocumentId);
     const quizStartDate = new Date();
-    this._dataService.storeQuizStart();
     this._shared.setQuizStartTime(quizStartDate);
   }
 }

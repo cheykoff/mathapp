@@ -1,52 +1,59 @@
 <div class="header">
-  <h1 *ngIf="!this.shared.quizFinished" class="headerTitle">Deine Levels</h1>
-  <h1 *ngIf="this.shared.quizFinished" sclass="headerTitle">Dein Ergebnis</h1>
+  <h1 class="headerTitle">
+    {{ this.shared.topic }}
+  </h1>
 </div>
 
 <div class="main">
   <ul>
-    <li
-      *ngFor="let level of levels"
-      (click)="selectSchoolClass(schoolClass.level)"
-    >
+    <li *ngFor="let level of levels">
       <button
         class="btn classBtn btnList"
-        [disabled]="
-          level.level > this.shared.currentLevel || this.shared.quizFinished
-        "
+        [disabled]="level.level > this.shared.currentLevel[this.shared.topic]"
         (click)="goToDynamicExercise(level)"
       >
         Level {{ level.level }}
         <img
           src="assets/img/star.png"
           class="star"
-          *ngIf="this.shared.levelStars[level.level] >= 1"
+          *ngIf="
+            this.shared.levelStars[this.shared.topic][level.level - 1] >= 1
+          "
         />
         <img
           style="right: 30px"
           src="assets/img/star.png"
           class="star"
-          *ngIf="this.shared.levelStars[level.level] >= 2"
+          *ngIf="
+            this.shared.levelStars[this.shared.topic][level.level - 1] >= 2
+          "
         />
         <img
           style="right: 50px"
           src="assets/img/star.png"
           class="star"
-          *ngIf="this.shared.levelStars[level.level] >= 3"
+          *ngIf="
+            this.shared.levelStars[this.shared.topic][level.level - 1] >= 3
+          "
         />
         <img
           style="right: 70px"
           src="assets/img/star.png"
           class="star"
-          *ngIf="this.shared.levelStars[level.level] >= 4"
+          *ngIf="
+            this.shared.levelStars[this.shared.topic][level.level - 1] >= 4
+          "
         />
         <img
           style="right: 90px"
           src="assets/img/star.png"
           class="star"
-          *ngIf="this.shared.levelStars[level.level] >= 5"
+          *ngIf="
+            this.shared.levelStars[this.shared.topic][level.level - 1] >= 5
+          "
         />
       </button>
     </li>
   </ul>
+  <p><a routerLink="/topics">Wähle ein anderes Thema</a></p>
 </div>

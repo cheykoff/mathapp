@@ -1,0 +1,16 @@
+<div class="header">
+  <h1 class="headerTitle">Grundlagen</h1>
+</div>
+<div class="main">
+  <ul>
+    <li *ngFor="let topic of topics">
+      <button
+        class="btn btnList classBtn"
+        [disabled]="topic.disabled"
+        (click)="goToLevelPage(topic)"
+      >
+        {{ topic.name }}
+      </button>
+    </li>
+  </ul>
+</div>

@@ -5,6 +5,7 @@ import { Observable, Subscription, timer } from 'rxjs';
 import { DataService } from '../service/data.service';
 
 import { Student } from '../shared/student';
+import { QuizTemplate } from './quiz-template';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +22,32 @@ export class SharedService {
     skillLevel: 0,
   };
 
+  quizTemplates: QuizTemplate[] = [];
+
+  mode: string;
+  topic: string;
+
+  currentLevel = {
+    Addition: 1,
+    Subtraktion: 1,
+    Multiplikation: 1,
+    Division: 1,
+  };
+  chosenLevel = 1;
+  levelStars = {
+    Addition: [0, 0, 0],
+    Subtraktion: [0, 0, 0],
+    Multiplikation: [0, 0, 0],
+    Division: [0, 0, 0],
+  };
+
   schoolClass: number = 0;
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  docId: string = 'mjAHUQYd5uc3Bt4jWUpQ'; // Default id for session (startTime is set to 1.1.2022, studentId is 111111)
+  docId: string;
   // sessionId: string = '';
-  quizId: string = 'kwhVeGouM3tDJvJMucxi'; // Default quizId that catches all answers that somehow don't got the quizId (startTime is set to 1.1.2022)
+  quizId: string;
+  practiceId: string;
   parameters = {};
   studentId: number = 100000;
   correctPuzzles: number = 0;
@@ -46,6 +67,7 @@ export class SharedService {
   setStudentData(studentData: Student): void {
     console.log('setStudentData()');
     this.studentData.id = studentData.id;
+    this.studentData.studentId = studentData.studentId;
     this.studentData.correctAnswers = studentData.correctAnswers;
     this.studentData.totalQuestions = studentData.totalQuestions;
     this.studentData.schoolClasses = studentData.schoolClasses;
@@ -87,10 +109,6 @@ export class SharedService {
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
-
-  currentLevel = 1;
-  chosenLevel = 1;
-  levelStars: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   // called from codepage
   // TODO: call from quiz-intro
@@ -142,6 +160,14 @@ export class SharedService {
   getStudentDocumentId(): string {
     return this.studentDocumentId;
   }
+  /*
+  updateLevelStars(stars: number) {
+    console.log('old stars: ' + this.levelStars.addition[this.chosenLevel - 1]);
+    this.levelStars[this.topic][this.chosenLevel - 1] = stars;
+    console.log('new stars: ' + this.levelStars.addition[this.chosenLevel - 1]);
+    console.log('this.levelStars: ' + this.levelStars);
+  }
+  */
 
   // TODO: Store all important variables in local storage
   storeStudentIdInLocalStorage(): void {
@@ -221,6 +247,14 @@ export class SharedService {
 
   getQuizId(): string {
     return this.quizId;
+  }
+
+  setPracticeId(data: string): void {
+    this.practiceId = data;
+  }
+
+  getPracticeId(): string {
+    return this.practiceId;
   }
 
   /*

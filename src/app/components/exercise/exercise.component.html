@@ -5,41 +5,142 @@
 </div>
 
 <div class="main">
-  <ng-container *ngIf="exercises$ | async as exercises; else loading">
+  <div *ngIf="this.shared.mode === 'practice'">
     <div class="question">
-      <p [mathjax]="exercises[currentQuestion].question"></p>
-      <img
-        class="questionImg"
-        src="assets/img/geometry/parallelogram.png"
-        *ngIf="exercises[currentQuestion].questionType === 'image'"
-      />
+      <p [mathjax]="question"></p>
     </div>
-    <div class="options" *ngIf="exercises[currentQuestion].answerType === 'mc'">
-      <ul class="answerList">
-        <li
-          *ngFor="
-            let option of exercises[currentQuestion].answerOptions;
-            let i = index
-          "
-          class="answerListItem"
-          (click)="onClickAnswer(option, exercises[currentQuestion])"
-        >
-          <button
-            [id]="'option' + i"
-            class="answerButton btn"
-            [disabled]="isDisabled"
-            [mathjax]="option.answerText"
-          ></button>
-        </li>
-      </ul>
-    </div>
-
-    <form
-      (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
-      #f="ngForm"
-      *ngIf="exercises[currentQuestion].answerType === 'integer'"
-    >
+    <form (ngSubmit)="onSubmitAnswer(f)" #f="ngForm">
       <div>
+        <input
+          class="answerText"
+          type="number"
+          id="givenAnswer"
+          name="givenAnswer"
+          placeholder=""
+          [(ngModel)]="givenAnswer"
+          [disabled]="isDisabled"
+          required
+          autofocus
+          (focus)="onFocusEvent($event)"
+        />
+      </div>
+      <button class="btn classBtn" type="submit" [disabled]="isDisabled">
+        Antwort prüfen
+      </button>
+    </form>
+  </div>
+  <div *ngIf="this.shared.mode === 'quiz'">
+    <ng-container *ngIf="exercises$ | async as exercises; else loading">
+      <div class="question">
+        <p [mathjax]="exercises[currentQuestion].question"></p>
+        <img
+          class="questionImg"
+          src="assets/img/geometry/parallelogram.png"
+          *ngIf="exercises[currentQuestion].questionType === 'image'"
+        />
+      </div>
+      <div
+        class="options"
+        *ngIf="exercises[currentQuestion].answerType === 'mc'"
+      >
+        <ul class="answerList">
+          <li
+            *ngFor="
+              let option of exercises[currentQuestion].answerOptions;
+              let i = index
+            "
+            class="answerListItem"
+            (click)="onClickAnswer(option, exercises[currentQuestion])"
+          >
+            <button
+              [id]="'option' + i"
+              class="answerButton btn"
+              [disabled]="isDisabled"
+              [mathjax]="option.answerText"
+            ></button>
+          </li>
+        </ul>
+      </div>
+
+      <form
+        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        #f="ngForm"
+        *ngIf="exercises[currentQuestion].answerType === 'integer'"
+      >
+        <div>
+          <input
+            class="answerText"
+            type="text"
+            id="givenAnswer"
+            name="givenAnswer"
+            placeholder=""
+            [(ngModel)]="givenAnswer"
+            [disabled]="isDisabled"
+            required
+            autofocus
+            [hasUnit]="exercises[currentQuestion].unit"
+            (focus)="onFocusEvent($event)"
+          />
+          <p
+            class="unit"
+            *ngIf="exercises[currentQuestion].unit"
+            [mathjax]="exercises[currentQuestion].unit"
+          ></p>
+        </div>
+        <button class="btn classBtn" type="submit" [disabled]="isDisabled">
+          Antwort prüfen
+        </button>
+      </form>
+
+      <form
+        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        #f="ngForm"
+        *ngIf="exercises[currentQuestion].answerType === 'fraction'"
+      >
+        <div class="tableWrapper">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    id="numerator"
+                    name="numerator"
+                    [(ngModel)]="numerator"
+                    required
+                    autofocus
+                    [disabled]="isDisabled"
+                    (focus)="onFocusEvent($event)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    id="denominator"
+                    name="denominator"
+                    [(ngModel)]="denominator"
+                    required
+                    [disabled]="isDisabled"
+                    (focus)="onFocusEvent($event)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button class="btn classBtn" type="submit" [disabled]="isDisabled">
+          Antwort prüfen
+        </button>
+      </form>
+
+      <form
+        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        #f="ngForm"
+        *ngIf="exercises[currentQuestion].answerType === 'dynamic'"
+      >
         <input
           class="answerText"
           type="text"
@@ -50,145 +151,72 @@
           [disabled]="isDisabled"
           required
           autofocus
-          [hasUnit]="exercises[currentQuestion].unit"
           (focus)="onFocusEvent($event)"
         />
-        <p
-          class="unit"
-          *ngIf="exercises[currentQuestion].unit"
-          [mathjax]="exercises[currentQuestion].unit"
-        ></p>
-      </div>
-      <button class="btn classBtn" type="submit" [disabled]="isDisabled">
-        Antwort prüfen
-      </button>
-    </form>
-
-    <form
-      (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
-      #f="ngForm"
-      *ngIf="exercises[currentQuestion].answerType === 'fraction'"
-    >
-      <div class="tableWrapper">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  id="numerator"
-                  name="numerator"
-                  [(ngModel)]="numerator"
-                  required
-                  autofocus
-                  [disabled]="isDisabled"
-                  (focus)="onFocusEvent($event)"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  id="denominator"
-                  name="denominator"
-                  [(ngModel)]="denominator"
-                  required
-                  [disabled]="isDisabled"
-                  (focus)="onFocusEvent($event)"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <button class="btn classBtn" type="submit" [disabled]="isDisabled">
-        Antwort prüfen
-      </button>
-    </form>
-
-    <form
-      (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
-      #f="ngForm"
-      *ngIf="exercises[currentQuestion].answerType === 'dynamic'"
-    >
-      <input
-        class="answerText"
-        type="text"
-        id="givenAnswer"
-        name="givenAnswer"
-        placeholder=""
-        [(ngModel)]="givenAnswer"
-        [disabled]="isDisabled"
-        required
-        autofocus
-        (focus)="onFocusEvent($event)"
-      />
-      <ng-template #streak>
-        <p class="correctText feedback">
-          Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
-          beantwortet!
-        </p>
-      </ng-template>
-
-      <button class="btn classBtn" type="submit" [disabled]="isDisabled">
-        Antwort prüfen
-      </button>
-    </form>
-
-    <div class="feedback-wrapper">
-      <div *ngIf="answerIsCorrect" class="correct">
-        <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
-          Richtig!
-        </p>
         <ng-template #streak>
           <p class="correctText feedback">
             Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
             beantwortet!
           </p>
         </ng-template>
-      </div>
-      <div *ngIf="answerIsIncorrect" class="wrong">
-        <div>
-          <div class="incorrectText feedback">
-            <p>Leider falsch!</p>
-          </div>
+
+        <button class="btn classBtn" type="submit" [disabled]="isDisabled">
+          Antwort prüfen
+        </button>
+      </form>
+    </ng-container>
+
+    <ng-template #loading>
+      <p class="loading">Lade die nächste Aufgabe ...</p>
+    </ng-template>
+  </div>
+  <div class="feedback-wrapper">
+    <div *ngIf="answerIsCorrect" class="correct">
+      <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
+        Richtig!
+      </p>
+      <ng-template #streak>
+        <p class="correctText feedback">
+          Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
+          beantwortet!
+        </p>
+      </ng-template>
+    </div>
+    <div *ngIf="answerIsIncorrect" class="wrong">
+      <div>
+        <div class="incorrectText feedback">
+          <p>Leider falsch!</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div *ngIf="attempts >= maxAttempts">
-      <p
-        *ngIf="
-          exercises[currentQuestion].answerType === 'integer' ||
-          exercises[currentQuestion].answerType === 'dynamic'
-        "
-      >
-        Die richtige Antwort wäre
-        {{ exercises[currentQuestion].correctAnswer }} gewesen.
-      </p>
-      <div *ngIf="exercises[currentQuestion].answerType === 'fraction'">
-        <p>
-          Die richtige Antwort wäre
-          {{ exercises[currentQuestion].correctAnswerFraction.numerator }}
-          /
-          {{ exercises[currentQuestion].correctAnswerFraction.denominator }}
-          gewesen.
-        </p>
-      </div>
-    </div>
-    <button
-      *ngIf="this.showNextButton"
-      class="btn classBtn"
-      (click)="nextExercise()"
-      type="submit"
+  <div *ngIf="attempts >= maxAttempts">
+    <p
+      *ngIf="
+        exercises[currentQuestion].answerType === 'integer' ||
+        exercises[currentQuestion].answerType === 'dynamic'
+      "
     >
-      Nächste Frage
-    </button>
-  </ng-container>
-
-  <ng-template #loading>
-    <p class="loading">Lade die nächste Aufgabe ...</p>
-  </ng-template>
+      Die richtige Antwort wäre
+      {{ exercises[currentQuestion].correctAnswer }} gewesen.
+    </p>
+    <div *ngIf="exercises[currentQuestion].answerType === 'fraction'">
+      <p>
+        Die richtige Antwort wäre
+        {{ exercises[currentQuestion].correctAnswerFraction.numerator }}
+        /
+        {{ exercises[currentQuestion].correctAnswerFraction.denominator }}
+        gewesen.
+      </p>
+    </div>
+  </div>
+  <button
+    *ngIf="this.showNextButton"
+    class="btn classBtn"
+    (click)="nextExercise()"
+    type="submit"
+  >
+    Nächste Frage
+  </button>
 </div>
