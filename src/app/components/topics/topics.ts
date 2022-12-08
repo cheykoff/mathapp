@@ -1,9 +1,10 @@
 export interface Topic {
   name: string;
   disabled?: boolean;
+  hidden?: boolean;
 }
 
-export const topics: Topic[] = [
+export let topics: Topic[] = [
   { name: 'Addition' },
   { name: 'Subtraktion' },
   { name: 'Multiplikation' },

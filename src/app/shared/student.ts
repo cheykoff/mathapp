@@ -15,4 +15,5 @@ export interface Student {
   };
   totalPracticeQuestions?: number;
   correctPracticeQuestions?: number;
+  classId?: string;
 }

@@ -19,10 +19,12 @@ export class MenuComponent implements OnInit {
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {
       this.shared.mode = 'quiz';
+      localStorage.setItem('mode', 'quiz');
       this._router.navigate(['/', 'exercise']);
       return;
     } else if (menuItem.name === 'Üben') {
       this.shared.mode = 'practice';
+      localStorage.setItem('mode', 'practice');
       this._router.navigate(['/', 'topics']);
       return;
     } else if (menuItem.name === 'Erfolge') {

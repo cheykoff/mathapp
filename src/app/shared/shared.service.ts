@@ -22,6 +22,7 @@ export class SharedService {
     skillLevel: 0,
     totalPracticeQuestions: 0,
     correctPracticeQuestions: 0,
+    classId: '',
   };
 
   quizTemplates: QuizTemplate[] = [];
@@ -72,13 +73,12 @@ export class SharedService {
     console.log('setStudentData()');
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
-    this.studentData.correctAnswers = studentData.correctAnswers;
-    this.studentData.totalQuestions = studentData.totalQuestions;
     this.studentData.schoolClasses = studentData.schoolClasses;
     this.studentData.emailStudent = studentData.emailStudent;
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
     this.levelStars = studentData.levelStars;
+    this.studentData.classId = studentData.classId;
     this.setCurrentLevels();
     this.studentData.totalPracticeQuestions =
       studentData.totalPracticeQuestions;
@@ -89,7 +89,41 @@ export class SharedService {
     console.log('levelStars');
     console.log(this.levelStars);
     console.log(this.currentLevel);
+    localStorage.setItem('studentId', this.studentData.studentId.toString());
+    localStorage.setItem('studentDocumentId', this.studentData.id);
+    localStorage.setItem('levelStars', JSON.stringify(this.levelStars));
+    localStorage.setItem(
+      'correctPracticeQuestions',
+      this.studentData.correctPracticeQuestions.toString()
+    );
+    localStorage.setItem(
+      'totalPracticeQuestions',
+      this.studentData.totalPracticeQuestions.toString()
+    );
+    localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
+    // localStorage.setItem('skillLevel', this.studentData.skillLevel.toString());
+    localStorage.setItem('classId', this.studentData.classId);
   }
+
+  reloadStudentData(): void {
+    this.studentData.id = localStorage.getItem('studentDocumentId');
+    this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
+    this.levelStars = JSON.parse(localStorage.getItem('levelStars'));
+    this.studentData.correctPracticeQuestions = parseInt(
+      localStorage.getItem('correctPracticeQuestions')
+    );
+    this.studentData.totalPracticeQuestions = parseInt(
+      localStorage.getItem('totalPracticeQuestions')
+    );
+    this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+    this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
+    this.studentData.classId = localStorage.getItem('classId');
+    console.log('reloadStudentData()');
+    console.log(this.studentData);
+    console.log(this.levelStars);
+    console.log(this.currentLevel);
+  }
+
   // called from login
   setStudentId(studentId: number): void {
     this.studentId = studentId;
