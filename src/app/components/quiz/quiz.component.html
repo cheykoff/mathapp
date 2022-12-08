@@ -1,5 +1,6 @@
 <div class="header">
   <h1 class="headerTitle">Quiz</h1>
+  <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
 </div>
 <div class="main">
   <ng-container *ngIf="quizTemplates$ | async as quizTemplates; else loading">

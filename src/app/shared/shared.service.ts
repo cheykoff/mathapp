@@ -20,6 +20,8 @@ export class SharedService {
     emailsParents: [''],
     schoolClasses: [{ classId: '', currentClass: false }],
     skillLevel: 0,
+    totalPracticeQuestions: 0,
+    correctPracticeQuestions: 0,
   };
 
   quizTemplates: QuizTemplate[] = [];
@@ -78,6 +80,10 @@ export class SharedService {
     this.studentData.skillLevel = studentData.skillLevel;
     this.levelStars = studentData.levelStars;
     this.setCurrentLevels();
+    this.studentData.totalPracticeQuestions =
+      studentData.totalPracticeQuestions;
+    this.studentData.correctPracticeQuestions =
+      studentData.correctPracticeQuestions;
     console.log('studentData');
     console.log(this.studentData);
     console.log('levelStars');

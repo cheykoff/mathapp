@@ -1,0 +1,15 @@
+<div class="header">
+  <h1 class="headerTitle">Erfolge</h1>
+  <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
+</div>
+<div class="main">
+  <div class="resultContainer">
+    <div class="bigNumber">
+      {{ this.shared.studentData.correctPracticeQuestions }}/{{
+        this.shared.studentData.totalPracticeQuestions
+      }}
+    </div>
+    <p class="labelBigNumber">Übungsfragen richtig beantwortet</p>
+  </div>
+  <p><a routerLink="/menu">Zurück zum Hauptmenü</a></p>
+</div>

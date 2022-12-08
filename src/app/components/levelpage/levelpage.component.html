@@ -2,9 +2,14 @@
   <h1 class="headerTitle">
     {{ this.shared.topic }}
   </h1>
+  <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
 </div>
 
 <div class="main">
+  <p>
+    Jedes Level besteht aus 10 Fragen, wenn du mindestens 6 Fragen richtig hast,
+    wird das nächste Level freigeschaltet.
+  </p>
   <ul>
     <li *ngFor="let level of levels">
       <button

@@ -25,6 +25,9 @@ export class MenuComponent implements OnInit {
       this.shared.mode = 'practice';
       this._router.navigate(['/', 'topics']);
       return;
+    } else if (menuItem.name === 'Erfolge') {
+      this._router.navigate(['/', 'statistics']);
+      return;
     }
   }
 }

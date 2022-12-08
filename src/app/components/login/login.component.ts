@@ -68,12 +68,13 @@ export class LoginComponent implements OnInit {
   goToMenu(): void {
     this._router.navigate(['/', 'menu']);
   }
-  /*
-  generateId(): void { // TODO: allow users to generate their own id (which needs to be unique)
-    this.shared.setStudentId();
+
+  generateId(): void {
+    // TODO: allow users to generate their own id (which needs to be unique)
+    const newId = Math.floor(100000 + Math.random() * 900000);
+    this.shared.setStudentId(newId);
     // this._data.updateStudentId();
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }
-  */
 }

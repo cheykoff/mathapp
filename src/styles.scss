@@ -150,6 +150,16 @@ h1.headerTitle {
   margin: 4px 0px;
 }
 
+#studentId {
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-grey-light);
+  display: inline-block;
+  position: absolute;
+  right: 16px;
+  top: 4px;
+}
+
 .footer {
   position: absolute;
   bottom: 0px;
@@ -493,6 +503,26 @@ button {
   100% {
     filter: blur(0px);
   }
+}
+
+.resultContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.bigNumber {
+  font-size: 4rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary-dark);
+  margin: 2rem auto 0;
+  text-align: center;
+  line-height: 100%;
+}
+
+.labelBigNumber {
+  font-size: 0.8rem;
+  font-weight: var(--fw-normal);
+  color: var(--clr-primary-dark);
 }
 
 @media (min-width: 913px) {

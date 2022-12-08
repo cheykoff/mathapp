@@ -19,6 +19,7 @@ import { ResultpageComponent } from './components/resultpage/resultpage.componen
 import { CodepageComponent } from './components/codepage/codepage.component';
 
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/website', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'levelpage', component: LevelpageComponent },
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
+  { path: 'statistics', component: StatisticsComponent },
   { path: '**', redirectTo: '/start' },
 ];
 

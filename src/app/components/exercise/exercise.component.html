@@ -1,6 +1,8 @@
 <div class="header">
-  <h1 class="headerTitle">Frage {{ currentQuestion + 1 }}</h1>
-  <span id="studentId">ID: {{ this.shared.studentId }}</span>
+  <h1 class="headerTitle">
+    Frage {{ currentQuestion + 1 }} von {{ totalQuestions }}
+  </h1>
+  <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
   <div id="countdown">{{ this.shared.counter | countDown }}</div>
 </div>
 
@@ -192,24 +194,29 @@
   </div>
 
   <div *ngIf="attempts >= maxAttempts">
-    <p
-      *ngIf="
-        exercises[currentQuestion].answerType === 'integer' ||
-        exercises[currentQuestion].answerType === 'dynamic'
-      "
-    >
-      Die richtige Antwort wäre
-      {{ exercises[currentQuestion].correctAnswer }} gewesen.
-    </p>
-    <div *ngIf="exercises[currentQuestion].answerType === 'fraction'">
-      <p>
+    <div *ngIf="this.shared.mode === 'quiz'">
+      <p
+        *ngIf="
+          exercises[currentQuestion].answerType === 'integer' ||
+          exercises[currentQuestion].answerType === 'dynamic'
+        "
+      >
         Die richtige Antwort wäre
-        {{ exercises[currentQuestion].correctAnswerFraction.numerator }}
-        /
-        {{ exercises[currentQuestion].correctAnswerFraction.denominator }}
-        gewesen.
+        {{ exercises[currentQuestion].correctAnswer }} gewesen.
       </p>
+      <div *ngIf="exercises[currentQuestion].answerType === 'fraction'">
+        <p>
+          Die richtige Antwort wäre
+          {{ exercises[currentQuestion].correctAnswerFraction.numerator }}
+          /
+          {{ exercises[currentQuestion].correctAnswerFraction.denominator }}
+          gewesen.
+        </p>
+      </div>
     </div>
+    <p *ngIf="this.shared.mode === 'practice'">
+      Die richtige Antwort wäre {{ answer }} gewesen.
+    </p>
   </div>
   <button
     *ngIf="this.showNextButton"
@@ -218,5 +225,7 @@
     type="submit"
   >
     Nächste Frage
+    <!--<p *ngIf="currentQuestion >= totalQuestions - 1; else next">Zum Ergebnis</p>
+    <ng-template #next>Nächste Frage</ng-template>-->
   </button>
 </div>

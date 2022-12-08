@@ -13,4 +13,6 @@ export interface Student {
     Multiplikation: [number];
     Division: [number];
   };
+  totalPracticeQuestions?: number;
+  correctPracticeQuestions?: number;
 }

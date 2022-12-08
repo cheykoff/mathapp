@@ -1,37 +1,15 @@
 .imgContainer {
-    width:100%;
-    overflow:hidden;
-    margin:0;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
 }
 .starsGif {
-    display:block;
-    width: 100%;
+  display: block;
+  width: 100%;
 
-    padding: auto;
-    
-}
-
-.resultContainer {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.bigNumber {
-    font-size: 4rem;
-    font-weight: var(--fw-bold);
-    color: var(--clr-primary-dark);
-    margin: 2rem auto 0;
-    text-align: center;
-    line-height: 100%;
-}
-
-.labelBigNumber {
-    font-size: 0.8rem;
-    font-weight: var(--fw-normal);
-    color: var(--clr-primary-dark);
-
+  padding: auto;
 }
 
 input {
-    width: 100%;
+  width: 100%;
 }

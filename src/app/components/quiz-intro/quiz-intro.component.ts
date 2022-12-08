@@ -20,7 +20,7 @@ export class QuizIntroComponent implements OnInit {
   quizTimeLimit = 1800;
   constructor(
     private _dataService: DataService,
-    private _shared: SharedService
+    public shared: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -28,8 +28,8 @@ export class QuizIntroComponent implements OnInit {
   }
 
   onStartQuiz() {
-    console.log('studentDocumentId: ' + this._shared.getStudentDocumentId());
+    console.log('studentDocumentId: ' + this.shared.getStudentDocumentId());
     const quizStartDate = new Date();
-    this._shared.setQuizStartTime(quizStartDate);
+    this.shared.setQuizStartTime(quizStartDate);
   }
 }

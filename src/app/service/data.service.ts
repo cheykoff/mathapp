@@ -155,6 +155,7 @@ export class DataService {
         level: this._shared.chosenLevel,
         startTime: serverTimestamp(),
         url: window.location.href,
+        topic: this._shared.topic,
       })
       .then((docRef) => {
         this._shared.setPracticeId(docRef.id);
@@ -165,8 +166,10 @@ export class DataService {
     console.log('storeLevelEnd');
     const quizEndTime = new Date();
     this._store
-      .collection(`/students/${this._shared.getStudentDocumentId()}/practices`)
-      .add({
+      .doc(
+        `/students/${this._shared.getStudentDocumentId()}/practices/${this._shared.getPracticeId()}`
+      )
+      .update({
         // TODO: change to update
         correctAnswers: this._shared.correctAnswer,
         totalQuestions:
@@ -262,7 +265,11 @@ export class DataService {
     console.log('attempt: ' + attempt);
     console.log('topic: ' + this._shared.topic);
     this._store
-      .collection(`students/${this._shared.studentData.id}/dynamicanswers`)
+      .collection(
+        `students/${
+          this._shared.studentData.id
+        }/practices/${this._shared.getPracticeId()}/practiceanswers`
+      )
       .add({
         startTime: serverTimestamp(),
         question: question,

@@ -7,6 +7,7 @@ import { Quiz } from 'src/app/shared/quiz';
 import { QuizTemplate } from 'src/app/shared/quiz-template';
 import { SchoolClass2 } from 'src/app/shared/schoolClass';
 import { Student } from 'src/app/shared/student';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-quiz',
@@ -44,7 +45,10 @@ export class QuizComponent implements OnInit {
     },
   ];
   */
-  constructor(private _dataService: DataService) {}
+  constructor(
+    private _dataService: DataService,
+    public shared: SharedService
+  ) {}
 
   ngOnInit(): void {
     console.log('QuizComponent.ngOnInit()');

@@ -17,6 +17,8 @@ export class LevelpageComponent implements OnInit {
 
   goToDynamicExercise(level: Level): void {
     this.shared.chosenLevel = level.level;
+    const quizStartDate = new Date();
+    this.shared.setQuizStartTime(quizStartDate);
     this._router.navigate(['/', 'exercise']);
   }
 }

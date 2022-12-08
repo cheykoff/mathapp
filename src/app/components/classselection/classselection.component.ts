@@ -22,7 +22,8 @@ export class ClassselectionComponent {
   selectSchoolClass(level: number): void {
     this._dataService.storeSchoolClass(level);
     this._shared.setSchoolClass(level);
-    this._goToCodePage();
+    this._router.navigate(['/', 'menu']);
+    // this._goToCodePage();
     //this._goToExercise();
   }
 

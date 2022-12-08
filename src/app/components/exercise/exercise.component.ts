@@ -89,7 +89,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    console.log('onSubmitAnswer');
+    const givenNumber = parseInt(form.value.givenAnswer);
+    if (isNaN(givenNumber)) {
+      return;
+    }
     this.trackDurationAndAttempts();
     this.checkAnswer(form, exercise);
     form.reset();
@@ -213,11 +216,9 @@ export class ExerciseComponent implements OnInit {
         this.streakCount++;
         this.shared.correctAnswer++;
       }
-      this.storeDynamicAnswer(true);
       this.isDisabled = true;
       this.showFeedback(true);
       this.showNextButton = true;
-      return;
     } else {
       console.log('incorrect answer');
       if (this.attempts === 1) {
@@ -225,7 +226,6 @@ export class ExerciseComponent implements OnInit {
         this.streakCount = 0;
       }
       this.streakCount = 0;
-      this.storeDynamicAnswer(false);
       this.showFeedback(false);
 
       if (this.attempts >= this.maxAttempts) {
@@ -233,9 +233,9 @@ export class ExerciseComponent implements OnInit {
         this.showNextButton = true;
         this.isDisabled = true;
       }
-      this.storeDynamicAnswer(isCorrect);
-      return;
     }
+    this.storeDynamicAnswer(isCorrect);
+    return;
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
