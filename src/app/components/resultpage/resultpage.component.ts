@@ -29,7 +29,7 @@ export class ResultpageComponent implements OnInit {
 
   getStars(): string {
     this.getPercentage();
-    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
+    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0); // TODO: Use this.shared.currentLevelStars
     let imgUrl = 'assets/img/' + this.stars + 'stars.gif';
     if (!this.stars) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';
@@ -46,6 +46,7 @@ export class ResultpageComponent implements OnInit {
     } else if (this.shared.mode === 'practice') {
       // this.shared.updateLevelStars(this.stars);
       this._dataService.storeLevelEnd();
+      this._dataService.storeLevelStars();
     }
   }
 

@@ -147,6 +147,8 @@ export class DataService {
   }
 
   storePracticeStart() {
+    console.log('storePracticeStart');
+    console.log('studentData.id:' + this._shared.studentData.id);
     this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/practices`)
       .add({
@@ -160,15 +162,25 @@ export class DataService {
   }
 
   storeLevelEnd() {
+    console.log('storeLevelEnd');
     const quizEndTime = new Date();
     this._store
       .collection(`/students/${this._shared.getStudentDocumentId()}/practices`)
       .add({
+        // TODO: change to update
         correctAnswers: this._shared.correctAnswer,
         totalQuestions:
           this._shared.correctAnswer + this._shared.incorrectAnswer,
         duration: quizEndTime.getTime() - this._shared.getQuizStartTime(),
       });
+  }
+
+  storeLevelStars() {
+    console.log('storeLevelStars');
+    console.log(this._shared.levelStars);
+    this._store.doc(`/students/${this._shared.getStudentDocumentId()}`).update({
+      levelStars: this._shared.levelStars,
+    });
   }
 
   // called from exercise
@@ -180,6 +192,7 @@ export class DataService {
     startTime: Date,
     endTime: Date
   ) {
+    console.log('storeAnswer');
     console.log('studentId: ' + this._shared.getStudentId());
     // console.log('sessionId: ' + this._shared.getSessionId());
     console.log('quizId: ' + this._shared.getQuizId());
@@ -192,9 +205,7 @@ export class DataService {
     console.log('attempts: ' + attempts);
     this._store
       .collection(
-        `students/${
-          this._shared.studentDocumentId
-        }/quizzes/${this._shared.getQuizId()}/answers`
+        `students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}/answers`
       )
       .add({
         startTime: startTime,

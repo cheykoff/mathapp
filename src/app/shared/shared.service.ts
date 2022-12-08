@@ -34,12 +34,15 @@ export class SharedService {
     Division: 1,
   };
   chosenLevel = 1;
+
   levelStars = {
     Addition: [0, 0, 0],
     Subtraktion: [0, 0, 0],
     Multiplikation: [0, 0, 0],
     Division: [0, 0, 0],
   };
+
+  currentLevelStars: number;
 
   schoolClass: number = 0;
   correctAnswer: number = 0;
@@ -55,7 +58,6 @@ export class SharedService {
   testNumber: number = 0;
   quizFinished: boolean = false;
   quizStartTime: Date = null;
-  studentDocumentId: string = 'abc';
   schoolClassDocumentId: string;
   quizTemplateIds: string[] = [];
 
@@ -64,25 +66,12 @@ export class SharedService {
   tick = 1000;
   constructor(private _router: Router) {}
 
-  setStudentData(studentData: Student): void {
-    console.log('setStudentData()');
-    this.studentData.id = studentData.id;
-    this.studentData.studentId = studentData.studentId;
-    this.studentData.correctAnswers = studentData.correctAnswers;
-    this.studentData.totalQuestions = studentData.totalQuestions;
-    this.studentData.schoolClasses = studentData.schoolClasses;
-    this.studentData.emailStudent = studentData.emailStudent;
-    this.studentData.emailsParents = studentData.emailsParents;
-    this.studentData.skillLevel = studentData.skillLevel;
-    console.log('studentData');
-    console.log(this.studentData);
-  }
-
   // called from login
   setStudentId(studentId: number): void {
     this.studentId = studentId;
     // this.studentId = Math.floor(100000 + Math.random() * 900000);
     return;
+    /*
     if (this.studentId === 100000 || !this.studentId) {
       if (localStorage.getItem('studentId')) {
         this.studentId = parseInt(localStorage.getItem('studentId'));
@@ -91,6 +80,7 @@ export class SharedService {
       this.studentId = Math.floor(100000 + Math.random() * 900000);
     }
     localStorage.setItem('studentId', this.studentId.toString());
+    */
   }
 
   countDownTimer() {
@@ -108,6 +98,25 @@ export class SharedService {
 
   showResult(): void {
     this._router.navigate(['/', 'resultpage']);
+  }
+
+  setStudentData(studentData: Student): void {
+    console.log('setStudentData()');
+    this.studentData.id = studentData.id;
+    this.studentData.studentId = studentData.studentId;
+    this.studentData.correctAnswers = studentData.correctAnswers;
+    this.studentData.totalQuestions = studentData.totalQuestions;
+    this.studentData.schoolClasses = studentData.schoolClasses;
+    this.studentData.emailStudent = studentData.emailStudent;
+    this.studentData.emailsParents = studentData.emailsParents;
+    this.studentData.skillLevel = studentData.skillLevel;
+    this.levelStars = studentData.levelStars;
+    this.setCurrentLevels();
+    console.log('studentData');
+    console.log(this.studentData);
+    console.log('levelStars');
+    console.log(this.levelStars);
+    console.log(this.currentLevel);
   }
 
   // called from codepage
@@ -143,22 +152,10 @@ export class SharedService {
   }
 
   // called from login
-  setStudentDocumentId(data: string): void {
-    this.studentDocumentId = data;
-    console.log(
-      'this.shared.studentDocumentId (synchronous): ' + this.studentDocumentId
-    );
-    setTimeout(() => {
-      console.log('after 1 second');
-      console.log(
-        'this.shared.studentDocumentId (1 s delay): ' + this.studentDocumentId
-      );
-    }, 1000);
-  }
 
   // called from login and data.service
   getStudentDocumentId(): string {
-    return this.studentDocumentId;
+    return this.studentData.id;
   }
   /*
   updateLevelStars(stars: number) {
@@ -273,4 +270,14 @@ export class SharedService {
     }
   }
   */
+
+  setCurrentLevels(): void {
+    for (const topic in this.levelStars) {
+      for (const levelRating of this.levelStars[topic]) {
+        if (levelRating > 0) {
+          this.currentLevel[topic]++;
+        }
+      }
+    }
+  }
 }

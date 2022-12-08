@@ -386,31 +386,19 @@ export class ExerciseComponent implements OnInit {
       'levelstars before:' +
         this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1]
     );
-    if (this.shared.incorrectAnswer === 0) {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 5;
-    } else if (this.shared.incorrectAnswer <= 1) {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 4;
-    } else if (this.shared.incorrectAnswer <= 2) {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 3;
-    } else if (this.shared.incorrectAnswer <= 3) {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 2;
-    } else if (this.shared.incorrectAnswer <= 4) {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 1;
-    } else {
-      this.shared.levelStars[this.shared.topic][
-        this.shared.chosenLevel - 1
-      ] = 0;
-    }
+
+    this.shared.currentLevelStars = Math.max(
+      // TODO: Remove the variable?
+      0,
+      5 - this.shared.incorrectAnswer
+    );
+
+    this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1] =
+      Math.max(
+        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1],
+        this.shared.currentLevelStars
+      );
+
     if (
       this.shared.chosenLevel === this.shared.currentLevel[this.shared.topic]
     ) {
