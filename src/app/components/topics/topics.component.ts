@@ -18,7 +18,6 @@ export class TopicsComponent implements OnInit {
   ngOnInit(): void {}
 
   goToLevelPage(topic: Topic) {
-    console.log('goToLevelPage for ' + topic.name);
     this.shared.topic = topic.name;
     this._router.navigate(['/', 'levelpage']);
   }

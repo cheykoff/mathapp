@@ -11,6 +11,5 @@ if (environment.production) {
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => {
-    console.log('error in main.ts');
     console.error(err);
   });

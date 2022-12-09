@@ -26,8 +26,6 @@ export class DataService {
   ) {}
 
   getStudentDocument(studentId: number) {
-    console.log('getStudentDocumentIds');
-    console.log(this._shared.getStudentId());
     this._store
       .collection('students', (ref) => ref.where('studentId', '==', studentId))
       .get()
@@ -38,7 +36,6 @@ export class DataService {
   }
 
   getQuizTemplateIDs() {
-    console.log('getQuizTemplateIDs');
     return this._store
       .doc(`schoolClasses/${this._shared.getSchoolClassDocumentId()}`)
       .get()
@@ -48,57 +45,11 @@ export class DataService {
       });
   }
 
-  /*
-  storeSessionId() {
-    this._store
-      .collection(`sessions`)
-      .add({
-        url: window.location.href,
-        startTime: serverTimestamp(),
-        studentId: this._shared.getStudentId(),
-      })
-      .then((docRef) => {
-        this._shared.setSessionId(docRef.id);
-      })
-      .then(() => {
-        localStorage.setItem('sessionId', this._shared.getSessionId());
-        localStorage.setItem(
-          'studentId',
-          this._shared.getStudentId().toString()
-        );
-      });
-  }
-  */
-
-  /*
-  updateStudentId() {
-    this._store
-      .doc(`/sessions/${this._shared.getSessionId()}`)
-      .update({
-        studentId: this._shared.studentId,
-      })
-      .then(() => {
-        localStorage.setItem(
-          'studentId',
-          this._shared.getStudentId().toString()
-        );
-      });
-  }
-  */
-  /*
-  storeMode(mode: string): void {
-    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
-      mode: mode,
-    });
-  }
-  */
-
   storeSchoolClass(className: number) {
     this._store
       .collection(`quizzes`)
       .add({
         schoolClass: className,
-        // sessionId: this._shared.getSessionId(),
         url: window.location.href,
         startTime: serverTimestamp(),
         studentId: this._shared.getStudentId(),
@@ -147,8 +98,6 @@ export class DataService {
   }
 
   storePracticeStart() {
-    console.log('storePracticeStart');
-    console.log('studentData.id:' + this._shared.studentData.id);
     this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/practices`)
       .add({
@@ -163,7 +112,6 @@ export class DataService {
   }
 
   storeLevelEnd() {
-    console.log('storeLevelEnd');
     const quizEndTime = new Date();
     this._store
       .doc(
@@ -179,8 +127,6 @@ export class DataService {
   }
 
   storeLevelStars() {
-    console.log('storeLevelStars');
-    console.log(this._shared.levelStars);
     this._store.doc(`/students/${this._shared.getStudentDocumentId()}`).update({
       levelStars: this._shared.levelStars,
     });
@@ -195,17 +141,6 @@ export class DataService {
     startTime: Date,
     endTime: Date
   ) {
-    console.log('storeAnswer');
-    console.log('studentId: ' + this._shared.getStudentId());
-    // console.log('sessionId: ' + this._shared.getSessionId());
-    console.log('quizId: ' + this._shared.getQuizId());
-    console.log('exerciseId: ' + exerciseId);
-    console.log('startTime: ' + startTime);
-    console.log('endTime: ' + endTime);
-    console.log('serverTimestamp: ' + serverTimestamp());
-    console.log('answerIsCorrect: ' + answerIsCorrect);
-    console.log('duration: ' + duration);
-    console.log('attempts: ' + attempts);
     this._store
       .collection(
         `students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}/answers`
@@ -219,30 +154,6 @@ export class DataService {
       });
   }
 
-  /*
-  storePuzzleAnswer(
-    puzzleId: string,
-    duration: number,
-    // firstTryDuration: number,
-    attempts: number
-    // wrongAnswers: any[]
-  ) {
-    this._store
-      .collection(`quizzes/${this._shared.getQuizId()}/puzzleanswers`)
-      .add({
-        startTime: serverTimestamp(),
-        attempts: attempts,
-        duration: duration,
-        // firstTryDuration: firstTryDuration,
-        puzzleId: puzzleId,
-        studentId: this._shared.getStudentId(),
-        sessionId: this._shared.getSessionId(),
-        quizId: this._shared.getQuizId(),
-        // wrongAnswers: wrongAnswers,
-      });
-  }
-  */
-
   // called from exercise
   // TODO: Refactor
   storeDynamicAnswer(
@@ -254,16 +165,6 @@ export class DataService {
     level: number,
     attempt: number
   ) {
-    console.log('storeDynamicAnswer (data.service.ts)');
-    console.log('studentId: ' + this._shared.studentData.id);
-    console.log('question: ' + question);
-    console.log('correctAnswer: ' + correctAnswer);
-    console.log('givenAnswer: ' + givenAnswer);
-    console.log('answerIsCorrect: ' + answerIsCorrect);
-    console.log('duration: ' + duration);
-    console.log('level: ' + level);
-    console.log('attempt: ' + attempt);
-    console.log('topic: ' + this._shared.topic);
     this._store
       .collection(
         `students/${
@@ -283,14 +184,6 @@ export class DataService {
       });
   }
 
-  /*
-  addEndTime() {
-    this._store.doc(`/sessions/${this._shared.getSessionId()}`).update({
-      endTime: serverTimestamp(),
-    });
-  }
-  */
-
   // called from resultpage
   // TODO: Decide if I want to keep it
   storeSelfReflection(selfReflection: number) {
@@ -299,38 +192,8 @@ export class DataService {
     });
   }
 
-  /*
-  getAllExercises(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises-all')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-  */
-
-  /*
-  getQuizzes(): Observable<Quiz[]> {
-    return this._store
-      .collection(
-        'users/G2vP9ZCoZNEDwnr4JsgG/sessions/3zDdvscA1GkZDzkmr0Ji/quizzes'
-      )
-      .get()
-      .pipe(map((result) => convertSnaps<Quiz>(result)));
-  }
-  */
-
-  /*
-  getQuizzes3(): Observable<Quiz[]> {
-    return this._store
-      .collection('quizzes3')
-      .get()
-      .pipe(map((result) => convertSnaps<Quiz>(result)));
-  }
-  */
-
   // called from Quiz Page
   getQuizzes4(): Observable<Quiz[]> {
-    console.log('getQuizzes4');
     return this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
       .get()
@@ -338,7 +201,6 @@ export class DataService {
   }
 
   getQuizTemplates(): Observable<QuizTemplate[]> {
-    console.log('getQuizTemplates');
     return this._store
       .collection(`quizTemplates`)
       .get()
@@ -346,7 +208,6 @@ export class DataService {
   }
 
   getQuizTemplates2(): Observable<SchoolClass2> {
-    console.log('getQuizTemplates2');
     return this._store
       .doc(`schoolClasses/qurzXjuNZYu48TS03O2g`)
       .get()
@@ -354,127 +215,27 @@ export class DataService {
   }
 
   getSchoolClassId(): void {
-    console.log('getSchoolClassId');
-    console.log(this._shared.getStudentDocumentId());
     this._store
-      // .doc('students/' + this._shared.getStudentDocumentId())
       .doc('students/BbWzvQmUIMpytT5G5bUI')
       .get()
-      .pipe(map((result) => convertSnap<Student>(result)))
-      .pipe(tap(console.log))
-      .pipe(
-        tap((student) => {
-          console.log(student);
-          this._shared.schoolClassDocumentId = student.schoolClasses[0].classId;
-        })
-      );
-  }
-
-  /*
-  getSchoolClassByStudentId(): Observable<SchoolClass2> {
-    const studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
-    const schoolClassId = 'qurzXjuNZYu48TS03O2g';
-    return this._store.doc(`students/${studentDocumentId}`)
-    .get()
-    .pipe(map((result) => convertSnap<Student>(result)))
-    .pipe(switchMap((student: Student): SchoolClass2 => {
-      this._store.doc(`schoolClasses/${student.schoolClass}`)
-      .get()
-      .pipe(map((result) => convertSnap<SchoolClass2>(result)))
-  }))
-   }
-  */
-
-  /*
-    return this._store
-      .doc(`schoolClasses/${schoolClassId}`)
-      .get()
-      .pipe(map((result) => convertSnap<SchoolClass2>(result)));
-      */
-
-  /* 
-  getQuizTemplates3(): void {
-    console.log('getQuizTemplate3');
-    const switched = of(1, 2, 3).pipe(switchMap((x) => of(x, x ** 2, x ** 3)));
-    switched.subscribe((x) => console.log(x));
-
-    let schoolClassId: any;
-
-    const mySchoolClasses$ = this._store
-      .collection(`students`, (ref) => ref.where('studentId', '==', 123456))
-      .get()
-      .pipe(map((result) => convertSnaps<Student>(result)))
-      .pipe(
-        switchMap((result) => {
-          schoolClassId = this._store
-            .doc(`schoolClasses/${result[0].schoolClassId}`)
-            .get()
-            .pipe(map((result) => convertSnaps<SchoolClass2>(result)));
-        })
-      );
-    mySchoolClasses$.subscribe((result) => console.log(result));
-    */
-
-  /*
-    return this._store
-      .collection(`schoolClasses`, (ref) =>
-        ref.where(
-          'studentIds',
-          'array-contains',
-          this._shared.getStudentDocumentId()
-        )
-      )
-      .get()
-      .pipe(
-        switchMap((schoolClasses) => this.getQuizTemplates4(schoolClasses))
-      );
-      
-  }
-  */
-
-  // called from quiz-intro
-  getExercisesByQuizId2(): void {
-    console.log('getExercisesByQuizId2');
-    /*
-    return this._store
-      .doc(`quizTemplates/TY1wRNj2Bq71aCvGgf0v`)
-      .get()
-      .pipe(map((result) => convertSnap<Quiz2>(result)));
-      */
+      .pipe(map((result) => convertSnap<Student>(result)));
   }
 
   // called from exercise
   // TODO: Can I call it from quiz-intro?
   getExercisesByQuizTemplateId() {
-    console.log('getExercisesByQuizTemplateId');
     return this._store
       .collection(`exerciseTemplates`)
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
-  /*
-  storeAccessTime() {
-    // Updating the document with the id wkPUpYoqmSgPYyv5ngor in the collection quizzes3.
-    this._store.doc(`quizzes3/wkPUpYoqmSgPYyv5ngor`).update({
-      accessTime: serverTimestamp(),
-    });
-    this._store.doc(`/quizzes3/99EqMuYQDPfbgYXemyDQ`).update({
-      accessTime: serverTimestamp(),
-    });
-  }
-  */
-
   // called from quiz-intro
   // TODO: use dynamic document id
   getExercisesByQuizId(): Observable<Quiz2> {
-    return (
-      this._store
-        .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
-        .get()
-        //.pipe(map(results => results.docs ))
-        .pipe(map((result) => convertSnap<Quiz2>(result)))
-    ); // does not work
-    //.valueChanges() as Observable<Quiz2> // does work
+    return this._store
+      .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
+      .get()
+      .pipe(map((result) => convertSnap<Quiz2>(result)));
   }
 }

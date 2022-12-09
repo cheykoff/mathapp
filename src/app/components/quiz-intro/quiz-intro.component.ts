@@ -23,12 +23,9 @@ export class QuizIntroComponent implements OnInit {
     public shared: SharedService
   ) {}
 
-  ngOnInit(): void {
-    // this.quiz$ = this._dataService.getExercisesByQuizId2();
-  }
+  ngOnInit(): void {}
 
   onStartQuiz() {
-    console.log('studentDocumentId: ' + this.shared.getStudentDocumentId());
     const quizStartDate = new Date();
     this.shared.setQuizStartTime(quizStartDate);
   }

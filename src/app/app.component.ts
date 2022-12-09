@@ -40,14 +40,8 @@ export class AppComponent implements OnInit {
   loadHandler(event: Event) {
     // this._shared.setStudentId(parseInt(localStorage.getItem('studentId')));
     this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass')));
-    console.log('before loading');
-    console.log(this._shared.studentData);
-    console.log(this._shared.levelStars);
     this._shared.reloadStudentData();
     this._shared.mode = localStorage.getItem('mode');
-    console.log('after loading');
-    console.log(this._shared.studentData);
-    console.log(this._shared.levelStars);
     // this._shared.setSessionId(localStorage.getItem('sessionId'));
   }
 }

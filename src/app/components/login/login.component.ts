@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   submitId(form: NgForm): void {
-    console.log('submitId() called');
     const value = form.value;
     if (value.studentId < 100000 || value.studentId > 999999) {
       this.validStudentId = false;
@@ -34,32 +33,15 @@ export class LoginComponent implements OnInit {
     }
     if (value.studentId) {
       // TODO: Need to ensure that the id is unique
-      console.log('value.studentId: ' + value.studentId);
 
       this.validStudentId = true;
-      // this.shared.setStudentId(value.studentId);
       this._data.getStudentDocument(value.studentId);
-      /*
-      setTimeout(() => {
-        this._data.getSchoolClassId();
-        // this._data.retrieveStudentDataFromFirestore(value.studentId);
-      }, 1000);
-      */
-
-      // this.goToClassSelection();
       this.goToMenu();
-      // this._data.updateStudentId();
       this.shared.storeStudentIdInLocalStorage();
-      // this.getStudentDocumentId();
     } else {
       this.validStudentId = false;
     }
   }
-  /*
-  getStudentDocumentId(): void {
-    this.shared.studentDocumentId = 'BbWzvQmUIMpytT5G5bUI';
-  }
-  */
 
   goToClassSelection(): void {
     this._router.navigate(['/', 'classselection']);
@@ -73,7 +55,6 @@ export class LoginComponent implements OnInit {
     // TODO: allow users to generate their own id (which needs to be unique)
     const newId = Math.floor(100000 + Math.random() * 900000);
     this.shared.setStudentId(newId);
-    // this._data.updateStudentId();
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }

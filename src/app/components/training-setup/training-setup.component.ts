@@ -17,8 +17,6 @@ export class TrainingSetupComponent implements OnInit {
   ngOnInit(): void {}
 
   submitTrainingSetup(form: NgForm) {
-    console.log('submitTrainingSetup');
     const value = form.controls['quiz-duration'].value;
-    console.log(value);
   }
 }

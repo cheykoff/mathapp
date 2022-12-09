@@ -41,11 +41,6 @@ export class ExerciseComponent implements OnInit {
   correctAnswer: string = '';
   isDisabled: boolean;
 
-  // tick = 1000;
-  // penaltyCountDown: Subscription;
-  // penalty: number = 5;
-  // penaltyCount: number = 0;
-
   showNextButton: boolean = false;
 
   constructor(
@@ -55,11 +50,7 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
-    // this.exercises$ = this._dataService.getAllExercises(); // For homework at 16.11.2022
-    // .pipe(map((exercises: Exercise2[]) => this.shuffleExercises(exercises))); // pipe to shuffle exercises
     this.resetCounts();
-
     if (this.shared.mode === 'practice') {
       this.createExercise();
       this._dataService.storePracticeStart();
@@ -72,7 +63,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   resetCounts(): void {
-    console.log('resetCounts');
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
     this.streakCount = 0;
@@ -80,7 +70,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   shuffleExercises(exercises: Exercise[]): Exercise[] {
-    console.log('shuffleExercises');
     for (let i = exercises.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
@@ -99,7 +88,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
-    console.log('checkAnswer');
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(this.checkDynamicAnswer(form));
     } else if (exercise.answerType === 'integer') {
@@ -110,7 +98,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('check fraction');
     const correctDenominator = exercise.correctAnswerFraction.denominator;
     const correctNumerator = exercise.correctAnswerFraction.numerator;
     const givenDenominator = form.value.denominator;
@@ -127,7 +114,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkIntegerAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('check integer');
     const givenAnswer = form.value.givenAnswer;
     if (
       givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
@@ -139,7 +125,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
-    console.log('onClickAnswer - mc');
     this.trackDurationAndAttempts();
 
     this.getCorrectAnswer(exercise);
@@ -155,16 +140,13 @@ export class ExerciseComponent implements OnInit {
   }
 
   trackDurationAndAttempts(): void {
-    console.log('trackDurationAndAttempts');
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
-    console.log(this.startTime);
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
     this.attempts++;
   }
 
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
-    console.log('saveAnswer');
     if (isCorrect) {
       if (this.attempts === 1) {
         this.streakCount++;
@@ -174,7 +156,6 @@ export class ExerciseComponent implements OnInit {
       this.showFeedback(true);
       this.showNextButton = true;
     } else {
-      console.log('integer incorrect');
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
@@ -182,7 +163,6 @@ export class ExerciseComponent implements OnInit {
       this.showFeedback(false);
 
       if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
-        console.log('integer incorrect: max attempts reached');
         this.showNextButton = true;
         this.isDisabled = true;
       }
@@ -192,12 +172,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    console.log('storeAnswer');
-    console.log('currentQuestionId: ' + currentQuestionId);
-    console.log('isCorrect: ' + isCorrect);
-    console.log('duration: ' + this.duration);
-    console.log('attempts: ' + this.attempts);
-
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
@@ -209,9 +183,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   saveDynamicAnswer(isCorrect: boolean): void {
-    console.log('saveDynamicAnswer');
     if (isCorrect) {
-      console.log('correct answer');
       if (this.attempts === 1) {
         this.streakCount++;
         this.shared.correctAnswer++;
@@ -220,16 +192,13 @@ export class ExerciseComponent implements OnInit {
       this.showFeedback(true);
       this.showNextButton = true;
     } else {
-      console.log('incorrect answer');
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
       }
       this.streakCount = 0;
       this.showFeedback(false);
-
       if (this.attempts >= this.maxAttempts) {
-        console.log('dynamic incorrect: max attempts reached');
         this.showNextButton = true;
         this.isDisabled = true;
       }
@@ -239,7 +208,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
-    console.log('storeDynamicAnswer');
     this._dataService.storeDynamicAnswer(
       this.question,
       this.answer,
@@ -252,7 +220,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   showFeedback(correctAnswer: boolean): void {
-    console.log('showFeedback');
     if (correctAnswer) {
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
@@ -263,12 +230,9 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    console.log('nextExercise');
     if (this.currentQuestion >= this.totalQuestions - 1) {
-      console.log('total questions reached');
       this.showResult();
     }
-    console.log('nextExercise');
     this.clearForm();
     if ((this.shared.mode = 'practice')) {
       this.createExercise();
@@ -286,7 +250,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   clearForm() {
-    console.log('clearForm');
     this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
@@ -296,21 +259,16 @@ export class ExerciseComponent implements OnInit {
   }
 
   showResult(): void {
-    console.log('showResult');
     this._router.navigate(['/', 'resultpage']);
   }
 
   onFocusEvent(event: any) {
-    console.log('onFocusEvent');
     this.answerIsIncorrect = false;
   }
 
   createExercise(): void {
-    console.log('createExercise');
     const level = this.shared.chosenLevel;
     const topic = this.shared.topic;
-    console.log('topic: ' + topic);
-    console.log('level: ' + level);
     this.startTime = new Date();
     let minNum = 0;
     let maxNum = 0;
@@ -342,17 +300,11 @@ export class ExerciseComponent implements OnInit {
         maxNum = 100;
       }
     }
-    console.log('minNum: ' + minNum);
-    console.log('maxNum: ' + maxNum);
     const a = this.getRandInteger(minNum, maxNum);
     const b = this.getRandInteger(minNum, maxNum);
-    console.log('a: ' + a);
-    console.log('b: ' + b);
     if (topic === 'Addition') {
       this.question = `${a} + ${b} = ?`;
-      console.log('question: ' + this.question);
       this.answer = a + b;
-      console.log('answer: ' + this.answer);
     } else if (topic === 'Subtraktion') {
       if (a > b) {
         this.question = `${a} - ${b} = ?`;
@@ -374,19 +326,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   getRandInteger(min, max) {
-    console.log('getRandInteger');
     return Math.round(Math.random() * (max - min) + min);
   }
 
   calculateStars(): void {
-    console.log('calculateStars');
-    console.log('topic: ' + this.shared.topic);
-    console.log('level: ' + this.shared.chosenLevel);
-    console.log(
-      'levelstars before:' +
-        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1]
-    );
-
     this.shared.currentLevelStars = Math.max(
       // TODO: Remove the variable?
       0,
@@ -404,14 +347,9 @@ export class ExerciseComponent implements OnInit {
     ) {
       this.shared.currentLevel[this.shared.topic]++;
     }
-    console.log(
-      'levelstars after:' +
-        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1]
-    );
   }
 
   checkDynamicAnswer(form: NgForm): boolean {
-    console.log('check dynamic');
     const givenAnswer = form.value.givenAnswer;
 
     if (givenAnswer === this.answer) {
@@ -419,66 +357,5 @@ export class ExerciseComponent implements OnInit {
     } else {
       return false;
     }
-    /*
-      console.log('dynamic correct');
-      this.isCorrect = true;
-      this.answerIsCorrect = true;
-      this.answerIsIncorrect = false;
-      this.shared.correctAnswer++;
-      this.isDisabled = true;
-      this.streakCount++;
-
-      setTimeout(() => {
-        this.currentQuestion++;
-        this.startTime = new Date();
-        this.answerIsCorrect = false;
-        this.isDisabled = false;
-        //this.showNextButton = true;
-        this.attempts = 0;
-
-        if (this.currentQuestion >= this.totalQuestions) {
-          this.showResult();
-        }
-      }, 1000);
-    } else {
-      console.log('dynamic incorrect');
-      this.attempts++;
-      if (this.attempts >= this.maxAttempts) {
-        console.log('dynamic incorrect: max attempts reached');
-        this.isDisabled = true;
-        // this.storeAnswer(false, givenAnswer);
-        this.showNextButton = true;
-        this.attempts = 0;
-      }
-      this.isCorrect = false;
-      this.answerIsIncorrect = true;
-      this.shared.incorrectAnswer++;
-      this.streakCount = 0;
-      setTimeout(() => {
-        this.answerIsIncorrect = false;
-      }, 1000);
-    }
-    this.trackDurationAndAttempts();
-    console.log(this.question);
-    console.log(this.answer);
-    console.log(this.givenAnswer);
-    console.log(this.isCorrect);
-    console.log(this.duration);
-    console.log(this.shared.chosenLevel);
-
-    this._dataService.storeDynamicAnswer(
-      this.question,
-      this.answer,
-      this.givenAnswer,
-      this.isCorrect,
-      this.duration,
-      this.shared.chosenLevel,
-      this.attempts
-    );
-
-    console.log(this.shared.correctAnswer);
-    console.log(this.shared.incorrectAnswer);
-    return;
-    */
   }
 }
