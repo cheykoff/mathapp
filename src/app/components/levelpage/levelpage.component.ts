@@ -13,7 +13,9 @@ export class LevelpageComponent implements OnInit {
 
   constructor(private _router: Router, public shared: SharedService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shared.setCurrentLevels();
+  }
 
   goToDynamicExercise(level: Level): void {
     this.shared.chosenLevel = level.level;

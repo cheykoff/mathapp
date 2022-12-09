@@ -36,6 +36,7 @@ export class SharedService {
     Multiplikation: 1,
     Division: 1,
   };
+
   chosenLevel = 1;
 
   levelStars = {
@@ -79,7 +80,7 @@ export class SharedService {
     this.studentData.skillLevel = studentData.skillLevel;
     this.levelStars = studentData.levelStars;
     this.studentData.classId = studentData.classId;
-    this.setCurrentLevels();
+
     this.studentData.totalPracticeQuestions =
       studentData.totalPracticeQuestions;
     this.studentData.correctPracticeQuestions =
@@ -89,6 +90,8 @@ export class SharedService {
     console.log('levelStars');
     console.log(this.levelStars);
     console.log(this.currentLevel);
+    this.setCurrentLevels();
+    console.log('setCurrentlevels finished');
     localStorage.setItem('studentId', this.studentData.studentId.toString());
     localStorage.setItem('studentDocumentId', this.studentData.id);
     localStorage.setItem('levelStars', JSON.stringify(this.levelStars));
@@ -311,12 +314,62 @@ export class SharedService {
   */
 
   setCurrentLevels(): void {
-    for (const topic in this.levelStars) {
-      for (const levelRating of this.levelStars[topic]) {
-        if (levelRating > 0) {
-          this.currentLevel[topic]++;
+    console.log('setCurrentLevels()');
+    console.log('this.levelStars: ');
+    let testLevel = {
+      a: 1,
+      b: 1,
+      c: 1,
+    };
+    const testObject = {
+      a: [5, 4, 3],
+      b: [2, 1, 0],
+      c: [0, 0, 0],
+    };
+    for (const topic in testObject) {
+      console.log('topic: ' + topic);
+      for (const levelStar of testObject[topic]) {
+        console.log('levelStar: ' + levelStar);
+        if (levelStar > 0) {
+          testLevel[topic]++;
         }
+        console.log('testLevel[topic]: ' + testLevel[topic]);
       }
     }
+
+    console.log(this.levelStars);
+
+    for (const topic in this.levelStars) {
+      this.currentLevel[topic] = 1;
+      console.log('topic: ' + topic);
+      for (const levelStar of this.levelStars[topic]) {
+        console.log('levelStar: ' + levelStar);
+        if (levelStar > 0) {
+          this.currentLevel[topic]++;
+        }
+        console.log(
+          'this.currentLevel[topic]: ' + topic + this.currentLevel[topic]
+        );
+      }
+    }
+
+    /* 
+    for (const topic in this.levelStars) {
+      console.log('topic: ' + topic);
+      for (const levelRating of this.levelStars['topic']) {
+        console.log('level: ' + levelRating);
+        if (levelRating > 0) {
+          console.log('whole topic object');
+          console.log(this.currentLevel);
+          console.log('topic only: ' + topic);
+          console.log(
+            'this.currentLevel[topic]: ' + this.currentLevel['topic']
+          );
+          this.currentLevel['topic']++;
+        }
+      }
+      
+    }
+    */
   }
 }
