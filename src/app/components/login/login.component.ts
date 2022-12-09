@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
       // TODO: Need to ensure that the id is unique
 
       this.validStudentId = true;
+      this.shared.setStudentId(value.studentId);
       this._data.getStudentDocument(value.studentId);
       this.goToMenu();
       this.shared.storeStudentIdInLocalStorage();

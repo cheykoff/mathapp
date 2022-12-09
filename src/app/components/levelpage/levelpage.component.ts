@@ -14,7 +14,17 @@ export class LevelpageComponent implements OnInit {
   constructor(private _router: Router, public shared: SharedService) {}
 
   ngOnInit(): void {
+    console.log(this.shared.currentLevel);
+    if (
+      this.shared.levelStars === undefined ||
+      this.shared.levelStars === null
+    ) {
+      this.shared.initializeLevelStars();
+    }
+    console.log(this.shared.levelStars);
     this.shared.setCurrentLevels();
+    console.log(this.shared.currentLevel);
+    console.log(this.shared.levelStars);
   }
 
   goToDynamicExercise(level: Level): void {

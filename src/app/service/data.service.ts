@@ -31,7 +31,29 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnaps<Student>(result)))
       .subscribe((data: Student[]) => {
-        this._shared.setStudentData(data[0]);
+        console.log(data);
+        console.log(data.length);
+        if (data.length > 0) {
+          this._shared.setStudentData(data[0]);
+        } else {
+          this._store
+            .collection('students')
+            .add({
+              studentId: studentId,
+              levelStars: {
+                Addition: [0, 0, 0],
+                Subtraktion: [0, 0, 0],
+                Multiplikation: [0, 0, 0],
+                Division: [0, 0, 0],
+              },
+              totalPracticeQuestions: 0,
+              correctPracticeQuestions: 0,
+              classId: null,
+            })
+            .then((docRef) => {
+              this._shared.setStudentDocumentId(docRef.id);
+            });
+        }
       });
   }
 
