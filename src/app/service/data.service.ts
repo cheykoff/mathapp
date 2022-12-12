@@ -258,13 +258,25 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnap<Quiz2>(result)));
   }
-
+  /*
   getExercisesGisela6b221213() {
     return this._store
       .collection('exercises-gisela-6b-221213')
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)))
-      .pipe(tap((result) => console.log(result)));
+      
+  }
+  */
+
+  getExercisesGisela6b221213(): Observable<Exercise[]> {
+    return (
+      this._store
+        // .collection('exercises-gisela-6b221213')
+        .collection('exercises-gisela-6b-221213')
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)))
+        .pipe(tap((result) => console.log(result)))
+    );
   }
 
   getExercises() {

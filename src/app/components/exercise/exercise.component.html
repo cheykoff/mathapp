@@ -7,6 +7,7 @@
 </div>
 
 <div class="main">
+  <p>main is shown</p>
   <div *ngIf="this.shared.mode === 'practice'">
     <div class="question">
       <p [mathjax]="question"></p>
@@ -33,7 +34,9 @@
     </form>
   </div>
 
-  <div *ngIf="this.shared.mode === 'quiz'">
+  <!--<div *ngIf="this.shared.mode === 'quiz'">-->
+  <div>
+    <p>shared mode is quiz</p>
     <ng-container *ngIf="exercises$ | async as exercises; else loading">
       <p>exercises are loaded</p>
       <ul>
@@ -43,11 +46,15 @@
       </ul>
       <div class="question">
         <p [mathjax]="exercises[currentQuestion].question"></p>
+        <p>{{ currentQuestion }}</p>
+        <img class="questionImg" [src]="getSrc()" />
+        <!--
         <img
           class="questionImg"
           [src]="getSrc()"
           *ngIf="exercise[currentQuestion].img"
         />
+        -->
         <!--<img class="questionImg" src="../assets/img/geometry/koordinaten.jpg" /> works-->
       </div>
       <div

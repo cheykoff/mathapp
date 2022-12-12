@@ -91,9 +91,11 @@ export class ExerciseComponent implements OnInit {
       console.log('store quiz start');
       this._dataService.storeQuizStart();
       console.log('currentQuestion: ' + this.currentQuestion);
-      this.exercises$ = this._dataService.getExercises();
+      // this.exercises$ = this._dataService.getExercises();
+      this.exercises$ = this._dataService.getExercisesGisela6b221213();
 
       this.exercises$.subscribe((data: Exercise[]) => {
+        this.totalQuestions = Math.min(this.totalQuestions, data.length);
         for (let exercise of data) {
           this.exercises.push(exercise);
           this.srcs.push('../assets/img/geometry/' + exercise.img);
@@ -120,6 +122,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    console.log(form);
+    console.log(exercise);
     const givenNumber = parseInt(form.value.givenAnswer);
     if (isNaN(givenNumber)) {
       return;
@@ -130,6 +134,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
+    console.log('checkAnswer: mode: ' + this.shared.mode);
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(this.checkDynamicAnswer(form));
     } else if (exercise.answerType === 'integer') {
@@ -160,6 +165,8 @@ export class ExerciseComponent implements OnInit {
     if (
       givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
     ) {
+      console.log(givenAnswer.toString().replace('.', ',').trim());
+      console.log(exercise.correctAnswer);
       return true;
     } else {
       return false;
@@ -251,6 +258,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
+    console.log('store dynamic answer');
     this._dataService.storeDynamicAnswer(
       this.question,
       this.answer,
@@ -274,12 +282,14 @@ export class ExerciseComponent implements OnInit {
 
   nextExercise(): void {
     console.log('nextExercise');
+    console.log(this.currentQuestion);
+    console.log(this.totalQuestions);
     if (this.currentQuestion >= this.totalQuestions - 1) {
       console.log('showResult');
       this.showResult();
     }
     this.clearForm();
-    if ((this.shared.mode = 'practice')) {
+    if (this.shared.mode === 'practice') {
       this.createExercise();
     }
     console.log('currentQuestion', this.currentQuestion);

@@ -27,7 +27,7 @@ export class SharedService {
 
   quizTemplates: QuizTemplate[] = [];
 
-  mode: string;
+  mode: string = 'quiz';
   topic: string;
 
   currentLevel = {
