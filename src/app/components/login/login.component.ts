@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
       this.validStudentId = true;
       this.shared.setStudentId(value.studentId);
       this._data.getStudentDocument(value.studentId);
-      this.goToMenu();
+      this.goToClassSelection();
+      // this.goToMenu();
       this.shared.storeStudentIdInLocalStorage();
     } else {
       this.validStudentId = false;

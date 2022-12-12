@@ -87,14 +87,15 @@ export class ExerciseComponent implements OnInit {
       const quizStartDate = new Date();
       this.shared.setQuizStartTime(quizStartDate);
       // this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
-      console.log('get exercises');
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();
-      console.log('store quiz start');
       this._dataService.storeQuizStart();
-      console.log('currentQuestion: ' + this.currentQuestion);
       // this.exercises$ = this._dataService.getExercises();
-      this.exercises$ = this._dataService.getExercisesGisela6b221213();
+      if (this.shared.schoolClass === 5) {
+        this.exercises$ = this._dataService.getExercisesGisela5b221213();
+      } else {
+        this.exercises$ = this._dataService.getExercisesGisela6b221213();
+      }
 
       this.exercises$.subscribe((data: Exercise[]) => {
         this.totalQuestions = Math.min(this.totalQuestions, data.length);

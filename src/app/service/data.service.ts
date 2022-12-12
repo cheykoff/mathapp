@@ -65,22 +65,25 @@ export class DataService {
       });
   }
 
-  storeSchoolClass(className: number) {
-    this._store
-      .collection(`quizzes`)
-      .add({
-        schoolClass: className,
-        url: window.location.href,
-        startTime: serverTimestamp(),
-        studentId: this._shared.getStudentId(),
-      })
-      .then((docRef) => {
-        this._shared.setQuizId(docRef.id);
-      });
+  storeSchoolClass(schoolClass: number) {
+    this._store.doc(`students/${this._shared.getStudentDocumentId()}`).update({
+      schoolClass: schoolClass,
+      url: window.location.href,
+      startTime: serverTimestamp(),
+      studentId: this._shared.getStudentId(),
+    });
     localStorage.setItem(
       'schoolClass',
       this._shared.getSchoolClass().toString()
     );
+  }
+
+  storeSchoolClassName(schoolClassName: string) {
+    console.log('storeSchoolClassName: ' + schoolClassName);
+    this._store.doc(`students/${this._shared.getStudentDocumentId()}`).update({
+      schoolClassName: schoolClassName,
+    });
+    localStorage.setItem('schoolClassName', schoolClassName);
   }
 
   // called from quiz-intro
@@ -273,6 +276,17 @@ export class DataService {
       this._store
         // .collection('exercises-gisela-6b221213')
         .collection('exercises-gisela-6b-221213')
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)))
+        .pipe(tap((result) => console.log(result)))
+    );
+  }
+
+  getExercisesGisela5b221213(): Observable<Exercise[]> {
+    return (
+      this._store
+        // .collection('exercises-gisela-6b221213')
+        .collection('exercises-gisela-5b')
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)))
         .pipe(tap((result) => console.log(result)))

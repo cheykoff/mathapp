@@ -14,6 +14,7 @@ import { TrainingComponent } from './components/training/training.component';
 import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 
 import { ClassselectionComponent } from './components/classselection/classselection.component';
+import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
 import { CodepageComponent } from './components/codepage/codepage.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
     path: 'classselection',
     component: ClassselectionComponent,
   },
+  { path: 'classselection2', component: Classselection2Component },
   { path: 'codepage', component: CodepageComponent },
   { path: 'levelpage', component: LevelpageComponent },
   { path: 'exercise', component: ExerciseComponent },

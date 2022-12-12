@@ -49,6 +49,7 @@ export class SharedService {
   currentLevelStars: number;
 
   schoolClass: number = 0;
+  schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
   docId: string;
@@ -197,6 +198,14 @@ export class SharedService {
 
   getSchoolClass(): number {
     return this.schoolClass;
+  }
+
+  setSchoolClassName(data: string): void {
+    this.schoolClassName = data;
+  }
+
+  getSchoolClassName(): string {
+    return this.schoolClassName;
   }
 
   setQuizId(data: string): void {
