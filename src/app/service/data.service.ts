@@ -31,8 +31,6 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnaps<Student>(result)))
       .subscribe((data: Student[]) => {
-        console.log(data);
-        console.log(data.length);
         if (data.length > 0) {
           this._shared.setStudentData(data[0]);
         } else {

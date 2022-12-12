@@ -70,9 +70,6 @@ export class SharedService {
   constructor(private _router: Router) {}
 
   setStudentData(studentData: Student): void {
-    console.log('setStudentData: ');
-    console.log(studentData);
-
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
     this.studentData.schoolClasses = studentData.schoolClasses;
@@ -80,8 +77,6 @@ export class SharedService {
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
     this.levelStars = studentData.levelStars;
-    console.log('this.levelStars: ');
-    console.log(this.levelStars);
     this.studentData.classId = studentData.classId;
 
     this.studentData.totalPracticeQuestions =
@@ -221,7 +216,6 @@ export class SharedService {
   }
 
   setCurrentLevels(): void {
-    console.log('setCurrentLevels: ');
     let testLevel = {
       a: 1,
       b: 1,
@@ -233,29 +227,17 @@ export class SharedService {
       c: [0, 0, 0],
     };
     for (const topic in testObject) {
-      console.log('topic: ' + topic);
       for (const levelStar of testObject[topic]) {
-        console.log('levelStar: ' + levelStar);
         if (levelStar > 0) {
           testLevel[topic]++;
         }
       }
     }
-    console.log('topic:' + this.topic);
-    console.log(this.currentLevel);
     this.initializeCurrentLevels();
-    console.log(this.currentLevel);
 
     for (const topic in this.levelStars) {
-      console.log('topic: ' + topic);
-      console.log(this.levelStars[topic]);
-      console.log(
-        'this.currentLevel: ' + topic + ':' + this.currentLevel[topic]
-      );
       this.currentLevel[topic] = 1;
-      console.log('this.currentLevel[topic]: ' + this.currentLevel[topic]);
       for (const levelStar of this.levelStars[topic]) {
-        console.log('levelStar: ' + levelStar);
         if (levelStar > 0) {
           this.currentLevel[topic]++;
         }
@@ -264,7 +246,6 @@ export class SharedService {
   }
 
   initializeCurrentLevels(): void {
-    console.log('initializeCurrentLevels: ');
     this.currentLevel = {
       Multiplikation: 1,
       Division: 1,
