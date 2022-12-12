@@ -20,7 +20,23 @@ export class ExerciseComponent implements OnInit {
 
   srcs: string[] = [];
 
-  currentQuestion: number = 1;
+  getSrc(): string {
+    if (this.srcs.length === 0) {
+      return null;
+    }
+    return this.srcs[this.currentQuestion];
+  }
+
+  getImg(): string {
+    if (!this.exercises[this.currentQuestion].img) {
+      return null;
+    }
+    return this.exercises[this.currentQuestion].img;
+  }
+
+  exercises: Exercise[] = [];
+
+  currentQuestion: number = 0;
   attempts: number = 0;
   streakCount: number = 0;
 
@@ -70,12 +86,16 @@ export class ExerciseComponent implements OnInit {
     } else {
       // this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
       console.log('get exercises');
-      this.exercises$ = this._dataService.getExercisesGisela6b221213();
+      // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       console.log('store quiz start');
       this._dataService.storeQuizStart();
+      console.log('currentQuestion: ' + this.currentQuestion);
+      this.exercises$ = this._dataService.getExercises();
+
       this.exercises$.subscribe((data: Exercise[]) => {
         for (let exercise of data) {
+          this.exercises.push(exercise);
           this.srcs.push('../assets/img/geometry/' + exercise.img);
         }
       });

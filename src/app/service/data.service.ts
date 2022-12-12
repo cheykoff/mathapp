@@ -263,6 +263,23 @@ export class DataService {
     return this._store
       .collection('exercises-gisela-6b-221213')
       .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result)))
+      .pipe(tap((result) => console.log(result)));
+  }
+
+  getExercises() {
+    return this._store
+      .collection('exercises')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)))
+      .pipe(tap((result) => console.log(result)));
+  }
+
+  getExercises6() {
+    return this._store
+      .collection('exercises6')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)))
+      .pipe(tap((result) => console.log(result)));
   }
 }
