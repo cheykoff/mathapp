@@ -84,6 +84,8 @@ export class ExerciseComponent implements OnInit {
       this.createExercise();
       this._dataService.storePracticeStart();
     } else {
+      const quizStartDate = new Date();
+      this.shared.setQuizStartTime(quizStartDate);
       // this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
       console.log('get exercises');
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();

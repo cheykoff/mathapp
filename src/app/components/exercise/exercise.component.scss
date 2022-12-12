@@ -9,6 +9,7 @@
 }
 
 .question {
+  max-height: 320px;
   border: 1px solid var(--clr-primary-dark);
   border-radius: 5px;
   padding: 12px 8px;
@@ -21,8 +22,13 @@
   white-space: pre-wrap;
 }
 
+.img-wrapper {
+  text-align: center;
+}
+
 .questionImg {
-  width: 100%;
+  height: 200px;
+  // width: 100%;
 }
 
 .answerText[hasUnit="true"] {

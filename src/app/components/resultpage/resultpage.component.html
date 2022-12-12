@@ -18,7 +18,20 @@
       <p class="labelBigNumber">Fragen richtig beantwortet</p>
     </div>
   </div>
-  <button class="btn classBtn" routerLink="/levelpage">Nächstes Level</button>
+  <button
+    class="btn classBtn"
+    routerLink="/levelpage"
+    *ngIf="shared.mode === 'practice'"
+  >
+    Nächstes Level
+  </button>
+  <button
+    class="btn classBtn"
+    routerLink="/menu"
+    *ngIf="shared.mode === 'quiz'"
+  >
+    Zum Menü
+  </button>
 </div>
 
 <!--
