@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { from, map, Observable, Subscription, timer } from 'rxjs';
 import { NgForm } from '@angular/forms';
@@ -18,9 +18,9 @@ export class ExerciseComponent implements OnInit {
   totalQuestions: number = 10;
   maxAttempts: number = 3;
 
-  src: string = '../assets/img/geometry/figuren-4.jpg';
+  srcs: string[] = [];
 
-  currentQuestion: number = 0;
+  currentQuestion: number = 1;
   attempts: number = 0;
   streakCount: number = 0;
 
@@ -51,7 +51,18 @@ export class ExerciseComponent implements OnInit {
     private _dataService: DataService
   ) {}
 
+  /*
+  ngOnChanges(): void {
+    console.log('ngOnChanges');
+    this.exercises$.subscribe((data: Exercise[]) => {
+      this.exercise = data[0];
+      this.src = '../assets/img/geometry/' + this.exercise.img;
+    });
+  }
+  */
+
   ngOnInit(): void {
+    console.log('ngOnInit');
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.createExercise();
@@ -63,6 +74,11 @@ export class ExerciseComponent implements OnInit {
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       console.log('store quiz start');
       this._dataService.storeQuizStart();
+      this.exercises$.subscribe((data: Exercise[]) => {
+        for (let exercise of data) {
+          this.srcs.push('../assets/img/geometry/' + exercise.img);
+        }
+      });
     }
 
     // this.createExercise(this.shared.chosenLevel);
@@ -178,6 +194,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    console.log('store answer');
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
@@ -236,14 +253,18 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
+    console.log('nextExercise');
     if (this.currentQuestion >= this.totalQuestions - 1) {
+      console.log('showResult');
       this.showResult();
     }
     this.clearForm();
     if ((this.shared.mode = 'practice')) {
       this.createExercise();
     }
+    console.log('currentQuestion', this.currentQuestion);
     this.currentQuestion++;
+    console.log('currentQuestion', this.currentQuestion);
     this.startTime = new Date();
 
     if (

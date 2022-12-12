@@ -16,4 +16,5 @@ export interface Exercise {
       questionNumber?: string;
     }
   ];
+  img?: string;
 }
