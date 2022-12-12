@@ -32,15 +32,12 @@
       </button>
     </form>
   </div>
+
   <div *ngIf="this.shared.mode === 'quiz'">
     <ng-container *ngIf="exercises$ | async as exercises; else loading">
       <div class="question">
         <p [mathjax]="exercises[currentQuestion].question"></p>
-        <img
-          class="questionImg"
-          src="assets/img/geometry/parallelogram.png"
-          *ngIf="exercises[currentQuestion].questionType === 'image'"
-        />
+        <img class="questionImg" [src]="src" />
       </div>
       <div
         class="options"

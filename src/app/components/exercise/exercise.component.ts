@@ -18,6 +18,8 @@ export class ExerciseComponent implements OnInit {
   totalQuestions: number = 10;
   maxAttempts: number = 3;
 
+  src: string = '../assets/img/geometry/figuren-4.jpg';
+
   currentQuestion: number = 0;
   attempts: number = 0;
   streakCount: number = 0;
@@ -55,7 +57,11 @@ export class ExerciseComponent implements OnInit {
       this.createExercise();
       this._dataService.storePracticeStart();
     } else {
-      this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
+      // this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
+      console.log('get exercises');
+      this.exercises$ = this._dataService.getExercisesGisela6b221213();
+      // this.exercises$ = this._dataService.getExercisesGisela6b221213();
+      console.log('store quiz start');
       this._dataService.storeQuizStart();
     }
 

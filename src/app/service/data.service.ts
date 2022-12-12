@@ -258,4 +258,11 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnap<Quiz2>(result)));
   }
+
+  getExercisesGisela6b221213() {
+    return this._store
+      .collection('exercises-gisela-6b-221213')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
 }
