@@ -43,6 +43,7 @@ export class DataService {
                 Subtraktion: [0, 0, 0],
                 Multiplikation: [0, 0, 0],
                 Division: [0, 0, 0],
+                Terme: [0, 0, 0],
               },
               totalPracticeQuestions: 0,
               correctPracticeQuestions: 0,
@@ -271,11 +272,11 @@ export class DataService {
   }
   */
 
-  getExercisesGisela6b221213(): Observable<Exercise[]> {
+  getExercisesGisela6a221213(): Observable<Exercise[]> {
     return (
       this._store
         // .collection('exercises-gisela-6b221213')
-        .collection('exercises-gisela-6b-221213')
+        .collection('exercises-gisela-6a-221213')
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)))
         .pipe(tap((result) => console.log(result)))

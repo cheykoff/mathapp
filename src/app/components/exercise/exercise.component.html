@@ -82,6 +82,9 @@
             autofocus
             [hasUnit]="exercises[currentQuestion].unit"
             (focus)="onFocusEvent($event)"
+            [ngStyle]="{
+              width: exercises[currentQuestion].unit ? '80%' : '100%'
+            }"
           />
           <p
             class="unit"
@@ -157,8 +160,7 @@
         />
         <ng-template #streak>
           <p class="correctText feedback">
-            Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
-            beantwortet!
+            Richtig! {{ streakCount }} in Folge!
           </p>
         </ng-template>
 
@@ -178,10 +180,7 @@
         Richtig!
       </p>
       <ng-template #streak>
-        <p class="correctText feedback">
-          Richtig! Du hast {{ streakCount }} Fragen in Folge richtig
-          beantwortet!
-        </p>
+        <p class="correctText feedback">Richtig! {{ streakCount }} in Folge!</p>
       </ng-template>
     </div>
     <div *ngIf="answerIsIncorrect" class="wrong">

@@ -9,4 +9,5 @@ export let topics: Topic[] = [
   { name: 'Subtraktion' },
   { name: 'Multiplikation' },
   { name: 'Division' },
+  { name: 'Terme' },
 ];

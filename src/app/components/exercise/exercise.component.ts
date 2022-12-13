@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
 import { DataService } from '../../service/data.service';
+import { enableIndexedDbPersistence } from 'firebase/firestore';
+import { r3JitTypeSourceSpan } from '@angular/compiler';
 
 @Component({
   selector: 'app-exercise',
@@ -15,7 +17,7 @@ import { DataService } from '../../service/data.service';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
 
-  totalQuestions: number = 10;
+  totalQuestions: number = 21;
   maxAttempts: number = 3;
 
   srcs: string[] = [];
@@ -81,6 +83,7 @@ export class ExerciseComponent implements OnInit {
     console.log('ngOnInit');
     this.resetCounts();
     if (this.shared.mode === 'practice') {
+      console.log('mode is practice');
       this.createExercise();
       this._dataService.storePracticeStart();
     } else {
@@ -94,14 +97,14 @@ export class ExerciseComponent implements OnInit {
       if (this.shared.schoolClass === 5) {
         this.exercises$ = this._dataService.getExercisesGisela5b221213();
       } else {
-        this.exercises$ = this._dataService.getExercisesGisela6b221213();
+        this.exercises$ = this._dataService.getExercisesGisela6a221213();
       }
 
       this.exercises$.subscribe((data: Exercise[]) => {
         this.totalQuestions = Math.min(this.totalQuestions, data.length);
         for (let exercise of data) {
           this.exercises.push(exercise);
-          this.srcs.push('../assets/img/geometry/' + exercise.img);
+          this.srcs.push('../assets/img/geometry/' + exercise.img + '.jpg');
         }
       });
     }
@@ -110,6 +113,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   resetCounts(): void {
+    console.log('resetCounts');
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
     this.streakCount = 0;
@@ -125,6 +129,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    console.log('has a unit' + exercise.unit);
     console.log(form);
     console.log(exercise);
     const givenNumber = parseInt(form.value.givenAnswer);
@@ -326,9 +331,19 @@ export class ExerciseComponent implements OnInit {
     this.answerIsIncorrect = false;
   }
 
+  createTerm(): void {
+    const level = this.shared.chosenLevel;
+    console.log('createTerm level', level);
+  }
+
   createExercise(): void {
+    console.log('createExercise');
     const level = this.shared.chosenLevel;
     const topic = this.shared.topic;
+    if (this.shared.topic === 'Terme') {
+      this.createTerm();
+      return;
+    }
     this.startTime = new Date();
     let minNum = 0;
     let maxNum = 0;

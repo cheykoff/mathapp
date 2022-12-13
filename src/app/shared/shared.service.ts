@@ -35,6 +35,7 @@ export class SharedService {
     Subtraktion: 1,
     Multiplikation: 1,
     Division: 1,
+    Terme: 1,
   };
 
   chosenLevel = 1;
@@ -44,6 +45,7 @@ export class SharedService {
     Subtraktion: [0, 0, 0],
     Multiplikation: [0, 0, 0],
     Division: [0, 0, 0],
+    Terme: [0, 0, 0],
   };
 
   currentLevelStars: number;
@@ -77,7 +79,9 @@ export class SharedService {
     this.studentData.emailStudent = studentData.emailStudent;
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
+    console.log('setStudentData: ' + studentData.levelStars);
     this.levelStars = studentData.levelStars;
+    console.log(this.levelStars);
     this.studentData.classId = studentData.classId;
 
     this.studentData.totalPracticeQuestions =
@@ -225,23 +229,6 @@ export class SharedService {
   }
 
   setCurrentLevels(): void {
-    let testLevel = {
-      a: 1,
-      b: 1,
-      c: 1,
-    };
-    const testObject = {
-      a: [5, 4, 3],
-      b: [2, 1, 0],
-      c: [0, 0, 0],
-    };
-    for (const topic in testObject) {
-      for (const levelStar of testObject[topic]) {
-        if (levelStar > 0) {
-          testLevel[topic]++;
-        }
-      }
-    }
     this.initializeCurrentLevels();
 
     for (const topic in this.levelStars) {
@@ -260,6 +247,7 @@ export class SharedService {
       Division: 1,
       Addition: 1,
       Subtraktion: 1,
+      Terme: 1,
     };
   }
 
@@ -269,6 +257,7 @@ export class SharedService {
       Division: [0, 0, 0],
       Addition: [0, 0, 0],
       Subtraktion: [0, 0, 0],
+      Terme: [0, 0, 0],
     };
   }
 }

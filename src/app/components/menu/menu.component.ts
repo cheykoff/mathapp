@@ -14,7 +14,11 @@ export class MenuComponent implements OnInit {
   menuItems: MenuListItem[] = menuListItems;
   constructor(public shared: SharedService, private _router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.shared.schoolClassName === '5b') {
+      this.menuItems[1].disabled = false;
+    }
+  }
 
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {
@@ -24,6 +28,12 @@ export class MenuComponent implements OnInit {
       localStorage.setItem('mode', 'quiz');
       this._router.navigate(['/', 'exercise']);
       return;
+    } else if (menuItem.name === 'Hausaufgaben') {
+      this.shared.mode = 'practice';
+      localStorage.setItem('mode', 'practice');
+      this.shared.topic = 'Terme';
+      localStorage.setItem('topic', 'Terme');
+      this._router.navigate(['/', 'levelpage']);
     } else if (menuItem.name === 'Üben') {
       console.log('clicked üben');
       this.shared.mode = 'practice';

@@ -9,7 +9,7 @@
 }
 
 .question {
-  max-height: 320px;
+  max-height: 350px;
   border: 1px solid var(--clr-primary-dark);
   border-radius: 5px;
   padding: 12px 8px;
@@ -27,11 +27,11 @@
 }
 
 .questionImg {
-  height: 200px;
+  height: 180px;
   // width: 100%;
 }
 
-.answerText[hasUnit="true"] {
+.answerText[hasUnit] {
   width: 80%;
 }
 

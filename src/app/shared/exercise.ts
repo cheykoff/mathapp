@@ -17,4 +17,5 @@ export interface Exercise {
     }
   ];
   img?: string;
+  unit?: string;
 }
