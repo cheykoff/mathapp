@@ -17,7 +17,7 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
 
-  totalQuestions: number = 21;
+  totalQuestions: number = 20;
   maxAttempts: number = 3;
 
   srcs: string[] = [];
@@ -83,6 +83,7 @@ export class ExerciseComponent implements OnInit {
     console.log('ngOnInit');
     this.resetCounts();
     if (this.shared.mode === 'practice') {
+      this.totalQuestions = 10;
       console.log('mode is practice');
       this.createExercise();
       this._dataService.storePracticeStart();
@@ -104,7 +105,7 @@ export class ExerciseComponent implements OnInit {
         this.totalQuestions = Math.min(this.totalQuestions, data.length);
         for (let exercise of data) {
           this.exercises.push(exercise);
-          this.srcs.push('../assets/img/geometry/' + exercise.img + '.jpg');
+          this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
         }
       });
     }
@@ -129,9 +130,9 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    console.log('has a unit' + exercise.unit);
+    console.log('has a unit');
     console.log(form);
-    console.log(exercise);
+    // console.log(exercise);
     const givenNumber = parseInt(form.value.givenAnswer);
     if (isNaN(givenNumber)) {
       return;
@@ -332,8 +333,160 @@ export class ExerciseComponent implements OnInit {
   }
 
   createTerm(): void {
+    console.log('createTerm');
     const level = this.shared.chosenLevel;
-    console.log('createTerm level', level);
+    this.startTime = new Date();
+    let minNum = 0;
+    let maxNum = 0;
+    let operatorsNum = 0;
+    if (level === 1) {
+      minNum = 1;
+      maxNum = 20;
+      operatorsNum = 2;
+    } else if (level === 2) {
+      minNum = 10;
+      maxNum = 100;
+      operatorsNum = 3;
+    } else if (level === 3) {
+      minNum = 100;
+      maxNum = 1000;
+      operatorsNum = 4;
+    } else {
+      minNum = 1000;
+      maxNum = 10000;
+      operatorsNum = 4;
+    }
+    let result = -1;
+    while (result < 0) {
+      const a = this.getRandInteger(minNum, 2 * maxNum);
+      const b = this.getRandInteger(minNum, maxNum);
+      const c = this.getRandInteger(minNum, maxNum);
+      const d = this.getRandInteger(minNum, maxNum);
+      const e = this.getRandInteger(minNum, maxNum);
+      const operatorRandom = this.getRandInteger(1, 16);
+      // const operatorRandom = 2;
+      const bracketRandom = this.getRandInteger(1, 8);
+
+      console.log('result start is: ' + result);
+      if (level === 1) {
+        if (operatorRandom % 4 === 0) {
+          this.question = `${a} + ${b} + ${c} = ?`;
+          this.answer = a + b + c;
+        } else if (operatorRandom % 4 === 1) {
+          this.question = `${a} + ${b} - ${c} = ?`;
+          this.answer = a + b - c;
+        } else if (operatorRandom % 4 === 2) {
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} - (${b} + ${c}) = ?`;
+            this.answer = a - (b + c);
+          } else {
+            this.question = `${a} - ${b} + ${c} = ?`;
+            this.answer = a - b + c;
+          }
+        } else {
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} - (${b} - ${c}) = ?`;
+            this.answer = a - (b - c);
+          } else {
+            this.question = `${a} - ${b} - ${c} = ?`;
+            this.answer = a - b - c;
+          }
+        }
+      } else if (level === 2) {
+        if (operatorRandom % 8 === 0) {
+          this.question = `${a} + ${b} + ${c} + ${d}= ?`;
+          this.answer = a + b + c + d;
+        } else if (operatorRandom % 8 === 1) {
+          this.question = `${a} + ${b} + ${c} - ${d}= ?`;
+          this.answer = a + b + c - d;
+        } else if (operatorRandom % 8 === 2) {
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} + ${b} - (${c} + ${d})= ?`;
+            this.answer = a + b - (c + d);
+          } else {
+            this.question = `${a} + ${b} - ${c} + ${d}= ?`;
+            this.answer = a + b - c + d;
+          }
+        } else if (operatorRandom % 8 === 3) {
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} + ${b} - (${c} - ${d})= ?`;
+            this.answer = a + b - (c - d);
+          } else {
+            this.question = `${a} + ${b} - ${c} - ${d}= ?`;
+            this.answer = a + b - c - d;
+          }
+        } else if (operatorRandom % 8 === 4) {
+          this.question = `${a} - ${b} + ${c} + ${d}= ?`;
+          this.answer = a - b + c + d;
+        } else if (operatorRandom % 8 === 5) {
+          this.question = `${a} - ${b} + ${c} - ${d}= ?`;
+          this.answer = a - b + c - d;
+        } else if (operatorRandom % 8 === 6) {
+          this.question = `${a} - ${b} - ${c} + ${d}= ?`;
+          this.answer = a - b - c + d;
+        } else {
+          this.question = `${a} - ${b} - ${c} - ${d}= ?`;
+          this.answer = a - b - c - d;
+        }
+      } else if (level === 3) {
+        if (operatorRandom % 16 === 0) {
+          this.question = `${a} + ${b} + ${c} + ${d} + ${e} = ?`;
+          this.answer = a + b + c + d + e;
+        } else if (operatorRandom % 16 === 1) {
+          this.question = `${a} + ${b} + ${c} + ${d} - ${e} = ?`;
+          this.answer = a + b + c + d - e;
+        } else if (operatorRandom % 16 === 2) {
+          this.question = `${a} + ${b} + ${c} - ${d} + ${e} = ?`;
+          this.answer = a + b + c - d + e;
+        } else if (operatorRandom % 16 === 3) {
+          this.question = `${a} + ${b} + ${c} - ${d} - ${e} = ?`;
+          this.answer = a + b + c - d - e;
+        } else if (operatorRandom % 16 === 4) {
+          this.question = `${a} + ${b} - ${c} + ${d} + ${e} = ?`;
+          this.answer = a + b - c + d + e;
+        } else if (operatorRandom % 16 === 5) {
+          this.question = `${a} + ${b} - ${c} + ${d} - ${e} = ?`;
+          this.answer = a + b - c + d - e;
+        } else if (operatorRandom % 16 === 6) {
+          this.question = `${a} + ${b} - ${c} - ${d} + ${e} = ?`;
+          this.answer = a + b - c - d + e;
+        } else if (operatorRandom % 16 === 7) {
+          this.question = `${a} + ${b} - ${c} - ${d} - ${e} = ?`;
+          this.answer = a + b - c - d - e;
+        } else if (operatorRandom % 16 === 8) {
+          this.question = `${a} - ${b} + ${c} + ${d} + ${e} = ?`;
+          this.answer = a - b + c + d + e;
+        } else if (operatorRandom % 16 === 9) {
+          this.question = `${a} - ${b} + ${c} + ${d} - ${e} = ?`;
+          this.answer = a - b + c + d - e;
+        } else if (operatorRandom % 16 === 10) {
+          this.question = `${a} - ${b} + ${c} - ${d} + ${e} = ?`;
+          this.answer = a - b + c - d + e;
+        } else if (operatorRandom % 16 === 11) {
+          this.question = `${a} - ${b} + ${c} - ${d} - ${e} = ?`;
+          this.answer = a - b + c - d - e;
+        } else if (operatorRandom % 16 === 12) {
+          this.question = `${a} - ${b} - ${c} + ${d} + ${e} = ?`;
+          this.answer = a - b - c + d + e;
+        } else if (operatorRandom % 16 === 13) {
+          this.question = `${a} - ${b} - ${c} + ${d} - ${e} = ?`;
+          this.answer = a - b - c + d - e;
+        } else if (operatorRandom % 16 === 14) {
+          this.question = `${a} - ${b} - ${c} - ${d} + ${e} = ?`;
+          this.answer = a - b - c - d + e;
+        } else {
+          this.question = `${a} - ${b} - ${c} - ${d} - ${e} = ?`;
+          this.answer = a - b - c - d - e;
+        }
+      } else {
+        this.question = `${a} + ${b} + ${c} = ?`;
+        this.answer = a + b + c;
+      }
+      result = this.answer;
+      console.log('result end is: ' + result);
+    }
+
+    return;
   }
 
   createExercise(): void {
