@@ -28,7 +28,6 @@ export class CodepageComponent implements OnInit {
 
   goToExercise(): void {
     this._router.navigate(['/', 'exercise']);
-    this._shared.countDownTimer();
   }
   goToLevelPage(): void {
     this._router.navigate(['/', 'levelpage']);

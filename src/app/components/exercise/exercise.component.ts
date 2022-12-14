@@ -83,13 +83,18 @@ export class ExerciseComponent implements OnInit {
       // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       this._dataService.storeQuizStart();
       // this.exercises$ = this._dataService.getExercises();
+      this.shared.countDownTimer();
       if (this.shared.schoolClass === 5) {
         this.exercises$ = this._dataService.getExercisesGisela5b221213();
       } else {
         if (this.shared.schoolClassName === '6a') {
           this.exercises$ = this._dataService.getExercisesGisela6a221213();
         } else {
-          this.exercises$ = this._dataService.getExercisesGisela6c221216();
+          this.exercises$ = this._dataService
+            .getExercisesGisela6c221216()
+            .pipe(
+              map((exercises: Exercise[]) => this.shuffleExercises(exercises))
+            );
         }
       }
 

@@ -131,7 +131,7 @@ export class SharedService {
       --this.counter;
       if (this.counter === 0) {
         this.quizFinished = true;
-        this._router.navigate(['/', 'levelpage']);
+        this._router.navigate(['/', 'resultpage']);
         // this.showResult();
         this.countDown.unsubscribe();
         this.countDown = null;
