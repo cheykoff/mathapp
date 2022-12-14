@@ -29,7 +29,11 @@ export class ResultpageComponent implements OnInit {
 
   getStars(): string {
     this.getPercentage();
-    this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
+    if (this.shared.mode === 'quiz') {
+      this.stars = Math.floor(this.percentage / 20);
+    } else {
+      this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
+    }
     let imgUrl = 'assets/img/' + this.stars + 'stars.gif';
     if (!this.stars) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';

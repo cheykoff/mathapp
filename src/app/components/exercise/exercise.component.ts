@@ -287,7 +287,9 @@ export class ExerciseComponent implements OnInit {
       this.shared.correctAnswer + this.shared.incorrectAnswer >=
       this.totalQuestions
     ) {
-      this.calculateStars();
+      if (this.shared.mode === 'practice') {
+        this.calculateStars();
+      }
       this.showResult();
     }
   }
