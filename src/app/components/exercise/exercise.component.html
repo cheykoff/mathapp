@@ -80,6 +80,7 @@
             [disabled]="isDisabled"
             required
             autofocus
+            autocomplete="off"
             [hasUnit]="exercises[currentQuestion].unit"
             (focus)="onFocusEvent($event)"
             [ngStyle]="{
@@ -114,6 +115,7 @@
                     [(ngModel)]="numerator"
                     required
                     autofocus
+                    autocomplete="off"
                     [disabled]="isDisabled"
                     (focus)="onFocusEvent($event)"
                   />
@@ -127,6 +129,7 @@
                     name="denominator"
                     [(ngModel)]="denominator"
                     required
+                    autocomplete="off"
                     [disabled]="isDisabled"
                     (focus)="onFocusEvent($event)"
                   />
