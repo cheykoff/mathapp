@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, share } from 'rxjs';
 
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
@@ -18,11 +18,15 @@ export class LoginComponent implements OnInit {
     private _data: DataService
   ) {}
 
+  defaultStudentId: number;
+
   validStudentId: boolean = true;
   idWasGenerated: boolean;
 
   ngOnInit(): void {
     // this.studentDocumentIds$ = this._data.getStudentDocumentIds();
+    // this.shared.reloadStudentData();
+    this.defaultStudentId = this.shared.getStudentId();
   }
 
   submitId(form: NgForm): void {

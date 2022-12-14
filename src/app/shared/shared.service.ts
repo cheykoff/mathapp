@@ -58,7 +58,7 @@ export class SharedService {
   quizId: string;
   practiceId: string;
   parameters = {};
-  studentId: number = 100000;
+  studentId: number;
   correctPuzzles: number = 0;
   incorrectPuzzles: number = 0;
   testNumber: number = 0;
@@ -104,6 +104,7 @@ export class SharedService {
   }
 
   reloadStudentData(): void {
+    console.log('reloadStudentData()');
     this.studentData.id = localStorage.getItem('studentDocumentId');
     this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
     this.levelStars = JSON.parse(localStorage.getItem('levelStars'));
@@ -116,6 +117,7 @@ export class SharedService {
     this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
     this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
     this.studentData.classId = localStorage.getItem('classId');
+    console.log(this.studentData.studentId);
   }
 
   // called from login
@@ -143,7 +145,7 @@ export class SharedService {
 
   // called from app.component, codepage, data.service
   getStudentId(): number {
-    return this.studentId;
+    return this.studentData.studentId;
   }
   setStudentDocumentId(data: string): void {
     this.studentData.id = data;
