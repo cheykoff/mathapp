@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <div *ngIf="attempts >= maxAttempts">
+  <div *ngIf="attempts >= maxAttempts && answerIsIncorrect">
     <div *ngIf="this.shared.mode === 'quiz'">
       <p
         *ngIf="

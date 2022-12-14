@@ -14,17 +14,12 @@ export class LevelpageComponent implements OnInit {
   constructor(private _router: Router, public shared: SharedService) {}
 
   ngOnInit(): void {
-    console.log(this.shared.levelStars);
-    console.log(this.shared.topic);
-    console.log(this.levels);
     if (
       this.shared.levelStars === undefined ||
       this.shared.levelStars === null
     ) {
-      console.log('levelStars is undefined or null - initializing');
       this.shared.initializeLevelStars();
     }
-    console.log('setCurrentLevels');
     this.shared.setCurrentLevels();
   }
 

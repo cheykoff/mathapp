@@ -80,7 +80,6 @@ export class DataService {
   }
 
   storeSchoolClassName(schoolClassName: string) {
-    console.log('storeSchoolClassName: ' + schoolClassName);
     this._store.doc(`students/${this._shared.getStudentDocumentId()}`).update({
       schoolClassName: schoolClassName,
     });
@@ -279,7 +278,16 @@ export class DataService {
         .collection('exercises-gisela-6a-221213')
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)))
-        .pipe(tap((result) => console.log(result)))
+    );
+  }
+
+  getExercisesGisela6c221216(): Observable<Exercise[]> {
+    return (
+      this._store
+        // .collection('exercises-gisela-6b221213')
+        .collection('exercises-gisela-6c-221216')
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)))
     );
   }
 
@@ -290,7 +298,6 @@ export class DataService {
         .collection('exercises-gisela-5b')
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)))
-        .pipe(tap((result) => console.log(result)))
     );
   }
 
@@ -298,15 +305,13 @@ export class DataService {
     return this._store
       .collection('exercises')
       .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)))
-      .pipe(tap((result) => console.log(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
   getExercises6() {
     return this._store
       .collection('exercises6')
       .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)))
-      .pipe(tap((result) => console.log(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 }

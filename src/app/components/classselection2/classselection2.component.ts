@@ -20,7 +20,6 @@ export class Classselection2Component implements OnInit {
 
   selectSchoolClassName(classLetter: string): void {
     const className = this.shared.getSchoolClass() + classLetter;
-    console.log(className);
     this._dataService.storeSchoolClassName(className);
     this.shared.setSchoolClassName(className);
     this._router.navigate(['/', 'menu']);

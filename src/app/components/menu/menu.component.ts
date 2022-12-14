@@ -22,9 +22,7 @@ export class MenuComponent implements OnInit {
 
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {
-      console.log('clicked on Quiz');
       this.shared.mode = 'quiz';
-      console.log('mode: ' + this.shared.mode);
       localStorage.setItem('mode', 'quiz');
       this._router.navigate(['/', 'exercise']);
       return;
@@ -35,7 +33,6 @@ export class MenuComponent implements OnInit {
       localStorage.setItem('topic', 'Terme');
       this._router.navigate(['/', 'levelpage']);
     } else if (menuItem.name === 'Üben') {
-      console.log('clicked üben');
       this.shared.mode = 'practice';
       localStorage.setItem('mode', 'practice');
       this._router.navigate(['/', 'topics']);

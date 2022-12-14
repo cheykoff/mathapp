@@ -69,22 +69,10 @@ export class ExerciseComponent implements OnInit {
     private _dataService: DataService
   ) {}
 
-  /*
-  ngOnChanges(): void {
-    console.log('ngOnChanges');
-    this.exercises$.subscribe((data: Exercise[]) => {
-      this.exercise = data[0];
-      this.src = '../assets/img/geometry/' + this.exercise.img;
-    });
-  }
-  */
-
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.totalQuestions = 10;
-      console.log('mode is practice');
       this.createExercise();
       this._dataService.storePracticeStart();
     } else {
@@ -98,7 +86,11 @@ export class ExerciseComponent implements OnInit {
       if (this.shared.schoolClass === 5) {
         this.exercises$ = this._dataService.getExercisesGisela5b221213();
       } else {
-        this.exercises$ = this._dataService.getExercisesGisela6a221213();
+        if (this.shared.schoolClassName === '6a') {
+          this.exercises$ = this._dataService.getExercisesGisela6a221213();
+        } else {
+          this.exercises$ = this._dataService.getExercisesGisela6c221216();
+        }
       }
 
       this.exercises$.subscribe((data: Exercise[]) => {
@@ -114,7 +106,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   resetCounts(): void {
-    console.log('resetCounts');
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
     this.streakCount = 0;
@@ -130,9 +121,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    console.log('has a unit');
-    console.log(form);
-    // console.log(exercise);
     const givenNumber = parseInt(form.value.givenAnswer);
     if (isNaN(givenNumber)) {
       return;
@@ -143,7 +131,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
-    console.log('checkAnswer: mode: ' + this.shared.mode);
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(this.checkDynamicAnswer(form));
     } else if (exercise.answerType === 'integer') {
@@ -174,8 +161,6 @@ export class ExerciseComponent implements OnInit {
     if (
       givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
     ) {
-      console.log(givenAnswer.toString().replace('.', ',').trim());
-      console.log(exercise.correctAnswer);
       return true;
     } else {
       return false;
@@ -230,7 +215,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    console.log('store answer');
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
@@ -267,7 +251,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
-    console.log('store dynamic answer');
     this._dataService.storeDynamicAnswer(
       this.question,
       this.answer,
@@ -290,20 +273,14 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    console.log('nextExercise');
-    console.log(this.currentQuestion);
-    console.log(this.totalQuestions);
     if (this.currentQuestion >= this.totalQuestions - 1) {
-      console.log('showResult');
       this.showResult();
     }
     this.clearForm();
     if (this.shared.mode === 'practice') {
       this.createExercise();
     }
-    console.log('currentQuestion', this.currentQuestion);
     this.currentQuestion++;
-    console.log('currentQuestion', this.currentQuestion);
     this.startTime = new Date();
 
     if (
@@ -333,7 +310,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   createTerm(): void {
-    console.log('createTerm');
     const level = this.shared.chosenLevel;
     this.startTime = new Date();
     let minNum = 0;
@@ -367,7 +343,6 @@ export class ExerciseComponent implements OnInit {
       // const operatorRandom = 2;
       const bracketRandom = this.getRandInteger(1, 8);
 
-      console.log('result start is: ' + result);
       if (level === 1) {
         if (operatorRandom % 4 === 0) {
           this.question = `${a} + ${b} + ${c} = ?`;
@@ -401,7 +376,7 @@ export class ExerciseComponent implements OnInit {
           this.answer = a + b + c - d;
         } else if (operatorRandom % 8 === 2) {
           if (bracketRandom % 2 === 0) {
-            this.question = `${a} + ${b} - (${c} + ${d})= ?`;
+            this.question = `${a} + ${b} - (${c} + ${d}) = ?`;
             this.answer = a + b - (c + d);
           } else {
             this.question = `${a} + ${b} - ${c} + ${d}= ?`;
@@ -409,24 +384,62 @@ export class ExerciseComponent implements OnInit {
           }
         } else if (operatorRandom % 8 === 3) {
           if (bracketRandom % 2 === 0) {
-            this.question = `${a} + ${b} - (${c} - ${d})= ?`;
+            this.question = `${a} + ${b} - (${c} - ${d}) = ?`;
             this.answer = a + b - (c - d);
           } else {
             this.question = `${a} + ${b} - ${c} - ${d}= ?`;
             this.answer = a + b - c - d;
           }
         } else if (operatorRandom % 8 === 4) {
-          this.question = `${a} - ${b} + ${c} + ${d}= ?`;
-          this.answer = a - b + c + d;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) + ${d} = ?`;
+            this.answer = a - (b + c) + d;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c} + ${d}) = ?`;
+            this.answer = a - (b + c + d);
+          } else {
+            this.question = `${a} - ${b} + ${c} + ${d}= ?`;
+            this.answer = a - b + c + d;
+          }
         } else if (operatorRandom % 8 === 5) {
-          this.question = `${a} - ${b} + ${c} - ${d}= ?`;
-          this.answer = a - b + c - d;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) - ${d}= ?`;
+            this.answer = a - (b + c) - d;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c} - ${d}) = ?`;
+            this.answer = a - (b + c - d);
+          } else {
+            this.question = `${a} - ${b} + ${c} - ${d}= ?`;
+            this.answer = a - b + c - d;
+          }
         } else if (operatorRandom % 8 === 6) {
-          this.question = `${a} - ${b} - ${c} + ${d}= ?`;
-          this.answer = a - b - c + d;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} - ${c}) + ${d}= ?`;
+            this.answer = a - (b - c) + d;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} - ${c} + ${d})= ?`;
+            this.answer = a - (b - c + d);
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - [${b} - (${c} + ${d})] = ?`;
+            this.answer = a - (b - (c + d));
+          } else {
+            this.question = `${a} - ${b} - ${c} + ${d}= ?`;
+            this.answer = a - b - c + d;
+          }
         } else {
-          this.question = `${a} - ${b} - ${c} - ${d}= ?`;
-          this.answer = a - b - c - d;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} - ${c}) - ${d}= ?`;
+            this.answer = a - (b - c) - d;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - ${b} - (${c} - ${d})= ?`;
+            this.answer = a - b - (c - d);
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - [${b} - (${c} - ${d})] = ?`;
+            this.answer = a - (b - (c - d));
+          } else {
+            this.question = `${a} - ${b} - ${c} - ${d}= ?`;
+            this.answer = a - b - c - d;
+          }
         }
       } else if (level === 3) {
         if (operatorRandom % 16 === 0) {
@@ -436,61 +449,196 @@ export class ExerciseComponent implements OnInit {
           this.question = `${a} + ${b} + ${c} + ${d} - ${e} = ?`;
           this.answer = a + b + c + d - e;
         } else if (operatorRandom % 16 === 2) {
-          this.question = `${a} + ${b} + ${c} - ${d} + ${e} = ?`;
-          this.answer = a + b + c - d + e;
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} + ${b} + ${c} - (${d} + ${e}) = ?`;
+            this.answer = a + b + c - (d + e);
+          } else {
+            this.question = `${a} + ${b} + ${c} - ${d} + ${e} = ?`;
+            this.answer = a + b + c - d + e;
+          }
         } else if (operatorRandom % 16 === 3) {
-          this.question = `${a} + ${b} + ${c} - ${d} - ${e} = ?`;
-          this.answer = a + b + c - d - e;
+          if (bracketRandom % 2 === 0) {
+            this.question = `${a} + ${b} + ${c} - (${d} - ${e}) = ?`;
+            this.answer = a + b + c - (d - e);
+          } else {
+            this.question = `${a} + ${b} + ${c} - ${d} - ${e} = ?`;
+            this.answer = a + b + c - d - e;
+          }
         } else if (operatorRandom % 16 === 4) {
-          this.question = `${a} + ${b} - ${c} + ${d} + ${e} = ?`;
-          this.answer = a + b - c + d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} + ${b} - (${c} + ${d}) + ${e} = ?`;
+            this.answer = a + b - (c + d) + e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} + ${b} - (${c} + ${d} + ${e}) = ?`;
+            this.answer = a + b - (c + d + e);
+          } else {
+            this.question = `${a} + ${b} - ${c} + ${d} + ${e} = ?`;
+            this.answer = a + b - c + d + e;
+          }
         } else if (operatorRandom % 16 === 5) {
-          this.question = `${a} + ${b} - ${c} + ${d} - ${e} = ?`;
-          this.answer = a + b - c + d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} + ${b} - (${c} + ${d}) - ${e} = ?`;
+            this.answer = a + b - (c + d) - e;
+          } else if (bracketRandom % 4 === 0) {
+            this.question = `${a} + ${b} - (${c} + ${d} - ${e}) = ?`;
+            this.answer = a + b - (c + d - e);
+          } else {
+            this.question = `${a} + ${b} - ${c} + ${d} - ${e} = ?`;
+            this.answer = a + b - c + d - e;
+          }
         } else if (operatorRandom % 16 === 6) {
-          this.question = `${a} + ${b} - ${c} - ${d} + ${e} = ?`;
-          this.answer = a + b - c - d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} + ${b} - (${c} - ${d}) + ${e} = ?`;
+            this.answer = a + b - (c - d) + e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} + ${b} - ${c} - (${d} + ${e}) = ?`;
+            this.answer = a + b - c - (d + e);
+          }
+          if (bracketRandom % 4 === 2) {
+            this.question = `${a} + ${b} - (${c} - ${d} + ${e}) = ?`;
+            this.answer = a + b - (c - d + e);
+          } else {
+            this.question = `${a} + ${b} - [(${c} - (${d} + ${e})] = ?`;
+            this.answer = a + b - (c - (d + e));
+          }
         } else if (operatorRandom % 16 === 7) {
-          this.question = `${a} + ${b} - ${c} - ${d} - ${e} = ?`;
-          this.answer = a + b - c - d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} + ${b} - ${c} - ${d} - ${e} = ?`;
+            this.answer = a + b - c - d - e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} + ${b} - (${c} - ${d} - ${e}) = ?`;
+            this.answer = a + b - (c - d - e);
+          } else if (bracketRandom % 4 === 3) {
+            this.question = `${a} + ${b} - (${c} - (${d} - ${e})) = ?`;
+            this.answer = a + b - (c - (d - e));
+          } else {
+            this.question = `${a} + ${b} - (${c} - ${d}) - ${e} = ?`;
+            this.answer = a + b - (c - d) - e;
+          }
         } else if (operatorRandom % 16 === 8) {
-          this.question = `${a} - ${b} + ${c} + ${d} + ${e} = ?`;
-          this.answer = a - b + c + d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) + ${d} + ${e} = ?`;
+            this.answer = a - (b + c) + d + e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c}) + ${d} + ${e} = ?`;
+            this.answer = a - (b + c + d) + e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} + ${c} + ${d} + ${e}) = ?`;
+            this.answer = a - (b + c + d + e);
+          } else {
+            this.question = `${a} - ${b} + ${c} + ${d} + ${e} = ?`;
+            this.answer = a - b + c + d + e;
+          }
         } else if (operatorRandom % 16 === 9) {
-          this.question = `${a} - ${b} + ${c} + ${d} - ${e} = ?`;
-          this.answer = a - b + c + d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) + ${d} - ${e} = ?`;
+            this.answer = a - (b + c) + d - e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c} + ${d}) - ${e} = ?`;
+            this.answer = a - (b + c + d) - e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} + ${c} + ${d} - ${e}) = ?`;
+            this.answer = a - (b + c + d - e);
+          } else {
+            this.question = `${a} - ${b} + ${c} + ${d} - ${e} = ?`;
+            this.answer = a - b + c + d - e;
+          }
         } else if (operatorRandom % 16 === 10) {
-          this.question = `${a} - ${b} + ${c} - ${d} + ${e} = ?`;
-          this.answer = a - b + c - d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) - ${d} + ${e} = ?`;
+            this.answer = a - (b + c) - d + e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c} - ${d}) + ${e} = ?`;
+            this.answer = a - (b + c - d) + e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} + ${c}) + (${d} + ${e}) = ?`;
+            this.answer = a - (b + c) - (d + e);
+          } else {
+            this.question = `${a} - ${b} + ${c} - ${d} + ${e} = ?`;
+            this.answer = a - b + c - d + e;
+          }
         } else if (operatorRandom % 16 === 11) {
-          this.question = `${a} - ${b} + ${c} - ${d} - ${e} = ?`;
-          this.answer = a - b + c - d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} + ${c}) - ${d} - ${e} = ?`;
+            this.answer = a - (b + c) - d - e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - (${b} + ${c} - ${d}) - ${e} = ?`;
+            this.answer = a - (b + c - d) - e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - [(${b} + ${c}) - (${d} + ${e})]= ?`;
+            this.answer = a - (b + c - (d + e));
+          } else {
+            this.question = `${a} - ${b} + ${c} - (${d} - ${e}) = ?`;
+            this.answer = a - b + c - (d - e);
+          }
         } else if (operatorRandom % 16 === 12) {
-          this.question = `${a} - ${b} - ${c} + ${d} + ${e} = ?`;
-          this.answer = a - b - c + d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} - ${c}) + ${d} + ${e} = ?`;
+            this.answer = a - (b - c) + d + e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - ${b} - (${c} + ${d}) + ${e} = ?`;
+            this.answer = a - b - (c + d) + e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} - ${c} + ${d}) + ${e} = ?`;
+            this.answer = a - (b - c + d) + e;
+          } else {
+            this.question = `${a} - ${b} - ${c} + ${d} + ${e} = ?`;
+            this.answer = a - b - c + d + e;
+          }
         } else if (operatorRandom % 16 === 13) {
-          this.question = `${a} - ${b} - ${c} + ${d} - ${e} = ?`;
-          this.answer = a - b - c + d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - [(${b} - ${c}) + ${d} - ${e}] = ?`;
+            this.answer = a - (b - c + d - e);
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - ${b} - (${c} + ${d}) - ${e} = ?`;
+            this.answer = a - b - (c + d) - e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} - ${c} + ${d}) - ${e} = ?`;
+            this.answer = a - (b - c + d) - e;
+          } else {
+            this.question = `${a} - [${b} - (${c} + ${d})] - ${e} = ?`;
+            this.answer = a - (b - (c + d)) - e;
+          }
         } else if (operatorRandom % 16 === 14) {
-          this.question = `${a} - ${b} - ${c} - ${d} + ${e} = ?`;
-          this.answer = a - b - c - d + e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} - ${c}) - ${d} + ${e} = ?`;
+            this.answer = a - (b - c) - d + e;
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - ${b} - (${c} - ${d}) + ${e} = ?`;
+            this.answer = a - b - (c - d) + e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - (${b} - ${c} - ${d}) + ${e} = ?`;
+            this.answer = a - (b - c - d) + e;
+          } else {
+            this.question = `${a} - [${b} - (${c} - ${d})] + ${e} = ?`;
+            this.answer = a - (b - (c - d)) + e;
+          }
         } else {
-          this.question = `${a} - ${b} - ${c} - ${d} - ${e} = ?`;
-          this.answer = a - b - c - d - e;
+          if (bracketRandom % 4 === 0) {
+            this.question = `${a} - (${b} - ${c}) - (${d} - ${e}) = ?`;
+            this.answer = a - (b - c) - (d - e);
+          } else if (bracketRandom % 4 === 1) {
+            this.question = `${a} - [${b} - (${c} - ${d})] - ${e} = ?`;
+            this.answer = a - b - (c - d) - e;
+          } else if (bracketRandom % 4 === 2) {
+            this.question = `${a} - [${b} - (${c} - ${d}) - ${e}] = ?`;
+            this.answer = a - (b - (c - d) - e);
+          } else {
+            this.question = `${a} - [${b} - [${c} - (${d} - ${e})]] = ?`;
+            this.answer = a - (b - (c - (d - e)));
+          }
         }
       } else {
         this.question = `${a} + ${b} + ${c} = ?`;
         this.answer = a + b + c;
       }
       result = this.answer;
-      console.log('result end is: ' + result);
     }
 
     return;
   }
 
   createExercise(): void {
-    console.log('createExercise');
     const level = this.shared.chosenLevel;
     const topic = this.shared.topic;
     if (this.shared.topic === 'Terme') {

@@ -79,9 +79,7 @@ export class SharedService {
     this.studentData.emailStudent = studentData.emailStudent;
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
-    console.log('setStudentData: ' + studentData.levelStars);
     this.levelStars = studentData.levelStars;
-    console.log(this.levelStars);
     this.studentData.classId = studentData.classId;
 
     this.studentData.totalPracticeQuestions =
