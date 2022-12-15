@@ -109,6 +109,7 @@ export class SharedService {
       'totalPracticeQuestions',
       this.studentData.totalPracticeQuestions.toString()
     );
+    localStorage.setItem('topic', this.topic);
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('classId', this.studentData.classId);
   }
@@ -124,6 +125,8 @@ export class SharedService {
       localStorage.getItem('totalPracticeQuestions')
     );
     this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+    // TODO: Retrieve topic when reload
+    this.topic = localStorage.getItem('topic');
     this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
     this.studentData.classId = localStorage.getItem('classId');
   }
@@ -206,6 +209,7 @@ export class SharedService {
   }
 
   setSchoolClass(data: number): void {
+    console.log('setSchoolClass', data);
     this.schoolClass = data;
   }
 

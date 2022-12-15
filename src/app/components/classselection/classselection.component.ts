@@ -23,6 +23,9 @@ export class ClassselectionComponent {
     if (level === 5) {
       this._shared.disabledMenuItems.Quiz = true;
     }
+    if (level === 6) {
+      this._shared.disabledMenuItems.Quiz = false;
+    }
     this._dataService.storeSchoolClass(level);
     this._shared.setSchoolClass(level);
     this._router.navigate(['/', 'classselection2']);

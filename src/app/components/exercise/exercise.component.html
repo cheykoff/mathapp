@@ -3,7 +3,7 @@
     Frage {{ currentQuestion + 1 }} von {{ this.shared.totalSessionQuestions }}
   </h1>
   <h1 class="headerTitle" *ngIf="shared.mode === 'practice'">
-    {{ this.shared.topic }} ({{ this.shared.chosenLevel }})
+    {{ this.shared.topic }} {{ this.shared.chosenLevel }}:
     {{ currentQuestion + 1 }}/{{ this.shared.totalSessionQuestions }}
   </h1>
   <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
