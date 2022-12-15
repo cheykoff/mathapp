@@ -75,6 +75,13 @@ export class SharedService {
   countDownRunning: boolean = false;
   constructor(private _router: Router) {}
 
+  disabledMenuItems = {
+    Quiz: false,
+    Hausaufgaben: false,
+    üben: false,
+    Erfolge: false,
+  };
+
   setStudentData(studentData: Student): void {
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
@@ -107,7 +114,6 @@ export class SharedService {
   }
 
   reloadStudentData(): void {
-    console.log('reloadStudentData()');
     this.studentData.id = localStorage.getItem('studentDocumentId');
     this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
     this.levelStars = JSON.parse(localStorage.getItem('levelStars'));
@@ -120,12 +126,11 @@ export class SharedService {
     this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
     this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
     this.studentData.classId = localStorage.getItem('classId');
-    console.log(this.studentData.studentId);
   }
 
   // called from login
   setStudentId(studentId: number): void {
-    this.studentId = studentId;
+    this.studentData.studentId = studentId;
     return;
   }
 

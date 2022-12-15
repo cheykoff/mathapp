@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (value.studentId) {
+      console.log('Student ID: ' + value.studentId);
       // TODO: Need to ensure that the id is unique
 
       this.validStudentId = true;
@@ -59,8 +60,9 @@ export class LoginComponent implements OnInit {
 
   generateId(): void {
     // TODO: allow users to generate their own id (which needs to be unique)
-    const newId = Math.floor(100000 + Math.random() * 900000);
+    const newId = Math.floor(110000 + Math.random() * 890000);
     this.shared.setStudentId(newId);
+    this._data.getStudentDocument(newId);
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }

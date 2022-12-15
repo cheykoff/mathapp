@@ -5,7 +5,12 @@
 <div class="main">
   <ul>
     <li *ngFor="let menuItem of menuItems" (click)="onMenuItemClick(menuItem)">
-      <button class="btn btnList" [disabled]="menuItem.disabled">
+      <button
+        class="btn btnList"
+        [disabled]="
+          menuItem.disabled || this.shared.disabledMenuItems[menuItem.name]
+        "
+      >
         {{ menuItem.name }}
       </button>
     </li>
