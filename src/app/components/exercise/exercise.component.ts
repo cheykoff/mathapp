@@ -128,16 +128,22 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    console.log('onSubmitAnswer');
+    /*
+    console.log(form.value.givenAnswer);
     const givenNumber = parseInt(form.value.givenAnswer);
     if (isNaN(givenNumber)) {
+      console.log('givenNumber is NaN');
       return;
     }
+    */
     this.trackDurationAndAttempts();
     this.checkAnswer(form, exercise);
     form.reset();
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
+    console.log('checkAnswer');
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(this.checkDynamicAnswer(form));
     } else if (exercise.answerType === 'integer') {
@@ -148,14 +154,22 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
+    console.log('checkFractionAnswer');
     const correctDenominator = exercise.correctAnswerFraction.denominator;
     const correctNumerator = exercise.correctAnswerFraction.numerator;
     const givenDenominator = form.value.denominator;
     const givenNumerator = form.value.numerator;
 
+    console.log('correctDenominator', correctDenominator);
+    console.log('correctNumerator', correctNumerator);
+    console.log('givenDenominator', givenDenominator);
+    console.log('givenNumerator', givenNumerator);
+
     if (
-      parseInt(givenDenominator) === parseInt(correctDenominator) &&
-      parseInt(givenNumerator) === parseInt(correctNumerator)
+      (parseInt(givenDenominator) === parseInt(correctDenominator) &&
+        parseInt(givenNumerator) === parseInt(correctNumerator)) ||
+      (parseInt(givenDenominator) === -1 * parseInt(correctDenominator) &&
+        parseInt(givenNumerator) === -1 * parseInt(correctNumerator))
     ) {
       return true;
     } else {
