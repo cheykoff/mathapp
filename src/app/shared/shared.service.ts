@@ -54,6 +54,7 @@ export class SharedService {
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
+  totalSessionQuestions: number = 20;
   docId: string;
   quizId: string;
   practiceId: string;

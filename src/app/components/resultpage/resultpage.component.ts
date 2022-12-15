@@ -21,10 +21,10 @@ export class ResultpageComponent implements OnInit {
   selfReflectionGiven: boolean = false;
 
   getPercentage(): void {
+    console.log(this.shared.correctAnswer);
+    console.log(this.shared.totalSessionQuestions);
     this.percentage =
-      (this.shared.correctAnswer /
-        (this.shared.correctAnswer + this.shared.incorrectAnswer)) *
-      100;
+      (this.shared.correctAnswer / this.shared.totalSessionQuestions) * 100;
   }
 
   getStars(): string {

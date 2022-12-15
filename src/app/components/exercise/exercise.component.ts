@@ -17,7 +17,6 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
 export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
 
-  totalQuestions: number = 20;
   maxAttempts: number = 3;
 
   srcs: string[] = [];
@@ -72,7 +71,7 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     this.resetCounts();
     if (this.shared.mode === 'practice') {
-      this.totalQuestions = 10;
+      this.shared.totalSessionQuestions = 10;
       this.createExercise();
       this._dataService.storePracticeStart();
     } else {
@@ -99,7 +98,10 @@ export class ExerciseComponent implements OnInit {
       }
 
       this.exercises$.subscribe((data: Exercise[]) => {
-        this.totalQuestions = Math.min(this.totalQuestions, data.length);
+        this.shared.totalSessionQuestions = Math.min(
+          this.shared.totalSessionQuestions,
+          data.length
+        );
         for (let exercise of data) {
           this.exercises.push(exercise);
           this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
@@ -278,7 +280,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    if (this.currentQuestion >= this.totalQuestions - 1) {
+    if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
       this.showResult();
     }
     this.clearForm();
@@ -290,7 +292,7 @@ export class ExerciseComponent implements OnInit {
 
     if (
       this.shared.correctAnswer + this.shared.incorrectAnswer >=
-      this.totalQuestions
+      this.shared.totalSessionQuestions
     ) {
       if (this.shared.mode === 'practice') {
         this.calculateStars();

@@ -1,11 +1,12 @@
 <div class="header">
-  <h1 class="headerTitle">Level {{ this.shared.chosenLevel }} geschafft</h1>
+  <h1 class="headerTitle">Dein Ergebnis</h1>
   <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
 </div>
 <div class="main">
+  <p *ngIf="shared.mode === 'practice'">
+    {{ this.shared.topic }}: Level {{ this.shared.chosenLevel }}
+  </p>
   <div class="results">
-    <p>Geschafft!</p>
-
     <div class="imgContainer">
       <img [src]="getStars()" id="starsGif" class="starsGif" />
     </div>
@@ -15,7 +16,10 @@
           this.shared.correctAnswer + this.shared.incorrectAnswer
         }}
       </div>
-      <p class="labelBigNumber">Fragen richtig beantwortet</p>
+      <p class="labelBigNumber">
+        Fragen richtig beantwortet<br />Es gab insgesamt
+        {{ this.shared.totalSessionQuestions }} Fragen
+      </p>
     </div>
   </div>
   <button
