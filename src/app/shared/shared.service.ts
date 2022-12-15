@@ -68,8 +68,10 @@ export class SharedService {
   quizTemplateIds: string[] = [];
 
   countDown: Subscription;
-  counter = 1800; // 1800 s = 30 minutes
+  countDownStartTime = 18; // 1800 s = 30 minutes
+  counter = this.countDownStartTime;
   tick = 1000;
+  countDownRunning: boolean = false;
   constructor(private _router: Router) {}
 
   setStudentData(studentData: Student): void {
@@ -127,6 +129,12 @@ export class SharedService {
   }
 
   countDownTimer() {
+    console.log('countDownTimer()');
+    if (this.countDownRunning === true) {
+      console.log('countDownTimer() already running');
+      return;
+    }
+    this.countDownRunning = true;
     this.countDown = timer(0, this.tick).subscribe(() => {
       --this.counter;
       if (this.counter === 0) {
@@ -134,7 +142,10 @@ export class SharedService {
         this._router.navigate(['/', 'resultpage']);
         // this.showResult();
         this.countDown.unsubscribe();
+        console.log('countDownTimer() unsubscribed');
+        this.countDownRunning = false;
         this.countDown = null;
+        this.counter = this.countDownStartTime;
       }
     });
   }
