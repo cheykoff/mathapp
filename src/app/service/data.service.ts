@@ -67,7 +67,6 @@ export class DataService {
   }
 
   storeSchoolClass(schoolClass: number) {
-    console.log('storeSchoolClass: ' + schoolClass);
     this._store.doc(`students/${this._shared.getStudentDocumentId()}`).update({
       schoolClass: schoolClass,
       url: window.location.href,

@@ -317,6 +317,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   createTerm(): void {
+    // TODO: Create more terms with brackets -> change probabilities
     const level = this.shared.chosenLevel;
     this.startTime = new Date();
     let minNum = 0;
@@ -376,17 +377,17 @@ export class ExerciseComponent implements OnInit {
         }
       } else if (level === 2) {
         if (operatorRandom % 8 === 0) {
-          this.question = `${a} + ${b} + ${c} + ${d}= ?`;
+          this.question = `${a} + ${b} + ${c} + ${d} = ?`;
           this.answer = a + b + c + d;
         } else if (operatorRandom % 8 === 1) {
-          this.question = `${a} + ${b} + ${c} - ${d}= ?`;
+          this.question = `${a} + ${b} + ${c} - ${d} = ?`;
           this.answer = a + b + c - d;
         } else if (operatorRandom % 8 === 2) {
           if (bracketRandom % 2 === 0) {
             this.question = `${a} + ${b} - (${c} + ${d}) = ?`;
             this.answer = a + b - (c + d);
           } else {
-            this.question = `${a} + ${b} - ${c} + ${d}= ?`;
+            this.question = `${a} + ${b} - ${c} + ${d} = ?`;
             this.answer = a + b - c + d;
           }
         } else if (operatorRandom % 8 === 3) {
@@ -394,7 +395,7 @@ export class ExerciseComponent implements OnInit {
             this.question = `${a} + ${b} - (${c} - ${d}) = ?`;
             this.answer = a + b - (c - d);
           } else {
-            this.question = `${a} + ${b} - ${c} - ${d}= ?`;
+            this.question = `${a} + ${b} - ${c} - ${d} = ?`;
             this.answer = a + b - c - d;
           }
         } else if (operatorRandom % 8 === 4) {
@@ -405,46 +406,46 @@ export class ExerciseComponent implements OnInit {
             this.question = `${a} - (${b} + ${c} + ${d}) = ?`;
             this.answer = a - (b + c + d);
           } else {
-            this.question = `${a} - ${b} + ${c} + ${d}= ?`;
+            this.question = `${a} - ${b} + ${c} + ${d} = ?`;
             this.answer = a - b + c + d;
           }
         } else if (operatorRandom % 8 === 5) {
           if (bracketRandom % 4 === 0) {
-            this.question = `${a} - (${b} + ${c}) - ${d}= ?`;
+            this.question = `${a} - (${b} + ${c}) - ${d} = ?`;
             this.answer = a - (b + c) - d;
           } else if (bracketRandom % 4 === 1) {
             this.question = `${a} - (${b} + ${c} - ${d}) = ?`;
             this.answer = a - (b + c - d);
           } else {
-            this.question = `${a} - ${b} + ${c} - ${d}= ?`;
+            this.question = `${a} - ${b} + ${c} - ${d} = ?`;
             this.answer = a - b + c - d;
           }
         } else if (operatorRandom % 8 === 6) {
           if (bracketRandom % 4 === 0) {
-            this.question = `${a} - (${b} - ${c}) + ${d}= ?`;
+            this.question = `${a} - (${b} - ${c}) + ${d} = ?`;
             this.answer = a - (b - c) + d;
           } else if (bracketRandom % 4 === 1) {
-            this.question = `${a} - (${b} - ${c} + ${d})= ?`;
+            this.question = `${a} - (${b} - ${c} + ${d}) = ?`;
             this.answer = a - (b - c + d);
           } else if (bracketRandom % 4 === 2) {
             this.question = `${a} - [${b} - (${c} + ${d})] = ?`;
             this.answer = a - (b - (c + d));
           } else {
-            this.question = `${a} - ${b} - ${c} + ${d}= ?`;
+            this.question = `${a} - ${b} - ${c} + ${d} = ?`;
             this.answer = a - b - c + d;
           }
         } else {
           if (bracketRandom % 4 === 0) {
-            this.question = `${a} - (${b} - ${c}) - ${d}= ?`;
+            this.question = `${a} - (${b} - ${c}) - ${d} = ?`;
             this.answer = a - (b - c) - d;
           } else if (bracketRandom % 4 === 1) {
-            this.question = `${a} - ${b} - (${c} - ${d})= ?`;
+            this.question = `${a} - ${b} - (${c} - ${d}) = ?`;
             this.answer = a - b - (c - d);
           } else if (bracketRandom % 4 === 2) {
             this.question = `${a} - [${b} - (${c} - ${d})] = ?`;
             this.answer = a - (b - (c - d));
           } else {
-            this.question = `${a} - ${b} - ${c} - ${d}= ?`;
+            this.question = `${a} - ${b} - ${c} - ${d} = ?`;
             this.answer = a - b - c - d;
           }
         }
