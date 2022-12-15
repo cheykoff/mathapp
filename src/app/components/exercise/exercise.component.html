@@ -7,7 +7,9 @@
     {{ currentQuestion + 1 }}/{{ this.shared.totalSessionQuestions }}
   </h1>
   <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
-  <div id="countdown">{{ this.shared.counter | countDown }}</div>
+  <div id="countdown" *ngIf="shared.mode === 'quiz'">
+    {{ this.shared.counter | countDown }}
+  </div>
 </div>
 
 <div class="main">
