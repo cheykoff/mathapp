@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, map, Observable, Subscription, timer } from 'rxjs';
+import { from, map, Observable, Subscription, timer, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../../shared/shared.service';
@@ -89,11 +89,18 @@ export class ExerciseComponent implements OnInit {
         if (this.shared.schoolClassName === '6a') {
           this.exercises$ = this._dataService.getExercisesGisela6a221213();
         } else {
-          this.exercises$ = this._dataService
-            .getExercisesGisela6c221216()
+          this.exercises$ = this._dataService.getExercisesGisela6c221216();
+          /*
             .pipe(
               map((exercises: Exercise[]) => this.shuffleExercises(exercises))
+            )
+            .pipe(
+              tap((exercises: Exercise[]) => {
+                console.log('tap');
+                console.log(exercises);
+              })
             );
+            */
         }
       }
 
