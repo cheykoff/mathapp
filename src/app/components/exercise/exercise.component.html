@@ -1,17 +1,3 @@
-<div class="header">
-  <h1 class="headerTitle" *ngIf="shared.mode === 'quiz'">
-    Frage {{ currentQuestion + 1 }} von {{ this.shared.totalSessionQuestions }}
-  </h1>
-  <h1 class="headerTitle" *ngIf="shared.mode === 'practice'">
-    {{ this.shared.topic }} {{ this.shared.chosenLevel }}:
-    {{ currentQuestion + 1 }}/{{ this.shared.totalSessionQuestions }}
-  </h1>
-  <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
-  <div id="countdown" *ngIf="shared.mode === 'quiz'">
-    {{ this.shared.counter | countDown }}
-  </div>
-</div>
-
 <div class="main">
   <div *ngIf="this.shared.mode === 'practice'">
     <div class="question">
@@ -44,7 +30,10 @@
       <div class="question">
         <p [mathjax]="exercises[currentQuestion].question"></p>
         <div class="img-wrapper" *ngIf="exercises[currentQuestion].img">
-          <img class="questionImg" [src]="getSrc()" />
+          <img
+            class="questionImg"
+            [src]="exercise | getSrcPipe getSrc(exercise[currentQuestion].img)"
+          />
         </div>
       </div>
       <div

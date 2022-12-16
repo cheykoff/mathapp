@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DataService } from '../../service/data.service';
 import { SharedService } from '../../shared/shared.service';
 
-import { Exercise } from 'src/app/shared/exercise';
+import { Exercise } from 'src/app/components/exercise/exercise';
 import { Quiz2 } from 'src/app/shared/quiz2';
 
 @Component({

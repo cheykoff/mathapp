@@ -61,6 +61,7 @@ import { TopicsComponent } from './components/topics/topics.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { AutofocusDirective } from './shared/autofocus.directive';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     StatisticsComponent,
     Classselection2Component,
     AutofocusDirective,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

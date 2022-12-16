@@ -9,7 +9,7 @@ import { getDoc, serverTimestamp, orderBy } from 'firebase/firestore';
 import { Observable, map, of, take, tap, first, switchMap, pipe } from 'rxjs';
 
 import { Student } from '../shared/student';
-import { Exercise } from '../shared/exercise';
+import { Exercise } from '../components/exercise/exercise';
 import { Quiz } from '../shared/quiz';
 import { Quiz2 } from '../shared/quiz2';
 import { QuizTemplate } from '../shared/quiz-template';
