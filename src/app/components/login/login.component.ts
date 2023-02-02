@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (value.studentId) {
-      console.log('Student ID: ' + value.studentId);
       // TODO: Need to ensure that the id is unique
 
       this.validStudentId = true;

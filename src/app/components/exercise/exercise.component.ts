@@ -94,17 +94,6 @@ export class ExerciseComponent implements OnInit {
           this.exercises$ = this._dataService.getExercisesGisela6a221213();
         } else {
           this.exercises$ = this._dataService.getExercisesGisela6c221216();
-          /*
-            .pipe(
-              map((exercises: Exercise[]) => this.shuffleExercises(exercises))
-            )
-            .pipe(
-              tap((exercises: Exercise[]) => {
-                console.log('tap');
-                console.log(exercises);
-              })
-            );
-            */
         }
       }
 
