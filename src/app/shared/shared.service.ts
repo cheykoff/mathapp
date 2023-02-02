@@ -54,7 +54,7 @@ export class SharedService {
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  totalSessionQuestions: number = 20;
+  totalSessionQuestions: number = 30;
   docId: string;
   quizId: string;
   practiceId: string;
@@ -77,9 +77,9 @@ export class SharedService {
 
   disabledMenuItems = {
     Quiz: false,
-    Hausaufgaben: false,
+    Hausaufgaben: true,
     üben: false,
-    Erfolge: false,
+    Erfolge: true,
   };
 
   setStudentData(studentData: Student): void {

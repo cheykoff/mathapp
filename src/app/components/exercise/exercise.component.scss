@@ -56,6 +56,10 @@ h3 {
   font-size: 0.8em;
 }
 
+button {
+  height: auto;
+}
+
 button:disabled {
   background-color: var(--clr-grey-light) !important;
   color: var(--clr-grey-dark) !important;

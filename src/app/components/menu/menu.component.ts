@@ -14,11 +14,7 @@ export class MenuComponent implements OnInit {
   menuItems: MenuListItem[] = menuListItems;
   constructor(public shared: SharedService, private _router: Router) {}
 
-  ngOnInit(): void {
-    if (this.shared.schoolClassName === '5b') {
-      this.menuItems[1].disabled = false;
-    }
-  }
+  ngOnInit(): void {}
 
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {

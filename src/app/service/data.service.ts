@@ -273,33 +273,31 @@ export class DataService {
   */
 
   getExercisesGisela6a221213(): Observable<Exercise[]> {
-    return (
-      this._store
-        // .collection('exercises-gisela-6b221213')
-        .collection('exercises-gisela-6a-221213')
-        .get()
-        .pipe(map((result) => convertSnaps<Exercise>(result)))
-    );
+    return this._store
+      .collection('exercises-gisela-6a-221213')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
   getExercisesGisela6c221216(): Observable<Exercise[]> {
-    return (
-      this._store
-        // .collection('exercises-gisela-6b221213')
-        .collection('exercises-gisela-6c-221216')
-        .get()
-        .pipe(map((result) => convertSnaps<Exercise>(result)))
-    );
+    return this._store
+      .collection('exercises-gisela-6c-221216')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
+  getExercisesGisela5c230203(): Observable<Exercise[]> {
+    return this._store
+      .collection('exercises-gisela-5c-230203')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
   getExercisesGisela5b221213(): Observable<Exercise[]> {
-    return (
-      this._store
-        // .collection('exercises-gisela-6b221213')
-        .collection('exercises-gisela-5b')
-        .get()
-        .pipe(map((result) => convertSnaps<Exercise>(result)))
-    );
+    return this._store
+      .collection('exercises-gisela-5b')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
   getExercises() {
