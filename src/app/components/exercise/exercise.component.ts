@@ -660,7 +660,7 @@ export class ExerciseComponent implements OnInit {
       minNum = 1;
       maxNum = 10;
     } else if (level === 2) {
-      if (topic === 'Addition' || topic === 'Subtraction') {
+      if (topic === 'Addition' || topic === 'Subtraktion') {
         minNum = 1;
         maxNum = 100;
       } else {
@@ -668,7 +668,7 @@ export class ExerciseComponent implements OnInit {
         maxNum = 20;
       }
     } else if (level === 3) {
-      if (topic === 'Addition' || topic === 'Subtraction') {
+      if (topic === 'Addition' || topic === 'Subtraktion') {
         minNum = 1;
         maxNum = 1000;
       } else {
@@ -676,7 +676,7 @@ export class ExerciseComponent implements OnInit {
         maxNum = 50;
       }
     } else {
-      if (topic === 'Addition' || topic === 'Subtraction') {
+      if (topic === 'Addition' || topic === 'Subtraktion') {
         minNum = 1;
         maxNum = 10000;
       } else {

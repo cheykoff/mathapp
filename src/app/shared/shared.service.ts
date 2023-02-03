@@ -83,13 +83,30 @@ export class SharedService {
   };
 
   setStudentData(studentData: Student): void {
+    console.log('setStudentData()');
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
     this.studentData.schoolClasses = studentData.schoolClasses;
     this.studentData.emailStudent = studentData.emailStudent;
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
-    this.levelStars = studentData.levelStars;
+    // this.levelStars = studentData.levelStars;
+    console.log('before for loop');
+    console.log(this.levelStars);
+    console.log(this.chosenLevel);
+    /*
+    for (const key in this.levelStars) {
+      console.log('checking key: ' + key);
+      if (studentData.levelStars[key].length > 0) {
+        console.log('key found');
+        this.levelStars[key] = studentData.levelStars[key];
+      } else {
+        console.log('key not found');
+        this.levelStars[key] = [0, 0, 0];
+      }
+    }
+    */
+    console.log('after for loop');
     this.studentData.classId = studentData.classId;
 
     this.studentData.totalPracticeQuestions =
@@ -114,7 +131,13 @@ export class SharedService {
     localStorage.setItem('classId', this.studentData.classId);
   }
 
+  getStudentData(): Student {
+    console.log('getStudentData()');
+    return this.studentData;
+  }
+
   reloadStudentData(): void {
+    console.log('reloadStudentData()');
     this.studentData.id = localStorage.getItem('studentDocumentId');
     this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
     this.levelStars = JSON.parse(localStorage.getItem('levelStars'));
@@ -241,6 +264,7 @@ export class SharedService {
   }
 
   setCurrentLevels(): void {
+    console.log('setCurrentLevels');
     this.initializeCurrentLevels();
 
     for (const topic in this.levelStars) {
@@ -254,6 +278,7 @@ export class SharedService {
   }
 
   initializeCurrentLevels(): void {
+    console.log('initializeCurrentLevels');
     this.currentLevel = {
       Multiplikation: 1,
       Division: 1,
@@ -264,6 +289,7 @@ export class SharedService {
   }
 
   initializeLevelStars(): void {
+    console.log('initializeLevelStars');
     this.levelStars = {
       Multiplikation: [0, 0, 0],
       Division: [0, 0, 0],
@@ -271,5 +297,17 @@ export class SharedService {
       Subtraktion: [0, 0, 0],
       Terme: [0, 0, 0],
     };
+  }
+
+  initializeLevelStarsPerTopic(): void {
+    console.log('initializeLevelStarsPerTopic');
+    console.log(this.levelStars);
+    for (const topic in this.levelStars) {
+      if (this.studentData.levelStars[topic].length > 0) {
+        console.log('topic found');
+      } else {
+        this.levelStars[topic] = [0, 0, 0];
+      }
+    }
   }
 }
