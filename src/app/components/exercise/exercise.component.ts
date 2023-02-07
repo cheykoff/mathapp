@@ -720,11 +720,14 @@ export class ExerciseComponent implements OnInit {
       5 - this.shared.incorrectAnswer
     );
 
-    this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1] =
-      Math.max(
-        this.shared.levelStars[this.shared.topic][this.shared.chosenLevel - 1],
-        this.shared.currentLevelStars
-      );
+    this.shared.studentData.levelStars[this.shared.topic][
+      this.shared.chosenLevel - 1
+    ] = Math.max(
+      this.shared.studentData.levelStars[this.shared.topic][
+        this.shared.chosenLevel - 1
+      ],
+      this.shared.currentLevelStars
+    );
 
     if (
       this.shared.chosenLevel === this.shared.currentLevel[this.shared.topic]

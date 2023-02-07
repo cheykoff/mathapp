@@ -26,18 +26,14 @@ export class DataService {
   ) {}
 
   getStudentDocument(studentId: number) {
-    console.log('getStudentDocument');
     this._store
       .collection('students', (ref) => ref.where('studentId', '==', studentId))
       .get()
       .pipe(map((result) => convertSnaps<Student>(result)))
       .subscribe((data: Student[]) => {
         if (data.length > 0) {
-          console.log('student found');
           this._shared.setStudentData(data[0]);
-          console.log(this._shared.getStudentData());
         } else {
-          console.log('student created');
           this._store
             .collection('students')
             .add({
@@ -284,7 +280,6 @@ export class DataService {
   }
 
   getExercisesGisela6c221216(): Observable<Exercise[]> {
-    console.log('getexercises-gisela-6c-221216');
     return this._store
       .collection('exercises-gisela-6c-221216')
       .get()
@@ -292,7 +287,6 @@ export class DataService {
   }
 
   getExercisesGisela5c230203(): Observable<Exercise[]> {
-    console.log('getExercisesGisela5c230203');
     return this._store
       .collection('exercises-gisela-5c-230203')
       .get()
