@@ -8,11 +8,11 @@ export interface Student {
   schoolClasses?: [{ classId: string; currentClass: boolean }];
   skillLevel?: number;
   levelStars?: {
-    Addition: [number];
-    Subtraktion: [number];
-    Multiplikation: [number];
-    Division: [number];
-    Terme: [number];
+    Addition: number[];
+    Subtraktion: number[];
+    Multiplikation: number[];
+    Division: number[];
+    Terme: number[];
   };
   totalPracticeQuestions?: number;
   correctPracticeQuestions?: number;

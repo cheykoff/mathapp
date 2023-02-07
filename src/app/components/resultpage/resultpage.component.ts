@@ -45,7 +45,7 @@ export class ResultpageComponent implements OnInit {
       this._dataService.storeQuizEnd();
     } else if (this.shared.mode === 'practice') {
       this._dataService.storeLevelEnd();
-      this._dataService.storeLevelStars();
+      this._dataService.storelevelStars();
     }
   }
 

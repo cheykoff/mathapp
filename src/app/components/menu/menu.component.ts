@@ -14,7 +14,10 @@ export class MenuComponent implements OnInit {
   menuItems: MenuListItem[] = menuListItems;
   constructor(public shared: SharedService, private _router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('menu: studentData.levelStars');
+    console.log(this.shared.studentData.levelStars);
+  }
 
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {

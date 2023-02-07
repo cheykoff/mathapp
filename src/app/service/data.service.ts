@@ -35,6 +35,7 @@ export class DataService {
         if (data.length > 0) {
           console.log('student found');
           this._shared.setStudentData(data[0]);
+          console.log(this._shared.getStudentData());
         } else {
           console.log('student created');
           this._store
@@ -152,9 +153,9 @@ export class DataService {
       });
   }
 
-  storeLevelStars() {
+  storelevelStars() {
     this._store.doc(`/students/${this._shared.getStudentDocumentId()}`).update({
-      levelStars: this._shared.levelStars,
+      levelStars: this._shared.studentData.levelStars,
     });
   }
 

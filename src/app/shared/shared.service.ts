@@ -23,6 +23,13 @@ export class SharedService {
     totalPracticeQuestions: 0,
     correctPracticeQuestions: 0,
     classId: '',
+    levelStars: {
+      Addition: [0, 0, 0],
+      Subtraktion: [0, 0, 0],
+      Multiplikation: [0, 0, 0],
+      Division: [0, 0, 0],
+      Terme: [0, 0, 0],
+    },
   };
 
   quizTemplates: QuizTemplate[] = [];
@@ -46,6 +53,12 @@ export class SharedService {
     Multiplikation: [0, 0, 0],
     Division: [0, 0, 0],
     Terme: [0, 0, 0],
+  };
+
+  testObject = {
+    Addition: [0, 0, 0],
+    Subtraktion: [0, 0, 0],
+    Multiplikation: [0, 0, 0],
   };
 
   currentLevelStars: number;
@@ -90,23 +103,33 @@ export class SharedService {
     this.studentData.emailStudent = studentData.emailStudent;
     this.studentData.emailsParents = studentData.emailsParents;
     this.studentData.skillLevel = studentData.skillLevel;
-    // this.levelStars = studentData.levelStars;
-    console.log('before for loop');
-    console.log(this.levelStars);
+    this.studentData.levelStars = studentData.levelStars;
+    console.log('------------------------------------');
+    console.log('shared: setStudentData: studentData.levelStars');
+    console.log(this.studentData.levelStars);
     console.log(this.chosenLevel);
     /*
-    for (const key in this.levelStars) {
+    console.log('shared: setStudentData: studentData.levelStars');
+    for (const key in this.studentData.levelStars) {
       console.log('checking key: ' + key);
-      if (studentData.levelStars[key].length > 0) {
-        console.log('key found');
-        this.levelStars[key] = studentData.levelStars[key];
-      } else {
+      if (studentData.levelStars[key] === undefined) {
         console.log('key not found');
-        this.levelStars[key] = [0, 0, 0];
+        this.studentData.levelStars[key] = [0, 0, 0];
+      } else {
+        if (studentData.levelStars[key].length > 0) {
+          console.log('key found');
+          this.studentData.levelStars[key] = studentData.levelStars[key];
+        } else {
+          console.log('key not found 2');
+          // this.studentData.levelStars[key] = [0, 0, 0];
+        }
       }
     }
+
+    console.log('studentData.levelStars after for loop');
+    
+    console.log(this.studentData.levelStars);
     */
-    console.log('after for loop');
     this.studentData.classId = studentData.classId;
 
     this.studentData.totalPracticeQuestions =
@@ -117,7 +140,10 @@ export class SharedService {
 
     localStorage.setItem('studentId', this.studentData.studentId.toString());
     localStorage.setItem('studentDocumentId', this.studentData.id);
-    localStorage.setItem('levelStars', JSON.stringify(this.levelStars));
+    localStorage.setItem(
+      'studentData.levelStars',
+      JSON.stringify(this.studentData.levelStars)
+    );
     localStorage.setItem(
       'correctPracticeQuestions',
       this.studentData.correctPracticeQuestions.toString()
@@ -138,9 +164,18 @@ export class SharedService {
 
   reloadStudentData(): void {
     console.log('reloadStudentData()');
+    if (
+      localStorage.getItem('studentData.levelStars') !== null &&
+      localStorage.getItem('studentData.levelStars') !== undefined
+    ) {
+      console.log(localStorage.getItem('studentData.levelStars'));
+      this.studentData.levelStars = JSON.parse(
+        localStorage.getItem('studentData.levelStars')
+      );
+    }
     this.studentData.id = localStorage.getItem('studentDocumentId');
     this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
-    this.levelStars = JSON.parse(localStorage.getItem('levelStars'));
+    // this.studentData.levelStars = JSON.parse(localStorage.getItem('studentData.levelStars'));
     this.studentData.correctPracticeQuestions = parseInt(
       localStorage.getItem('correctPracticeQuestions')
     );
@@ -265,11 +300,11 @@ export class SharedService {
 
   setCurrentLevels(): void {
     console.log('setCurrentLevels');
-    this.initializeCurrentLevels();
+    this.initializeCurrentLevels(); // can be removed, I think
 
-    for (const topic in this.levelStars) {
+    for (const topic in this.studentData.levelStars) {
       this.currentLevel[topic] = 1;
-      for (const levelStar of this.levelStars[topic]) {
+      for (const levelStar of this.studentData.levelStars[topic]) {
         if (levelStar > 0) {
           this.currentLevel[topic]++;
         }
@@ -278,6 +313,7 @@ export class SharedService {
   }
 
   initializeCurrentLevels(): void {
+    // can be removed, I think
     console.log('initializeCurrentLevels');
     this.currentLevel = {
       Multiplikation: 1,
@@ -289,8 +325,8 @@ export class SharedService {
   }
 
   initializeLevelStars(): void {
-    console.log('initializeLevelStars');
-    this.levelStars = {
+    console.log('initializestudentData.levelStars');
+    this.studentData.levelStars = {
       Multiplikation: [0, 0, 0],
       Division: [0, 0, 0],
       Addition: [0, 0, 0],
@@ -300,14 +336,30 @@ export class SharedService {
   }
 
   initializeLevelStarsPerTopic(): void {
-    console.log('initializeLevelStarsPerTopic');
-    console.log(this.levelStars);
-    for (const topic in this.levelStars) {
+    console.log('initializestudentData.levelStarsPerTopic');
+    console.log(
+      'this.studentData.levelStars before initializestudentData.levelStarsPerTopic: '
+    );
+    console.log(this.studentData.levelStars);
+    for (const topic in this.studentData.levelStars) {
+      console.log('studentData');
+      console.log(this.studentData);
+      console.log('studentData.levelStars');
+      console.log(this.studentData.levelStars);
+      console.log('studentData.levelStars');
+      console.log(this.studentData.levelStars);
       if (this.studentData.levelStars[topic].length > 0) {
         console.log('topic found');
+        console.log(topic);
       } else {
-        this.levelStars[topic] = [0, 0, 0];
+        console.log('topic not found');
+        console.log(topic);
+        this.studentData.levelStars[topic] = [0, 0, 0];
       }
     }
+    console.log(
+      'this.studentData.levelStars after initializestudentData.levelStarsPerTopic: '
+    );
+    console.log(this.studentData.levelStars);
   }
 }
