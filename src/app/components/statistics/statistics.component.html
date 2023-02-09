@@ -4,12 +4,20 @@
 </div>
 <div class="main">
   <div class="resultContainer">
+    <h2>Übungsfragen</h2>
     <div class="bigNumber">
       {{ this.shared.studentData.correctPracticeQuestions }}/{{
         this.shared.studentData.totalPracticeQuestions
       }}
     </div>
     <p class="labelBigNumber">Übungsfragen richtig beantwortet</p>
+  </div>
+  <div class="resultContainer">
+    <h2>Sterne</h2>
+    <div class="bigNumber">
+      {{ this.shared.collectedStars }}/{{ this.shared.possibleStars }}
+    </div>
+    <p class="labelBigNumber">Sterne gesammelt</p>
   </div>
   <p><a routerLink="/menu">Zurück zum Hauptmenü</a></p>
 </div>

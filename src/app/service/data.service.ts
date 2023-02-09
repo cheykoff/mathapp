@@ -5,7 +5,13 @@ import {
   validateEventsArray,
 } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
-import { getDoc, serverTimestamp, orderBy } from 'firebase/firestore';
+import {
+  getDoc,
+  serverTimestamp,
+  orderBy,
+  FieldValue,
+  increment,
+} from 'firebase/firestore';
 import { Observable, map, of, take, tap, first, switchMap, pipe } from 'rxjs';
 
 import { Student } from '../shared/student';
@@ -147,6 +153,12 @@ export class DataService {
           this._shared.correctAnswer + this._shared.incorrectAnswer,
         duration: quizEndTime.getTime() - this._shared.getQuizStartTime(),
       });
+    this._store.doc(`/students/${this._shared.getStudentDocumentId()}`).update({
+      totalPracticeQuestions: increment(
+        this._shared.correctAnswer + this._shared.incorrectAnswer
+      ),
+      correctPracticeQuestions: increment(this._shared.correctAnswer),
+    });
   }
 
   storelevelStars() {

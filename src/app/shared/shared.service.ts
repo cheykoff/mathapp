@@ -73,6 +73,9 @@ export class SharedService {
   schoolClassDocumentId: string;
   quizTemplateIds: string[] = [];
 
+  collectedStars: number = 0;
+  possibleStars: number = 0;
+
   countDown: Subscription;
   countDownStartTime = 1800; // 1800 s = 30 minutes
   counter = this.countDownStartTime;
@@ -84,7 +87,7 @@ export class SharedService {
     Quiz: false,
     Hausaufgaben: true,
     üben: false,
-    Erfolge: true,
+    Erfolge: false,
   };
 
   setStudentData(studentData: Student): void {
@@ -121,6 +124,21 @@ export class SharedService {
     localStorage.setItem('topic', this.topic);
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('classId', this.studentData.classId);
+    this.calculatePossibleStars();
+    this.calculateCollectedStars();
+  }
+
+  calculatePossibleStars(): void {
+    this.possibleStars = 15 * 5;
+  }
+
+  calculateCollectedStars(): void {
+    this.collectedStars = 0;
+    for (const topic in this.studentData.levelStars) {
+      for (const level in this.studentData.levelStars[topic]) {
+        this.collectedStars += this.studentData.levelStars[topic][level];
+      }
+    }
   }
 
   getStudentData(): Student {

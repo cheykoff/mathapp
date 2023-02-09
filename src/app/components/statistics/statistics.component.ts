@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/service/data.service';
 
 import { SharedService } from '../../shared/shared.service';
 
@@ -8,7 +9,11 @@ import { SharedService } from '../../shared/shared.service';
   styleUrls: ['./statistics.component.scss'],
 })
 export class StatisticsComponent implements OnInit {
-  constructor(public shared: SharedService) {}
+  constructor(public shared: SharedService, private _data: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._data.getStudentDocument(this.shared.getStudentId());
+    this.shared.calculatePossibleStars();
+    this.shared.calculateCollectedStars();
+  }
 }
