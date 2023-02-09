@@ -84,11 +84,7 @@ export class ExerciseComponent implements OnInit {
       // this.exercises$ = this._dataService.getExercises();
       this.shared.countDownTimer();
       if (this.shared.schoolClass === 5) {
-        if (this.shared.schoolClassName === '5c') {
-          this.exercises$ = this._dataService.getExercisesGisela5c230203();
-        } else {
-          this.exercises$ = this._dataService.getExercisesGisela5b221213();
-        }
+        this.exercises$ = this._dataService.getExercisesGisela5c230203();
       } else {
         if (this.shared.schoolClassName === '6a') {
           this.exercises$ = this._dataService.getExercisesGisela6a221213();
