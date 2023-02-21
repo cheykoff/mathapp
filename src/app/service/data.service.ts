@@ -305,6 +305,16 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
+  getExercisesGisela5c230217(): Observable<Exercise[]> {
+    const version = this.getRandomNumber(1, 5);
+    return this._store
+      .collection('exercises-gisela-5c-230217', (ref) =>
+        ref.where('version', '==', version)
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
   getExercisesGisela5b221213(): Observable<Exercise[]> {
     return this._store
       .collection('exercises-gisela-5b')
@@ -324,5 +334,106 @@ export class DataService {
       .collection('exercises6')
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+  /*
+  getParameterExercises() {
+    console.log('getParameterExercises()');
+    return this._store
+      .collection('test-new-exercise-structure')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)))
+      .pipe(
+        tap((result) => {
+          console.log('all exercises');
+          result.forEach((exercise) => {
+            console.log('Next exercise');
+            this.substituteParameters2(exercise);
+          });
+        })
+      );
+  }
+
+  substituteParameters2(exercise: Exercise) {
+    console.log('substituteParameters for exercise');
+    console.log(exercise);
+  }
+
+  substituteParameters(element: Exercise) {
+    console.log('----------------------------------');
+    console.log('substituteParameters for ');
+    console.log(element);
+    let i = 0;
+    let stringIsNumber = false;
+    if (element.parameters !== undefined) {
+      let value3 = undefined;
+      while (stringIsNumber === false && i < 20) {
+        let tmpAnswer = undefined;
+        i++;
+        Object.entries(element.parameters).forEach(([key2, value2]) => {
+          value3 = this.getRandomNumber(value2[0], value2[1]);
+          tmpAnswer = element.correctAnswer.replaceAll(
+            `{${key2}}`,
+            value3.toString()
+          );
+        });
+        console.log(value3);
+
+        tmpAnswer = tmpAnswer.replaceAll(' ', '');
+        tmpAnswer = tmpAnswer.replaceAll(/[-]{2}|[+]{2}/g, '+');
+        console.log('tmp answer: ' + tmpAnswer);
+        console.log('tmp answer value: ' + eval(tmpAnswer));
+        stringIsNumber = this.stringIsInteger(eval(tmpAnswer));
+      }
+      Object.entries(element.parameters).forEach(([key2, value2]) => {
+        element.question = element.question.replaceAll(
+          `{${key2}}`,
+          value3.toString()
+        );
+        element.correctAnswer = element.correctAnswer.replaceAll(
+          `{${key2}}`,
+          value3.toString()
+        );
+      });
+      element.correctAnswer = element.correctAnswer.replaceAll(' ', '');
+      element.correctAnswer = element.correctAnswer.replaceAll(
+        /[-]{2}|[+]{2}/g,
+        '+'
+      );
+      console.log('Correct answer: ' + element.correctAnswer);
+      console.log('Correct answer: ' + eval(element.correctAnswer));
+      if (
+        eval(element.correctAnswer) === 0 ||
+        eval(element.correctAnswer) === 1 ||
+        eval(element.correctAnswer) === 2 ||
+        eval(element.correctAnswer) === 3 ||
+        eval(element.correctAnswer) === 4 ||
+        eval(element.correctAnswer) === 5 ||
+        eval(element.correctAnswer) === -1 ||
+        eval(element.correctAnswer) === -2 ||
+        eval(element.correctAnswer) === -3 ||
+        eval(element.correctAnswer) === -4 ||
+        eval(element.correctAnswer) === -5
+      ) {
+        stringIsNumber = true;
+      }
+    }
+    console.log('Iteration: ' + i);
+    console.log('Correct answer: ' + element.correctAnswer);
+    console.log('Correct answer: ' + eval(element.correctAnswer));
+  }
+
+  stringIsInteger(str: string): boolean {
+    if (Number(str) % 1 === 0) {
+      return true;
+    }
+    return false;
+  }
+  */
+
+  getRandomNumber(min: number, max: number): number {
+    let x = Math.random();
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(x * (max - min + 1)) + min;
   }
 }
