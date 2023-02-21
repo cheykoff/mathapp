@@ -5,7 +5,16 @@ export interface Topic {
   books?: [
     {
       bookId: string;
-      chapters?: [{ number; subchapters?: [{ number; pages?: [{ number }] }] }];
+      chapters?: [
+        {
+          chapter: number;
+          subchapters?: [
+            {
+              subchapter: number;
+            }
+          ];
+        }
+      ];
     }
   ];
 }
