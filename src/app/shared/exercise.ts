@@ -4,7 +4,7 @@ export interface Exercise {
   answerType?: string;
   correctAnswer?: string;
   correctAnswerFraction?: { numerator: string; denominator: string };
-  incorrectAnswers?: [string];
+  incorrectAnswers?: string[];
   answerOptions?: [{ answerText: string; isCorrect: boolean }];
   classLevel?: number;
   books?: [
@@ -18,4 +18,5 @@ export interface Exercise {
   ];
   img?: string;
   unit?: string;
+  parameters?: any;
 }
