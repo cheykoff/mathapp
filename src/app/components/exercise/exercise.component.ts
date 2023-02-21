@@ -83,6 +83,17 @@ export class ExerciseComponent implements OnInit {
       this._dataService.storeQuizStart();
       // this.exercises$ = this._dataService.getExercises();
       this.shared.countDownTimer();
+      // this.exercises$ = this._dataService.getParameterExercises();
+      this.exercises$ = this._dataService.getExercisesGisela5c230217();
+      /*
+        .pipe(map((data: Exercise[]) => this.shuffleExercises(data)))
+        .pipe(
+          tap((data: Exercise[]) => {
+            console.log(data);
+          })
+        );
+        */
+      /*
       if (this.shared.schoolClass === 5) {
         this.exercises$ = this._dataService.getExercisesGisela5c230203();
       } else {
@@ -92,6 +103,7 @@ export class ExerciseComponent implements OnInit {
           this.exercises$ = this._dataService.getExercisesGisela6c221216();
         }
       }
+      */
 
       this.exercises$.subscribe((data: Exercise[]) => {
         this.shared.totalSessionQuestions = Math.min(
