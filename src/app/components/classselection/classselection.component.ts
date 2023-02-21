@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataService } from '../../service/data.service';
 import { SharedService } from '../../shared/shared.service';
+import { HeaderService } from 'src/app/shared/header.service';
 import { SchoolClass, schoolClasses } from './classes';
 
 @Component({
@@ -10,14 +11,19 @@ import { SchoolClass, schoolClasses } from './classes';
   templateUrl: './classselection.component.html',
   styleUrls: ['./classselection.component.scss'],
 })
-export class ClassselectionComponent {
+export class ClassselectionComponent implements OnInit {
   schoolClasses: SchoolClass[] = schoolClasses;
 
   constructor(
     private _shared: SharedService,
     private _router: Router,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _header: HeaderService
   ) {}
+
+  ngOnInit(): void {
+    this._header.setTitle('Wähle deine Klasse');
+  }
 
   selectSchoolClass(level: number): void {
     this._dataService.storeSchoolClass(level);

@@ -4,6 +4,8 @@ import { Topic } from '../../shared/topic';
 
 import { topicListItems } from './topiclist';
 
+import { HeaderService } from 'src/app/shared/header.service';
+
 @Component({
   selector: 'app-training',
   templateUrl: './training.component.html',
@@ -13,7 +15,9 @@ export class TrainingComponent implements OnInit {
   header = 'Übungsaufgaben';
   topics: Topic[] = topicListItems;
 
-  constructor() {}
+  constructor(private _header: HeaderService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._header.setTitle('Übungsaufgaben');
+  }
 }

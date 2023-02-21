@@ -1,4 +1,10 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Input,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { from, map, Observable, Subscription, timer, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
@@ -15,7 +21,8 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnChanges {
+  @Input() currentQuestion: number = 0;
   exercises$: Observable<Exercise[]>;
 
   maxAttempts: number = 3;
@@ -36,9 +43,9 @@ export class ExerciseComponent implements OnInit {
     return 'assets/img/geometry/' + img + '.jpg';
   }
 
-  // exercises: Exercise[] = [];
+  exercises: Exercise[] = [];
 
-  currentQuestion: number = 0;
+  // currentQuestion: number = 0;
   attempts: number = 0;
   streakCount: number = 0;
 
@@ -70,8 +77,47 @@ export class ExerciseComponent implements OnInit {
     private _header: HeaderService
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentQuestion']) {
+      this._header.setTitle('nice');
+    }
+    if (this.shared.mode === 'quiz') {
+      this._header.setTitle(
+        'Frage ' +
+          (this.currentQuestion + 1) +
+          ' von ' +
+          this.shared.totalSessionQuestions
+      );
+    } else if (this.shared.mode === 'practice') {
+      this._header.setTitle(
+        this.shared.topic +
+          this.shared.chosenLevel +
+          ':' +
+          (this.currentQuestion + 1) +
+          '/' +
+          this.shared.totalSessionQuestions
+      );
+    }
+  }
+
   ngOnInit(): void {
-    this._header.setTitle('Übung');
+    if (this.shared.mode === 'quiz') {
+      this._header.setTitle(
+        'Frage ' +
+          (this.currentQuestion + 1) +
+          ' von ' +
+          this.shared.totalSessionQuestions
+      );
+    } else if (this.shared.mode === 'practice') {
+      this._header.setTitle(
+        this.shared.topic +
+          this.shared.chosenLevel +
+          ':' +
+          (this.currentQuestion + 1) +
+          '/' +
+          this.shared.totalSessionQuestions
+      );
+    }
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;

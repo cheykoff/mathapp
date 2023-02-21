@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Level, levels } from './levels';
 import { Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
+import { HeaderService } from 'src/app/shared/header.service';
 
 @Component({
   selector: 'app-levelpage',
@@ -11,9 +12,14 @@ import { SharedService } from '../../shared/shared.service';
 export class LevelpageComponent implements OnInit {
   levels: Level[] = levels;
 
-  constructor(private _router: Router, public shared: SharedService) {}
+  constructor(
+    private _router: Router,
+    public shared: SharedService,
+    private _header: HeaderService
+  ) {}
 
   ngOnInit(): void {
+    this._header.setTitle(this.shared.topic);
     if (
       this.shared.studentData.levelStars === undefined ||
       this.shared.studentData.levelStars === null

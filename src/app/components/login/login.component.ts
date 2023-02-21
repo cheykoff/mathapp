@@ -5,6 +5,7 @@ import { Observable, share } from 'rxjs';
 
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
+import { HeaderService } from 'src/app/shared/header.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     public shared: SharedService,
-    private _data: DataService
+    private _data: DataService,
+    private _header: HeaderService
   ) {}
 
   defaultStudentId: number;
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   idWasGenerated: boolean;
 
   ngOnInit(): void {
+    this._header.setTitle('Login');
     // this.studentDocumentIds$ = this._data.getStudentDocumentIds();
     // this.shared.reloadStudentData();
     this.defaultStudentId = this.shared.getStudentId();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuListItem, menuListItems } from './menulist';
 import { SharedService } from '../../shared/shared.service';
+import { HeaderService } from 'src/app/shared/header.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +13,15 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit {
   header = 'DieMatheApp';
   menuItems: MenuListItem[] = menuListItems;
-  constructor(public shared: SharedService, private _router: Router) {}
+  constructor(
+    public shared: SharedService,
+    private _router: Router,
+    private _header: HeaderService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._header.setTitle('Menü');
+  }
 
   onMenuItemClick(menuItem: MenuListItem) {
     if (menuItem.name === 'Quiz') {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SharedService } from '../../shared/shared.service';
+import { HeaderService } from 'src/app/shared/header.service';
 
 import { Topic, topics } from './topics';
 
@@ -13,9 +14,14 @@ import { Topic, topics } from './topics';
 export class TopicsComponent implements OnInit {
   topics: Topic[] = topics;
 
-  constructor(private _router: Router, public shared: SharedService) {}
+  constructor(
+    private _router: Router,
+    public shared: SharedService,
+    private _header: HeaderService
+  ) {}
 
   ngOnInit(): void {
+    this._header.setTitle('Themen');
     if (
       this.shared.studentData.levelStars === undefined ||
       this.shared.studentData.levelStars === null

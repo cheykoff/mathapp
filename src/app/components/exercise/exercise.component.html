@@ -44,10 +44,11 @@
       <div class="question">
         <p [mathjax]="exercises[currentQuestion].question"></p>
         <div class="img-wrapper" *ngIf="exercises[currentQuestion].img">
-          <img
+          <img class="questionImg" [src]="getSrc()" />
+          <!--<img
             class="questionImg"
             [src]="exercise | getSrcPipe getSrc(exercise[currentQuestion].img)"
-          />
+          />-->
         </div>
       </div>
       <div
