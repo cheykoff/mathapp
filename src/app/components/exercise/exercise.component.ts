@@ -84,7 +84,8 @@ export class ExerciseComponent implements OnInit {
       // this.exercises$ = this._dataService.getExercises();
       this.shared.countDownTimer();
       // this.exercises$ = this._dataService.getParameterExercises();
-      this.exercises$ = this._dataService.getExercisesGisela5c230217();
+      // this.exercises$ = this._dataService.getExercisesGisela5c230217();
+      this.exercises$ = this._dataService.getExercisesTest();
       /*
         .pipe(map((data: Exercise[]) => this.shuffleExercises(data)))
         .pipe(

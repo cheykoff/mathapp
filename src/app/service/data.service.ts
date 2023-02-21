@@ -315,6 +315,13 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
+  getExercisesTest(): Observable<Exercise[]> {
+    return this._store
+      .collection('exercise-test2')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+
   getExercisesGisela5b221213(): Observable<Exercise[]> {
     return this._store
       .collection('exercises-gisela-5b')
