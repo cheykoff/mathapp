@@ -195,7 +195,9 @@ export class DataService {
   getExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercise-test5', (ref) =>
-        ref.where('classLevel', '==', 5).where('chapter', '==', 5)
+        ref
+          .where('classLevel', '==', this._shared.getSchoolClass())
+          .where('chapter', '==', 1)
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
