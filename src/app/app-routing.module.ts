@@ -8,7 +8,6 @@ import { MenuComponent } from './components/menu/menu.component';
 import { TopicsComponent } from './components/topics/topics.component';
 
 import { ClassselectionComponent } from './components/classselection/classselection.component';
-import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
 
@@ -25,7 +24,6 @@ const routes: Routes = [
     path: 'classselection',
     component: ClassselectionComponent,
   },
-  { path: 'classselection2', component: Classselection2Component },
   { path: 'levelpage', component: LevelpageComponent },
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
