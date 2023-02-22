@@ -49,11 +49,6 @@ export class ResultpageComponent implements OnInit {
     }
   }
 
-  onSubmitSelfReflection(form: NgForm): void {
-    this._dataService.storeSelfReflection(form.value.selfReflection);
-    this.selfReflectionGiven = true;
-  }
-
   repeatQuiz(): void {
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;

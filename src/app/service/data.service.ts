@@ -1,26 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from '../shared/shared.service';
-import {
-  AngularFirestore,
-  validateEventsArray,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
-import {
-  getDoc,
-  serverTimestamp,
-  orderBy,
-  FieldValue,
-  increment,
-} from 'firebase/firestore';
-import { Observable, map, of, take, tap, first, switchMap, pipe } from 'rxjs';
+import { serverTimestamp, increment } from 'firebase/firestore';
+import { Observable, map } from 'rxjs';
 
 import { Student } from '../shared/student';
 import { Exercise } from '../shared/exercise';
-import { Quiz } from '../shared/quiz';
-import { Quiz2 } from '../shared/quiz2';
-import { QuizTemplate } from '../shared/quiz-template';
-import { convertSnaps, convertSnap } from './db-utils';
-import { SchoolClass2 } from '../shared/schoolClass';
+import { convertSnaps } from './db-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -59,16 +46,6 @@ export class DataService {
               this._shared.setStudentDocumentId(docRef.id);
             });
         }
-      });
-  }
-
-  getQuizTemplateIDs() {
-    return this._store
-      .doc(`schoolClasses/${this._shared.getSchoolClassDocumentId()}`)
-      .get()
-      .pipe(map((result) => convertSnap<SchoolClass2>(result)))
-      .subscribe((data: SchoolClass2) => {
-        this._shared.setQuizTemplateIds(data.quizTemplateIds);
       });
   }
 
@@ -215,120 +192,10 @@ export class DataService {
       });
   }
 
-  // TODO: Decide if I want to keep it
-  storeSelfReflection(selfReflection: number) {
-    this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
-      selfReflection: selfReflection,
-    });
-  }
-
-  getQuizzes4(): Observable<Quiz[]> {
-    return this._store
-      .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
-      .get()
-      .pipe(map((result) => convertSnaps<Quiz>(result)));
-  }
-
-  getQuizTemplates(): Observable<QuizTemplate[]> {
-    return this._store
-      .collection(`quizTemplates`)
-      .get()
-      .pipe(map((result) => convertSnaps<QuizTemplate>(result)));
-  }
-
-  getQuizTemplates2(): Observable<SchoolClass2> {
-    return this._store
-      .doc(`schoolClasses/qurzXjuNZYu48TS03O2g`)
-      .get()
-      .pipe(map((result) => convertSnap<SchoolClass2>(result)));
-  }
-
-  getSchoolClassId(): void {
-    this._store
-      .doc('students/BbWzvQmUIMpytT5G5bUI')
-      .get()
-      .pipe(map((result) => convertSnap<Student>(result)));
-  }
-
-  // TODO: Can I call it from quiz-intro?
-  getExercisesByQuizTemplateId() {
-    return this._store
-      .collection(`exerciseTemplates`)
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  // TODO: use dynamic document id
-  getExercisesByQuizId(): Observable<Quiz2> {
-    return this._store
-      .doc('quizzes2/3ebk6z4nj8wGCKqPiPZp')
-      .get()
-      .pipe(map((result) => convertSnap<Quiz2>(result)));
-  }
-
-  getExercisesGisela6a221213(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises-gisela-6a-221213')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercisesGisela6c221216(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises-gisela-6c-221216')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercisesGisela5c230203(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises-gisela-5c-230203')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercisesGisela5c230217(): Observable<Exercise[]> {
-    const version = this.getRandomNumber(1, 5);
-    return this._store
-      .collection('exercises-gisela-5c-230217', (ref) =>
-        ref.where('version', '==', version)
-      )
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercisesTest(): Observable<Exercise[]> {
+  getExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercise-test2')
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercisesGisela5b221213(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises-gisela-5b')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercises() {
-    return this._store
-      .collection('exercises')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getExercises6() {
-    return this._store
-      .collection('exercises6')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
-  }
-
-  getRandomNumber(min: number, max: number): number {
-    let x = Math.random();
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(x * (max - min + 1)) + min;
   }
 }

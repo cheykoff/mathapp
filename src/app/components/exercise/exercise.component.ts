@@ -79,7 +79,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._dataService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._dataService.getExercisesTest();
+      this.exercises$ = this._dataService.getExercises();
 
       this.exercises$.subscribe((data: Exercise[]) => {
         this.shared.totalSessionQuestions = Math.min(
