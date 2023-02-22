@@ -17,7 +17,6 @@ import { ClassselectionComponent } from './components/classselection/classselect
 import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
-import { CodepageComponent } from './components/codepage/codepage.component';
 
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
@@ -40,7 +39,6 @@ const routes: Routes = [
     component: ClassselectionComponent,
   },
   { path: 'classselection2', component: Classselection2Component },
-  { path: 'codepage', component: CodepageComponent },
   { path: 'levelpage', component: LevelpageComponent },
   { path: 'exercise', component: ExerciseComponent },
   { path: 'resultpage', component: ResultpageComponent },
