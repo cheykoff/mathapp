@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { WebsiteComponent } from './website/website.component';
 
-import { StartComponent } from './components/start/start.component';
-import { DemoComponent } from './components/demo/demo.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { QuizComponent } from './components/quiz/quiz.component';
@@ -24,8 +22,6 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 const routes: Routes = [
   { path: '', redirectTo: '/website', pathMatch: 'full' },
   { path: 'website', component: WebsiteComponent },
-  { path: 'start', component: StartComponent },
-  { path: 'demo', component: DemoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'quiz', component: QuizComponent },
