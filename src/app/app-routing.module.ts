@@ -6,7 +6,6 @@ import { WebsiteComponent } from './website/website.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { TopicsComponent } from './components/topics/topics.component';
-import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 
 import { ClassselectionComponent } from './components/classselection/classselection.component';
 import { Classselection2Component } from './components/classselection2/classselection2.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'topics', component: TopicsComponent },
-  { path: 'training-setup', component: TrainingSetupComponent },
 
   {
     path: 'classselection',
