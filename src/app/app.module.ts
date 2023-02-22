@@ -24,20 +24,12 @@ import { ClassselectionComponent } from './components/classselection/classselect
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
 import { ChangeBgDirective } from './change-bg.directive';
-import { CodepageComponent } from './components/codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
-import { EquationPipe } from './mathequation.pipe';
 import { LoginComponent } from './components/login/login.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
-import { StartComponent } from './components/start/start.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { DemoComponent } from './components/demo/demo.component';
-import { QuizComponent } from './components/quiz/quiz.component';
-import { QuizIntroComponent } from './components/quiz-intro/quiz-intro.component';
-import { TrainingComponent } from './components/training/training.component';
-import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 import { WebsiteComponent } from './website/website.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
@@ -50,19 +42,11 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     ClassselectionComponent,
     ResultpageComponent,
     ChangeBgDirective,
-    CodepageComponent,
     CountDownPipe,
-    EquationPipe,
     LoginComponent,
     ExerciseComponent,
     LevelpageComponent,
-    StartComponent,
     MenuComponent,
-    DemoComponent,
-    QuizComponent,
-    QuizIntroComponent,
-    TrainingComponent,
-    TrainingSetupComponent,
     WebsiteComponent,
     TopicsComponent,
     StatisticsComponent,

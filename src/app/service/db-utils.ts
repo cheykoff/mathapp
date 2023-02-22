@@ -6,10 +6,3 @@ export function convertSnaps<T>(results) {
     };
   });
 }
-
-export function convertSnap<T>(snap) {
-  return <T>{
-    id: snap.id,
-    ...(<any>snap.data()),
-  };
-}
