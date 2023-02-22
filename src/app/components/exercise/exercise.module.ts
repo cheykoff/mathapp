@@ -6,9 +6,10 @@ import { MathjaxModule } from 'mathjax-angular';
 import { CountDownPipe } from 'src/app/countdown.pipe';
 
 import { ExerciseComponent } from './exercise.component';
+import { QuestionComponent } from './question/question.component';
 
 @NgModule({
-  declarations: [ExerciseComponent, CountDownPipe],
+  declarations: [ExerciseComponent, CountDownPipe, QuestionComponent],
   imports: [RouterModule, CommonModule, FormsModule, MathjaxModule],
   exports: [ExerciseComponent],
 })
