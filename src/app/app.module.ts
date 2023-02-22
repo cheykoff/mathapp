@@ -30,7 +30,6 @@ import { LoginComponent } from './components/login/login.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { TrainingComponent } from './components/training/training.component';
 import { TrainingSetupComponent } from './components/training-setup/training-setup.component';
 import { WebsiteComponent } from './website/website.component';
 import { TopicsComponent } from './components/topics/topics.component';
@@ -49,7 +48,6 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     ExerciseComponent,
     LevelpageComponent,
     MenuComponent,
-    TrainingComponent,
     TrainingSetupComponent,
     WebsiteComponent,
     TopicsComponent,
