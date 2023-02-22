@@ -24,9 +24,7 @@ import { ClassselectionComponent } from './components/classselection/classselect
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
 
-import { CountDownPipe } from './countdown.pipe';
 import { LoginComponent } from './components/login/login.component';
-import { ExerciseComponent } from './components/exercise/exercise.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { WebsiteComponent } from './website/website.component';
@@ -35,14 +33,14 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { AutofocusDirective } from './shared/autofocus.directive';
 
+import { ExerciseModule } from './components/exercise/exercise.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     ClassselectionComponent,
     ResultpageComponent,
-    CountDownPipe,
     LoginComponent,
-    ExerciseComponent,
     LevelpageComponent,
     MenuComponent,
     WebsiteComponent,
@@ -63,6 +61,7 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     // AngularFirestoreModule, TODO: Do I need this?
     RouterModule,
     MathjaxModule.forRoot(),
+    ExerciseModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de-DE' },
