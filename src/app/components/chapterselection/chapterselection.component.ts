@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataService } from '../../service/data.service';
@@ -10,7 +10,7 @@ import { Chapter, chapters } from './chapters';
   templateUrl: './chapterselection.component.html',
   styleUrls: ['./chapterselection.component.scss'],
 })
-export class ChapterselectionComponent {
+export class ChapterselectionComponent implements OnInit {
   chapters: Chapter[] = chapters;
 
   constructor(
@@ -18,6 +18,12 @@ export class ChapterselectionComponent {
     private _router: Router,
     private _dataService: DataService
   ) {}
+
+  ngOnInit(): void {
+    this.chapters = this.chapters.filter(
+      (chapter) => chapter.classLevel === this._shared.getSchoolClass()
+    );
+  }
 
   selectChapter(chapter: Chapter): void {
     this._dataService.storeChapter(chapter);
