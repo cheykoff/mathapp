@@ -27,7 +27,6 @@ import { ChangeBgDirective } from './change-bg.directive';
 import { CodepageComponent } from './components/codepage/codepage.component';
 
 import { CountDownPipe } from './countdown.pipe';
-import { EquationPipe } from './mathequation.pipe';
 import { LoginComponent } from './components/login/login.component';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { LevelpageComponent } from './components/levelpage/levelpage.component';
@@ -52,7 +51,6 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     ChangeBgDirective,
     CodepageComponent,
     CountDownPipe,
-    EquationPipe,
     LoginComponent,
     ExerciseComponent,
     LevelpageComponent,
