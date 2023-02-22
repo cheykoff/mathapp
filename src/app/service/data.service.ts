@@ -92,7 +92,6 @@ export class DataService {
     localStorage.setItem('schoolClassName', schoolClassName);
   }
 
-  // called from quiz-intro
   storeQuizStart() {
     this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
@@ -110,7 +109,6 @@ export class DataService {
     );
   }
 
-  // called from resultpage
   storeQuizEnd() {
     const quizEndTime = new Date();
 
@@ -147,7 +145,6 @@ export class DataService {
         `/students/${this._shared.getStudentDocumentId()}/practices/${this._shared.getPracticeId()}`
       )
       .update({
-        // TODO: change to update
         correctAnswers: this._shared.correctAnswer,
         totalQuestions:
           this._shared.correctAnswer + this._shared.incorrectAnswer,
@@ -167,7 +164,6 @@ export class DataService {
     });
   }
 
-  // called from exercise
   storeAnswer(
     exerciseId: string,
     answerIsCorrect: boolean,
@@ -190,7 +186,6 @@ export class DataService {
       });
   }
 
-  // called from exercise
   // TODO: Refactor
   storeDynamicAnswer(
     question: string,
@@ -220,7 +215,6 @@ export class DataService {
       });
   }
 
-  // called from resultpage
   // TODO: Decide if I want to keep it
   storeSelfReflection(selfReflection: number) {
     this._store.doc(`/quizzes/${this._shared.getQuizId()}`).update({
@@ -228,7 +222,6 @@ export class DataService {
     });
   }
 
-  // called from Quiz Page
   getQuizzes4(): Observable<Quiz[]> {
     return this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
@@ -257,7 +250,6 @@ export class DataService {
       .pipe(map((result) => convertSnap<Student>(result)));
   }
 
-  // called from exercise
   // TODO: Can I call it from quiz-intro?
   getExercisesByQuizTemplateId() {
     return this._store
@@ -266,7 +258,6 @@ export class DataService {
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
-  // called from quiz-intro
   // TODO: use dynamic document id
   getExercisesByQuizId(): Observable<Quiz2> {
     return this._store
@@ -274,15 +265,6 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnap<Quiz2>(result)));
   }
-  /*
-  getExercisesGisela6b221213() {
-    return this._store
-      .collection('exercises-gisela-6b-221213')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)))
-      
-  }
-  */
 
   getExercisesGisela6a221213(): Observable<Exercise[]> {
     return this._store
@@ -342,100 +324,6 @@ export class DataService {
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
-  /*
-  getParameterExercises() {
-    console.log('getParameterExercises()');
-    return this._store
-      .collection('test-new-exercise-structure')
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)))
-      .pipe(
-        tap((result) => {
-          console.log('all exercises');
-          result.forEach((exercise) => {
-            console.log('Next exercise');
-            this.substituteParameters2(exercise);
-          });
-        })
-      );
-  }
-
-  substituteParameters2(exercise: Exercise) {
-    console.log('substituteParameters for exercise');
-    console.log(exercise);
-  }
-
-  substituteParameters(element: Exercise) {
-    console.log('----------------------------------');
-    console.log('substituteParameters for ');
-    console.log(element);
-    let i = 0;
-    let stringIsNumber = false;
-    if (element.parameters !== undefined) {
-      let value3 = undefined;
-      while (stringIsNumber === false && i < 20) {
-        let tmpAnswer = undefined;
-        i++;
-        Object.entries(element.parameters).forEach(([key2, value2]) => {
-          value3 = this.getRandomNumber(value2[0], value2[1]);
-          tmpAnswer = element.correctAnswer.replaceAll(
-            `{${key2}}`,
-            value3.toString()
-          );
-        });
-        console.log(value3);
-
-        tmpAnswer = tmpAnswer.replaceAll(' ', '');
-        tmpAnswer = tmpAnswer.replaceAll(/[-]{2}|[+]{2}/g, '+');
-        console.log('tmp answer: ' + tmpAnswer);
-        console.log('tmp answer value: ' + eval(tmpAnswer));
-        stringIsNumber = this.stringIsInteger(eval(tmpAnswer));
-      }
-      Object.entries(element.parameters).forEach(([key2, value2]) => {
-        element.question = element.question.replaceAll(
-          `{${key2}}`,
-          value3.toString()
-        );
-        element.correctAnswer = element.correctAnswer.replaceAll(
-          `{${key2}}`,
-          value3.toString()
-        );
-      });
-      element.correctAnswer = element.correctAnswer.replaceAll(' ', '');
-      element.correctAnswer = element.correctAnswer.replaceAll(
-        /[-]{2}|[+]{2}/g,
-        '+'
-      );
-      console.log('Correct answer: ' + element.correctAnswer);
-      console.log('Correct answer: ' + eval(element.correctAnswer));
-      if (
-        eval(element.correctAnswer) === 0 ||
-        eval(element.correctAnswer) === 1 ||
-        eval(element.correctAnswer) === 2 ||
-        eval(element.correctAnswer) === 3 ||
-        eval(element.correctAnswer) === 4 ||
-        eval(element.correctAnswer) === 5 ||
-        eval(element.correctAnswer) === -1 ||
-        eval(element.correctAnswer) === -2 ||
-        eval(element.correctAnswer) === -3 ||
-        eval(element.correctAnswer) === -4 ||
-        eval(element.correctAnswer) === -5
-      ) {
-        stringIsNumber = true;
-      }
-    }
-    console.log('Iteration: ' + i);
-    console.log('Correct answer: ' + element.correctAnswer);
-    console.log('Correct answer: ' + eval(element.correctAnswer));
-  }
-
-  stringIsInteger(str: string): boolean {
-    if (Number(str) % 1 === 0) {
-      return true;
-    }
-    return false;
-  }
-  */
 
   getRandomNumber(min: number, max: number): number {
     let x = Math.random();

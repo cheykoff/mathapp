@@ -24,8 +24,6 @@ export class LoginComponent implements OnInit {
   idWasGenerated: boolean;
 
   ngOnInit(): void {
-    // this.studentDocumentIds$ = this._data.getStudentDocumentIds();
-    // this.shared.reloadStudentData();
     this.defaultStudentId = this.shared.getStudentId();
   }
 
@@ -37,12 +35,10 @@ export class LoginComponent implements OnInit {
     }
     if (value.studentId) {
       // TODO: Need to ensure that the id is unique
-
       this.validStudentId = true;
       this.shared.setStudentId(value.studentId);
       this._data.getStudentDocument(value.studentId);
       this.goToClassSelection();
-      // this.goToMenu();
       this.shared.storeStudentIdInLocalStorage();
     } else {
       this.validStudentId = false;
@@ -58,7 +54,6 @@ export class LoginComponent implements OnInit {
   }
 
   generateId(): void {
-    // TODO: allow users to generate their own id (which needs to be unique)
     const newId = Math.floor(110000 + Math.random() * 890000);
     this.shared.setStudentId(newId);
     this._data.getStudentDocument(newId);

@@ -77,34 +77,9 @@ export class ExerciseComponent implements OnInit {
     } else {
       const quizStartDate = new Date();
       this.shared.setQuizStartTime(quizStartDate);
-      // this.exercises$ = this._dataService.getExercisesByQuizTemplateId();
-      // this.exercises$ = this._dataService.getExercisesGisela6b221213();
-      // this.exercises$ = this._dataService.getExercisesGisela6b221213();
       this._dataService.storeQuizStart();
-      // this.exercises$ = this._dataService.getExercises();
       this.shared.countDownTimer();
-      // this.exercises$ = this._dataService.getParameterExercises();
-      // this.exercises$ = this._dataService.getExercisesGisela5c230217();
       this.exercises$ = this._dataService.getExercisesTest();
-      /*
-        .pipe(map((data: Exercise[]) => this.shuffleExercises(data)))
-        .pipe(
-          tap((data: Exercise[]) => {
-            console.log(data);
-          })
-        );
-        */
-      /*
-      if (this.shared.schoolClass === 5) {
-        this.exercises$ = this._dataService.getExercisesGisela5c230203();
-      } else {
-        if (this.shared.schoolClassName === '6a') {
-          this.exercises$ = this._dataService.getExercisesGisela6a221213();
-        } else {
-          this.exercises$ = this._dataService.getExercisesGisela6c221216();
-        }
-      }
-      */
 
       this.exercises$.subscribe((data: Exercise[]) => {
         this.shared.totalSessionQuestions = Math.min(
@@ -117,8 +92,6 @@ export class ExerciseComponent implements OnInit {
         }
       });
     }
-
-    // this.createExercise(this.shared.chosenLevel);
   }
 
   resetCounts(): void {
@@ -357,7 +330,6 @@ export class ExerciseComponent implements OnInit {
       const d = this.getRandInteger(minNum, maxNum);
       const e = this.getRandInteger(minNum, maxNum);
       const operatorRandom = this.getRandInteger(1, 16);
-      // const operatorRandom = 2;
       const bracketRandom = this.getRandInteger(1, 8);
 
       if (level === 1) {
@@ -724,7 +696,6 @@ export class ExerciseComponent implements OnInit {
 
   calculateStars(): void {
     this.shared.currentLevelStars = Math.max(
-      // TODO: Remove the variable?
       0,
       5 - this.shared.incorrectAnswer
     );

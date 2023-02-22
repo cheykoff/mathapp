@@ -28,11 +28,5 @@ export class QuizComponent implements OnInit {
     public shared: SharedService
   ) {}
 
-  ngOnInit(): void {
-    /*
-    this.quizTemplates$ = this._dataService.getQuizTemplates();
-    this.schoolClass$ = this._dataService.getQuizTemplates2();
-    this._dataService.getQuizTemplateIDs();
-    */
-  }
+  ngOnInit(): void {}
 }

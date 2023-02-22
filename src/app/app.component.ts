@@ -14,12 +14,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this._shared.setParameters();
-    /*
-    if (!localStorage.getItem('sessionId')) {
-      this._dataService.storeSessionId();
-    }*/
-    // this._dataService.storeSessionId();
     this._shared.reloadStudentData();
   }
 
@@ -30,8 +24,6 @@ export class AppComponent implements OnInit {
       'schoolClass',
       this._shared.getSchoolClass().toString()
     );
-    // localStorage.setItem('sessionId', this._shared.getSessionId());
-    // this._dataService.addEndTime();
     if (this._shared.counter > 0) {
       window.opener.location.reload();
     }
@@ -39,10 +31,8 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:load', ['$event'])
   loadHandler(event: Event) {
-    // this._shared.setStudentId(parseInt(localStorage.getItem('studentId')));
     this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass')));
     this._shared.reloadStudentData();
     this._shared.mode = localStorage.getItem('mode');
-    // this._shared.setSessionId(localStorage.getItem('sessionId'));
   }
 }

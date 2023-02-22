@@ -24,14 +24,4 @@ export class ClassselectionComponent {
     this._shared.setSchoolClass(level);
     this._router.navigate(['/', 'classselection2']);
   }
-
-  private _goToExercise(): void {
-    // TODO: implement with level routing
-    this._router.navigate(['/', 'exercise']);
-  }
-
-  private _goToCodePage(): void {
-    // TODO: implement with level routing
-    this._router.navigate(['/', 'codepage']);
-  }
 }

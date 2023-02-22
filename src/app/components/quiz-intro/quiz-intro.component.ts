@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { DataService } from '../../service/data.service';
 import { SharedService } from '../../shared/shared.service';
 
-import { Exercise } from 'src/app/shared/exercise';
 import { Quiz2 } from 'src/app/shared/quiz2';
 
 @Component({
@@ -18,10 +16,7 @@ export class QuizIntroComponent implements OnInit {
   header = 'DieMatheApp - Quiz';
   totalExercises = 10;
   quizTimeLimit = 1800;
-  constructor(
-    private _dataService: DataService,
-    public shared: SharedService
-  ) {}
+  constructor(public shared: SharedService) {}
 
   ngOnInit(): void {}
 

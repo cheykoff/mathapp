@@ -19,9 +19,7 @@ export class LevelpageComponent implements OnInit {
       this.shared.studentData.levelStars === null
     ) {
       this.shared.initializeLevelStars();
-    } /*else {
-      this.shared.initializeLevelStarsPerTopic();
-    }*/
+    }
 
     this.shared.setCurrentLevels();
   }

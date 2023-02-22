@@ -173,7 +173,6 @@ export class SharedService {
     }
     this.studentData.id = localStorage.getItem('studentDocumentId');
     this.studentData.studentId = parseInt(localStorage.getItem('studentId'));
-    // this.studentData.levelStars = JSON.parse(localStorage.getItem('studentData.levelStars'));
     this.studentData.correctPracticeQuestions = parseInt(
       localStorage.getItem('correctPracticeQuestions')
     );
@@ -187,7 +186,6 @@ export class SharedService {
     this.studentData.classId = localStorage.getItem('classId');
   }
 
-  // called from login
   setStudentId(studentId: number): void {
     this.studentData.studentId = studentId;
     return;
@@ -211,14 +209,14 @@ export class SharedService {
     });
   }
 
-  // called from app.component, codepage, data.service
   getStudentId(): number {
     return this.studentData.studentId;
   }
+
   setStudentDocumentId(data: string): void {
     this.studentData.id = data;
   }
-  // called from login and data.service
+
   getStudentDocumentId(): string {
     return this.studentData.id;
   }
