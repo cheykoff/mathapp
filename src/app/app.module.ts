@@ -32,7 +32,6 @@ import { MenuComponent } from './components/menu/menu.component';
 import { WebsiteComponent } from './website/website.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-import { Classselection2Component } from './components/classselection2/classselection2.component';
 import { AutofocusDirective } from './shared/autofocus.directive';
 
 @NgModule({
@@ -48,7 +47,6 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     WebsiteComponent,
     TopicsComponent,
     StatisticsComponent,
-    Classselection2Component,
     AutofocusDirective,
   ],
   imports: [
