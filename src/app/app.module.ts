@@ -23,7 +23,6 @@ import { AppComponent } from './app.component';
 import { ClassselectionComponent } from './components/classselection/classselection.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultpageComponent } from './components/resultpage/resultpage.component';
-import { ChangeBgDirective } from './change-bg.directive';
 
 import { CountDownPipe } from './countdown.pipe';
 import { LoginComponent } from './components/login/login.component';
@@ -41,7 +40,6 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     AppComponent,
     ClassselectionComponent,
     ResultpageComponent,
-    ChangeBgDirective,
     CountDownPipe,
     LoginComponent,
     ExerciseComponent,
