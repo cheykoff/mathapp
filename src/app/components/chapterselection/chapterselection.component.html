@@ -1,0 +1,12 @@
+<div class="header">
+  <h1 class="headerTitle">Wähle deine Klasse</h1>
+</div>
+<div class="main">
+  <ul>
+    <li *ngFor="let chapter of chapters" (click)="selectChapter(chapter)">
+      <button class="btn btnList" [disabled]="chapter.disabled">
+        {{ chapter.chapterNumber }}.<span>{{ chapter.chapterName }}</span>
+      </button>
+    </li>
+  </ul>
+</div>

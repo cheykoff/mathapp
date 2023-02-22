@@ -33,6 +33,7 @@ import { WebsiteComponent } from './website/website.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AutofocusDirective } from './shared/autofocus.directive';
+import { ChapterselectionComponent } from './components/chapterselection/chapterselection.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     TopicsComponent,
     StatisticsComponent,
     AutofocusDirective,
+    ChapterselectionComponent,
   ],
   imports: [
     BrowserModule,

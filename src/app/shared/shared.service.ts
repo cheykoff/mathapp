@@ -51,6 +51,7 @@ export class SharedService {
   currentLevelStars: number;
 
   schoolClass: number = 0;
+  chapter: number = 0;
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
@@ -263,6 +264,14 @@ export class SharedService {
 
   getSchoolClass(): number {
     return this.schoolClass;
+  }
+
+  setChapter(data: number): void {
+    this.chapter = data;
+  }
+
+  getChapter(): number {
+    return this.chapter;
   }
 
   setSchoolClassName(data: string): void {

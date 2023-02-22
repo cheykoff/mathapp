@@ -7,6 +7,7 @@ import { Observable, map } from 'rxjs';
 
 import { Student } from '../shared/student';
 import { Exercise } from '../shared/exercise';
+import { Chapter } from '../components/chapterselection/chapters';
 import { convertSnaps } from './db-utils';
 
 @Injectable({
@@ -60,6 +61,13 @@ export class DataService {
       'schoolClass',
       this._shared.getSchoolClass().toString()
     );
+  }
+
+  storeChapter(chapter: Chapter) {
+    this._store.doc(`students/${this._shared.getStudentDocumentId()}`).update({
+      chapter: chapter,
+    });
+    localStorage.setItem('chapter', this._shared.getChapter().toString());
   }
 
   storeSchoolClassName(schoolClassName: string) {
@@ -197,7 +205,7 @@ export class DataService {
       .collection('exercise-test5', (ref) =>
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
-          .where('chapter', '==', 1)
+          .where('chapter', '==', this._shared.getChapter())
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
