@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, timer } from 'rxjs';
-
-import { DataService } from '../service/data.service';
+import { Subscription, timer } from 'rxjs';
 
 import { Student } from '../shared/student';
-import { QuizTemplate } from './quiz-template';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +28,6 @@ export class SharedService {
       Terme: [0, 0, 0],
     },
   };
-
-  quizTemplates: QuizTemplate[] = [];
 
   mode: string = 'quiz';
   topic: string;
