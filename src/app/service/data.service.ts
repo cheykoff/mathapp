@@ -194,7 +194,11 @@ export class DataService {
 
   getExercises(): Observable<Exercise[]> {
     return this._store
-      .collection('exercise-test2')
+      .collection('exercise-test2', (ref) =>
+        ref
+          .where('classLevel', '==', 5)
+          .where('curriculum.learningArea', '==', 4)
+      )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
