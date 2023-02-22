@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'topics', component: TopicsComponent },
-
   {
     path: 'classselection',
     component: ClassselectionComponent,
