@@ -423,7 +423,21 @@ button {
     cursor: not-allowed;
     background-color: var(--clr-grey-lighter);
     border: 1px solid var(--clr-grey-dark);
-    color: var(--clr-text-dark);
+    color: var(--clr-grey-dark);
+  }
+}
+
+.btn-secondary {
+  background-color: #fff;
+  border-color: var(--clr-grey-dark);
+
+  &:not([disabled]) {
+    &:hover,
+    &:active,
+    &:focus,
+    &:visited {
+      background-color: var(--clr-primary-lightest);
+    }
   }
 }
 

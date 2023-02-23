@@ -32,7 +32,9 @@
         Wenn du noch keine ID hast, dann erstell dir eine.
       </p></ng-template
     >
-    <a (click)="generateId()">ID erstellen</a>
+    <button class="btn btn-secondary" (click)="generateId()">
+      ID erstellen
+    </button>
   </div>
 
   <div *ngIf="idWasGenerated">
