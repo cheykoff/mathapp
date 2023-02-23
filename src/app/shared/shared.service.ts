@@ -55,7 +55,7 @@ export class SharedService {
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  totalSessionQuestions: number = 1000;
+  totalSessionQuestions: number = 20;
   docId: string;
   quizId: string;
   practiceId: string;
@@ -260,6 +260,7 @@ export class SharedService {
 
   setSchoolClass(data: number): void {
     this.schoolClass = data;
+    localStorage.setItem('schoolClass', this.schoolClass.toString());
   }
 
   getSchoolClass(): number {
