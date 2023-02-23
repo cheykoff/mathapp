@@ -26,6 +26,7 @@
   --clr-primary-lightest: hsl(var(--hue-primary), 59%, 70%);
   --clr-primary-dark: hsl(var(--hue-primary), 100%, 15%);
   --clr-primary-darker: hsl(var(--hue-primary), 75%, 8%);
+  --clr-primary-darker: hsl(var(--hue-primary), 75%, 5%);
 
   --clr-secondary: hsl(var(--hue-secondary), 68%, 47%);
   --clr-secondary-light: hsl(var(--hue-secondary), 100%, 55%);
@@ -71,12 +72,15 @@ body {
 }
 
 a {
-  color: blue;
-  text-decoration: none;
+  color: var(--clr-primary);
 
-  :hover {
-    text-decoration: underline;
-    cursor: pointer;
+  &:not([disabled]) {
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--clr-primary-dark);
+      cursor: pointer;
+    }
   }
 }
 
