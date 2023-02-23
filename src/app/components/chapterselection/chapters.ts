@@ -19,7 +19,7 @@ export const chapters: Chapter[] = [
   {
     classLevel: 5,
     chapterNumber: 3,
-    chapterName: 'Geometriesche Figuren und Lagebeziehungen',
+    chapterName: 'Geometrische Figuren und Lagebeziehungen',
   },
   {
     classLevel: 5,
@@ -33,5 +33,35 @@ export const chapters: Chapter[] = [
     classLevel: 6,
     chapterNumber: 2,
     chapterName: 'Addition und Subtraktion von Brüchen',
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 2,
+    chapterName: 'Multiplikation und Division von Brüchen',
+    disabled: true,
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 2,
+    chapterName: 'Flächeninhalt',
+    disabled: true,
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 2,
+    chapterName: 'Volumen',
+    disabled: true,
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 2,
+    chapterName: 'Rechnen mit rationalen Zahlen',
+    disabled: true,
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 2,
+    chapterName: 'Prozentrechnung, Daten und Diagramme',
+    disabled: true,
   },
 ];
