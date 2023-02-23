@@ -50,7 +50,7 @@ export class SharedService {
 
   currentLevelStars: number;
 
-  schoolClass: number = 0;
+  schoolClass: number = 5;
   chapter: number = 0;
   schoolClassName: string = '';
   correctAnswer: number = 0;
@@ -264,6 +264,14 @@ export class SharedService {
 
   getSchoolClass(): number {
     return this.schoolClass;
+  }
+
+  setMode(data: string): void {
+    this.mode = data;
+  }
+
+  getMode(): string {
+    return this.mode;
   }
 
   setChapter(data: number): void {

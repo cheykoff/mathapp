@@ -20,6 +20,7 @@ export class ChapterselectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass'))); // needed for reload
     this.chapters = this.chapters.filter(
       (chapter) => chapter.classLevel === this._shared.getSchoolClass()
     );
