@@ -124,38 +124,15 @@ export class ExerciseComponent implements OnInit {
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(this.checkDynamicAnswer(form));
     } else if (exercise.answerType === 'integer') {
-      this.saveAnswer(this.checkIntegerAnswer(form, exercise), exercise);
+      this.saveAnswer(
+        this._checkAnswerService.checkIntegerAnswer(form, exercise),
+        exercise
+      );
     } else {
-      this.saveAnswer(this.checkFractionAnswer(form, exercise), exercise);
-    }
-  }
-
-  checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    const correctDenominator = exercise.correctAnswerFraction.denominator;
-    const correctNumerator = exercise.correctAnswerFraction.numerator;
-    const givenDenominator = form.value.denominator;
-    const givenNumerator = form.value.numerator;
-
-    if (
-      (parseInt(givenDenominator) === parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === parseInt(correctNumerator)) ||
-      (parseInt(givenDenominator) === -1 * parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === -1 * parseInt(correctNumerator))
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  checkIntegerAnswer(form: NgForm, exercise?: Exercise): boolean {
-    const givenAnswer = form.value.givenAnswer;
-    if (
-      givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
-    ) {
-      return true;
-    } else {
-      return false;
+      this.saveAnswer(
+        this._checkAnswerService.checkFractionAnswer(form, exercise),
+        exercise
+      );
     }
   }
 
