@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
 import { DataService } from '../../service/data.service';
+import { CheckanswerService } from './checkanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { r3JitTypeSourceSpan } from '@angular/compiler';
 
@@ -65,10 +66,12 @@ export class ExerciseComponent implements OnInit {
   constructor(
     public shared: SharedService,
     private _router: Router,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _checkAnswerService: CheckanswerService
   ) {}
 
   ngOnInit(): void {
+    this._checkAnswerService.consoleLog();
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
