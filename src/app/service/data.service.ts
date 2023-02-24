@@ -202,10 +202,11 @@ export class DataService {
 
   getExercises(): Observable<Exercise[]> {
     return this._store
-      .collection('exercise-test5', (ref) =>
+      .collection('exercises', (ref) =>
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
+          .limit(5)
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
