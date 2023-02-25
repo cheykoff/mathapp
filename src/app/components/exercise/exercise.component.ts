@@ -9,6 +9,7 @@ import { ExerciseRecord } from './exerciserecord';
 import { DataService } from '../../service/data.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
+import { SaveanswerService } from './services/saveanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { r3JitTypeSourceSpan } from '@angular/compiler';
 
@@ -76,6 +77,7 @@ export class ExerciseComponent implements OnInit {
     private _dataService: DataService,
     private _checkAnswerService: CheckanswerService,
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
+    private _saveAnswerService: SaveanswerService
   ) {}
 
   // ngOnInit
@@ -189,6 +191,14 @@ export class ExerciseComponent implements OnInit {
   }
 
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
+    const exerciseRecord: ExerciseRecord = {
+      exercise,
+      duration: this.duration,
+      attempts: this.attempts,
+      answerIsCorrect: isCorrect,
+    };
+
+    this._saveAnswerService.saveAnswer(exerciseRecord);
     if (isCorrect) {
       if (this.attempts === 1) {
         this.streakCount++;
