@@ -202,7 +202,7 @@ export class ExerciseComponent implements OnInit {
     if (isCorrect) {
       if (this.attempts === 1) {
         this.streakCount++;
-        this.shared.correctAnswer++;
+        this.shared.incrementCorrectAnswer();
       }
       this.isDisabled = true;
       this.showFeedback(true);
