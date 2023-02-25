@@ -206,7 +206,6 @@ export class DataService {
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
-          .limit(5)
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
