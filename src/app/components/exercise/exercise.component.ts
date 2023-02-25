@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
+import { ExerciseRecord } from './exerciserecord';
 import { DataService } from '../../service/data.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
