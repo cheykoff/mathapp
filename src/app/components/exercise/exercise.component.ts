@@ -181,6 +181,11 @@ export class ExerciseComponent implements OnInit {
     this.attempts++;
   }
 
+  // call a method of the service instead adapting the variable
+  incrementCorrectAnswers(): void {
+    this.streakCount++;
+  }
+
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
     if (isCorrect) {
       if (this.attempts === 1) {
