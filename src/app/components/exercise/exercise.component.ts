@@ -95,19 +95,21 @@ export class ExerciseComponent implements OnInit {
       this.shared.countDownTimer();
       this.exercises$ = this._dataService
         .getExercises()
-        .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)));
-
-      this.exercises$.subscribe((data: Exercise[]) => {
-        this.shared.totalSessionQuestions = Math.min(
-          this.shared.totalSessionQuestions,
-          data.length
+        .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)))
+        .pipe(
+          tap((data: Exercise[]) => {
+            this.shared.totalSessionQuestions = Math.min(
+              this.shared.totalSessionQuestions,
+              data.length
+            );
+            for (let exercise of data) {
+              this.exercises.push(exercise);
+              this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+            }
+          })
         );
-        for (let exercise of data) {
-          this.exercises.push(exercise);
-          this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
-        }
-      });
     }
+  }
 
   // public methods
   getSrc(): string {
