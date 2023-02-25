@@ -5,7 +5,11 @@ import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
+import { ExerciseRecord } from './exerciserecord';
 import { DataService } from '../../service/data.service';
+import { CheckanswerService } from './services/checkanswer.service';
+import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
+import { SaveanswerService } from './services/saveanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { r3JitTypeSourceSpan } from '@angular/compiler';
 
@@ -15,25 +19,12 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit {
+  // public variables
   exercises$: Observable<Exercise[]>;
 
   maxAttempts: number = 3;
 
   srcs: string[] = [];
-
-  getSrc(): string {
-    if (this.srcs.length === 0) {
-      return null;
-    }
-    return this.srcs[this.currentQuestion];
-  }
-
-  getImg(): string {
-    if (!this.exercises[this.currentQuestion].img) {
-      return null;
-    }
-    return this.exercises[this.currentQuestion].img;
-  }
 
   exercises: Exercise[] = [];
 
@@ -62,13 +53,21 @@ export class ExerciseComponent implements OnInit {
 
   showNextButton: boolean = false;
 
+  // private variables
+
+  // constructor
   constructor(
     public shared: SharedService,
     private _router: Router,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _checkAnswerService: CheckanswerService,
+    private _checkDynamicAnswerService: CheckDynamicAnswerService,
+    private _saveAnswerService: SaveanswerService
   ) {}
 
+  // ngOnInit
   ngOnInit(): void {
+    this._checkAnswerService.consoleLog();
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
@@ -79,19 +78,37 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._dataService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._dataService.getExercises();
-
-      this.exercises$.subscribe((data: Exercise[]) => {
-        this.shared.totalSessionQuestions = Math.min(
-          this.shared.totalSessionQuestions,
-          data.length
+      this.exercises$ = this._dataService
+        .getExercises()
+        .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)))
+        .pipe(
+          tap((data: Exercise[]) => {
+            this.shared.totalSessionQuestions = Math.min(
+              this.shared.totalSessionQuestions,
+              data.length
+            );
+            for (let exercise of data) {
+              this.exercises.push(exercise);
+              this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+            }
+          })
         );
-        for (let exercise of data) {
-          this.exercises.push(exercise);
-          this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
-        }
-      });
     }
+  }
+
+  // public methods
+  getSrc(): string {
+    if (this.srcs.length === 0) {
+      return null;
+    }
+    return this.srcs[this.currentQuestion];
+  }
+
+  getImg(): string {
+    if (!this.exercises[this.currentQuestion].img) {
+      return null;
+    }
+    return this.exercises[this.currentQuestion].img;
   }
 
   resetCounts(): void {
@@ -117,46 +134,24 @@ export class ExerciseComponent implements OnInit {
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
     if (this.shared.mode === 'practice') {
-      this.saveDynamicAnswer(this.checkDynamicAnswer(form));
+      this.saveDynamicAnswer(
+        this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
+      );
     } else if (exercise.answerType === 'integer') {
-      this.saveAnswer(this.checkIntegerAnswer(form, exercise), exercise);
+      this.saveAnswer(
+        this._checkAnswerService.checkIntegerAnswer({ form, exercise }),
+        exercise
+      );
     } else {
-      this.saveAnswer(this.checkFractionAnswer(form, exercise), exercise);
-    }
-  }
-
-  checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    const correctDenominator = exercise.correctAnswerFraction.denominator;
-    const correctNumerator = exercise.correctAnswerFraction.numerator;
-    const givenDenominator = form.value.denominator;
-    const givenNumerator = form.value.numerator;
-
-    if (
-      (parseInt(givenDenominator) === parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === parseInt(correctNumerator)) ||
-      (parseInt(givenDenominator) === -1 * parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === -1 * parseInt(correctNumerator))
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  checkIntegerAnswer(form: NgForm, exercise?: Exercise): boolean {
-    const givenAnswer = form.value.givenAnswer;
-    if (
-      givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
-    ) {
-      return true;
-    } else {
-      return false;
+      this.saveAnswer(
+        this._checkAnswerService.checkFractionAnswer(form, exercise),
+        exercise
+      );
     }
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
     this.trackDurationAndAttempts();
-
     this.getCorrectAnswer(exercise);
     this.saveAnswer(option.isCorrect, exercise);
   }
@@ -176,11 +171,23 @@ export class ExerciseComponent implements OnInit {
     this.attempts++;
   }
 
+  incrementCorrectAnswers(): void {
+    this.streakCount++;
+  }
+
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
+    const exerciseRecord: ExerciseRecord = {
+      exercise,
+      duration: this.duration,
+      attempts: this.attempts,
+      answerIsCorrect: isCorrect,
+    };
+
+    this._saveAnswerService.saveAnswer(exerciseRecord);
     if (isCorrect) {
       if (this.attempts === 1) {
         this.streakCount++;
-        this.shared.correctAnswer++;
+        this.shared.incrementCorrectAnswer();
       }
       this.isDisabled = true;
       this.showFeedback(true);
@@ -725,4 +732,6 @@ export class ExerciseComponent implements OnInit {
       return false;
     }
   }
+
+  // private methods
 }

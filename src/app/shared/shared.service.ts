@@ -8,6 +8,7 @@ import { Student } from '../shared/student';
   providedIn: 'root',
 })
 export class SharedService {
+  // public variables
   studentData: Student = {
     id: '',
     studentId: 0,
@@ -55,7 +56,7 @@ export class SharedService {
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  totalSessionQuestions: number = 1000;
+  totalSessionQuestions: number = 20;
   docId: string;
   quizId: string;
   practiceId: string;
@@ -86,6 +87,11 @@ export class SharedService {
     Erfolge: false,
   };
 
+  // private variables
+
+  // constructor
+
+  // public methods
   setStudentData(studentData: Student): void {
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
@@ -260,6 +266,7 @@ export class SharedService {
 
   setSchoolClass(data: number): void {
     this.schoolClass = data;
+    localStorage.setItem('schoolClass', this.schoolClass.toString());
   }
 
   getSchoolClass(): number {
@@ -350,4 +357,10 @@ export class SharedService {
       }
     }
   }
+
+  incrementCorrectAnswer(): void {
+    this.correctAnswer++;
+  }
+
+  // private methods
 }
