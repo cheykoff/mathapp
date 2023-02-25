@@ -8,6 +8,8 @@ import { Student } from '../shared/student';
   providedIn: 'root',
 })
 export class SharedService {
+
+  // public variables
   studentData: Student = {
     id: '',
     studentId: 0,
@@ -86,6 +88,13 @@ export class SharedService {
     Erfolge: false,
   };
 
+  // private variables
+
+
+  // constructor
+
+
+  // public methods
   setStudentData(studentData: Student): void {
     this.studentData.id = studentData.id;
     this.studentData.studentId = studentData.studentId;
@@ -351,4 +360,7 @@ export class SharedService {
       }
     }
   }
+
+  
+  // private methods
 }

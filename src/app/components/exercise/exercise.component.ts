@@ -17,6 +17,8 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit {
+  
+  // public variables
   exercises$: Observable<Exercise[]>;
 
   maxAttempts: number = 3;
@@ -64,6 +66,9 @@ export class ExerciseComponent implements OnInit {
 
   showNextButton: boolean = false;
 
+  // private variables
+  
+  // constructor
   constructor(
     public shared: SharedService,
     private _router: Router,
@@ -71,6 +76,7 @@ export class ExerciseComponent implements OnInit {
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
   ) {}
 
+  // ngOnInit
   ngOnInit(): void {
     this._checkAnswerService.consoleLog();
     this.resetCounts();
@@ -98,6 +104,20 @@ export class ExerciseComponent implements OnInit {
         }
       });
     }
+
+  // public methods
+  getSrc(): string {
+    if (this.srcs.length === 0) {
+      return null;
+    }
+    return this.srcs[this.currentQuestion];
+  }
+
+  getImg(): string {
+    if (!this.exercises[this.currentQuestion].img) {
+      return null;
+    }
+    return this.exercises[this.currentQuestion].img;
   }
 
   resetCounts(): void {
@@ -710,4 +730,6 @@ export class ExerciseComponent implements OnInit {
       return false;
     }
   }
+
+  // private methods
 }
