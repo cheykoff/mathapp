@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
 import { DataService } from '../../service/data.service';
-import { CheckanswerService } from './checkanswer.service';
+import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { r3JitTypeSourceSpan } from '@angular/compiler';
 
@@ -67,7 +67,7 @@ export class ExerciseComponent implements OnInit {
     public shared: SharedService,
     private _router: Router,
     private _dataService: DataService,
-    private _checkAnswerService: CheckanswerService
+    private _checkDynamicAnswerService: CheckDynamicAnswerService,
   ) {}
 
   ngOnInit(): void {
@@ -122,7 +122,9 @@ export class ExerciseComponent implements OnInit {
 
   checkAnswer(form: NgForm, exercise?: Exercise): void {
     if (this.shared.mode === 'practice') {
-      this.saveDynamicAnswer(this.checkDynamicAnswer(form));
+      this.saveDynamicAnswer(
+        this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
+      );
     } else if (exercise.answerType === 'integer') {
       this.saveAnswer(
         this._checkAnswerService.checkIntegerAnswer(form, exercise),
