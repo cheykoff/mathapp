@@ -19,27 +19,12 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit {
-  
   // public variables
   exercises$: Observable<Exercise[]>;
 
   maxAttempts: number = 3;
 
   srcs: string[] = [];
-
-  getSrc(): string {
-    if (this.srcs.length === 0) {
-      return null;
-    }
-    return this.srcs[this.currentQuestion];
-  }
-
-  getImg(): string {
-    if (!this.exercises[this.currentQuestion].img) {
-      return null;
-    }
-    return this.exercises[this.currentQuestion].img;
-  }
 
   exercises: Exercise[] = [];
 
@@ -69,7 +54,7 @@ export class ExerciseComponent implements OnInit {
   showNextButton: boolean = false;
 
   // private variables
-  
+
   // constructor
   constructor(
     public shared: SharedService,
@@ -167,7 +152,6 @@ export class ExerciseComponent implements OnInit {
 
   onClickAnswer(option: any, exercise: Exercise): void {
     this.trackDurationAndAttempts();
-
     this.getCorrectAnswer(exercise);
     this.saveAnswer(option.isCorrect, exercise);
   }
@@ -187,7 +171,6 @@ export class ExerciseComponent implements OnInit {
     this.attempts++;
   }
 
-  // call a method of the service instead adapting the variable
   incrementCorrectAnswers(): void {
     this.streakCount++;
   }
