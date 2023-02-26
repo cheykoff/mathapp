@@ -44,9 +44,11 @@ export class ExerciseComponent implements OnInit {
   duration: number;
 
   isCorrect: boolean;
+
   answerPossible: boolean = true;
-  answerIsCorrect: boolean = false;
-  answerIsIncorrect: boolean = false;
+  // answerIsCorrect: boolean = null;
+  // answerIsIncorrect: boolean = null;
+  feedbackIsShown: boolean = false;
 
   correctAnswer: string = '';
   isDisabled: boolean;
@@ -204,15 +206,15 @@ export class ExerciseComponent implements OnInit {
         this.shared.incrementCorrectAnswer();
       }
       this.isDisabled = true;
-      this.showFeedback(true);
+      this.isCorrect = true;
+      // this.showFeedback(true);
       this.showNextButton = true;
     } else {
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
       }
-      this.showFeedback(false);
-
+      // this.showFeedback(false);
       if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
         this.showNextButton = true;
         this.isDisabled = true;
@@ -240,7 +242,7 @@ export class ExerciseComponent implements OnInit {
         this.shared.correctAnswer++;
       }
       this.isDisabled = true;
-      this.showFeedback(true);
+      // this.showFeedback(true);
       this.showNextButton = true;
     } else {
       if (this.attempts === 1) {
@@ -248,7 +250,7 @@ export class ExerciseComponent implements OnInit {
         this.streakCount = 0;
       }
       this.streakCount = 0;
-      this.showFeedback(false);
+      // this.showFeedback(false);
       if (this.attempts >= this.maxAttempts) {
         this.showNextButton = true;
         this.isDisabled = true;
@@ -270,15 +272,32 @@ export class ExerciseComponent implements OnInit {
     );
   }
 
+  showFeedback(): void {
+    console.log('show feedback');
+    this.feedbackIsShown = true;
+    console.log('feedbackIsShown: ' + this.feedbackIsShown);
+  }
+
+  hideFeedback(): void {
+    console.log('hide feedback');
+    this.feedbackIsShown = false;
+  }
+
+  feedbackIsShown2(): boolean {
+    return this.feedbackIsShown;
+  }
+
+  /*
   showFeedback(correctAnswer: boolean): void {
     if (correctAnswer) {
       this.answerIsCorrect = true;
       this.answerIsIncorrect = false;
     } else {
       this.answerIsCorrect = false;
-      this.answerIsIncorrect = true;
+      // this.answerIsIncorrect = true;
     }
   }
+  */
 
   nextExercise(): void {
     if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
@@ -307,8 +326,9 @@ export class ExerciseComponent implements OnInit {
     this.isCorrect = false;
     this.isDisabled = false;
     this.showNextButton = false;
-    this.answerIsIncorrect = false;
-    this.answerIsCorrect = false;
+    // this.answerIsIncorrect = null;
+    // this.answerIsCorrect = null;
+    this.hideFeedback();
   }
 
   showResult(): void {

@@ -182,8 +182,8 @@
       <p class="loading">Lade die nächste Aufgabe ...</p>
     </ng-template>
   </div>
-  <div class="feedback-wrapper">
-    <div *ngIf="answerIsCorrect" class="correct">
+  <div class="feedback-wrapper" *ngIf="feedbackIsShown2()">
+    <div *ngIf="isCorrect; else incorrectAnswer" class="correct">
       <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
         Richtig!
       </p>
@@ -191,16 +191,16 @@
         <p class="correctText feedback">Richtig! {{ streakCount }} in Folge!</p>
       </ng-template>
     </div>
-    <div *ngIf="answerIsIncorrect" class="wrong">
+    <ng-template #incorrectAnswer class="wrong">
       <div>
         <div class="incorrectText feedback">
           <p>Leider falsch!</p>
         </div>
       </div>
-    </div>
+    </ng-template>
   </div>
 
-  <div *ngIf="attempts >= maxAttempts && answerIsIncorrect">
+  <div *ngIf="attempts >= maxAttempts && !isCorrect">
     <div *ngIf="this.shared.mode === 'quiz'">
       <p
         *ngIf="
