@@ -127,27 +127,41 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    this.trackDurationAndAttempts();
-    this.checkAnswer(form, exercise);
+    console.log('onSubmitAnswer');
+    if (this.checkAnswer(form, exercise)) {
+      this.trackDurationAndAttempts();
+      this.showFeedback();
+    }
     form.reset();
   }
 
-  checkAnswer(form: NgForm, exercise?: Exercise): void {
+  checkAnswer(form: NgForm, exercise?: Exercise): boolean {
+    console.log('checkAnswer');
+    console.log(form.value.givenAnswer);
+    if (!form.value.givenAnswer) {
+      console.log('no answer given');
+      return false;
+    }
     if (this.shared.mode === 'practice') {
       this.saveDynamicAnswer(
         this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
       );
     } else if (exercise.answerType === 'integer') {
-      this.saveAnswer(
-        this._checkAnswerService.checkIntegerAnswer({ form, exercise }),
-        exercise
-      );
+      if (form.value.givenAnswer != '' && form.value.givenAnswer != null) {
+        const tmp = this._checkAnswerService.checkIntegerAnswer({
+          form,
+          exercise,
+        });
+        this.isCorrect = tmp;
+        this.saveAnswer(tmp, exercise);
+      }
     } else {
       this.saveAnswer(
         this._checkAnswerService.checkFractionAnswer(form, exercise),
         exercise
       );
     }
+    return true;
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {

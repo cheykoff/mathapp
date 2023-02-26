@@ -21,10 +21,11 @@ export class CheckanswerService {
     form: NgForm;
     exercise?: Exercise;
   }): boolean {
-    console.log('CheckanswerService: checkIntegerAnswer called');
+    console.log('CheckanswerService: checkIntegerAnswer');
     const givenAnswer = form.value.givenAnswer;
     return (
-      givenAnswer.toString().replace('.', ',').trim() === exercise.correctAnswer
+      givenAnswer.toString().replace('.', ',').trim() ===
+      exercise.correctAnswer.trim()
     );
   }
 
