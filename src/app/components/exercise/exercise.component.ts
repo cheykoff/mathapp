@@ -133,6 +133,27 @@ export class ExerciseComponent implements OnInit {
     if (this.checkAnswer(form, exercise)) {
       this.trackDurationAndAttempts();
       this.showFeedback();
+      if (this.shared.mode === 'practice') {
+        this.saveDynamicAnswer(
+          this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
+        );
+      } else if (exercise.answerType === 'integer') {
+        if (form.value.givenAnswer != '' && form.value.givenAnswer != null) {
+          // I think it is not needed anymore (the check is in checkAnswer already)
+          const tmp = this._checkAnswerService.checkIntegerAnswer({
+            form,
+            exercise,
+          });
+          this.isCorrect = tmp;
+          this.saveAnswer(tmp, exercise);
+        }
+      } else {
+        this.saveAnswer(
+          this._checkAnswerService.checkFractionAnswer(form, exercise),
+          exercise
+        );
+      }
+      this.saveAnswer(this.isCorrect, exercise);
     }
     form.reset();
   }
@@ -143,25 +164,6 @@ export class ExerciseComponent implements OnInit {
     if (!form.value.givenAnswer) {
       console.log('no answer given');
       return false;
-    }
-    if (this.shared.mode === 'practice') {
-      this.saveDynamicAnswer(
-        this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
-      );
-    } else if (exercise.answerType === 'integer') {
-      if (form.value.givenAnswer != '' && form.value.givenAnswer != null) {
-        const tmp = this._checkAnswerService.checkIntegerAnswer({
-          form,
-          exercise,
-        });
-        this.isCorrect = tmp;
-        this.saveAnswer(tmp, exercise);
-      }
-    } else {
-      this.saveAnswer(
-        this._checkAnswerService.checkFractionAnswer(form, exercise),
-        exercise
-      );
     }
     return true;
   }
