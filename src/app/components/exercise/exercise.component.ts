@@ -170,16 +170,8 @@ export class ExerciseComponent implements OnInit {
 
   onClickAnswer(option: any, exercise: Exercise): void {
     this.trackDurationAndAttempts();
-    this.getCorrectAnswer(exercise);
-    this.saveAnswer(option.isCorrect, exercise);
-  }
-
-  getCorrectAnswer(exercise: Exercise): void {
-    exercise.answerOptions.forEach((answerOption) => {
-      if (answerOption.isCorrect) {
-        this.correctAnswer = answerOption.answerText;
-      }
-    });
+    this.saveAnswer(!!option.isCorrect, exercise);
+    this.showFeedback();
   }
 
   trackDurationAndAttempts(): void {
