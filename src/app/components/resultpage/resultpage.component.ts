@@ -43,6 +43,7 @@ export class ResultpageComponent implements OnInit {
     this.getStars();
     if (this.shared.mode === 'quiz') {
       this._dataService.storeQuizEnd();
+      this.shared.stopCountDownTimer();
     } else if (this.shared.mode === 'practice') {
       this._dataService.storeLevelEnd();
       this._dataService.storelevelStars();

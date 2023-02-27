@@ -203,12 +203,16 @@ export class SharedService {
       if (this.counter === 0) {
         this.quizFinished = true;
         this._router.navigate(['/', 'resultpage']);
-        this.countDown.unsubscribe();
-        this.countDownRunning = false;
-        this.countDown = null;
-        this.counter = this.countDownStartTime;
+        this.stopCountDownTimer();
       }
     });
+  }
+
+  stopCountDownTimer() {
+    this.countDown.unsubscribe();
+    this.countDownRunning = false;
+    this.countDown = null;
+    this.counter = this.countDownStartTime;
   }
 
   getStudentId(): number {
