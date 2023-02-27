@@ -1,13 +1,10 @@
 export const environment = {
   firebase: {
-    apiKey: 'AIzaSyC9VBHxz2xe5x2V5LJB87VpQVrtwSWioEI',
-    authDomain: 'quizapp-d018b.firebaseapp.com',
-    databaseURL:
-      'https://quizapp-d018b-default-rtdb.europe-west1.firebasedatabase.app',
-    projectId: 'quizapp-d018b',
-    storageBucket: 'quizapp-d018b.appspot.com',
-    messagingSenderId: '628501369285',
-    appId: '1:628501369285:web:a52c2a1cea581154fffbac',
+    apiKey: 'AIzaSyBv9-Y9p7rM5JU2Q1NOS1FYn73iM4m2wzU',
+    authDomain: 'matheapp-dev.firebaseapp.com',
+    projectId: 'matheapp-dev',
+    storageBucket: 'matheapp-dev.appspot.com',
+    appId: '1:1088114733510:web:6d1958d66fe8d67e73c2c7',
   },
   production: false,
   useEmulators: false,
