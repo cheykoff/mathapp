@@ -143,7 +143,7 @@ export class ExerciseComponent implements OnInit {
             exercise,
           });
           this.isCorrect = tmp;
-          // this.saveAnswer(tmp, exercise);
+          this.saveAnswer(tmp, exercise);
         }
       } else {
         this.saveAnswer(
@@ -152,7 +152,7 @@ export class ExerciseComponent implements OnInit {
         );
       }
       this.showFeedback();
-      this.saveAnswer(this.isCorrect, exercise);
+      // this.saveAnswer(this.isCorrect, exercise);
     }
     form.reset();
   }
@@ -227,6 +227,7 @@ export class ExerciseComponent implements OnInit {
 
   saveDynamicAnswer(isCorrect: boolean): void {
     if (isCorrect) {
+      this.isCorrect = true;
       if (this.attempts === 1) {
         this.streakCount++;
         this.shared.correctAnswer++;
@@ -235,9 +236,9 @@ export class ExerciseComponent implements OnInit {
       // this.showFeedback(true);
       this.showNextButton = true;
     } else {
+      this.isCorrect = false;
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
-        this.streakCount = 0;
       }
       this.streakCount = 0;
       // this.showFeedback(false);
