@@ -56,7 +56,7 @@ export class SharedService {
   schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  totalSessionQuestions: number = 5;
+  totalSessionQuestions: number = 20;
   docId: string;
   quizId: string;
   practiceId: string;
@@ -74,7 +74,7 @@ export class SharedService {
   possibleStars: number = 0;
 
   countDown: Subscription;
-  countDownStartTime = 180; // 1800 s = 30 minutes
+  countDownStartTime = 1800; // 1800 s = 30 minutes
   counter = this.countDownStartTime;
   tick = 1000;
   countDownRunning: boolean = false;
