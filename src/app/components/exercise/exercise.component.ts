@@ -158,7 +158,34 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): boolean {
+    if (this.shared.mode === 'practice') {
+      return this.checkDynamicAnswer2(form);
+    }
+    if (exercise.answerType === 'integer') {
+      return this.checkIntegerAnswer(form, exercise);
+    }
+    if (exercise.answerType === 'fraction') {
+      return this.checkFractionAnswer(form, exercise);
+    }
+    return true;
+  }
+
+  checkIntegerAnswer(form: NgForm, exercise: Exercise): boolean {
     if (!form.value.givenAnswer) {
+      return false;
+    }
+    return true;
+  }
+
+  checkFractionAnswer(form: NgForm, exercise: Exercise): boolean {
+    if (form.value.numerator === '' || form.value.denominator === '') {
+      return false;
+    }
+    return true;
+  }
+
+  checkDynamicAnswer2(form: NgForm): boolean {
+    if (isNaN(form.value.givenAnswer)) {
       return false;
     }
     return true;
