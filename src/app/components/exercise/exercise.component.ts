@@ -147,7 +147,7 @@ export class ExerciseComponent implements OnInit {
             exercise,
           });
           this.isCorrect = tmp;
-          this.saveAnswer(tmp, exercise);
+          // this.saveAnswer(tmp, exercise);
         }
       } else {
         this.saveAnswer(

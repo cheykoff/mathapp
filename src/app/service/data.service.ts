@@ -157,6 +157,7 @@ export class DataService {
     startTime: Date,
     endTime: Date
   ) {
+    console.log('storeAnswer');
     this._store
       .collection(
         `students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}/answers`
