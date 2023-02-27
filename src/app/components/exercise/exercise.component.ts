@@ -339,11 +339,6 @@ export class ExerciseComponent implements OnInit {
     this._router.navigate(['/', 'resultpage']);
   }
 
-  onFocusEvent(event: any) {
-    console.log('focus event');
-    this.isCorrect = false;
-  }
-
   createTerm(): void {
     console.log('createTerm');
     // TODO: Create more terms with brackets -> change probabilities
