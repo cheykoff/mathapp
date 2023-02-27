@@ -11,9 +11,6 @@ export class SaveanswerService {
   constructor(shared: SharedService) {}
 
   saveAnswer(exerciseRecord: ExerciseRecord): void {
-    console.log('SaveanswerService: saveAnswer called');
-    console.log('exerciseRecord: ');
-    console.log(exerciseRecord);
     return;
   }
 }

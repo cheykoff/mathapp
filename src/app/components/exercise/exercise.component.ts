@@ -69,7 +69,6 @@ export class ExerciseComponent implements OnInit {
 
   // ngOnInit
   ngOnInit(): void {
-    console.log('ExerciseComponent: ngOnInit called');
     this.resetCounts();
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
@@ -114,7 +113,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   resetCounts(): void {
-    console.log('resetCounts');
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
     this.streakCount = 0;
@@ -122,7 +120,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   shuffleExercises(exercises: Exercise[]): Exercise[] {
-    console.log('shuffleExercises');
     for (let i = exercises.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
@@ -131,7 +128,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    console.log('onSubmitAnswer');
     if (this.checkAnswer(form, exercise)) {
       this.trackDurationAndAttempts();
 
@@ -162,10 +158,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('checkAnswer');
-    console.log(form.value.givenAnswer);
     if (!form.value.givenAnswer) {
-      console.log('no answer given');
       return false;
     }
     return true;
@@ -178,7 +171,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   trackDurationAndAttempts(): void {
-    console.log('trackDurationAndAttempts');
     // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
     this.endTime = new Date();
     this.duration = this.endTime.getTime() - this.startTime.getTime();
@@ -190,7 +182,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   saveAnswer(isCorrect: boolean, exercise: Exercise): void {
-    console.log('saveAnswer');
     const exerciseRecord: ExerciseRecord = {
       exercise,
       duration: this.duration,
@@ -224,8 +215,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    console.log('storeAnswer');
-    console.log('duration: ' + this.duration);
     this._dataService.storeAnswer(
       currentQuestionId,
       isCorrect,
@@ -274,13 +263,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   showFeedback(): void {
-    console.log('show feedback');
     this.feedbackIsShown = true;
-    console.log('feedbackIsShown: ' + this.feedbackIsShown);
   }
 
   hideFeedback(): void {
-    console.log('hide feedback');
     this.feedbackIsShown = false;
   }
 
@@ -301,7 +287,6 @@ export class ExerciseComponent implements OnInit {
   */
 
   nextExercise(): void {
-    console.log('nextExercise');
     if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
       this.showResult();
     }
@@ -324,7 +309,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   clearForm() {
-    console.log('clearForm');
     this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
@@ -335,12 +319,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   showResult(): void {
-    console.log('showResult');
     this._router.navigate(['/', 'resultpage']);
   }
 
   createTerm(): void {
-    console.log('createTerm');
     // TODO: Create more terms with brackets -> change probabilities
     const level = this.shared.chosenLevel;
     this.startTime = new Date();

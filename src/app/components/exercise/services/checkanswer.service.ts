@@ -10,10 +10,6 @@ import { SharedService } from 'src/app/shared/shared.service';
 export class CheckanswerService {
   constructor(public shared: SharedService) {}
 
-  consoleLog() {
-    console.log('checkanswer service called');
-  }
-
   checkIntegerAnswer({
     form,
     exercise,
@@ -21,7 +17,6 @@ export class CheckanswerService {
     form: NgForm;
     exercise?: Exercise;
   }): boolean {
-    console.log('CheckanswerService: checkIntegerAnswer');
     const givenAnswer = form.value.givenAnswer;
     return (
       givenAnswer.toString().replace('.', ',').trim() ===
@@ -30,7 +25,6 @@ export class CheckanswerService {
   }
 
   checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    console.log('CheckanswerService: checkFractionAnswer called');
     const correctDenominator = exercise.correctAnswerFraction.denominator;
     const correctNumerator = exercise.correctAnswerFraction.numerator;
     const givenDenominator = form.value.denominator;

@@ -8,7 +8,6 @@ export class CheckDynamicAnswerService {
   constructor() {}
 
   checkDynamicAnswer(form: NgForm, answer: number): boolean {
-    console.log('CheckDynamicAnswerService: checkDynamicAnswer called');
     const givenAnswer = form.value.givenAnswer;
     // refactor to: return givenAnswer === answer;
     if (givenAnswer === answer) {
