@@ -134,7 +134,7 @@ export class ExerciseComponent implements OnInit {
     console.log('onSubmitAnswer');
     if (this.checkAnswer(form, exercise)) {
       this.trackDurationAndAttempts();
-      this.showFeedback();
+
       if (this.shared.mode === 'practice') {
         this.saveDynamicAnswer(
           this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
@@ -155,6 +155,7 @@ export class ExerciseComponent implements OnInit {
           exercise
         );
       }
+      this.showFeedback();
       this.saveAnswer(this.isCorrect, exercise);
     }
     form.reset();
