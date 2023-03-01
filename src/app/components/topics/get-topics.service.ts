@@ -14,7 +14,7 @@ export class GetTopicsService {
 
   getTopics(): Observable<Topic[]> {
     return this._store
-      .collection('topics')
+      .collection('topics', (ref) => ref.orderBy('orderNumber', 'asc'))
       .get()
       .pipe(map((result) => convertSnaps<Topic>(result)));
   }
