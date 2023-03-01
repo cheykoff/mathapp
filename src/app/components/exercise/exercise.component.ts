@@ -11,8 +11,6 @@ import { GetExercisesService } from '../../service/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { SaveanswerService } from './services/saveanswer.service';
-import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { r3JitTypeSourceSpan } from '@angular/compiler';
 import { StoreQuizService } from 'src/app/service/store-quiz.service';
 
 @Component({
@@ -48,8 +46,7 @@ export class ExerciseComponent implements OnInit {
   isCorrect: boolean;
 
   answerPossible: boolean = true;
-  // answerIsCorrect: boolean = null;
-  // answerIsIncorrect: boolean = null;
+
   feedbackIsShown: boolean = false;
 
   correctAnswer: string = '';
@@ -306,18 +303,6 @@ export class ExerciseComponent implements OnInit {
     return this.feedbackIsShown;
   }
 
-  /*
-  showFeedback(correctAnswer: boolean): void {
-    if (correctAnswer) {
-      this.answerIsCorrect = true;
-      this.answerIsIncorrect = false;
-    } else {
-      this.answerIsCorrect = false;
-      // this.answerIsIncorrect = true;
-    }
-  }
-  */
-
   nextExercise(): void {
     if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
       this.showResult();
@@ -345,8 +330,6 @@ export class ExerciseComponent implements OnInit {
     this.isCorrect = false;
     this.isDisabled = false;
     this.showNextButton = false;
-    // this.answerIsIncorrect = null;
-    // this.answerIsCorrect = null;
     this.hideFeedback();
   }
 
