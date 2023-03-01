@@ -30,6 +30,29 @@ export class StoreQuizService {
     );
   }
 
+  storeAnswer(
+    exerciseId: string,
+    answerIsCorrect: boolean,
+    duration: number,
+    attempts: number,
+    startTime: Date,
+    endTime: Date
+  ) {
+    this._store
+      .collection(
+        `students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}/answers`
+      )
+      .add({
+        startTime: startTime,
+        endTime: endTime,
+        exerciseId: exerciseId,
+        attempt: attempts,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+        studentId: this._shared.getStudentId(),
+      });
+  }
+
   storeQuizEnd() {
     const quizEndTime = new Date();
 

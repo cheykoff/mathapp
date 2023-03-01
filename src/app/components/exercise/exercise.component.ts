@@ -246,7 +246,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    this._dataService.storeAnswer(
+    this._storeQuizService.storeAnswer(
       currentQuestionId,
       isCorrect,
       this.duration,
