@@ -24,7 +24,6 @@ export class GetExercisesService {
           .where('chapter', '==', this._shared.getChapter())
       )
       .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)))
-      .pipe(tap((result) => console.log(result)));
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 }
