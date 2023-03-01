@@ -5,6 +5,7 @@ import { Observable, share } from 'rxjs';
 
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
+import { GetStudentDataService } from 'src/app/service/get-student-data.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     public shared: SharedService,
-    private _data: DataService
+    private _getStudentData: GetStudentDataService
   ) {}
 
   defaultStudentId: number;
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
       // TODO: Need to ensure that the id is unique
       this.validStudentId = true;
       this.shared.setStudentId(value.studentId);
-      this._data.getStudentDocument(value.studentId);
+      this._getStudentData.getStudentDocument(value.studentId);
       this.goToClassSelection();
       this.shared.storeStudentIdInLocalStorage();
     } else {
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
   generateId(): void {
     const newId = Math.floor(110000 + Math.random() * 890000);
     this.shared.setStudentId(newId);
-    this._data.getStudentDocument(newId);
+    this._getStudentData.getStudentDocument(newId);
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }

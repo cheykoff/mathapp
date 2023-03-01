@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
 
 import { SharedService } from '../../shared/shared.service';
+import { GetStudentDataService } from 'src/app/service/get-student-data.service';
 
 @Component({
   selector: 'app-statistics',
@@ -9,10 +9,13 @@ import { SharedService } from '../../shared/shared.service';
   styleUrls: ['./statistics.component.scss'],
 })
 export class StatisticsComponent implements OnInit {
-  constructor(public shared: SharedService, private _data: DataService) {}
+  constructor(
+    public shared: SharedService,
+    private _getStudentData: GetStudentDataService
+  ) {}
 
   ngOnInit(): void {
-    this._data.getStudentDocument(this.shared.getStudentId());
+    this._getStudentData.getStudentDocument(this.shared.getStudentId());
     this.shared.calculatePossibleStars();
     this.shared.calculateCollectedStars();
   }
