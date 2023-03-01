@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
 import { StoreQuizService } from '../../service/store-quiz.service';
+import { StorePracticeService } from '../../service/store-practice.service';
 
 @Component({
   selector: 'app-resultpage',
@@ -13,7 +14,8 @@ export class ResultpageComponent implements OnInit {
   constructor(
     public shared: SharedService,
     private _dataService: DataService,
-    private _storeQuizService: StoreQuizService
+    private _storeQuizService: StoreQuizService,
+    private _storePracticeService: StorePracticeService
   ) {}
 
   stars: number;
@@ -47,8 +49,8 @@ export class ResultpageComponent implements OnInit {
       this._storeQuizService.storeQuizEnd();
       this.shared.stopCountDownTimer();
     } else if (this.shared.mode === 'practice') {
-      this._dataService.storeLevelEnd();
-      this._dataService.storelevelStars();
+      this._storePracticeService.storeLevelEnd();
+      this._storePracticeService.storelevelStars();
     }
   }
 

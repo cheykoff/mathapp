@@ -6,12 +6,12 @@ import { NgForm } from '@angular/forms';
 import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
 import { ExerciseRecord } from './exerciserecord';
-import { DataService } from '../../service/data.service';
 import { GetExercisesService } from '../../service/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { SaveanswerService } from './services/saveanswer.service';
 import { StoreQuizService } from 'src/app/service/store-quiz.service';
+import { StorePracticeService } from 'src/app/service/store-practice.service';
 
 @Component({
   selector: 'app-exercise',
@@ -46,7 +46,8 @@ export class ExerciseComponent implements OnInit {
   isCorrect: boolean;
 
   answerPossible: boolean = true;
-
+  // answerIsCorrect: boolean = null;
+  // answerIsIncorrect: boolean = null;
   feedbackIsShown: boolean = false;
 
   correctAnswer: string = '';
@@ -60,12 +61,12 @@ export class ExerciseComponent implements OnInit {
   constructor(
     public shared: SharedService,
     private _router: Router,
-    private _dataService: DataService,
     private _checkAnswerService: CheckanswerService,
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
     private _saveAnswerService: SaveanswerService,
     private _getExercisesService: GetExercisesService,
-    private _storeQuizService: StoreQuizService
+    private _storeQuizService: StoreQuizService,
+    private _storePracticeService: StorePracticeService
   ) {}
 
   // ngOnInit
@@ -74,7 +75,7 @@ export class ExerciseComponent implements OnInit {
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
       this.createExercise();
-      this._dataService.storePracticeStart();
+      this._storePracticeService.storePracticeStart();
     } else {
       const quizStartDate = new Date();
       this.shared.setQuizStartTime(quizStartDate);
@@ -280,7 +281,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
-    this._dataService.storeDynamicAnswer(
+    this._storePracticeService.storeDynamicAnswer(
       this.question,
       this.answer,
       this.givenAnswer,
@@ -330,6 +331,8 @@ export class ExerciseComponent implements OnInit {
     this.isCorrect = false;
     this.isDisabled = false;
     this.showNextButton = false;
+    // this.answerIsIncorrect = null;
+    // this.answerIsCorrect = null;
     this.hideFeedback();
   }
 
