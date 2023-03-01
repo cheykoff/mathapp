@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { SharedService } from '../../shared/shared.service';
 import { DataService } from '../../service/data.service';
-import { NgForm } from '@angular/forms';
+import { StoreQuizService } from '../../service/store-quiz.service';
 
 @Component({
   selector: 'app-resultpage',
@@ -11,7 +12,8 @@ import { NgForm } from '@angular/forms';
 export class ResultpageComponent implements OnInit {
   constructor(
     public shared: SharedService,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _storeQuizService: StoreQuizService
   ) {}
 
   stars: number;
@@ -42,7 +44,7 @@ export class ResultpageComponent implements OnInit {
   ngOnInit(): void {
     this.getStars();
     if (this.shared.mode === 'quiz') {
-      this._dataService.storeQuizEnd();
+      this._storeQuizService.storeQuizEnd();
       this.shared.stopCountDownTimer();
     } else if (this.shared.mode === 'practice') {
       this._dataService.storeLevelEnd();

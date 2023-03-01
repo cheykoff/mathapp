@@ -45,38 +45,6 @@ export class DataService {
     localStorage.setItem('schoolClassName', schoolClassName);
   }
 
-  storeQuizStart() {
-    this._store
-      .collection(`students/${this._shared.getStudentDocumentId()}/quizzes`)
-      .add({
-        quizTemplateId: 'TY1wRNj2Bq71aCvGgf0v',
-        url: window.location.href,
-        startTime: serverTimestamp(),
-      })
-      .then((docRef) => {
-        this._shared.setQuizId(docRef.id);
-      });
-    localStorage.setItem(
-      'schoolClass',
-      this._shared.getSchoolClass().toString()
-    );
-  }
-
-  storeQuizEnd() {
-    const quizEndTime = new Date();
-
-    this._store
-      .doc(
-        `/students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}`
-      )
-      .update({
-        correctAnswers: this._shared.correctAnswer,
-        totalQuestions:
-          this._shared.correctAnswer + this._shared.incorrectAnswer,
-        duration: quizEndTime.getTime() - this._shared.getQuizStartTime(),
-      });
-  }
-
   storePracticeStart() {
     this._store
       .collection(`students/${this._shared.getStudentDocumentId()}/practices`)

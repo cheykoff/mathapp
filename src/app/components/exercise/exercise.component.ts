@@ -13,6 +13,7 @@ import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service
 import { SaveanswerService } from './services/saveanswer.service';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { r3JitTypeSourceSpan } from '@angular/compiler';
+import { StoreQuizService } from 'src/app/service/store-quiz.service';
 
 @Component({
   selector: 'app-exercise',
@@ -66,7 +67,8 @@ export class ExerciseComponent implements OnInit {
     private _checkAnswerService: CheckanswerService,
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
     private _saveAnswerService: SaveanswerService,
-    private _getExercisesService: GetExercisesService
+    private _getExercisesService: GetExercisesService,
+    private _storeQuizService: StoreQuizService
   ) {}
 
   // ngOnInit
@@ -79,7 +81,7 @@ export class ExerciseComponent implements OnInit {
     } else {
       const quizStartDate = new Date();
       this.shared.setQuizStartTime(quizStartDate);
-      this._dataService.storeQuizStart();
+      this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
       this.exercises$ = this._getExercisesService
         .getExercises()
