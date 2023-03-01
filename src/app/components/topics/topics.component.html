@@ -4,7 +4,7 @@
 </div>
 <div class="main">
   <ul>
-    <li *ngFor="let topic of topics">
+    <li *ngFor="let topic of topics$ | async">
       <button
         class="btn btnList classBtn"
         [disabled]="topic.disabled"

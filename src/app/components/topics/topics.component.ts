@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SharedService } from '../../services/shared.service';
+import { Observable } from 'rxjs';
 
-import { Topic, topics } from './topics';
+import { SharedService } from '../../services/shared.service';
+import { GetTopicsService } from './get-topics.service';
+
+import { Topic } from './topics';
 
 @Component({
   selector: 'app-topics',
@@ -11,20 +14,16 @@ import { Topic, topics } from './topics';
   styleUrls: ['./topics.component.scss'],
 })
 export class TopicsComponent implements OnInit {
-  topics: Topic[] = topics;
+  topics$: Observable<Topic[]>;
 
-  constructor(private _router: Router, public shared: SharedService) {}
+  constructor(
+    private _router: Router,
+    public shared: SharedService,
+    public getTopics: GetTopicsService
+  ) {}
 
   ngOnInit(): void {
-    if (
-      this.shared.studentData.levelStars === undefined ||
-      this.shared.studentData.levelStars === null
-    ) {
-      this.shared.initializeLevelStars();
-    } else {
-      this.shared.initializeLevelStarsPerTopic();
-    }
-    this.shared.setCurrentLevels();
+    this.topics$ = this.getTopics.getTopics();
   }
 
   goToLevelPage(topic: Topic) {
