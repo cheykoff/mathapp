@@ -150,8 +150,19 @@ export class ExerciseComponent implements OnInit {
           this.saveAnswer(tmp, exercise);
         }
       } else {
+        const givenAnswerFraction = {
+          numerator: parseInt(form.value.numerator),
+          denominator: parseInt(form.value.denominator),
+        };
+        const correctAnswerFraction = {
+          numerator: parseInt(exercise.correctAnswerFraction.numerator),
+          denominator: parseInt(exercise.correctAnswerFraction.denominator),
+        };
         this.saveAnswer(
-          this._checkAnswerService.checkFractionAnswer(form, exercise),
+          this._checkAnswerService.checkFractionAnswer(
+            givenAnswerFraction,
+            correctAnswerFraction
+          ),
           exercise
         );
       }
@@ -182,7 +193,12 @@ export class ExerciseComponent implements OnInit {
   }
 
   checkFractionAnswer(form: NgForm, exercise: Exercise): boolean {
-    if (form.value.numerator === '' || form.value.denominator === '') {
+    if (
+      form.value.numerator === '' ||
+      form.value.numerator === null ||
+      form.value.denominator === '' ||
+      form.value.denominator === null
+    ) {
       return false;
     }
     return true;
