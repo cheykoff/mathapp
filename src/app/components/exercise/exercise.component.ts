@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, map, Observable, Subscription, timer, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 import { SharedService } from '../../services/shared.service';
