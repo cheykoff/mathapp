@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { map } from 'rxjs';
 
-import { Student } from '../shared/student';
+import { Student } from '../models/student';
 import { convertSnaps } from '../../utils/db-utils';
 
 @Injectable({

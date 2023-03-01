@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 
-import { Student } from '../shared/student';
+import { Student } from '../models/student';
 
 @Injectable({
   providedIn: 'root',
