@@ -7,6 +7,7 @@ import { SharedService } from '../../shared/shared.service';
 import { Exercise } from '../../shared/exercise';
 import { ExerciseRecord } from './exerciserecord';
 import { DataService } from '../../service/data.service';
+import { GetExercisesService } from '../../service/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { SaveanswerService } from './services/saveanswer.service';
@@ -64,7 +65,8 @@ export class ExerciseComponent implements OnInit {
     private _dataService: DataService,
     private _checkAnswerService: CheckanswerService,
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
-    private _saveAnswerService: SaveanswerService
+    private _saveAnswerService: SaveanswerService,
+    private _getExercisesService: GetExercisesService
   ) {}
 
   // ngOnInit
@@ -79,7 +81,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._dataService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._dataService
+      this.exercises$ = this._getExercisesService
         .getExercises()
         .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)))
         .pipe(

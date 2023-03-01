@@ -3,7 +3,7 @@ import { SharedService } from '../shared/shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { serverTimestamp, increment } from 'firebase/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 import { Exercise } from '../shared/exercise';
 import { Chapter } from '../components/chapterselection/chapters';
@@ -167,16 +167,5 @@ export class DataService {
         attempt: attempt,
         topic: this._shared.topic,
       });
-  }
-
-  getExercises(): Observable<Exercise[]> {
-    return this._store
-      .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', this._shared.getSchoolClass())
-          .where('chapter', '==', this._shared.getChapter())
-      )
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 }
