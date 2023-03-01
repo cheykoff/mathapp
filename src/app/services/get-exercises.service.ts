@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import { Observable, map, tap } from 'rxjs';
 
 import { Exercise } from '../components/exercise/exercise';
-import { convertSnaps } from './db-utils';
+import { convertSnaps } from '../../utils/db-utils';
 
 @Injectable({
   providedIn: 'root',

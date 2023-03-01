@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import { map } from 'rxjs';
 
 import { Student } from '../shared/student';
-import { convertSnaps } from './db-utils';
+import { convertSnaps } from '../../utils/db-utils';
 
 @Injectable({
   providedIn: 'root',
