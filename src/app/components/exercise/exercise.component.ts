@@ -132,7 +132,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    if (this.checkAnswer(form, exercise)) {
+    if (form.valid) {
       this.trackDurationAndAttempts();
 
       if (this.shared.mode === 'practice') {
@@ -170,45 +170,6 @@ export class ExerciseComponent implements OnInit {
       // this.saveAnswer(this.isCorrect, exercise);
     }
     form.reset();
-  }
-
-  checkAnswer(form: NgForm, exercise?: Exercise): boolean {
-    if (this.shared.mode === 'practice') {
-      return this.checkDynamicAnswer2(form);
-    }
-    if (exercise.answerType === 'integer') {
-      return this.checkIntegerAnswer(form, exercise);
-    }
-    if (exercise.answerType === 'fraction') {
-      return this.checkFractionAnswer(form, exercise);
-    }
-    return true;
-  }
-
-  checkIntegerAnswer(form: NgForm, exercise: Exercise): boolean {
-    if (!form.value.givenAnswer) {
-      return false;
-    }
-    return true;
-  }
-
-  checkFractionAnswer(form: NgForm, exercise: Exercise): boolean {
-    if (
-      form.value.numerator === '' ||
-      form.value.numerator === null ||
-      form.value.denominator === '' ||
-      form.value.denominator === null
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  checkDynamicAnswer2(form: NgForm): boolean {
-    if (isNaN(form.value.givenAnswer)) {
-      return false;
-    }
-    return true;
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
