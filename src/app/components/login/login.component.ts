@@ -3,9 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, share } from 'rxjs';
 
-import { SharedService } from '../../shared/shared.service';
-import { DataService } from '../../service/data.service';
-import { GetStudentDataService } from 'src/app/service/get-student-data.service';
+import { SharedService } from '../../services/shared.service';
+import { DataService } from '../../services/data.service';
+import { GetStudentDataService } from 'src/app/services/get-student-data.service';
 
 @Component({
   selector: 'app-login',

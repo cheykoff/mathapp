@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { DataService } from './service/data.service';
-import { SharedService } from './shared/shared.service';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,7 @@ import { SharedService } from './shared/shared.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private _dataService: DataService,
-    private _shared: SharedService
-  ) {}
+  constructor(private _shared: SharedService) {}
 
   ngOnInit(): void {
     this._shared.reloadStudentData();

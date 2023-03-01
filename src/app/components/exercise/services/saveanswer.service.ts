@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Exercise } from 'src/app/shared/exercise';
-import { SharedService } from 'src/app/shared/shared.service';
+import { Exercise } from 'src/app/components/exercise/exercise';
+import { SharedService } from 'src/app/services/shared.service';
 import { ExerciseRecord } from '../exerciserecord';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { Exercise } from '../../shared/exercise';
+import { Exercise } from './exercise';
 
 export interface ExerciseRecord {
   exercise: Exercise;

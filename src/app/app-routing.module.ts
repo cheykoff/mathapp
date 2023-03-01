@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { WebsiteComponent } from './website/website.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -17,7 +17,7 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 
 const routes: Routes = [
   { path: '', redirectTo: '/website', pathMatch: 'full' },
-  { path: 'website', component: WebsiteComponent },
+  { path: 'website', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'topics', component: TopicsComponent },

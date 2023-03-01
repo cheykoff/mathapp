@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SharedService } from '../../shared/shared.service';
+import { SharedService } from '../../services/shared.service';
 
 import { Topic, topics } from './topics';
 

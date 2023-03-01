@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
+import { SharedService } from './shared.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { map } from 'rxjs';

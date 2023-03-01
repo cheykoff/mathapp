@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { from, map, Observable, Subscription, timer, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
-import { SharedService } from '../../shared/shared.service';
-import { Exercise } from '../../shared/exercise';
+import { SharedService } from '../../services/shared.service';
+import { Exercise } from './exercise';
 import { ExerciseRecord } from './exerciserecord';
-import { GetExercisesService } from '../../service/get-exercises.service';
+import { GetExercisesService } from '../../services/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { SaveanswerService } from './services/saveanswer.service';
-import { StoreQuizService } from 'src/app/service/store-quiz.service';
-import { StorePracticeService } from 'src/app/service/store-practice.service';
+import { StoreQuizService } from 'src/app/services/store-quiz.service';
+import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 @Component({
   selector: 'app-exercise',
@@ -54,6 +54,8 @@ export class ExerciseComponent implements OnInit {
   isDisabled: boolean;
 
   showNextButton: boolean = false;
+
+  private _currentLevelStars: number;
 
   // private variables
 
@@ -737,10 +739,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   calculateStars(): void {
-    this.shared.currentLevelStars = Math.max(
-      0,
-      5 - this.shared.incorrectAnswer
-    );
+    this._currentLevelStars = Math.max(0, 5 - this.shared.incorrectAnswer);
 
     this.shared.studentData.levelStars[this.shared.topic][
       this.shared.chosenLevel - 1
@@ -748,7 +747,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.studentData.levelStars[this.shared.topic][
         this.shared.chosenLevel - 1
       ],
-      this.shared.currentLevelStars
+      this._currentLevelStars
     );
 
     if (

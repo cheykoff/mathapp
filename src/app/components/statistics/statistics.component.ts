@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SharedService } from '../../shared/shared.service';
-import { GetStudentDataService } from 'src/app/service/get-student-data.service';
+import { SharedService } from '../../services/shared.service';
+import { GetStudentDataService } from 'src/app/services/get-student-data.service';
 
 @Component({
   selector: 'app-statistics',

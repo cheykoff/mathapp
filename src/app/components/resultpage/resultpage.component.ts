@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SharedService } from '../../shared/shared.service';
-import { DataService } from '../../service/data.service';
-import { StoreQuizService } from '../../service/store-quiz.service';
-import { StorePracticeService } from '../../service/store-practice.service';
+import { SharedService } from '../../services/shared.service';
+import { DataService } from '../../services/data.service';
+import { StoreQuizService } from '../../services/store-quiz.service';
+import { StorePracticeService } from '../../services/store-practice.service';
 
 @Component({
   selector: 'app-resultpage',

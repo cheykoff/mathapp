@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MenuListItem, menuListItems } from './menulist';
-import { SharedService } from '../../shared/shared.service';
+import { SharedService } from '../../services/shared.service';
 import { Router } from '@angular/router';
 
 @Component({
