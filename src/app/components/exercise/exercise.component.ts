@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { map, Observable, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { map, Observable, tap } from 'rxjs';
 
 import { SharedService } from '../../services/shared.service';
-import { Exercise } from './exercise';
-import { ExerciseRecord } from './exerciserecord';
 import { GetExercisesService } from '../../services/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
@@ -14,6 +13,11 @@ import { StoreQuizService } from 'src/app/services/store-quiz.service';
 import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 import { createExercise } from './create-exercise';
+
+import { Quiz } from './quiz';
+import { QuizRecord } from './quizrecord';
+import { Exercise } from './exercise';
+import { ExerciseRecord } from './exerciserecord';
 
 import { AppConfig } from '../../../appconfig';
 
@@ -26,17 +30,42 @@ export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
   // exercises: Exercise[] = [];
+
   maxAttempts: number = AppConfig.maxAttempts;
-  currentQuestion: number = 0;
+
+  quiz: Quiz = {
+    classLevel: this.shared.chosenLevel,
+    chapter: this.shared.chapter,
+    numberOfQuestions: AppConfig.quizQuestions,
+    timeLimit: AppConfig.quizTimeLimit,
+  };
+
+  quizRecord: QuizRecord = {
+    quiz: this.quiz,
+    startTime: new Date(),
+    endTime: null,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    streakCount: 0,
+    currentQuestion: 0,
+  };
+
+  // currentQuestion: number = 0;
+  // streakCount: number = 0;
+
+  // exerciseRecord
   attempts: number = 0;
-  streakCount: number = 0;
+  isCorrect: boolean;
+
+  // those should not be necessary
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
-  isCorrect: boolean;
+
   showNextButton: boolean = false;
+  isDisabled: boolean;
 
   // private variables
   private _srcs: string[] = [];
@@ -44,7 +73,6 @@ export class ExerciseComponent implements OnInit {
   private _endTime: Date;
   private _duration: number;
   private _feedbackIsShown: boolean = false;
-  private _isDisabled: boolean;
   private _currentLevelStars: number;
 
   // constructor
@@ -100,7 +128,7 @@ export class ExerciseComponent implements OnInit {
     if (this._srcs.length === 0) {
       return null;
     }
-    return this._srcs[this.currentQuestion];
+    return this._srcs[this.quizRecord.currentQuestion];
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
@@ -150,7 +178,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
+    if (
+      this.quizRecord.currentQuestion >=
+      this.shared.totalSessionQuestions - 1
+    ) {
       this._showResult();
     }
     this._clearForm();
@@ -163,7 +194,7 @@ export class ExerciseComponent implements OnInit {
       this.answer = answer;
       this._startTime = startTime;
     }
-    this.currentQuestion++;
+    this.quizRecord.currentQuestion++;
     this._startTime = new Date();
 
     if (
@@ -181,7 +212,7 @@ export class ExerciseComponent implements OnInit {
   private _resetCounts(): void {
     this.shared.correctAnswer = 0;
     this.shared.incorrectAnswer = 0;
-    this.streakCount = 0;
+    this.quizRecord.streakCount = 0;
     this.attempts = 0;
   }
 
@@ -201,7 +232,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   private _incrementStreakCount(): void {
-    this.streakCount++;
+    this.quizRecord.streakCount++;
   }
 
   private _saveAnswer(isCorrect: boolean, exercise: Exercise): void {
@@ -218,20 +249,20 @@ export class ExerciseComponent implements OnInit {
         this._incrementStreakCount();
         this.shared.incrementCorrectAnswer();
       }
-      this._isDisabled = true;
+      this.isDisabled = true;
       this.isCorrect = true;
       this.showNextButton = true;
     } else {
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
-        this.streakCount = 0;
+        this.quizRecord.streakCount = 0;
       }
       if (
         this.attempts >= AppConfig.maxAttempts &&
         exercise.answerType !== 'mc'
       ) {
         this.showNextButton = true;
-        this._isDisabled = true;
+        this.isDisabled = true;
       }
     }
     this._storeAnswer(isCorrect, exercise.id);
@@ -256,17 +287,17 @@ export class ExerciseComponent implements OnInit {
         this._incrementStreakCount();
         this.shared.correctAnswer++;
       }
-      this._isDisabled = true;
+      this.isDisabled = true;
       this.showNextButton = true;
     } else {
       this.isCorrect = false;
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
       }
-      this.streakCount = 0;
+      this.quizRecord.streakCount = 0;
       if (this.attempts >= AppConfig.maxAttempts) {
         this.showNextButton = true;
-        this._isDisabled = true;
+        this.isDisabled = true;
       }
     }
     this._storeDynamicAnswer(isCorrect);
@@ -297,7 +328,7 @@ export class ExerciseComponent implements OnInit {
     this.givenAnswer = null;
     this.attempts = 0;
     this.isCorrect = false;
-    this._isDisabled = false;
+    this.isDisabled = false;
     this.showNextButton = false;
     this._hideFeedback();
   }

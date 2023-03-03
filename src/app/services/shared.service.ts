@@ -12,7 +12,7 @@ export class SharedService {
   // public variables
 
   totalSessionQuestions: number = AppConfig.quizQuestions;
-  countDownStartTime = AppConfig.quizDuration;
+  countDownStartTime = AppConfig.quizTimeLimit;
 
   studentData: Student = {
     id: '',
