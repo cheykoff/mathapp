@@ -22,6 +22,12 @@ export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
 
+  /*
+  Observable in parent
+  inject the parent in the child
+
+  */
+
   maxAttempts: number = 3;
 
   srcs: string[] = [];
@@ -319,6 +325,9 @@ export class ExerciseComponent implements OnInit {
     this._router.navigate(['/', 'resultpage']);
   }
 
+  // use a simple function (if you don't need to inject anything)
+  // in exercise-util.ts
+  // pass in chosenLevel
   createTerm(): void {
     // TODO: Create more terms with brackets -> change probabilities
     const level = this.shared.chosenLevel;
@@ -711,6 +720,7 @@ export class ExerciseComponent implements OnInit {
     return;
   }
 
+  // util function
   getRandInteger(min, max) {
     return Math.round(Math.random() * (max - min) + min);
   }

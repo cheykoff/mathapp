@@ -101,13 +101,55 @@
           Antwort prüfen
         </button>
       </form>
+      <form
+        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        #f="ngForm"
+      >
+        <div class="tableWrapper">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    id="numerator"
+                    name="numerator"
+                    [(ngModel)]="numerator"
+                    required
+                    autocomplete="off"
+                    [disabled]="isDisabled"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    id="denominator"
+                    name="denominator"
+                    [(ngModel)]="denominator"
+                    required
+                    autocomplete="off"
+                    [disabled]="isDisabled"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+        <button class="btn classBtn" type="submit" [disabled]="isDisabled">
+          Antwort prüfen
+        </button>
+      </form>
+
+      <!--
       <app-exercise-fraction
         *ngIf="exercises[currentQuestion].answerType === 'fraction'"
         [exercises]="exercises"
-        #f="ngForm"
-        (submitAnswer)="onSubmitAnswer(f, exercises[currentQuestion])"
+        (submitAnswer)="onSubmitAnswer(exercises[currentQuestion])"
       ></app-exercise-fraction>
+      -->
 
       <form
         (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
