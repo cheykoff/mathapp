@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Exercise } from 'src/app/shared/exercise';
-import { SharedService } from 'src/app/shared/shared.service';
+import { Exercise } from 'src/app/components/exercise/exercise';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,21 +24,25 @@ export class CheckanswerService {
     );
   }
 
-  checkFractionAnswer(form: NgForm, exercise?: Exercise): boolean {
-    const correctDenominator = exercise.correctAnswerFraction.denominator;
-    const correctNumerator = exercise.correctAnswerFraction.numerator;
-    const givenDenominator = form.value.denominator;
-    const givenNumerator = form.value.numerator;
-
+  checkFractionAnswer(
+    givenAnswerFraction: { numerator: number; denominator: number },
+    correctAnswerFraction: { numerator: number; denominator: number }
+  ): boolean {
     if (
-      (parseInt(givenDenominator) === parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === parseInt(correctNumerator)) ||
-      (parseInt(givenDenominator) === -1 * parseInt(correctDenominator) &&
-        parseInt(givenNumerator) === -1 * parseInt(correctNumerator))
+      givenAnswerFraction.denominator === correctAnswerFraction.denominator &&
+      givenAnswerFraction.numerator === correctAnswerFraction.numerator
     ) {
       return true;
-    } else {
-      return false;
     }
+    if (
+      givenAnswerFraction.denominator ===
+        -1 * correctAnswerFraction.denominator &&
+      givenAnswerFraction.numerator === -1 * correctAnswerFraction.numerator &&
+      (correctAnswerFraction.denominator < 0 ||
+        correctAnswerFraction.numerator < 0)
+    ) {
+      return true;
+    }
+    return false;
   }
 }

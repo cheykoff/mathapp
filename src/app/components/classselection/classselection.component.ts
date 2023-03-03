@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataService } from '../../service/data.service';
-import { SharedService } from '../../shared/shared.service';
+import { DataService } from '../../services/data.service';
+import { SharedService } from '../../services/shared.service';
 import { SchoolClass, schoolClasses } from './classes';
 
 @Component({

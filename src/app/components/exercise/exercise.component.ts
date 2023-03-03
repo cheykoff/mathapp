@@ -1,17 +1,17 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, map, Observable, Subscription, timer, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
-import { SharedService } from '../../shared/shared.service';
-import { Exercise } from '../../shared/exercise';
+import { SharedService } from '../../services/shared.service';
+import { Exercise } from './exercise';
 import { ExerciseRecord } from './exerciserecord';
-import { DataService } from '../../service/data.service';
+import { GetExercisesService } from '../../services/get-exercises.service';
 import { CheckanswerService } from './services/checkanswer.service';
 import { CheckDynamicAnswerService } from './services/checkdynamicanswer.service';
 import { SaveanswerService } from './services/saveanswer.service';
-import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { r3JitTypeSourceSpan } from '@angular/compiler';
+import { StoreQuizService } from 'src/app/services/store-quiz.service';
+import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 @Component({
   selector: 'app-exercise',
@@ -21,6 +21,12 @@ import { r3JitTypeSourceSpan } from '@angular/compiler';
 export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
+
+  /*
+  Observable in parent
+  inject the parent in the child
+
+  */
 
   maxAttempts: number = 3;
 
@@ -55,16 +61,20 @@ export class ExerciseComponent implements OnInit {
 
   showNextButton: boolean = false;
 
+  private _currentLevelStars: number;
+
   // private variables
 
   // constructor
   constructor(
     public shared: SharedService,
     private _router: Router,
-    private _dataService: DataService,
     private _checkAnswerService: CheckanswerService,
     private _checkDynamicAnswerService: CheckDynamicAnswerService,
-    private _saveAnswerService: SaveanswerService
+    private _saveAnswerService: SaveanswerService,
+    private _getExercisesService: GetExercisesService,
+    private _storeQuizService: StoreQuizService,
+    private _storePracticeService: StorePracticeService
   ) {}
 
   // ngOnInit
@@ -73,13 +83,13 @@ export class ExerciseComponent implements OnInit {
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
       this.createExercise();
-      this._dataService.storePracticeStart();
+      this._storePracticeService.storePracticeStart();
     } else {
       const quizStartDate = new Date();
       this.shared.setQuizStartTime(quizStartDate);
-      this._dataService.storeQuizStart();
+      this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._dataService
+      this.exercises$ = this._getExercisesService
         .getExercises()
         .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)))
         .pipe(
@@ -128,7 +138,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    if (this.checkAnswer(form, exercise)) {
+    if (form.valid) {
       this.trackDurationAndAttempts();
 
       if (this.shared.mode === 'practice') {
@@ -146,8 +156,19 @@ export class ExerciseComponent implements OnInit {
           this.saveAnswer(tmp, exercise);
         }
       } else {
+        const givenAnswerFraction = {
+          numerator: parseInt(form.value.numerator),
+          denominator: parseInt(form.value.denominator),
+        };
+        const correctAnswerFraction = {
+          numerator: parseInt(exercise.correctAnswerFraction.numerator),
+          denominator: parseInt(exercise.correctAnswerFraction.denominator),
+        };
         this.saveAnswer(
-          this._checkAnswerService.checkFractionAnswer(form, exercise),
+          this._checkAnswerService.checkFractionAnswer(
+            givenAnswerFraction,
+            correctAnswerFraction
+          ),
           exercise
         );
       }
@@ -155,40 +176,6 @@ export class ExerciseComponent implements OnInit {
       // this.saveAnswer(this.isCorrect, exercise);
     }
     form.reset();
-  }
-
-  checkAnswer(form: NgForm, exercise?: Exercise): boolean {
-    if (this.shared.mode === 'practice') {
-      return this.checkDynamicAnswer2(form);
-    }
-    if (exercise.answerType === 'integer') {
-      return this.checkIntegerAnswer(form, exercise);
-    }
-    if (exercise.answerType === 'fraction') {
-      return this.checkFractionAnswer(form, exercise);
-    }
-    return true;
-  }
-
-  checkIntegerAnswer(form: NgForm, exercise: Exercise): boolean {
-    if (!form.value.givenAnswer) {
-      return false;
-    }
-    return true;
-  }
-
-  checkFractionAnswer(form: NgForm, exercise: Exercise): boolean {
-    if (form.value.numerator === '' || form.value.denominator === '') {
-      return false;
-    }
-    return true;
-  }
-
-  checkDynamicAnswer2(form: NgForm): boolean {
-    if (isNaN(form.value.givenAnswer)) {
-      return false;
-    }
-    return true;
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
@@ -242,7 +229,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    this._dataService.storeAnswer(
+    this._storeQuizService.storeAnswer(
       currentQuestionId,
       isCorrect,
       this.duration,
@@ -279,7 +266,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   storeDynamicAnswer(isCorrect: boolean): void {
-    this._dataService.storeDynamicAnswer(
+    this._storePracticeService.storeDynamicAnswer(
       this.question,
       this.answer,
       this.givenAnswer,
@@ -301,18 +288,6 @@ export class ExerciseComponent implements OnInit {
   feedbackIsShown2(): boolean {
     return this.feedbackIsShown;
   }
-
-  /*
-  showFeedback(correctAnswer: boolean): void {
-    if (correctAnswer) {
-      this.answerIsCorrect = true;
-      this.answerIsIncorrect = false;
-    } else {
-      this.answerIsCorrect = false;
-      // this.answerIsIncorrect = true;
-    }
-  }
-  */
 
   nextExercise(): void {
     if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
@@ -350,6 +325,9 @@ export class ExerciseComponent implements OnInit {
     this._router.navigate(['/', 'resultpage']);
   }
 
+  // use a simple function (if you don't need to inject anything)
+  // in exercise-util.ts
+  // pass in chosenLevel
   createTerm(): void {
     // TODO: Create more terms with brackets -> change probabilities
     const level = this.shared.chosenLevel;
@@ -742,15 +720,13 @@ export class ExerciseComponent implements OnInit {
     return;
   }
 
+  // util function
   getRandInteger(min, max) {
     return Math.round(Math.random() * (max - min) + min);
   }
 
   calculateStars(): void {
-    this.shared.currentLevelStars = Math.max(
-      0,
-      5 - this.shared.incorrectAnswer
-    );
+    this._currentLevelStars = Math.max(0, 5 - this.shared.incorrectAnswer);
 
     this.shared.studentData.levelStars[this.shared.topic][
       this.shared.chosenLevel - 1
@@ -758,7 +734,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.studentData.levelStars[this.shared.topic][
         this.shared.chosenLevel - 1
       ],
-      this.shared.currentLevelStars
+      this._currentLevelStars
     );
 
     if (
