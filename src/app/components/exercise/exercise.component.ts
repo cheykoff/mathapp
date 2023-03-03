@@ -13,6 +13,7 @@ import { StoreQuizService } from 'src/app/services/store-quiz.service';
 import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 import { createExercise } from './create-exercise';
+import { shuffleExercises } from './exercise-util';
 
 import { Quiz } from './quiz';
 import { QuizRecord } from './quizrecord';
@@ -107,7 +108,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.countDownTimer();
       this.exercises$ = this._getExercisesService
         .getExercises()
-        .pipe(map((exercises: Exercise[]) => this._shuffleExercises(exercises)))
+        .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
@@ -214,14 +215,6 @@ export class ExerciseComponent implements OnInit {
     this.shared.incorrectAnswer = 0;
     this.quizRecord.streakCount = 0;
     this.attempts = 0;
-  }
-
-  private _shuffleExercises(exercises: Exercise[]): Exercise[] {
-    for (let i = exercises.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
-    }
-    return exercises;
   }
 
   private _trackDurationAndAttempts(): void {
