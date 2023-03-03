@@ -183,7 +183,7 @@ export class ExerciseComponent implements OnInit {
       this.showFeedback();
       // this.saveAnswer(this.isCorrect, exercise);
     }
-    form.reset();
+    // form.reset();
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
@@ -325,7 +325,8 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
-  clearForm() {
+  clearForm(): void {
+    this.givenAnswer = null;
     this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
