@@ -183,7 +183,7 @@
       <p class="loading">Lade die nächste Aufgabe ...</p>
     </ng-template>
   </div>
-  <div class="feedback-wrapper" *ngIf="feedbackIsShown2()">
+  <div class="feedback-wrapper" *ngIf="feedbackIsShown()">
     <div *ngIf="isCorrect; else incorrectAnswer" class="correct">
       <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
         Richtig!
@@ -235,6 +235,6 @@
     Nächste Frage
   </button>
   <button class="btn btn-secondary" routerLink="/levelpage">
-    Zurück zur Levelauswahl
+    Zur Levelauswahl
   </button>
 </div>

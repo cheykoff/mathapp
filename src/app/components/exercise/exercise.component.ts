@@ -23,49 +23,27 @@ import { createExercise } from './create-exercise';
 export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
-
-  /*
-  Observable in parent
-  inject the parent in the child
-
-  */
-
-  maxAttempts: number = 3;
-
-  srcs: string[] = [];
-
   exercises: Exercise[] = [];
-
+  maxAttempts: number = 3;
   currentQuestion: number = 0;
   attempts: number = 0;
   streakCount: number = 0;
-
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
-  givenAnswers: any = [];
-
-  startTime: Date = new Date();
-  endTime: Date;
-  duration: number;
-
   isCorrect: boolean;
-
-  answerPossible: boolean = true;
-  // answerIsCorrect: boolean = null;
-  // answerIsIncorrect: boolean = null;
-  feedbackIsShown: boolean = false;
-
-  correctAnswer: string = '';
-  isDisabled: boolean;
-
   showNextButton: boolean = false;
 
-  private _currentLevelStars: number;
-
   // private variables
+  private _srcs: string[] = [];
+  private _startTime: Date = new Date();
+  private _endTime: Date;
+  private _duration: number;
+  private _feedbackIsShown: boolean = false;
+  private _isDisabled: boolean;
+  private _currentLevelStars: number;
 
   // constructor
   constructor(
@@ -81,7 +59,7 @@ export class ExerciseComponent implements OnInit {
 
   // ngOnInit
   ngOnInit(): void {
-    this.resetCounts();
+    this._resetCounts();
     if (this.shared.mode === 'practice') {
       this.shared.totalSessionQuestions = 10;
       let { question, answer, startTime } = createExercise(
@@ -90,7 +68,7 @@ export class ExerciseComponent implements OnInit {
       );
       this.question = question;
       this.answer = answer;
-      this.startTime = startTime;
+      this._startTime = startTime;
       this._storePracticeService.storePracticeStart();
     } else {
       const quizStartDate = new Date();
@@ -99,7 +77,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.countDownTimer();
       this.exercises$ = this._getExercisesService
         .getExercises()
-        .pipe(map((exercises: Exercise[]) => this.shuffleExercises(exercises)))
+        .pipe(map((exercises: Exercise[]) => this._shuffleExercises(exercises)))
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
@@ -108,7 +86,7 @@ export class ExerciseComponent implements OnInit {
             );
             for (let exercise of data) {
               this.exercises.push(exercise);
-              this.srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
             }
           })
         );
@@ -117,52 +95,27 @@ export class ExerciseComponent implements OnInit {
 
   // public methods
   getSrc(): string {
-    if (this.srcs.length === 0) {
+    if (this._srcs.length === 0) {
       return null;
     }
-    return this.srcs[this.currentQuestion];
-  }
-
-  getImg(): string {
-    if (!this.exercises[this.currentQuestion].img) {
-      return null;
-    }
-    return this.exercises[this.currentQuestion].img;
-  }
-
-  resetCounts(): void {
-    this.shared.correctAnswer = 0;
-    this.shared.incorrectAnswer = 0;
-    this.streakCount = 0;
-    this.attempts = 0;
-  }
-
-  shuffleExercises(exercises: Exercise[]): Exercise[] {
-    for (let i = exercises.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
-    }
-    return exercises;
+    return this._srcs[this.currentQuestion];
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
     if (form.valid) {
-      this.trackDurationAndAttempts();
+      this._trackDurationAndAttempts();
 
       if (this.shared.mode === 'practice') {
-        this.saveDynamicAnswer(
+        this._saveDynamicAnswer(
           this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
         );
       } else if (exercise.answerType === 'integer') {
-        if (form.value.givenAnswer != '' && form.value.givenAnswer != null) {
-          // I think it is not needed anymore (the check is in checkAnswer already)
-          const tmp = this._checkAnswerService.checkIntegerAnswer({
-            form,
-            exercise,
-          });
-          this.isCorrect = tmp;
-          this.saveAnswer(tmp, exercise);
-        }
+        const tmp = this._checkAnswerService.checkIntegerAnswer({
+          form,
+          exercise,
+        });
+        this.isCorrect = tmp;
+        this._saveAnswer(tmp, exercise);
       } else {
         const givenAnswerFraction = {
           numerator: parseInt(form.value.numerator),
@@ -172,7 +125,7 @@ export class ExerciseComponent implements OnInit {
           numerator: parseInt(exercise.correctAnswerFraction.numerator),
           denominator: parseInt(exercise.correctAnswerFraction.denominator),
         };
-        this.saveAnswer(
+        this._saveAnswer(
           this._checkAnswerService.checkFractionAnswer(
             givenAnswerFraction,
             correctAnswerFraction
@@ -180,128 +133,25 @@ export class ExerciseComponent implements OnInit {
           exercise
         );
       }
-      this.showFeedback();
-      // this.saveAnswer(this.isCorrect, exercise);
+      this._showFeedback();
     }
-    // form.reset();
   }
 
   onClickAnswer(option: any, exercise: Exercise): void {
-    this.trackDurationAndAttempts();
-    this.saveAnswer(!!option.isCorrect, exercise);
-    this.showFeedback();
+    this._trackDurationAndAttempts();
+    this._saveAnswer(!!option.isCorrect, exercise);
+    this._showFeedback();
   }
 
-  trackDurationAndAttempts(): void {
-    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
-    this.endTime = new Date();
-    this.duration = this.endTime.getTime() - this.startTime.getTime();
-    this.attempts++;
-  }
-
-  incrementCorrectAnswers(): void {
-    this.streakCount++;
-  }
-
-  saveAnswer(isCorrect: boolean, exercise: Exercise): void {
-    const exerciseRecord: ExerciseRecord = {
-      exercise,
-      duration: this.duration,
-      attempts: this.attempts,
-      answerIsCorrect: isCorrect,
-    };
-
-    this._saveAnswerService.saveAnswer(exerciseRecord);
-    if (isCorrect) {
-      if (this.attempts === 1) {
-        this.streakCount++;
-        this.shared.incrementCorrectAnswer();
-      }
-      this.isDisabled = true;
-      this.isCorrect = true;
-      // this.showFeedback(true);
-      this.showNextButton = true;
-    } else {
-      if (this.attempts === 1) {
-        this.shared.incorrectAnswer++;
-        this.streakCount = 0;
-      }
-      // this.showFeedback(false);
-      if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
-        this.showNextButton = true;
-        this.isDisabled = true;
-      }
-    }
-    this.storeAnswer(isCorrect, exercise.id);
-    return;
-  }
-
-  storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
-    this._storeQuizService.storeAnswer(
-      currentQuestionId,
-      isCorrect,
-      this.duration,
-      this.attempts,
-      this.startTime,
-      this.endTime
-    );
-  }
-
-  saveDynamicAnswer(isCorrect: boolean): void {
-    if (isCorrect) {
-      this.isCorrect = true;
-      if (this.attempts === 1) {
-        this.streakCount++;
-        this.shared.correctAnswer++;
-      }
-      this.isDisabled = true;
-      // this.showFeedback(true);
-      this.showNextButton = true;
-    } else {
-      this.isCorrect = false;
-      if (this.attempts === 1) {
-        this.shared.incorrectAnswer++;
-      }
-      this.streakCount = 0;
-      // this.showFeedback(false);
-      if (this.attempts >= this.maxAttempts) {
-        this.showNextButton = true;
-        this.isDisabled = true;
-      }
-    }
-    this.storeDynamicAnswer(isCorrect);
-    return;
-  }
-
-  storeDynamicAnswer(isCorrect: boolean): void {
-    this._storePracticeService.storeDynamicAnswer(
-      this.question,
-      this.answer,
-      this.givenAnswer,
-      isCorrect,
-      this.duration,
-      this.shared.chosenLevel,
-      this.attempts
-    );
-  }
-
-  showFeedback(): void {
-    this.feedbackIsShown = true;
-  }
-
-  hideFeedback(): void {
-    this.feedbackIsShown = false;
-  }
-
-  feedbackIsShown2(): boolean {
-    return this.feedbackIsShown;
+  feedbackIsShown(): boolean {
+    return this._feedbackIsShown;
   }
 
   nextExercise(): void {
     if (this.currentQuestion >= this.shared.totalSessionQuestions - 1) {
-      this.showResult();
+      this._showResult();
     }
-    this.clearForm();
+    this._clearForm();
     if (this.shared.mode === 'practice') {
       let { question, answer, startTime } = createExercise(
         this.shared.chosenLevel,
@@ -309,44 +159,149 @@ export class ExerciseComponent implements OnInit {
       );
       this.question = question;
       this.answer = answer;
-      this.startTime = startTime;
+      this._startTime = startTime;
     }
     this.currentQuestion++;
-    this.startTime = new Date();
+    this._startTime = new Date();
 
     if (
       this.shared.correctAnswer + this.shared.incorrectAnswer >=
       this.shared.totalSessionQuestions
     ) {
       if (this.shared.mode === 'practice') {
-        this.calculateStars();
+        this._calculateStars();
       }
-      this.showResult();
+      this._showResult();
     }
   }
 
-  clearForm(): void {
+  // private methods
+  private _resetCounts(): void {
+    this.shared.correctAnswer = 0;
+    this.shared.incorrectAnswer = 0;
+    this.streakCount = 0;
+    this.attempts = 0;
+  }
+
+  private _shuffleExercises(exercises: Exercise[]): Exercise[] {
+    for (let i = exercises.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [exercises[i], exercises[j]] = [exercises[j], exercises[i]];
+    }
+    return exercises;
+  }
+
+  private _trackDurationAndAttempts(): void {
+    // TODO; performance API https://developer.mozilla.org/en-US/docs/Web/API/Performance
+    this._endTime = new Date();
+    this._duration = this._endTime.getTime() - this._startTime.getTime();
+    this.attempts++;
+  }
+
+  private _incrementStreakCount(): void {
+    this.streakCount++;
+  }
+
+  private _saveAnswer(isCorrect: boolean, exercise: Exercise): void {
+    const exerciseRecord: ExerciseRecord = {
+      exercise,
+      duration: this._duration,
+      attempts: this.attempts,
+      answerIsCorrect: isCorrect,
+    };
+
+    this._saveAnswerService.saveAnswer(exerciseRecord);
+    if (isCorrect) {
+      if (this.attempts === 1) {
+        this._incrementStreakCount();
+        this.shared.incrementCorrectAnswer();
+      }
+      this._isDisabled = true;
+      this.isCorrect = true;
+      this.showNextButton = true;
+    } else {
+      if (this.attempts === 1) {
+        this.shared.incorrectAnswer++;
+        this.streakCount = 0;
+      }
+      if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
+        this.showNextButton = true;
+        this._isDisabled = true;
+      }
+    }
+    this._storeAnswer(isCorrect, exercise.id);
+    return;
+  }
+
+  private _storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+    this._storeQuizService.storeAnswer(
+      currentQuestionId,
+      isCorrect,
+      this._duration,
+      this.attempts,
+      this._startTime,
+      this._endTime
+    );
+  }
+
+  private _saveDynamicAnswer(isCorrect: boolean): void {
+    if (isCorrect) {
+      this.isCorrect = true;
+      if (this.attempts === 1) {
+        this._incrementStreakCount();
+        this.shared.correctAnswer++;
+      }
+      this._isDisabled = true;
+      this.showNextButton = true;
+    } else {
+      this.isCorrect = false;
+      if (this.attempts === 1) {
+        this.shared.incorrectAnswer++;
+      }
+      this.streakCount = 0;
+      if (this.attempts >= this.maxAttempts) {
+        this.showNextButton = true;
+        this._isDisabled = true;
+      }
+    }
+    this._storeDynamicAnswer(isCorrect);
+    return;
+  }
+
+  private _storeDynamicAnswer(isCorrect: boolean): void {
+    this._storePracticeService.storeDynamicAnswer(
+      this.question,
+      this.answer,
+      this.givenAnswer,
+      isCorrect,
+      this._duration,
+      this.shared.chosenLevel,
+      this.attempts
+    );
+  }
+
+  private _showFeedback(): void {
+    this._feedbackIsShown = true;
+  }
+
+  private _hideFeedback(): void {
+    this._feedbackIsShown = false;
+  }
+
+  private _clearForm(): void {
     this.givenAnswer = null;
     this.attempts = 0;
     this.isCorrect = false;
-    this.isDisabled = false;
+    this._isDisabled = false;
     this.showNextButton = false;
-    // this.answerIsIncorrect = null;
-    // this.answerIsCorrect = null;
-    this.hideFeedback();
+    this._hideFeedback();
   }
 
-  showResult(): void {
+  private _showResult(): void {
     this._router.navigate(['/', 'resultpage']);
   }
 
-  // use a simple function (if you don't need to inject anything)
-  // in exercise-util.ts
-  // pass in chosenLevel
-
-  // util function
-
-  calculateStars(): void {
+  private _calculateStars(): void {
     this._currentLevelStars = Math.max(0, 5 - this.shared.incorrectAnswer);
 
     this.shared.studentData.levelStars[this.shared.topic][
@@ -364,16 +319,4 @@ export class ExerciseComponent implements OnInit {
       this.shared.currentLevel[this.shared.topic]++;
     }
   }
-
-  checkDynamicAnswer(form: NgForm): boolean {
-    const givenAnswer = form.value.givenAnswer;
-
-    if (givenAnswer === this.answer) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // private methods
 }
