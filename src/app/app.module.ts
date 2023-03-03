@@ -34,6 +34,7 @@ import { TopicsComponent } from './components/topics/topics.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AutofocusDirective } from '../directives/autofocus.directive';
 import { ChapterselectionComponent } from './components/chapterselection/chapterselection.component';
+import { ExerciseFractionComponent } from './components/exercise/exercise-fraction/exercise-fraction.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ChapterselectionComponent } from './components/chapterselection/chapter
     StatisticsComponent,
     AutofocusDirective,
     ChapterselectionComponent,
+    ExerciseFractionComponent,
   ],
   imports: [
     BrowserModule,
