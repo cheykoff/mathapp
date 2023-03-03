@@ -104,6 +104,7 @@
       <form
         (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
         #f="ngForm"
+        *ngIf="exercises[currentQuestion].answerType === 'fraction'"
       >
         <div class="tableWrapper">
           <table>
@@ -234,7 +235,5 @@
   >
     Nächste Frage
   </button>
-  <button class="btn btn-secondary" routerLink="/levelpage">
-    Zur Levelauswahl
-  </button>
+  <button class="btn btn-secondary" routerLink="/menu">Abbrechen</button>
 </div>

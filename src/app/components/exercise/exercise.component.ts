@@ -15,6 +15,8 @@ import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 import { createExercise } from './create-exercise';
 
+import { AppConfig } from '../../../appconfig';
+
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
@@ -23,8 +25,8 @@ import { createExercise } from './create-exercise';
 export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
-  exercises: Exercise[] = [];
-  maxAttempts: number = 3;
+  // exercises: Exercise[] = [];
+  maxAttempts: number = AppConfig.maxAttempts;
   currentQuestion: number = 0;
   attempts: number = 0;
   streakCount: number = 0;
@@ -61,7 +63,7 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     this._resetCounts();
     if (this.shared.mode === 'practice') {
-      this.shared.totalSessionQuestions = 10;
+      this.shared.totalSessionQuestions = AppConfig.practiceQuestions;
       let { question, answer, startTime } = createExercise(
         this.shared.chosenLevel,
         this.shared.topic
@@ -81,11 +83,11 @@ export class ExerciseComponent implements OnInit {
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
-              this.shared.totalSessionQuestions,
+              AppConfig.quizQuestions,
               data.length
             );
             for (let exercise of data) {
-              this.exercises.push(exercise);
+              // this.exercises.push(exercise);
               this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
             }
           })
@@ -224,7 +226,10 @@ export class ExerciseComponent implements OnInit {
         this.shared.incorrectAnswer++;
         this.streakCount = 0;
       }
-      if (this.attempts >= this.maxAttempts && exercise.answerType !== 'mc') {
+      if (
+        this.attempts >= AppConfig.maxAttempts &&
+        exercise.answerType !== 'mc'
+      ) {
         this.showNextButton = true;
         this._isDisabled = true;
       }
@@ -259,7 +264,7 @@ export class ExerciseComponent implements OnInit {
         this.shared.incorrectAnswer++;
       }
       this.streakCount = 0;
-      if (this.attempts >= this.maxAttempts) {
+      if (this.attempts >= AppConfig.maxAttempts) {
         this.showNextButton = true;
         this._isDisabled = true;
       }

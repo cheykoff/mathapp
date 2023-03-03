@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 
 import { Student } from '../models/student';
+import { AppConfig } from '../../appconfig';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ import { Student } from '../models/student';
 export class SharedService {
   // public variables
 
-  totalSessionQuestions: number = 20;
-  countDownStartTime = 1800; // 1800 s = 30 minutes
+  totalSessionQuestions: number = AppConfig.quizQuestions;
+  countDownStartTime = AppConfig.quizDuration;
 
   studentData: Student = {
     id: '',
