@@ -107,16 +107,16 @@ export class SharedService {
       JSON.stringify(this.studentData.levelStars)
     );
     if (this.studentData.correctPracticeQuestions !== undefined) {
-    localStorage.setItem(
-      'correctPracticeQuestions',
-      this.studentData.correctPracticeQuestions.toString()
-    );
+      localStorage.setItem(
+        'correctPracticeQuestions',
+        this.studentData.correctPracticeQuestions.toString()
+      );
     }
     if (this.studentData.totalPracticeQuestions !== undefined) {
-    localStorage.setItem(
-      'totalPracticeQuestions',
-      this.studentData.totalPracticeQuestions.toString()
-    );
+      localStorage.setItem(
+        'totalPracticeQuestions',
+        this.studentData.totalPracticeQuestions.toString()
+      );
     }
     localStorage.setItem('topic', this.topic);
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
@@ -150,11 +150,11 @@ export class SharedService {
         Terme: [0, 0, 0],
       };
     } else {
-    for (const key in this.studentData.levelStars) {
-      if (this.studentData.levelStars[key] === undefined) {
-        this.studentData.levelStars[key] = [0, 0, 0];
-      } else {
-        this.studentData.levelStars[key] = studentData.levelStars[key];
+      for (const key in this.studentData.levelStars) {
+        if (this.studentData.levelStars[key] === undefined) {
+          this.studentData.levelStars[key] = [0, 0, 0];
+        } else {
+          this.studentData.levelStars[key] = studentData.levelStars[key];
         }
       }
     }
@@ -186,7 +186,7 @@ export class SharedService {
     );
 
     if (localStorage.getItem('currentLevel') !== null) {
-    this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+      this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
     }
     // TODO: Retrieve topic when reload
     this.topic = localStorage.getItem('topic');
