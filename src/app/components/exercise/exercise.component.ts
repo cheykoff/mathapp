@@ -20,7 +20,7 @@ import { QuizRecord } from './quizrecord';
 import { Exercise } from './exercise';
 import { ExerciseRecord } from './exerciserecord';
 
-import { AppConfig } from '../../../appconfig';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-exercise',
@@ -32,13 +32,13 @@ export class ExerciseComponent implements OnInit {
   exercises$: Observable<Exercise[]>;
   // exercises: Exercise[] = [];
 
-  maxAttempts: number = AppConfig.maxAttempts;
+  maxAttempts: number = environment.appConfig.maxAttempts;
 
   quiz: Quiz = {
     classLevel: this.shared.chosenLevel,
     chapter: this.shared.chapter,
-    numberOfQuestions: AppConfig.quizQuestions,
-    timeLimit: AppConfig.quizTimeLimit,
+    numberOfQuestions: environment.appConfig.quizQuestions,
+    timeLimit: environment.appConfig.quizTimeLimit,
   };
 
   quizRecord: QuizRecord = {
@@ -92,7 +92,8 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     this._resetCounts();
     if (this.shared.mode === 'practice') {
-      this.shared.totalSessionQuestions = AppConfig.practiceQuestions;
+      this.shared.totalSessionQuestions =
+        environment.appConfig.practiceQuestions;
       let { question, answer, startTime } = createExercise(
         this.shared.chosenLevel,
         this.shared.topic
@@ -112,7 +113,7 @@ export class ExerciseComponent implements OnInit {
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
-              AppConfig.quizQuestions,
+              environment.appConfig.quizQuestions,
               data.length
             );
             for (let exercise of data) {
@@ -251,7 +252,7 @@ export class ExerciseComponent implements OnInit {
         this.quizRecord.streakCount = 0;
       }
       if (
-        this.attempts >= AppConfig.maxAttempts &&
+        this.attempts >= environment.appConfig.maxAttempts &&
         exercise.answerType !== 'mc'
       ) {
         this.showNextButton = true;
@@ -288,7 +289,7 @@ export class ExerciseComponent implements OnInit {
         this.shared.incorrectAnswer++;
       }
       this.quizRecord.streakCount = 0;
-      if (this.attempts >= AppConfig.maxAttempts) {
+      if (this.attempts >= environment.appConfig.maxAttempts) {
         this.showNextButton = true;
         this.isDisabled = true;
       }

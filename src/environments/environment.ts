@@ -1,3 +1,5 @@
+import { AppConfig } from '../appconfigs/appconfig.dev';
+
 export const environment = {
   firebase: {
     apiKey: 'AIzaSyBv9-Y9p7rM5JU2Q1NOS1FYn73iM4m2wzU',
@@ -7,5 +9,6 @@ export const environment = {
     appId: '1:1088114733510:web:6d1958d66fe8d67e73c2c7',
   },
   production: false,
+  appConfig: AppConfig,
   useEmulators: false,
 };

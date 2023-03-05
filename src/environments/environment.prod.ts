@@ -1,3 +1,5 @@
+import { AppConfig } from '../appconfigs/appconfig.prod';
+
 export const environment = {
   firebase: {
     projectId: 'matheapp-prod',
@@ -9,5 +11,6 @@ export const environment = {
     messagingSenderId: '82563327798',
   },
   production: true,
+  appConfig: AppConfig,
   useEmulators: false,
 };
