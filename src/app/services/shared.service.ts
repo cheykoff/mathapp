@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 
-import { Student } from '../shared/student';
+import { Student } from '../models/student';
+import { AppConfig } from '../../appconfig';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
   // public variables
+
+  totalSessionQuestions: number = AppConfig.quizQuestions;
+  countDownStartTime = AppConfig.quizTimeLimit;
+
   studentData: Student = {
     id: '',
     studentId: 0,
@@ -30,8 +35,11 @@ export class SharedService {
     },
   };
 
-  mode: string = 'quiz';
-  topic: string;
+  studentId: number;
+  schoolClass: number = 5;
+  schoolClassName: string = '';
+  collectedStars: number = 0;
+  possibleStars: number = 0;
 
   currentLevel = {
     Addition: 1,
@@ -41,55 +49,31 @@ export class SharedService {
     Terme: 1,
   };
 
+  mode: string = 'quiz';
+  topic: string;
   chosenLevel = 1;
 
-  testObject = {
-    Addition: [0, 0, 0],
-    Subtraktion: [0, 0, 0],
-    Multiplikation: [0, 0, 0],
-  };
-
-  currentLevelStars: number;
-
-  schoolClass: number = 5;
   chapter: number = 0;
-  schoolClassName: string = '';
   correctAnswer: number = 0;
   incorrectAnswer: number = 0;
-  totalSessionQuestions: number = 20;
-  docId: string;
+
+  // docId: string;
   quizId: string;
   practiceId: string;
-  parameters = {};
-  studentId: number;
-  correctPuzzles: number = 0;
-  incorrectPuzzles: number = 0;
-  testNumber: number = 0;
-  quizFinished: boolean = false;
+
   quizStartTime: Date = null;
-  schoolClassDocumentId: string;
   quizTemplateIds: string[] = [];
 
-  collectedStars: number = 0;
-  possibleStars: number = 0;
-
   countDown: Subscription;
-  countDownStartTime = 1800; // 1800 s = 30 minutes
+
   counter = this.countDownStartTime;
   tick = 1000;
   countDownRunning: boolean = false;
-  constructor(private _router: Router) {}
-
-  disabledMenuItems = {
-    Quiz: false,
-    Hausaufgaben: true,
-    üben: false,
-    Erfolge: false,
-  };
 
   // private variables
 
   // constructor
+  constructor(private _router: Router) {}
 
   // public methods
   setStudentData(studentData: Student): void {
@@ -109,25 +93,34 @@ export class SharedService {
       studentData.correctPracticeQuestions;
     this.setCurrentLevels();
 
+    this.setLocalStorage();
+
+    this.calculatePossibleStars();
+    this.calculateCollectedStars();
+  }
+
+  setLocalStorage(): void {
     localStorage.setItem('studentId', this.studentData.studentId.toString());
     localStorage.setItem('studentDocumentId', this.studentData.id);
     localStorage.setItem(
       'studentData.levelStars',
       JSON.stringify(this.studentData.levelStars)
     );
-    localStorage.setItem(
-      'correctPracticeQuestions',
-      this.studentData.correctPracticeQuestions.toString()
-    );
-    localStorage.setItem(
-      'totalPracticeQuestions',
-      this.studentData.totalPracticeQuestions.toString()
-    );
+    if (this.studentData.correctPracticeQuestions !== undefined) {
+      localStorage.setItem(
+        'correctPracticeQuestions',
+        this.studentData.correctPracticeQuestions.toString()
+      );
+    }
+    if (this.studentData.totalPracticeQuestions !== undefined) {
+      localStorage.setItem(
+        'totalPracticeQuestions',
+        this.studentData.totalPracticeQuestions.toString()
+      );
+    }
     localStorage.setItem('topic', this.topic);
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('classId', this.studentData.classId);
-    this.calculatePossibleStars();
-    this.calculateCollectedStars();
   }
 
   calculatePossibleStars(): void {
@@ -148,11 +141,21 @@ export class SharedService {
   }
 
   setLevelStars(studentData: Student): void {
-    for (const key in this.studentData.levelStars) {
-      if (this.studentData.levelStars[key] === undefined) {
-        this.studentData.levelStars[key] = [0, 0, 0];
-      } else {
-        this.studentData.levelStars[key] = studentData.levelStars[key];
+    if (studentData.levelStars === undefined) {
+      this.studentData.levelStars = {
+        Addition: [0, 0, 0],
+        Subtraktion: [0, 0, 0],
+        Multiplikation: [0, 0, 0],
+        Division: [0, 0, 0],
+        Terme: [0, 0, 0],
+      };
+    } else {
+      for (const key in this.studentData.levelStars) {
+        if (this.studentData.levelStars[key] === undefined) {
+          this.studentData.levelStars[key] = [0, 0, 0];
+        } else {
+          this.studentData.levelStars[key] = studentData.levelStars[key];
+        }
       }
     }
   }
@@ -181,7 +184,10 @@ export class SharedService {
     this.studentData.totalPracticeQuestions = parseInt(
       localStorage.getItem('totalPracticeQuestions')
     );
-    this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+
+    if (localStorage.getItem('currentLevel') !== null) {
+      this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+    }
     // TODO: Retrieve topic when reload
     this.topic = localStorage.getItem('topic');
     this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
@@ -201,7 +207,6 @@ export class SharedService {
     this.countDown = timer(0, this.tick).subscribe(() => {
       --this.counter;
       if (this.counter === 0) {
-        this.quizFinished = true;
         this._router.navigate(['/', 'resultpage']);
         this.stopCountDownTimer();
       }
@@ -229,15 +234,6 @@ export class SharedService {
 
   storeStudentIdInLocalStorage(): void {
     localStorage.setItem('studentId', this.getStudentId().toString());
-  }
-
-  setSchoolClassDocumentId(data: string): void {
-    this.schoolClassDocumentId = data;
-    return;
-  }
-
-  getSchoolClassDocumentId(): string {
-    return this.schoolClassDocumentId;
   }
 
   setQuizTemplateIds(data: string[]): void {
@@ -318,8 +314,6 @@ export class SharedService {
   }
 
   setCurrentLevels(): void {
-    this.initializeCurrentLevels(); // can be removed, I think
-
     for (const topic in this.studentData.levelStars) {
       this.currentLevel[topic] = 1;
       if (this.studentData.levelStars[topic] !== undefined) {
@@ -330,17 +324,6 @@ export class SharedService {
         }
       }
     }
-  }
-
-  initializeCurrentLevels(): void {
-    // can be removed, I think
-    this.currentLevel = {
-      Multiplikation: 1,
-      Division: 1,
-      Addition: 1,
-      Subtraktion: 1,
-      Terme: 1,
-    };
   }
 
   initializeLevelStars(): void {

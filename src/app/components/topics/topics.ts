@@ -3,11 +3,3 @@ export interface Topic {
   disabled?: boolean;
   hidden?: boolean;
 }
-
-export let topics: Topic[] = [
-  { name: 'Addition' },
-  { name: 'Subtraktion' },
-  { name: 'Multiplikation' },
-  { name: 'Division' },
-  { name: 'Terme' },
-];
