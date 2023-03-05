@@ -319,6 +319,8 @@ export class ExerciseComponent implements OnInit {
 
   private _clearForm(): void {
     this.givenAnswer = null;
+    this.numerator = null;
+    this.denominator = null;
     this.attempts = 0;
     this.isCorrect = false;
     this.isDisabled = false;
