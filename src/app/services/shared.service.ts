@@ -204,13 +204,15 @@ export class SharedService {
       return;
     }
     this.countDownRunning = true;
-    this.countDown = timer(0, this.tick).subscribe(() => {
-      --this.counter;
-      if (this.counter === 0) {
-        this._router.navigate(['/', 'resultpage']);
-        this.stopCountDownTimer();
-      }
-    });
+    if (this.countDown !== null) {
+      this.countDown = timer(0, this.tick).subscribe(() => {
+        --this.counter;
+        if (this.counter === 0) {
+          this._router.navigate(['/', 'resultpage']);
+          this.stopCountDownTimer();
+        }
+      });
+    }
   }
 
   stopCountDownTimer() {
