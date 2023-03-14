@@ -15,13 +15,23 @@ export class GetExercisesService {
     private _store: AngularFirestore,
     private _shared: SharedService
   ) {}
-
+  /*
   getExercises(): Observable<Exercise[]> {
     return this._store
       .collection('exercises', (ref) =>
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+  */
+  getExercises(): Observable<Exercise[]> {
+    return this._store
+      .collection('gpt4-exercises', ref => ref
+        .orderBy('classLevel')
+        .orderBy('questionNumber')
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));

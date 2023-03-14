@@ -106,9 +106,25 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
+      /*
       this.exercises$ = this._getExercisesService
         .getExercises()
         .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
+        .pipe(
+          tap((data: Exercise[]) => {
+            this.shared.totalSessionQuestions = Math.min(
+              AppConfig.quizQuestions,
+              data.length
+            );
+            for (let exercise of data) {
+              // this.exercises.push(exercise);
+              this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+            }
+          })
+        );
+        */
+        this.exercises$ = this._getExercisesService
+        .getExercises()
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
