@@ -1,10 +1,11 @@
 <div class="header">
   <h1 class="headerTitle" *ngIf="shared.mode === 'quiz'">
-    Frage {{ currentQuestion + 1 }} von {{ this.shared.totalSessionQuestions }}
+    Frage {{ quizRecord.currentQuestion + 1 }} von
+    {{ this.shared.totalSessionQuestions }}
   </h1>
   <h1 class="headerTitle" *ngIf="shared.mode === 'practice'">
     {{ this.shared.topic }} {{ this.shared.chosenLevel }}:
-    {{ currentQuestion + 1 }}/{{ this.shared.totalSessionQuestions }}
+    {{ quizRecord.currentQuestion + 1 }}/{{ this.shared.totalSessionQuestions }}
   </h1>
   <span id="studentId">ID: {{ this.shared.studentData.studentId }}</span>
   <div id="countdown" *ngIf="shared.mode === 'quiz'">
@@ -41,23 +42,28 @@
   <div *ngIf="this.shared.mode === 'quiz'">
     <ng-container *ngIf="exercises$ | async as exercises; else loading">
       <div class="question">
-        <p [mathjax]="exercises[currentQuestion].question"></p>
-        <div class="img-wrapper" *ngIf="exercises[currentQuestion].img">
+        <p [mathjax]="exercises[quizRecord.currentQuestion].question"></p>
+        <div
+          class="img-wrapper"
+          *ngIf="exercises[quizRecord.currentQuestion].img"
+        >
           <img class="questionImg" [src]="getSrc()" />
         </div>
       </div>
       <div
         class="options"
-        *ngIf="exercises[currentQuestion].answerType === 'mc'"
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'mc'"
       >
         <ul class="answerList">
           <li
             *ngFor="
-              let option of exercises[currentQuestion].answerOptions;
+              let option of exercises[quizRecord.currentQuestion].answerOptions;
               let i = index
             "
             class="answerListItem"
-            (click)="onClickAnswer(option, exercises[currentQuestion])"
+            (click)="
+              onClickAnswer(option, exercises[quizRecord.currentQuestion])
+            "
           >
             <button
               [id]="'option' + i"
@@ -70,9 +76,9 @@
       </div>
 
       <form
-        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        (ngSubmit)="onSubmitAnswer(f, exercises[quizRecord.currentQuestion])"
         #f="ngForm"
-        *ngIf="exercises[currentQuestion].answerType === 'integer'"
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'integer'"
       >
         <div>
           <input
@@ -86,15 +92,15 @@
             required
             autofocus
             autocomplete="off"
-            [hasUnit]="exercises[currentQuestion].unit"
+            [hasUnit]="exercises[quizRecord.currentQuestion].unit"
             [ngStyle]="{
-              width: exercises[currentQuestion].unit ? '80%' : '100%'
+              width: exercises[quizRecord.currentQuestion].unit ? '80%' : '100%'
             }"
           />
           <p
             class="unit"
-            *ngIf="exercises[currentQuestion].unit"
-            [mathjax]="exercises[currentQuestion].unit"
+            *ngIf="exercises[quizRecord.currentQuestion].unit"
+            [mathjax]="exercises[quizRecord.currentQuestion].unit"
           ></p>
         </div>
         <button class="btn classBtn" type="submit" [disabled]="isDisabled">
@@ -102,8 +108,9 @@
         </button>
       </form>
       <form
-        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        (ngSubmit)="onSubmitAnswer(f, exercises[quizRecord.currentQuestion])"
         #f="ngForm"
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'fraction'"
       >
         <div class="tableWrapper">
           <table>
@@ -145,16 +152,16 @@
 
       <!--
       <app-exercise-fraction
-        *ngIf="exercises[currentQuestion].answerType === 'fraction'"
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'fraction'"
         [exercises]="exercises"
-        (submitAnswer)="onSubmitAnswer(exercises[currentQuestion])"
+        (submitAnswer)="onSubmitAnswer(exercises[quizRecord.currentQuestion])"
       ></app-exercise-fraction>
       -->
 
       <form
-        (ngSubmit)="onSubmitAnswer(f, exercises[currentQuestion])"
+        (ngSubmit)="onSubmitAnswer(f, exercises[quizRecord.currentQuestion])"
         #f="ngForm"
-        *ngIf="exercises[currentQuestion].answerType === 'dynamic'"
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'dynamic'"
       >
         <input
           class="answerText"
@@ -169,7 +176,7 @@
         />
         <ng-template #streak>
           <p class="correctText feedback">
-            Richtig! {{ streakCount }} in Folge!
+            Richtig! {{ quizRecord.streakCount }} in Folge!
           </p>
         </ng-template>
 
@@ -183,13 +190,18 @@
       <p class="loading">Lade die nächste Aufgabe ...</p>
     </ng-template>
   </div>
-  <div class="feedback-wrapper" *ngIf="feedbackIsShown2()">
+  <div class="feedback-wrapper" *ngIf="feedbackIsShown()">
     <div *ngIf="isCorrect; else incorrectAnswer" class="correct">
-      <p *ngIf="streakCount < 2; else streak" class="correctText feedback">
+      <p
+        *ngIf="quizRecord.streakCount < 2; else streak"
+        class="correctText feedback"
+      >
         Richtig!
       </p>
       <ng-template #streak>
-        <p class="correctText feedback">Richtig! {{ streakCount }} in Folge!</p>
+        <p class="correctText feedback">
+          Richtig! {{ quizRecord.streakCount }} in Folge!
+        </p>
       </ng-template>
     </div>
     <ng-template #incorrectAnswer class="wrong">
@@ -205,19 +217,27 @@
     <div *ngIf="this.shared.mode === 'quiz'">
       <p
         *ngIf="
-          exercises[currentQuestion].answerType === 'integer' ||
-          exercises[currentQuestion].answerType === 'dynamic'
+          exercises[quizRecord.currentQuestion].answerType === 'integer' ||
+          exercises[quizRecord.currentQuestion].answerType === 'dynamic'
         "
       >
         Die richtige Antwort wäre
-        {{ exercises[currentQuestion].correctAnswer }} gewesen.
+        {{ exercises[quizRecord.currentQuestion].correctAnswer }} gewesen.
       </p>
-      <div *ngIf="exercises[currentQuestion].answerType === 'fraction'">
+      <div
+        *ngIf="exercises[quizRecord.currentQuestion].answerType === 'fraction'"
+      >
         <p>
           Die richtige Antwort wäre
-          {{ exercises[currentQuestion].correctAnswerFraction.numerator }}
+          {{
+            exercises[quizRecord.currentQuestion].correctAnswerFraction
+              .numerator
+          }}
           /
-          {{ exercises[currentQuestion].correctAnswerFraction.denominator }}
+          {{
+            exercises[quizRecord.currentQuestion].correctAnswerFraction
+              .denominator
+          }}
           gewesen.
         </p>
       </div>
@@ -234,4 +254,5 @@
   >
     Nächste Frage
   </button>
+  <button class="btn btn-secondary" routerLink="/menu">Abbrechen</button>
 </div>

@@ -67,7 +67,7 @@ import { ExerciseFractionComponent } from './components/exercise/exercise-fracti
     MathjaxModule.forRoot(),
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de-DE' },
+    { provide: LOCALE_ID, useValue: 'de' },
     {
       provide: USE_FIRESTORE_EMULATOR,
       useValue: environment.useEmulators ? ['localhost', 8080] : undefined,

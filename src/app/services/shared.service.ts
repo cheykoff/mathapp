@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 
 import { Student } from '../models/student';
+import { AppConfig } from '../../appconfig';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ import { Student } from '../models/student';
 export class SharedService {
   // public variables
 
-  totalSessionQuestions: number = 20;
-  countDownStartTime = 1800; // 1800 s = 30 minutes
+  totalSessionQuestions: number = AppConfig.quizQuestions;
+  countDownStartTime = AppConfig.quizTimeLimit;
 
   studentData: Student = {
     id: '',
@@ -105,14 +106,18 @@ export class SharedService {
       'studentData.levelStars',
       JSON.stringify(this.studentData.levelStars)
     );
-    localStorage.setItem(
-      'correctPracticeQuestions',
-      this.studentData.correctPracticeQuestions.toString()
-    );
-    localStorage.setItem(
-      'totalPracticeQuestions',
-      this.studentData.totalPracticeQuestions.toString()
-    );
+    if (this.studentData.correctPracticeQuestions !== undefined) {
+      localStorage.setItem(
+        'correctPracticeQuestions',
+        this.studentData.correctPracticeQuestions.toString()
+      );
+    }
+    if (this.studentData.totalPracticeQuestions !== undefined) {
+      localStorage.setItem(
+        'totalPracticeQuestions',
+        this.studentData.totalPracticeQuestions.toString()
+      );
+    }
     localStorage.setItem('topic', this.topic);
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('classId', this.studentData.classId);
@@ -136,11 +141,21 @@ export class SharedService {
   }
 
   setLevelStars(studentData: Student): void {
-    for (const key in this.studentData.levelStars) {
-      if (this.studentData.levelStars[key] === undefined) {
-        this.studentData.levelStars[key] = [0, 0, 0];
-      } else {
-        this.studentData.levelStars[key] = studentData.levelStars[key];
+    if (studentData.levelStars === undefined) {
+      this.studentData.levelStars = {
+        Addition: [0, 0, 0],
+        Subtraktion: [0, 0, 0],
+        Multiplikation: [0, 0, 0],
+        Division: [0, 0, 0],
+        Terme: [0, 0, 0],
+      };
+    } else {
+      for (const key in this.studentData.levelStars) {
+        if (this.studentData.levelStars[key] === undefined) {
+          this.studentData.levelStars[key] = [0, 0, 0];
+        } else {
+          this.studentData.levelStars[key] = studentData.levelStars[key];
+        }
       }
     }
   }
@@ -169,7 +184,10 @@ export class SharedService {
     this.studentData.totalPracticeQuestions = parseInt(
       localStorage.getItem('totalPracticeQuestions')
     );
-    this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+
+    if (localStorage.getItem('currentLevel') !== null) {
+      this.currentLevel = JSON.parse(localStorage.getItem('currentLevel'));
+    }
     // TODO: Retrieve topic when reload
     this.topic = localStorage.getItem('topic');
     this.studentData.skillLevel = parseInt(localStorage.getItem('skillLevel'));
