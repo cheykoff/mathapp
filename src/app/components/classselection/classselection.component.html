@@ -7,9 +7,14 @@
       *ngFor="let schoolClass of schoolClasses"
       (click)="selectSchoolClass(schoolClass.level)"
     >
+    <button class="btn btnList classBtn" [disabled]="schoolClass.disabled" *ngIf="schoolClass.name; else classLevel">
+      Klasse 1-12 ({{ schoolClass.name }})
+    </button>
+    <ng-template #classLevel>
       <button class="btn btnList classBtn" [disabled]="schoolClass.disabled">
         {{ schoolClass.level }}. Klasse
       </button>
+    </ng-template>
     </li>
   </ul>
   <p>
