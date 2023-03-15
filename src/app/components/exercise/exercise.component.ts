@@ -30,7 +30,9 @@ import { AppConfig } from '../../../appconfig';
 export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
-  // exercises: Exercise[] = [];
+  exercises: Exercise[] = [];
+
+  answeredQuestions: number[] = [];
 
   maxAttempts: number = AppConfig.maxAttempts;
 
@@ -57,6 +59,7 @@ export class ExerciseComponent implements OnInit {
   // exerciseRecord
   attempts: number = 0;
   isCorrect: boolean;
+  proceed: boolean;
 
   // those should not be necessary
   question: string = '';
@@ -137,6 +140,9 @@ export class ExerciseComponent implements OnInit {
             }
           })
         );
+        this.exercises$.subscribe((exercises) => {
+          this.exercises = exercises;
+        });
     }
   }
 
@@ -211,7 +217,21 @@ export class ExerciseComponent implements OnInit {
       this.answer = answer;
       this._startTime = startTime;
     }
+   /*
     this.quizRecord.currentQuestion++;
+    */
+    if (this.proceed) {
+      this.quizRecord.currentQuestion = this.quizRecord.currentQuestion + 3;
+    } else {
+      // moves one question back if it was not yet answered otherwise stays at the same question
+      this.answeredQuestions.push(this.quizRecord.currentQuestion);
+      const unansweredQuestions = this.exercises.map((_exercise, index) => index).filter((index) => !this.answeredQuestions.includes(index));
+      const currentIndex = unansweredQuestions.findIndex((index) => index === this.quizRecord.currentQuestion - 1);
+      if (currentIndex !== -1) {
+        this.quizRecord.currentQuestion = unansweredQuestions[currentIndex];
+      }
+    }
+    
     this._startTime = new Date();
 
     if (
@@ -260,19 +280,14 @@ export class ExerciseComponent implements OnInit {
       }
       this.isDisabled = true;
       this.isCorrect = true;
+      this.proceed = true;
       this.showNextButton = true;
     } else {
-      if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
         this.quizRecord.streakCount = 0;
-      }
-      if (
-        this.attempts >= AppConfig.maxAttempts &&
-        exercise.answerType !== 'mc'
-      ) {
+        this.proceed = false;
         this.showNextButton = true;
         this.isDisabled = true;
-      }
     }
     this._storeAnswer(isCorrect, exercise.id);
     return;
@@ -292,6 +307,7 @@ export class ExerciseComponent implements OnInit {
   private _saveDynamicAnswer(isCorrect: boolean): void {
     if (isCorrect) {
       this.isCorrect = true;
+      this.proceed = true;
       if (this.attempts === 1) {
         this._incrementStreakCount();
         this.shared.correctAnswer++;
@@ -300,6 +316,7 @@ export class ExerciseComponent implements OnInit {
       this.showNextButton = true;
     } else {
       this.isCorrect = false;
+      this.proceed = false;
       if (this.attempts === 1) {
         this.shared.incorrectAnswer++;
       }
