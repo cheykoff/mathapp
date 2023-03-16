@@ -59,7 +59,7 @@ import { ExerciseFractionComponent } from './components/exercise/exercise-fracti
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase, 'quizappv1')),
+    provideFirebaseApp(() => initializeApp(environment.firebase, 'mathapp')),
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     // AngularFirestoreModule, TODO: Do I need this?
