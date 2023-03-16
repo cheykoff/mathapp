@@ -30,7 +30,7 @@ import { AppConfig } from '../../../appconfig';
 export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
-  // exercises: Exercise[] = [];
+  exercises: Exercise[] = [];
 
   maxAttempts: number = AppConfig.maxAttempts;
 
@@ -116,7 +116,7 @@ export class ExerciseComponent implements OnInit {
               data.length
             );
             for (let exercise of data) {
-              // this.exercises.push(exercise);
+              this.exercises.push(exercise);
               this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
             }
           })

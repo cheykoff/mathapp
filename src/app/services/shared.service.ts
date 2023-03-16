@@ -214,7 +214,9 @@ export class SharedService {
   }
 
   stopCountDownTimer() {
-    this.countDown.unsubscribe();
+    if (this.countDown) {
+      this.countDown.unsubscribe();
+    }
     this.countDownRunning = false;
     this.countDown = null;
     this.counter = this.countDownStartTime;
