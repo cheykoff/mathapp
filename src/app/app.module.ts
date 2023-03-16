@@ -7,7 +7,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-registerLocaleData(localeDe, localeDeExtra);
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 
@@ -67,7 +67,7 @@ import { ExerciseFractionComponent } from './components/exercise/exercise-fracti
     MathjaxModule.forRoot(),
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de' },
+    { provide: LOCALE_ID, useValue: 'de-DE' },
     {
       provide: USE_FIRESTORE_EMULATOR,
       useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
