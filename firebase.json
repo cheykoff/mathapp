@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "target": "quizappv1",
-    "public": "dist/quizappv1",
+    "target": "mathapp",
+    "public": "dist/mathapp",
     "ignore": ["**/.*"],
     "headers": [
       {

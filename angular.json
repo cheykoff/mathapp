@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "quizappv1:build:production"
+              "browserTarget": "mathapp:build:production"
             },
             "development": {
-              "browserTarget": "quizappv1:build:development"
+              "browserTarget": "mathapp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "quizappv1:build"
+            "browserTarget": "mathapp:build"
           }
         },
         "test": {
@@ -96,7 +96,7 @@
           "options": {
             "prerender": false,
             "ssr": false,
-            "browserTarget": "quizappv1:build:production",
+            "browserTarget": "mathapp:build:production",
             "firebaseProject": "quizapp-d018b",
             "firebaseHostingSite": "quizapp-d018b"
           }
