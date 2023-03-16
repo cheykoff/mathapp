@@ -26,7 +26,9 @@ export class ResultpageComponent implements OnInit {
 
   getPercentage(): void {
     this.percentage =
-      (this.shared.correctAnswer / this.shared.totalSessionQuestions) * 100;
+      (this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer)) *
+      100;
   }
 
   getStars(): string {
