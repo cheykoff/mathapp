@@ -175,7 +175,6 @@ export class ExerciseComponent implements OnInit {
   onClickAnswer(option: any, exercise: Exercise): void {
     this._trackDurationAndAttempts();
     this._saveAnswer(!!option.isCorrect, exercise);
-
     this._showFeedback();
   }
 
