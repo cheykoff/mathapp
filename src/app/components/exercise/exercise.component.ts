@@ -62,6 +62,7 @@ export class ExerciseComponent implements OnInit {
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
+  lastAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
 
@@ -133,6 +134,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    this.lastAnswer = this.givenAnswer;
     if (form.valid) {
       this._trackDurationAndAttempts();
 
