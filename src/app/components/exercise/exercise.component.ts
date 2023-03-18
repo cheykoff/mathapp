@@ -69,6 +69,8 @@ export class ExerciseComponent implements OnInit {
   showNextButton: boolean = false;
   isDisabled: boolean;
 
+  showHint: boolean = false;
+
   // private variables
   private _srcs: string[] = [];
   private _startTime: Date = new Date();
@@ -173,6 +175,7 @@ export class ExerciseComponent implements OnInit {
   onClickAnswer(option: any, exercise: Exercise): void {
     this._trackDurationAndAttempts();
     this._saveAnswer(!!option.isCorrect, exercise);
+
     this._showFeedback();
   }
 
@@ -328,6 +331,7 @@ export class ExerciseComponent implements OnInit {
     this.isDisabled = false;
     this.showNextButton = false;
     this._hideFeedback();
+    this.showHint = false;
   }
 
   private _showResult(): void {
