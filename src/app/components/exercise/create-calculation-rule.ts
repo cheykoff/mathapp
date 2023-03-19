@@ -14,9 +14,10 @@ export function createCalculationRule(level: number): {
   if (level === 1) {
     minNum = 1;
     maxNum = 20;
-    const a = 2;
+    const aArray = [2, 5];
+    const a = aArray[getRandInteger(0, aArray.length - 1)];
     const b = getRandInteger(minNum, maxNum);
-    const c = 5;
+    const c = 10 / a;
     question =
       'Nutze das Assoziativgesetz\n(a ⋅ b) ⋅ c = a ⋅ (b ⋅ c) = (a ⋅ c) ⋅ b\n';
     question += `${a} ⋅ ${b} ⋅ ${c} = ?`;

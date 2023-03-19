@@ -56,13 +56,11 @@ export class LoginComponent implements OnInit {
   }
 
   async generateId(): Promise<void> {
-    console.log('generateId()');
     let newId: number;
     let isUnique: boolean;
 
     do {
       newId = Math.floor(110000 + Math.random() * 889999);
-      console.log('newId: ' + newId);
       isUnique = await this._checkIdService.checkIdIsUnique(newId);
     } while (!isUnique);
 

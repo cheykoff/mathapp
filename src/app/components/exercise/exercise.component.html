@@ -263,7 +263,12 @@
     (click)="nextExercise()"
     type="submit"
   >
-    Nächste Frage
+    {{
+      quizRecord.currentQuestion === shared.totalSessionQuestions - 1 &&
+      shared.mode === "practice"
+        ? "Ergebnis ansehen"
+        : "Nächste Frage"
+    }}
   </button>
   <div class="links-container">
     <a class="left-link" routerLink="/menu">Abbrechen</a>
