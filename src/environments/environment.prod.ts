@@ -1,12 +1,10 @@
 export const environment = {
   firebase: {
-    projectId: 'matheapp-prod',
-    appId: '1:82563327798:web:c1d55c6a992a73b5a27597',
-    storageBucket: 'matheapp-prod.appspot.com',
-    locationId: 'europe-west3',
-    authDomain: 'matheapp-prod.firebaseapp.com',
-    apiKey: 'AIzaSyCOY6gH3ue3JI0RK75tmgjqfClpBATw1TY',
-    messagingSenderId: '82563327798',
+    apiKey: 'AIzaSyBv9-Y9p7rM5JU2Q1NOS1FYn73iM4m2wzU',
+    authDomain: 'matheapp-dev.firebaseapp.com',
+    projectId: 'matheapp-dev',
+    storageBucket: 'matheapp-dev.appspot.com',
+    appId: '1:1088114733510:web:6d1958d66fe8d67e73c2c7',
   },
   production: true,
   useEmulators: false,
