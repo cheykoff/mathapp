@@ -32,15 +32,19 @@ export class ResultpageComponent implements OnInit {
   }
 
   getStars(): string {
-    this.getPercentage();
-    if (this.shared.mode === 'quiz') {
-      this.stars = Math.floor(this.percentage / 20);
-    } else {
-      this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
-    }
     let imgUrl = 'assets/img/' + this.stars + 'stars.gif';
-    if (!this.stars) {
+    if (this.shared.correctAnswer === 0 && this.shared.incorrectAnswer === 0) {
       imgUrl = 'assets/img/' + 0 + 'stars.gif';
+    } else {
+      this.getPercentage();
+      if (this.shared.mode === 'quiz') {
+        this.stars = Math.floor(this.percentage / 20);
+      } else {
+        this.stars = Math.max(5 - this.shared.incorrectAnswer, 0);
+      }
+      if (!this.stars) {
+        imgUrl = 'assets/img/' + 0 + 'stars.gif';
+      }
     }
     return imgUrl;
   }
