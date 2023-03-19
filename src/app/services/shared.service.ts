@@ -27,11 +27,12 @@ export class SharedService {
     correctPracticeQuestions: 0,
     classId: '',
     levelStars: {
-      Addition: [0, 0, 0],
-      Subtraktion: [0, 0, 0],
-      Multiplikation: [0, 0, 0],
-      Division: [0, 0, 0],
-      Terme: [0, 0, 0],
+      Addition: [0, 0, 0, 0, 0],
+      Subtraktion: [0, 0, 0, 0, 0],
+      Multiplikation: [0, 0, 0, 0, 0],
+      Division: [0, 0, 0, 0, 0],
+      Rechenregeln: [0, 0, 0, 0, 0],
+      Terme: [0, 0, 0, 0, 0],
     },
   };
 
@@ -46,10 +47,11 @@ export class SharedService {
     Subtraktion: 1,
     Multiplikation: 1,
     Division: 1,
+    Rechenregeln: 1,
     Terme: 1,
   };
 
-  mode: string = 'quiz';
+  mode: string = 'practice';
   topic: string;
   chosenLevel = 1;
 
@@ -124,7 +126,7 @@ export class SharedService {
   }
 
   calculatePossibleStars(): void {
-    this.possibleStars = 15 * 5;
+    this.possibleStars = 5 * 5 * 6;
   }
 
   calculateCollectedStars(): void {
@@ -143,16 +145,17 @@ export class SharedService {
   setLevelStars(studentData: Student): void {
     if (studentData.levelStars === undefined) {
       this.studentData.levelStars = {
-        Addition: [0, 0, 0],
-        Subtraktion: [0, 0, 0],
-        Multiplikation: [0, 0, 0],
-        Division: [0, 0, 0],
-        Terme: [0, 0, 0],
+        Addition: [0, 0, 0, 0, 0],
+        Subtraktion: [0, 0, 0, 0, 0],
+        Multiplikation: [0, 0, 0, 0, 0],
+        Division: [0, 0, 0, 0, 0],
+        Rechenregeln: [0, 0, 0, 0, 0],
+        Terme: [0, 0, 0, 0, 0],
       };
     } else {
       for (const key in this.studentData.levelStars) {
         if (this.studentData.levelStars[key] === undefined) {
-          this.studentData.levelStars[key] = [0, 0, 0];
+          this.studentData.levelStars[key] = [0, 0, 0, 0, 0];
         } else {
           this.studentData.levelStars[key] = studentData.levelStars[key];
         }
@@ -170,7 +173,7 @@ export class SharedService {
       );
       for (const key in this.studentData.levelStars) {
         if (this.studentData.levelStars[key] === undefined) {
-          this.studentData.levelStars[key] = [0, 0, 0];
+          this.studentData.levelStars[key] = [0, 0, 0, 0, 0];
         } else {
           this.studentData.levelStars[key] = tmpLevelStars[key];
         }
@@ -291,6 +294,14 @@ export class SharedService {
     return this.chapter;
   }
 
+  setTopic(data: string): void {
+    this.topic = data;
+  }
+
+  getTopic(): string {
+    return this.topic;
+  }
+
   setSchoolClassName(data: string): void {
     this.schoolClassName = data;
   }
@@ -330,11 +341,12 @@ export class SharedService {
 
   initializeLevelStars(): void {
     this.studentData.levelStars = {
-      Multiplikation: [0, 0, 0],
-      Division: [0, 0, 0],
-      Addition: [0, 0, 0],
-      Subtraktion: [0, 0, 0],
-      Terme: [0, 0, 0],
+      Multiplikation: [0, 0, 0, 0, 0],
+      Division: [0, 0, 0, 0, 0],
+      Addition: [0, 0, 0, 0, 0],
+      Subtraktion: [0, 0, 0, 0, 0],
+      Rechenregeln: [0, 0, 0, 0, 0],
+      Terme: [0, 0, 0, 0, 0],
     };
   }
 
@@ -342,7 +354,7 @@ export class SharedService {
     for (const topic in this.studentData.levelStars) {
       if (this.studentData.levelStars[topic] !== undefined) {
       } else {
-        this.studentData.levelStars[topic] = [0, 0, 0];
+        this.studentData.levelStars[topic] = [0, 0, 0, 0, 0];
       }
     }
   }

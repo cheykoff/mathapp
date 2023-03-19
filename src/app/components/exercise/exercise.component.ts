@@ -62,11 +62,14 @@ export class ExerciseComponent implements OnInit {
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
+  lastAnswer: number = undefined;
   numerator: string = '';
   denominator: string = '';
 
   showNextButton: boolean = false;
   isDisabled: boolean;
+
+  showHint: boolean = false;
 
   // private variables
   private _srcs: string[] = [];
@@ -133,6 +136,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
+    this.lastAnswer = this.givenAnswer;
     if (form.valid) {
       this._trackDurationAndAttempts();
 
@@ -207,6 +211,12 @@ export class ExerciseComponent implements OnInit {
       }
       this._showResult();
     }
+  }
+
+  skipExercise(): void {
+    this.quizRecord.incorrectAnswers++;
+    this.shared.incorrectAnswer++;
+    this.nextExercise();
   }
 
   // private methods
@@ -326,6 +336,7 @@ export class ExerciseComponent implements OnInit {
     this.isDisabled = false;
     this.showNextButton = false;
     this._hideFeedback();
+    this.showHint = false;
   }
 
   private _showResult(): void {

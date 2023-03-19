@@ -206,7 +206,7 @@
     <ng-template #incorrectAnswer class="wrong">
       <div>
         <div class="incorrectText feedback">
-          <p>Leider falsch!</p>
+          <p>{{ lastAnswer }} ist leider falsch!</p>
         </div>
       </div>
     </ng-template>
@@ -245,13 +245,35 @@
       Die richtige Antwort wäre {{ answer }} gewesen.
     </p>
   </div>
+  <!--
+  <a
+    *ngIf="attempts >= maxAttempts && !isCorrect"
+    (click)="showHint = !showHint"
+    >{{ showHint ? "Lösungsweg ausblenden" : "Lösungsweg anzeigen" }}</a
+  >
+  <div *ngIf="showHint">
+    <div *ngFor="let step of exercises[quizRecord.currentQuestion].steps">
+      <p class="hint" [mathjax]="step"></p>
+    </div>
+  </div>
+  -->
   <button
     *ngIf="this.showNextButton"
     class="btn classBtn"
     (click)="nextExercise()"
     type="submit"
   >
-    Nächste Frage
+    {{
+      quizRecord.currentQuestion === shared.totalSessionQuestions - 1 &&
+      shared.mode === "practice"
+        ? "Ergebnis ansehen"
+        : "Nächste Frage"
+    }}
   </button>
-  <button class="btn btn-secondary" routerLink="/menu">Abbrechen</button>
+  <div class="links-container">
+    <a class="left-link" routerLink="/menu">Abbrechen</a>
+    <a *ngIf="!this.showNextButton" class="right-link" (click)="skipExercise()"
+      >Aufgabe überspringen</a
+    >
+  </div>
 </div>

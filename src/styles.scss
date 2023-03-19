@@ -555,8 +555,9 @@ button {
   }
 
   body {
-    width: 375px;
-    height: 800px;
+    width: 400px;
+    // height: 800px;
+    min-height: 90vh;
     position: relative;
     margin: 20px auto;
   }
