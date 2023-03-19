@@ -213,6 +213,12 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
+  skipExercise(): void {
+    this.quizRecord.incorrectAnswers++;
+    this.shared.incorrectAnswer++;
+    this.nextExercise();
+  }
+
   // private methods
   private _resetCounts(): void {
     this.shared.correctAnswer = 0;

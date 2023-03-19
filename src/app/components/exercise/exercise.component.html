@@ -265,5 +265,10 @@
   >
     Nächste Frage
   </button>
-  <button class="btn btn-secondary" routerLink="/menu">Abbrechen</button>
+  <div class="links-container">
+    <a class="left-link" routerLink="/menu">Abbrechen</a>
+    <a *ngIf="!this.showNextButton" class="right-link" (click)="skipExercise()"
+      >Aufgabe überspringen</a
+    >
+  </div>
 </div>
