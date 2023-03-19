@@ -170,3 +170,16 @@ tr:first-child {
 .incorrectText {
   background-color: lightcoral;
 }
+
+.links-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-link {
+  margin-right: auto;
+}
+
+.right-link {
+  margin-left: auto;
+}
