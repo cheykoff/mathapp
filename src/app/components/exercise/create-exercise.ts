@@ -7,7 +7,6 @@ export function createExercise(
   level: number,
   topic: string
 ): { question: string; answer: number; startTime: Date } {
-  console.log('createExercise');
   if (topic === 'Terme') {
     const { question, answer, startTime } = createTerm(level);
     return { question: question, answer: answer, startTime: startTime };
@@ -17,7 +16,6 @@ export function createExercise(
     return { question: question, answer: answer, startTime: startTime };
   }
   const startTime = new Date();
-  console.log(startTime);
   let minNum = 0;
   let maxNum = 0;
   if (level === 1) {
@@ -91,7 +89,5 @@ export function createExercise(
     question = `${c} : ${a} = ?`;
     answer = b;
   }
-  console.log(question);
-  console.log(answer);
   return { question: question, answer: answer, startTime: startTime };
 }

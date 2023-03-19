@@ -98,8 +98,6 @@ export function createCalculationRule(level: number): {
       answer = a * b * c * d;
     }
   }
-  console.log(question);
-  console.log(answer);
 
   return { question: question, answer: answer, startTime: startTime };
 }
