@@ -30,11 +30,12 @@ export class GetStudentDataService {
             .add({
               studentId: studentId,
               levelStars: {
-                Addition: [0, 0, 0],
-                Subtraktion: [0, 0, 0],
-                Multiplikation: [0, 0, 0],
-                Division: [0, 0, 0],
-                Terme: [0, 0, 0],
+                Addition: [0, 0, 0, 0, 0],
+                Subtraktion: [0, 0, 0, 0, 0],
+                Multiplikation: [0, 0, 0, 0, 0],
+                Division: [0, 0, 0, 0, 0],
+                Rechenregeln: [0, 0, 0, 0, 0],
+                Terme: [0, 0, 0, 0, 0],
               },
               totalPracticeQuestions: 0,
               correctPracticeQuestions: 0,
