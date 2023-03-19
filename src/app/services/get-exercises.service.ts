@@ -18,11 +18,10 @@ export class GetExercisesService {
 
   getExercises(): Observable<Exercise[]> {
     return this._store
-      .collection('exercises-multiplication', (ref) =>
+      .collection('exercises', (ref) =>
         ref
-          .where('difficulty', '<', 20)
-          .orderBy('difficulty')
-          .orderBy('version')
+          .where('classLevel', '==', this._shared.getSchoolClass())
+          .where('chapter', '==', this._shared.getChapter())
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
