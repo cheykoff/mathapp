@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { DataService } from './service/data.service';
-import { SharedService } from './shared/shared.service';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,7 @@ import { SharedService } from './shared/shared.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private _dataService: DataService,
-    private _shared: SharedService
-  ) {}
+  constructor(private _shared: SharedService) {}
 
   ngOnInit(): void {
     this._shared.reloadStudentData();
@@ -26,6 +22,11 @@ export class AppComponent implements OnInit {
     );
     localStorage.setItem('mode', this._shared.getMode());
     localStorage.setItem('chapter', this._shared.getChapter().toString());
+    localStorage.setItem('topic', this._shared.getTopic());
+    localStorage.setItem(
+      'levelStars',
+      JSON.stringify(this._shared.studentData.levelStars)
+    );
     if (this._shared.counter > 0) {
       window.opener.location.reload();
     }
@@ -38,5 +39,9 @@ export class AppComponent implements OnInit {
     this._shared.setMode(localStorage.getItem('mode'));
     this._shared.reloadStudentData();
     this._shared.mode = localStorage.getItem('mode');
+    this._shared.topic = localStorage.getItem('topic');
+    this._shared.studentData.levelStars = JSON.parse(
+      localStorage.getItem('levelStars')
+    );
   }
 }

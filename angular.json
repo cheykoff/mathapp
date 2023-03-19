@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "quizappv1": {
+    "mathapp": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -16,18 +16,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/quizappv1",
+            "outputPath": "dist/mathapp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/.htaccess"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -50,7 +45,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true
             },
             "development": {
               "buildOptimizer": false,
@@ -67,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "quizappv1:build:production"
+              "browserTarget": "mathapp:build:production"
             },
             "development": {
-              "browserTarget": "quizappv1:build:development"
+              "browserTarget": "mathapp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "quizappv1:build"
+            "browserTarget": "mathapp:build"
           }
         },
         "test": {
@@ -88,13 +84,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": [
               "./node_modules/@lottiefiles/lottie-player/dist/lottie-player.js"
             ]
@@ -105,7 +96,7 @@
           "options": {
             "prerender": false,
             "ssr": false,
-            "browserTarget": "quizappv1:build:production",
+            "browserTarget": "mathapp:build:production",
             "firebaseProject": "quizapp-d018b",
             "firebaseHostingSite": "quizapp-d018b"
           }

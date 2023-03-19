@@ -31,6 +31,13 @@
   max-width: 100%;
 }
 
+.hint {
+  font-size: 0.8em;
+  color: var(--clr-grey-dark);
+  margin: 0;
+  padding: 0;
+}
+
 .answerText[hasUnit] {
   width: 80%;
 }
@@ -162,4 +169,17 @@ tr:first-child {
 
 .incorrectText {
   background-color: lightcoral;
+}
+
+.links-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-link {
+  margin-right: auto;
+}
+
+.right-link {
+  margin-left: auto;
 }

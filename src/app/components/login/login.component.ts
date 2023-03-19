@@ -3,8 +3,10 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, share } from 'rxjs';
 
-import { SharedService } from '../../shared/shared.service';
-import { DataService } from '../../service/data.service';
+import { SharedService } from '../../services/shared.service';
+import { CheckIdService } from '../../services/check-id.service';
+import { DataService } from '../../services/data.service';
+import { GetStudentDataService } from 'src/app/services/get-student-data.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,10 @@ import { DataService } from '../../service/data.service';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private _router: Router,
     public shared: SharedService,
-    private _data: DataService
+    private _router: Router,
+    private _getStudentData: GetStudentDataService,
+    private _checkIdService: CheckIdService
   ) {}
 
   defaultStudentId: number;
@@ -34,10 +37,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (value.studentId) {
-      // TODO: Need to ensure that the id is unique
       this.validStudentId = true;
       this.shared.setStudentId(value.studentId);
-      this._data.getStudentDocument(value.studentId);
+      this._getStudentData.getStudentDocument(value.studentId);
       this.goToClassSelection();
       this.shared.storeStudentIdInLocalStorage();
     } else {
@@ -53,10 +55,17 @@ export class LoginComponent implements OnInit {
     this._router.navigate(['/', 'menu']);
   }
 
-  generateId(): void {
-    const newId = Math.floor(110000 + Math.random() * 890000);
+  async generateId(): Promise<void> {
+    let newId: number;
+    let isUnique: boolean;
+
+    do {
+      newId = Math.floor(110000 + Math.random() * 889999);
+      isUnique = await this._checkIdService.checkIdIsUnique(newId);
+    } while (!isUnique);
+
     this.shared.setStudentId(newId);
-    this._data.getStudentDocument(newId);
+    this._getStudentData.getStudentDocument(newId);
     this.idWasGenerated = true;
     this.shared.storeStudentIdInLocalStorage();
   }

@@ -12,6 +12,7 @@ export interface Student {
     Subtraktion: number[];
     Multiplikation: number[];
     Division: number[];
+    Rechenregeln: number[];
     Terme: number[];
   };
   totalPracticeQuestions?: number;
