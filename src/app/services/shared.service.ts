@@ -291,6 +291,14 @@ export class SharedService {
     return this.chapter;
   }
 
+  setTopic(data: string): void {
+    this.topic = data;
+  }
+
+  getTopic(): string {
+    return this.topic;
+  }
+
   setSchoolClassName(data: string): void {
     this.schoolClassName = data;
   }

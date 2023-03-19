@@ -22,9 +22,15 @@ export class AppComponent implements OnInit {
     );
     localStorage.setItem('mode', this._shared.getMode());
     localStorage.setItem('chapter', this._shared.getChapter().toString());
+    localStorage.setItem('topic', this._shared.getTopic());
+    localStorage.setItem(
+      'levelStars',
+      JSON.stringify(this._shared.studentData.levelStars)
+    );
     if (this._shared.counter > 0) {
       window.opener.location.reload();
     }
+    console.log(this._shared.studentData.levelStars);
   }
 
   @HostListener('window:load', ['$event'])
@@ -32,7 +38,13 @@ export class AppComponent implements OnInit {
     this._shared.setSchoolClass(parseInt(localStorage.getItem('schoolClass')));
     this._shared.setChapter(parseInt(localStorage.getItem('chapter')));
     this._shared.setMode(localStorage.getItem('mode'));
+
+    console.log(this._shared.studentData.levelStars);
     this._shared.reloadStudentData();
     this._shared.mode = localStorage.getItem('mode');
+    this._shared.topic = localStorage.getItem('topic');
+    this._shared.studentData.levelStars = JSON.parse(
+      localStorage.getItem('levelStars')
+    );
   }
 }
