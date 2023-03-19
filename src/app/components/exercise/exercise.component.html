@@ -245,6 +245,7 @@
       Die richtige Antwort wäre {{ answer }} gewesen.
     </p>
   </div>
+  <!--
   <a
     *ngIf="attempts >= maxAttempts && !isCorrect"
     (click)="showHint = !showHint"
@@ -255,6 +256,7 @@
       <p class="hint" [mathjax]="step"></p>
     </div>
   </div>
+  -->
   <button
     *ngIf="this.showNextButton"
     class="btn classBtn"
