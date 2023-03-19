@@ -126,7 +126,7 @@ export class SharedService {
   }
 
   calculatePossibleStars(): void {
-    this.possibleStars = 15 * 5;
+    this.possibleStars = 5 * 5 * 6;
   }
 
   calculateCollectedStars(): void {
