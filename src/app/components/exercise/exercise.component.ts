@@ -111,7 +111,7 @@ export class ExerciseComponent implements OnInit {
       this.shared.countDownTimer();
       this.exercises$ = this._getExercisesService
         .getExercises()
-        .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
+        //.pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
         .pipe(
           tap((data: Exercise[]) => {
             this.shared.totalSessionQuestions = Math.min(
