@@ -38,13 +38,11 @@ export const chapters: Chapter[] = [
     classLevel: 6,
     chapterNumber: 3,
     chapterName: 'Multiplikation und Division von Brüchen',
-    disabled: true,
   },
   {
     classLevel: 6,
     chapterNumber: 4,
     chapterName: 'Flächeninhalt',
-    disabled: true,
   },
   {
     classLevel: 6,
