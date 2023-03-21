@@ -115,22 +115,40 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._getExercisesService
-        .getExercises()
-        .pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
-        .pipe(
-          tap((data: Exercise[]) => {
-            this.shared.totalSessionQuestions = Math.min(
-              AppConfig.quizQuestions,
-              data.length
-            );
-            for (let exercise of data) {
-              this.exercises.push(exercise);
-              this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
-            }
-            this.findNextSuitableExercise();
-          })
-        );
+      if (this.shared.getChapter() === 99) {
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          .pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                data.length
+              );
+              for (let exercise of data) {
+                this.exercises.push(exercise);
+                this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              }
+              this.findNextSuitableExercise();
+            })
+          );
+      } else {
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                data.length
+              );
+              for (let exercise of data) {
+                this.exercises.push(exercise);
+                this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              }
+            })
+          );
+      }
     }
   }
 
@@ -252,11 +270,13 @@ export class ExerciseComponent implements OnInit {
     }
     this.quizRecord.currentQuestion++;
     this.quizRecord.userQuestion++;
-    this.increaseDifficulty();
-
-    if (this.shared.mode === 'quiz') {
-      this.findNextSuitableExercise();
+    if (this.shared.getChapter() === 99) {
+      this.increaseDifficulty();
+      if (this.shared.mode === 'quiz') {
+        this.findNextSuitableExercise();
+      }
     }
+
     this._startTime = new Date();
 
     if (
