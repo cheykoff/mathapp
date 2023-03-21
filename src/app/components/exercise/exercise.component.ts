@@ -214,8 +214,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   skipExercise(): void {
-    this.quizRecord.incorrectAnswers++;
-    this.shared.incorrectAnswer++;
+    // this.quizRecord.incorrectAnswers++;
+    // this.shared.incorrectAnswer++;
     this.nextExercise();
   }
 
