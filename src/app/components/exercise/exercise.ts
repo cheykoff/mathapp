@@ -19,4 +19,5 @@ export interface Exercise {
   img?: string;
   unit?: string;
   parameters?: any;
+  answeredCorrectly?: boolean;
 }

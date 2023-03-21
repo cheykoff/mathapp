@@ -31,6 +31,7 @@ export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
   exercises: Exercise[] = [];
+  incorrectExercises: Exercise[] = [];
 
   maxAttempts: number = AppConfig.maxAttempts;
 
@@ -149,6 +150,21 @@ export class ExerciseComponent implements OnInit {
           form,
           exercise,
         });
+        this.exercises[this.quizRecord.currentQuestion].answeredCorrectly = tmp;
+        if (!tmp && this.attempts === 1) {
+          console.log('incorrect exercise is pushed: ');
+          console.log(
+            'now the incorrect exercise is pushed into the exercises'
+          );
+          this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);
+          /* 
+        this.incorrectExercises.splice(0, 1);
+          console.log(this.exercises[this.quizRecord.currentQuestion]);
+          this.incorrectExercises.push(
+            this.exercises[this.quizRecord.currentQuestion]
+          );
+          */
+        }
         this.isCorrect = tmp;
         this._saveAnswer(tmp, exercise);
       } else {
@@ -183,6 +199,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
+    console.log(this.exercises);
+    console.log(this.incorrectExercises);
+    console.log(this.quizRecord.currentQuestion);
+    console.log(this.quizRecord.streakCount);
     if (
       this.quizRecord.currentQuestion >=
       this.shared.totalSessionQuestions - 1
@@ -199,6 +219,35 @@ export class ExerciseComponent implements OnInit {
       this.answer = answer;
       this._startTime = startTime;
     }
+    if (
+      this.quizRecord.streakCount === 3 &&
+      this.incorrectExercises.length > 0
+    ) {
+      console.log('streakCount: ' + this.quizRecord.streakCount);
+
+      /*
+      this.exercises.splice(
+        this.quizRecord.currentQuestion + 1,
+        0,
+        this.incorrectExercises[0]
+      );
+      */
+      console.log(this.exercises);
+      /*
+      for (
+        let i = this.exercises.length - 1;
+        i > this.quizRecord.currentQuestion;
+        i--
+      ) {
+        let temp = this.exercises[i];
+        this.exercises[i] = this.exercises[i - 1];
+        this.exercises[i - 1] = temp;
+      }
+      this.incorrectExercises.splice(0, 1);
+      */
+
+      console.log(this.exercises);
+    }
     this.quizRecord.currentQuestion++;
     this._startTime = new Date();
 
@@ -211,6 +260,11 @@ export class ExerciseComponent implements OnInit {
       }
       this._showResult();
     }
+    console.log(this.exercises[this.quizRecord.currentQuestion].question);
+    console.log(
+      this.exercises[this.quizRecord.currentQuestion].correctAnswerFraction
+    );
+    console.log(this.exercises[this.quizRecord.currentQuestion]);
   }
 
   skipExercise(): void {
