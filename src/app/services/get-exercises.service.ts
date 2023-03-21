@@ -23,9 +23,8 @@ export class GetExercisesService {
         .collection('exercises', (ref) =>
           ref
             .where('classLevel', '==', this._shared.getSchoolClass())
-            .where('difficulty', '<=', 10)
+            .orderBy('chapter', 'asc')
             .orderBy('difficulty', 'asc')
-            .limit(20)
         )
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)));
@@ -35,9 +34,7 @@ export class GetExercisesService {
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
-          .where('difficulty', '<=', 10)
           .orderBy('difficulty', 'asc')
-          .limit(20)
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
