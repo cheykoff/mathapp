@@ -212,7 +212,10 @@ export class ExerciseComponent implements OnInit {
     if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
     }
-    if (this.quizRecord.currentQuestion >= this.exercises.length - 1) {
+    if (
+      this.shared.mode === 'quiz' &&
+      this.quizRecord.currentQuestion >= this.exercises.length - 1
+    ) {
       this.quizRecord.currentQuestion = 0;
     }
     this._clearForm();
