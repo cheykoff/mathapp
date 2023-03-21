@@ -18,6 +18,18 @@ export class GetExercisesService {
   ) {}
 
   getExercises(): Observable<Exercise[]> {
+    if (this._shared.getChapter() === 99) {
+      return this._store
+        .collection('exercises', (ref) =>
+          ref
+            .where('classLevel', '==', this._shared.getSchoolClass())
+            .where('difficulty', '<=', 10)
+            .orderBy('difficulty', 'asc')
+            .limit(20)
+        )
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)));
+    }
     return this._store
       .collection('exercises', (ref) =>
         ref
