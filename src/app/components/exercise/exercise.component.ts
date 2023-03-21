@@ -157,10 +157,6 @@ export class ExerciseComponent implements OnInit {
         });
         this.exercises[this.quizRecord.currentQuestion].answeredCorrectly = tmp;
         if (!tmp && this.attempts === 1) {
-          console.log('incorrect exercise is pushed: ');
-          console.log(
-            'now the incorrect exercise is pushed into the exercises'
-          );
           this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);
           /* 
         this.incorrectExercises.splice(0, 1);
@@ -182,6 +178,14 @@ export class ExerciseComponent implements OnInit {
           numerator: parseInt(exercise.correctAnswerFraction.numerator),
           denominator: parseInt(exercise.correctAnswerFraction.denominator),
         };
+        const tmp = this._checkAnswerService.checkFractionAnswer(
+          givenAnswerFraction,
+          correctAnswerFraction
+        );
+        if (tmp) {
+          this.exercises[this.quizRecord.currentQuestion].answeredCorrectly =
+            tmp;
+        }
         this._saveAnswer(
           this._checkAnswerService.checkFractionAnswer(
             givenAnswerFraction,
@@ -205,12 +209,11 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    console.log(this.exercises);
-    console.log(this.incorrectExercises);
-    console.log(this.quizRecord.currentQuestion);
-    console.log(this.quizRecord.streakCount);
     if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
+    }
+    if (this.quizRecord.currentQuestion >= this.exercises.length - 1) {
+      this.quizRecord.currentQuestion = 0;
     }
     this._clearForm();
     if (this.shared.mode === 'practice') {
@@ -226,17 +229,12 @@ export class ExerciseComponent implements OnInit {
       this.quizRecord.streakCount === 3 &&
       this.incorrectExercises.length > 0
     ) {
-      console.log('streakCount: ' + this.quizRecord.streakCount);
-
       /*
       this.exercises.splice(
         this.quizRecord.currentQuestion + 1,
         0,
         this.incorrectExercises[0]
       );
-      */
-      console.log(this.exercises);
-      /*
       for (
         let i = this.exercises.length - 1;
         i > this.quizRecord.currentQuestion;
@@ -252,7 +250,10 @@ export class ExerciseComponent implements OnInit {
     this.quizRecord.currentQuestion++;
     this.quizRecord.userQuestion++;
     this.increaseDifficulty();
-    this.findNextSuitableExercise();
+
+    if (this.shared.mode === 'quiz') {
+      this.findNextSuitableExercise();
+    }
     this._startTime = new Date();
 
     if (
@@ -267,11 +268,15 @@ export class ExerciseComponent implements OnInit {
   }
 
   findNextSuitableExercise(): void {
+    if (this.quizRecord.currentQuestion >= this.exercises.length - 1) {
+      this.quizRecord.currentQuestion = 0;
+    }
     while (
-      this.exercises[this.quizRecord.currentQuestion].difficulty >
+      (this.exercises[this.quizRecord.currentQuestion].difficulty >
         this.currentDifficultyLevel ||
-      this.exercises[this.quizRecord.currentQuestion].difficulty + 10 <=
-        this.currentDifficultyLevel
+        this.exercises[this.quizRecord.currentQuestion].difficulty + 10 <=
+          this.currentDifficultyLevel) &&
+      !this.exercises[this.quizRecord.currentQuestion].answeredCorrectly
     ) {
       this.quizRecord.currentQuestion++;
     }
