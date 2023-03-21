@@ -20,4 +20,7 @@ export interface Exercise {
   unit?: string;
   parameters?: any;
   answeredCorrectly?: boolean;
+  chapter?: number;
+  subChapter?: number;
+  difficulty?: number;
 }
