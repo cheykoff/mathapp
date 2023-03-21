@@ -33,6 +33,8 @@ export class ExerciseComponent implements OnInit {
   exercises: Exercise[] = [];
   incorrectExercises: Exercise[] = [];
 
+  currentDifficultyLevel: number = 10;
+
   maxAttempts: number = AppConfig.maxAttempts;
 
   quiz: Quiz = {
@@ -50,6 +52,7 @@ export class ExerciseComponent implements OnInit {
     incorrectAnswers: 0,
     streakCount: 0,
     currentQuestion: 0,
+    userQuestion: 0,
   };
 
   // currentQuestion: number = 0;
@@ -125,6 +128,7 @@ export class ExerciseComponent implements OnInit {
               this.exercises.push(exercise);
               this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
             }
+            this.findNextSuitableExercise();
           })
         );
     }
@@ -205,10 +209,7 @@ export class ExerciseComponent implements OnInit {
     console.log(this.incorrectExercises);
     console.log(this.quizRecord.currentQuestion);
     console.log(this.quizRecord.streakCount);
-    if (
-      this.quizRecord.currentQuestion >=
-      this.shared.totalSessionQuestions - 1
-    ) {
+    if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
     }
     this._clearForm();
@@ -262,11 +263,37 @@ export class ExerciseComponent implements OnInit {
       }
       this._showResult();
     }
-    console.log(this.exercises[this.quizRecord.currentQuestion].question);
-    console.log(
-      this.exercises[this.quizRecord.currentQuestion].correctAnswerFraction
-    );
-    console.log(this.exercises[this.quizRecord.currentQuestion]);
+  }
+
+  findNextSuitableExercise(): void {
+    while (
+      this.exercises[this.quizRecord.currentQuestion].difficulty >
+        this.currentDifficultyLevel ||
+      this.exercises[this.quizRecord.currentQuestion].difficulty + 10 <=
+        this.currentDifficultyLevel
+    ) {
+      this.quizRecord.currentQuestion++;
+    }
+  }
+
+  increaseDifficulty(): void {
+    if (
+      this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer) >
+        0.9 &&
+      this.shared.correctAnswer + this.shared.incorrectAnswer >
+        this.currentDifficultyLevel / 2
+    ) {
+      this.currentDifficultyLevel += 10;
+    } else if (
+      this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer) <
+      0.6
+    ) {
+      if (this.currentDifficultyLevel > 10) {
+        this.currentDifficultyLevel -= 10;
+      }
+    }
   }
 
   skipExercise(): void {
