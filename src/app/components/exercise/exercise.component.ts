@@ -63,9 +63,11 @@ export class ExerciseComponent implements OnInit {
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
-  lastAnswer: number = undefined;
+  lastAnswer: string = '';
   numerator: string = '';
   denominator: string = '';
+  givenNumerator: string = '';
+  givenDenominator: string = '';
 
   showNextButton: boolean = false;
   isDisabled: boolean;
@@ -137,15 +139,14 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    this.lastAnswer = this.givenAnswer;
     if (form.valid) {
       this._trackDurationAndAttempts();
-
       if (this.shared.mode === 'practice') {
         this._saveDynamicAnswer(
           this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
         );
       } else if (exercise.answerType === 'integer') {
+        this.lastAnswer = this.givenAnswer.toString();
         const tmp = this._checkAnswerService.checkIntegerAnswer({
           form,
           exercise,
@@ -168,6 +169,7 @@ export class ExerciseComponent implements OnInit {
         this.isCorrect = tmp;
         this._saveAnswer(tmp, exercise);
       } else {
+        this.lastAnswer = form.value.numerator + '/' + form.value.denominator;
         const givenAnswerFraction = {
           numerator: parseInt(form.value.numerator),
           denominator: parseInt(form.value.denominator),
@@ -184,7 +186,7 @@ export class ExerciseComponent implements OnInit {
           exercise
         );
       }
-      this._showFeedback();
+      this._showFeedback(form);
     }
   }
 
@@ -373,8 +375,11 @@ export class ExerciseComponent implements OnInit {
     );
   }
 
-  private _showFeedback(): void {
+  private _showFeedback(form?: NgForm): void {
     this._feedbackIsShown = true;
+    if (form) {
+      form.reset();
+    }
   }
 
   private _hideFeedback(): void {
