@@ -4,17 +4,20 @@
 <div class="main">
   <ul>
     <li *ngFor="let chapter of chapters" (click)="selectChapter(chapter)">
-      <button class="btn btnList" [disabled]="chapter.disabled">
+      <button
+        class="btn btnList"
+        [disabled]="chapter.disabled"
+        *ngIf="chapter.chapterNumber < 99; else allChapters"
+      >
         {{ chapter.chapterNumber }}.<span>{{ chapter.chapterName }}</span>
       </button>
+      <ng-template #allChapters>
+        <button class="btn btnList" [disabled]="chapter.disabled">
+          {{ chapter.chapterName }}
+        </button>
+      </ng-template>
     </li>
   </ul>
-  <p>
-    Dein Thema ist nicht dabei? <br />
-    Dann
-    <a href="https://diematheapp.de/kontakt.html" target="_blank">schreib uns</a
-    >.
-  </p>
   <button class="btn btn-secondary" routerLink="/menu">
     Zurück zum Hauptmenü
   </button>

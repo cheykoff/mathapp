@@ -28,6 +28,11 @@ export const chapters: Chapter[] = [
   },
   { classLevel: 5, chapterNumber: 5, chapterName: 'Größen' },
   { classLevel: 5, chapterNumber: 6, chapterName: 'Flächen' },
+  {
+    classLevel: 5,
+    chapterNumber: 99,
+    chapterName: 'Alle Kapitel',
+  },
   { classLevel: 6, chapterNumber: 1, chapterName: 'Brüche und Dezimalbrüche' },
   {
     classLevel: 6,
@@ -38,13 +43,11 @@ export const chapters: Chapter[] = [
     classLevel: 6,
     chapterNumber: 3,
     chapterName: 'Multiplikation und Division von Brüchen',
-    disabled: true,
   },
   {
     classLevel: 6,
     chapterNumber: 4,
     chapterName: 'Flächeninhalt',
-    disabled: true,
   },
   {
     classLevel: 6,
@@ -63,5 +66,10 @@ export const chapters: Chapter[] = [
     chapterNumber: 7,
     chapterName: 'Prozentrechnung, Daten und Diagramme',
     disabled: true,
+  },
+  {
+    classLevel: 6,
+    chapterNumber: 99,
+    chapterName: 'Alle Kapitel',
   },
 ];
