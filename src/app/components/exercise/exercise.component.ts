@@ -115,7 +115,47 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
-      if (this.shared.getChapter() === 99) {
+      if (this.shared.mode === 'test') {
+        this.exercises$ = this._getExercisesService.getExercises().pipe(
+          tap((data: Exercise[]) => {
+            console.log('tap');
+            /*
+            const versions = {};
+            const groups = data.reduce((acc, exercise) => {
+              const questionNumber = exercise.questionNumber;
+              if (!versions[questionNumber]) {
+                versions[questionNumber] = exercise.numVersions;
+              }
+              if (!acc[questionNumber]) {
+                acc[questionNumber] = [];
+              }
+              acc[questionNumber].push(exercise);
+              console.log(acc);
+              return acc;
+            }, {});
+            this.shared.totalSessionQuestions = Math.min(
+              AppConfig.quizQuestions,
+              data.length
+            );
+            for (let questionNumber in groups) {
+              const numVersions = versions[questionNumber];
+              const version = Math.floor(Math.random() * numVersions) + 1;
+              groups[questionNumber].forEach((exercise) => {
+                if (exercise.questionNumber === questionNumber) {
+                  exercise.version = version;
+                  this.exercises.push(exercise);
+                  this._srcs.push(
+                    'assets/img/geometry/' + exercise.img + '.jpg'
+                  );
+                }
+              });
+            }
+          
+          */
+          })
+        );
+      } else if (this.shared.getChapter() === 99) {
+        console.log('chapter 99');
         this.exercises$ = this._getExercisesService
           .getExercises()
           .pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
@@ -133,6 +173,7 @@ export class ExerciseComponent implements OnInit {
             })
           );
       } else {
+        console.log('normal chapter');
         this.exercises$ = this._getExercisesService
           .getExercises()
           .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))

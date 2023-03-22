@@ -28,6 +28,13 @@ export class GetExercisesService {
         )
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)));
+    } else if ((this._shared.mode = 'test')) {
+      console.log('get test exercises');
+      return this._store
+        .collection('exercises-2')
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)))
+        .pipe(tap((result) => console.log(result)));
     }
     return this._store
       .collection('exercises-2', (ref) =>

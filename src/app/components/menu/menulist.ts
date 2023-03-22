@@ -6,6 +6,7 @@ export interface MenuListItem {
 
 export const menuListItems: MenuListItem[] = [
   { name: 'Quiz', route: '/quiz' },
+  { name: 'Testschulaufgabe', route: '/quiz' },
   { name: 'Üben', route: '/topics' },
   { name: 'Erfolge', route: '/statistics' },
 ];

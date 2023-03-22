@@ -23,4 +23,6 @@ export interface Exercise {
   chapter?: number;
   subChapter?: number;
   difficulty?: number;
+  numVersions?: number;
+  questionNumber?: number;
 }

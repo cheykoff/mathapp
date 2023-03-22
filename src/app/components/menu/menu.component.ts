@@ -22,6 +22,11 @@ export class MenuComponent implements OnInit {
       localStorage.setItem('mode', 'quiz');
       this._router.navigate(['/', 'chapterselection']);
       return;
+    } else if (menuItem.name === 'Testschulaufgabe') {
+      this.shared.mode = 'test';
+      localStorage.setItem('mode', 'practice');
+      this._router.navigate(['/', 'exercise']);
+      return;
     } else if (menuItem.name === 'Üben') {
       this.shared.mode = 'practice';
       localStorage.setItem('mode', 'practice');
