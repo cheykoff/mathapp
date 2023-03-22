@@ -21,13 +21,14 @@ export class GetExercisesService {
     //if (this._shared.getChapter() === 100) {
     console.log('get test exercises');
     if (this._shared.getChapter() === 100) {
+      const version = getRandInteger(1, 9);
       return this._store
         .collection('exercises-6b-230323', (ref) =>
           ref
+            .where('version', '==', version)
             .orderBy('chapter', 'asc')
             .orderBy('subChapter', 'asc')
             .orderBy('questionNumber', 'asc')
-            .orderBy('version', 'asc')
         )
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)));

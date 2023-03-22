@@ -116,45 +116,10 @@ export class ExerciseComponent implements OnInit {
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
       if (this.shared.getChapter() === 100) {
-        console.log('chapter 100');
+        console.log('Testschulaufgabe');
         this.exercises$ = this._getExercisesService
           .getExercises()
-          // .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
-          .pipe(
-            tap((data: Exercise[]) => {
-              const groups = data.reduce((acc, exercise) => {
-                const key = `${exercise.classLevel}:${exercise.chapter}:${exercise.subChapter}:${exercise.questionNumber}`;
-                if (!acc[key]) {
-                  acc[key] = [];
-                }
-                acc[key].push(exercise);
-                return acc;
-              }, {});
-              console.log(this.exercises);
-              console.log(groups);
-              this.shared.totalSessionQuestions = Math.min(
-                AppConfig.quizQuestions,
-                Object.keys(groups).length
-              );
-              for (let key in groups) {
-                const versions = groups[key].map(
-                  (exercise) => exercise.version
-                );
-                const numVersions = Math.max(...versions);
-                const version = Math.floor(Math.random() * numVersions) + 1;
-                groups[key].forEach((exercise) => {
-                  exercise.version = version;
-                  this.exercises.push(exercise);
-                  this._srcs.push(
-                    'assets/img/geometry/' + exercise.img + '.jpg'
-                  );
-                });
-              }
-            })
-          ); /*
-        this.exercises$ = this._getExercisesService
-          .getExercises()
-          //.pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
+          .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
           .pipe(
             tap((data: Exercise[]) => {
               this.shared.totalSessionQuestions = Math.min(
@@ -165,44 +130,8 @@ export class ExerciseComponent implements OnInit {
                 this.exercises.push(exercise);
                 this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
               }
-              this.findNextSuitableExercise();
             })
           );
-        this.exercises$ = this._getExercisesService.getExercises().pipe(
-          tap((data: Exercise[]) => {
-            console.log('tap');
-            const versions = {};
-            const groups = data.reduce((acc, exercise) => {
-              const questionNumber = exercise.questionNumber;
-              if (!versions[questionNumber]) {
-                versions[questionNumber] = exercise.numVersions;
-              }
-              if (!acc[questionNumber]) {
-                acc[questionNumber] = [];
-              }
-              acc[questionNumber].push(exercise);
-              console.log(acc);
-              return acc;
-            }, {});
-            this.shared.totalSessionQuestions = Math.min(
-              AppConfig.quizQuestions,
-              data.length
-            );
-            for (let questionNumber in groups) {
-              const numVersions = versions[questionNumber];
-              const version = Math.floor(Math.random() * numVersions) + 1;
-              groups[questionNumber].forEach((exercise) => {
-                if (exercise.questionNumber === questionNumber) {
-                  exercise.version = version;
-                  this.exercises.push(exercise);
-                  this._srcs.push(
-                    'assets/img/geometry/' + exercise.img + '.jpg'
-                  );
-                }
-              });
-            }
-          })
-        ); */
       } else if (this.shared.getChapter() === 99) {
         console.log('chapter 99');
         this.exercises$ = this._getExercisesService
@@ -264,17 +193,20 @@ export class ExerciseComponent implements OnInit {
           exercise,
         });
         this.exercises[this.quizRecord.currentQuestion].answeredCorrectly = tmp;
+        /* 
         if (!tmp && this.attempts === 1) {
-          this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);
-          /* 
+          this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);*/
+        /* 
         this.incorrectExercises.splice(0, 1);
           console.log(this.exercises[this.quizRecord.currentQuestion]);
           this.incorrectExercises.push(
             this.exercises[this.quizRecord.currentQuestion]
           );
           */
-        }
+        /*  
+        }*/
         this.isCorrect = tmp;
+
         this._saveAnswer(tmp, exercise);
       } else {
         this.lastAnswer = form.value.numerator + '/' + form.value.denominator;
