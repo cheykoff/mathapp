@@ -20,7 +20,7 @@ export class GetExercisesService {
   getExercises(): Observable<Exercise[]> {
     if (this._shared.getChapter() === 99) {
       return this._store
-        .collection('exercises-2', (ref) =>
+        .collection('exercises', (ref) =>
           ref
             .where('classLevel', '==', this._shared.getSchoolClass())
             .orderBy('chapter', 'asc')
@@ -37,7 +37,7 @@ export class GetExercisesService {
         .pipe(tap((result) => console.log(result)));
     }
     return this._store
-      .collection('exercises-2', (ref) =>
+      .collection('exercises', (ref) =>
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
