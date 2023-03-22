@@ -19,4 +19,8 @@ export interface Exercise {
   img?: string;
   unit?: string;
   parameters?: any;
+  answeredCorrectly?: boolean;
+  chapter?: number;
+  subChapter?: number;
+  difficulty?: number;
 }

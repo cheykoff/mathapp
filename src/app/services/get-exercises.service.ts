@@ -6,6 +6,7 @@ import { Observable, map, tap } from 'rxjs';
 
 import { Exercise } from '../components/exercise/exercise';
 import { convertSnaps } from '../../utils/db-utils';
+import { getRandInteger } from '../components/exercise/exercise-util';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,55 @@ export class GetExercisesService {
   ) {}
 
   getExercises(): Observable<Exercise[]> {
+    if (this._shared.getChapter() === 99) {
+      return this._store
+        .collection('exercises-2', (ref) =>
+          ref
+            .where('classLevel', '==', this._shared.getSchoolClass())
+            .orderBy('chapter', 'asc')
+            .orderBy('difficulty', 'asc')
+        )
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)));
+    }
     return this._store
-      .collection('exercises', (ref) =>
+      .collection('exercises-2', (ref) =>
         ref
           .where('classLevel', '==', this._shared.getSchoolClass())
           .where('chapter', '==', this._shared.getChapter())
+          .orderBy('difficulty', 'asc')
       )
       .get()
       .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
+
+  /*
+    const version = 10 * getRandInteger(0, 9) + 1;
+
+    return this._store
+      .collection('exercises-fraction-3', (ref) =>
+        ref
+          .where('version', '>=', version)
+          .where('version', '<', version + 10)
+          .orderBy('version', 'asc')
+          .orderBy('difficulty', 'asc')
+      )
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+  */
+  /*
+    return this._store
+      .collection('exercises-parallelogram')
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+  */
+  /*
+    return this._store
+      .collection('exercises-dreieck', (ref) => ref.where('version', '==', 1))
+      .get()
+      .pipe(map((result) => convertSnaps<Exercise>(result)));
+  }
+  */
 }

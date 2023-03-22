@@ -8,4 +8,5 @@ export interface QuizRecord {
   incorrectAnswers: number;
   streakCount: number;
   currentQuestion: number;
+  userQuestion?: number;
 }

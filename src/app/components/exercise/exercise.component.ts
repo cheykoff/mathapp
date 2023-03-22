@@ -13,7 +13,7 @@ import { StoreQuizService } from 'src/app/services/store-quiz.service';
 import { StorePracticeService } from 'src/app/services/store-practice.service';
 
 import { createExercise } from './create-exercise';
-import { shuffleExercises } from './exercise-util';
+import { shuffleExercises, shuffleExercises2 } from './exercise-util';
 
 import { Quiz } from './quiz';
 import { QuizRecord } from './quizrecord';
@@ -31,6 +31,9 @@ export class ExerciseComponent implements OnInit {
   // public variables
   exercises$: Observable<Exercise[]>;
   exercises: Exercise[] = [];
+  incorrectExercises: Exercise[] = [];
+
+  currentDifficultyLevel: number = 10;
 
   maxAttempts: number = AppConfig.maxAttempts;
 
@@ -49,6 +52,7 @@ export class ExerciseComponent implements OnInit {
     incorrectAnswers: 0,
     streakCount: 0,
     currentQuestion: 0,
+    userQuestion: 0,
   };
 
   // currentQuestion: number = 0;
@@ -62,9 +66,11 @@ export class ExerciseComponent implements OnInit {
   question: string = '';
   answer: number;
   givenAnswer: number = undefined;
-  lastAnswer: number = undefined;
+  lastAnswer: string = '';
   numerator: string = '';
   denominator: string = '';
+  givenNumerator: string = '';
+  givenDenominator: string = '';
 
   showNextButton: boolean = false;
   isDisabled: boolean;
@@ -109,21 +115,40 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
-      this.exercises$ = this._getExercisesService
-        .getExercises()
-        .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
-        .pipe(
-          tap((data: Exercise[]) => {
-            this.shared.totalSessionQuestions = Math.min(
-              AppConfig.quizQuestions,
-              data.length
-            );
-            for (let exercise of data) {
-              this.exercises.push(exercise);
-              this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
-            }
-          })
-        );
+      if (this.shared.getChapter() === 99) {
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          .pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                data.length
+              );
+              for (let exercise of data) {
+                this.exercises.push(exercise);
+                this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              }
+              this.findNextSuitableExercise();
+            })
+          );
+      } else {
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                data.length
+              );
+              for (let exercise of data) {
+                this.exercises.push(exercise);
+                this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              }
+            })
+          );
+      }
     }
   }
 
@@ -136,22 +161,33 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmitAnswer(form: NgForm, exercise?: Exercise) {
-    this.lastAnswer = this.givenAnswer;
     if (form.valid) {
       this._trackDurationAndAttempts();
-
       if (this.shared.mode === 'practice') {
         this._saveDynamicAnswer(
           this._checkDynamicAnswerService.checkDynamicAnswer(form, this.answer)
         );
       } else if (exercise.answerType === 'integer') {
+        this.lastAnswer = this.givenAnswer.toString();
         const tmp = this._checkAnswerService.checkIntegerAnswer({
           form,
           exercise,
         });
+        this.exercises[this.quizRecord.currentQuestion].answeredCorrectly = tmp;
+        if (!tmp && this.attempts === 1) {
+          this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);
+          /* 
+        this.incorrectExercises.splice(0, 1);
+          console.log(this.exercises[this.quizRecord.currentQuestion]);
+          this.incorrectExercises.push(
+            this.exercises[this.quizRecord.currentQuestion]
+          );
+          */
+        }
         this.isCorrect = tmp;
         this._saveAnswer(tmp, exercise);
       } else {
+        this.lastAnswer = form.value.numerator + '/' + form.value.denominator;
         const givenAnswerFraction = {
           numerator: parseInt(form.value.numerator),
           denominator: parseInt(form.value.denominator),
@@ -160,6 +196,14 @@ export class ExerciseComponent implements OnInit {
           numerator: parseInt(exercise.correctAnswerFraction.numerator),
           denominator: parseInt(exercise.correctAnswerFraction.denominator),
         };
+        const tmp = this._checkAnswerService.checkFractionAnswer(
+          givenAnswerFraction,
+          correctAnswerFraction
+        );
+        if (tmp) {
+          this.exercises[this.quizRecord.currentQuestion].answeredCorrectly =
+            tmp;
+        }
         this._saveAnswer(
           this._checkAnswerService.checkFractionAnswer(
             givenAnswerFraction,
@@ -168,7 +212,7 @@ export class ExerciseComponent implements OnInit {
           exercise
         );
       }
-      this._showFeedback();
+      this._showFeedback(form);
     }
   }
 
@@ -183,11 +227,14 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    if (
-      this.quizRecord.currentQuestion >=
-      this.shared.totalSessionQuestions - 1
-    ) {
+    if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
+    }
+    if (
+      this.shared.mode === 'quiz' &&
+      this.quizRecord.currentQuestion >= this.exercises.length - 1
+    ) {
+      this.quizRecord.currentQuestion = 0;
     }
     this._clearForm();
     if (this.shared.mode === 'practice') {
@@ -199,7 +246,37 @@ export class ExerciseComponent implements OnInit {
       this.answer = answer;
       this._startTime = startTime;
     }
+    if (
+      this.quizRecord.streakCount === 3 &&
+      this.incorrectExercises.length > 0
+    ) {
+      /*
+      this.exercises.splice(
+        this.quizRecord.currentQuestion + 1,
+        0,
+        this.incorrectExercises[0]
+      );
+      for (
+        let i = this.exercises.length - 1;
+        i > this.quizRecord.currentQuestion;
+        i--
+      ) {
+        let temp = this.exercises[i];
+        this.exercises[i] = this.exercises[i - 1];
+        this.exercises[i - 1] = temp;
+      }
+      this.incorrectExercises.splice(0, 1);
+      */
+    }
     this.quizRecord.currentQuestion++;
+    this.quizRecord.userQuestion++;
+    if (this.shared.getChapter() === 99) {
+      this.increaseDifficulty();
+      if (this.shared.mode === 'quiz') {
+        this.findNextSuitableExercise();
+      }
+    }
+
     this._startTime = new Date();
 
     if (
@@ -213,9 +290,44 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
+  findNextSuitableExercise(): void {
+    if (this.quizRecord.currentQuestion >= this.exercises.length - 1) {
+      this.quizRecord.currentQuestion = 0;
+    }
+    while (
+      (this.exercises[this.quizRecord.currentQuestion].difficulty >
+        this.currentDifficultyLevel ||
+        this.exercises[this.quizRecord.currentQuestion].difficulty + 10 <=
+          this.currentDifficultyLevel) &&
+      !this.exercises[this.quizRecord.currentQuestion].answeredCorrectly
+    ) {
+      this.quizRecord.currentQuestion++;
+    }
+  }
+
+  increaseDifficulty(): void {
+    if (
+      this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer) >
+        0.9 &&
+      this.shared.correctAnswer + this.shared.incorrectAnswer >
+        this.currentDifficultyLevel / 2
+    ) {
+      this.currentDifficultyLevel += 10;
+    } else if (
+      this.shared.correctAnswer /
+        (this.shared.correctAnswer + this.shared.incorrectAnswer) <
+      0.6
+    ) {
+      if (this.currentDifficultyLevel > 10) {
+        this.currentDifficultyLevel -= 10;
+      }
+    }
+  }
+
   skipExercise(): void {
-    this.quizRecord.incorrectAnswers++;
-    this.shared.incorrectAnswer++;
+    // this.quizRecord.incorrectAnswers++;
+    // this.shared.incorrectAnswer++;
     this.nextExercise();
   }
 
@@ -319,8 +431,11 @@ export class ExerciseComponent implements OnInit {
     );
   }
 
-  private _showFeedback(): void {
+  private _showFeedback(form?: NgForm): void {
     this._feedbackIsShown = true;
+    if (form) {
+      form.reset();
+    }
   }
 
   private _hideFeedback(): void {
