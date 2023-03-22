@@ -115,11 +115,62 @@ export class ExerciseComponent implements OnInit {
       this.shared.setQuizStartTime(quizStartDate);
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
-      if (this.shared.mode === 'test') {
+      if (this.shared.getChapter() === 100) {
+        console.log('chapter 100');
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          // .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              const groups = data.reduce((acc, exercise) => {
+                const key = `${exercise.classLevel}:${exercise.chapter}:${exercise.subChapter}:${exercise.questionNumber}`;
+                if (!acc[key]) {
+                  acc[key] = [];
+                }
+                acc[key].push(exercise);
+                return acc;
+              }, {});
+              console.log(this.exercises);
+              console.log(groups);
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                Object.keys(groups).length
+              );
+              for (let key in groups) {
+                const versions = groups[key].map(
+                  (exercise) => exercise.version
+                );
+                const numVersions = Math.max(...versions);
+                const version = Math.floor(Math.random() * numVersions) + 1;
+                groups[key].forEach((exercise) => {
+                  exercise.version = version;
+                  this.exercises.push(exercise);
+                  this._srcs.push(
+                    'assets/img/geometry/' + exercise.img + '.jpg'
+                  );
+                });
+              }
+            })
+          ); /*
+        this.exercises$ = this._getExercisesService
+          .getExercises()
+          //.pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
+          .pipe(
+            tap((data: Exercise[]) => {
+              this.shared.totalSessionQuestions = Math.min(
+                AppConfig.quizQuestions,
+                data.length
+              );
+              for (let exercise of data) {
+                this.exercises.push(exercise);
+                this._srcs.push('assets/img/geometry/' + exercise.img + '.jpg');
+              }
+              this.findNextSuitableExercise();
+            })
+          );
         this.exercises$ = this._getExercisesService.getExercises().pipe(
           tap((data: Exercise[]) => {
             console.log('tap');
-            /*
             const versions = {};
             const groups = data.reduce((acc, exercise) => {
               const questionNumber = exercise.questionNumber;
@@ -150,10 +201,8 @@ export class ExerciseComponent implements OnInit {
                 }
               });
             }
-          
-          */
           })
-        );
+        ); */
       } else if (this.shared.getChapter() === 99) {
         console.log('chapter 99');
         this.exercises$ = this._getExercisesService
@@ -268,6 +317,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
+    console.log(this.quizRecord.currentQuestion);
+    console.log(this.exercises[this.quizRecord.currentQuestion]);
     if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
     }

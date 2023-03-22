@@ -18,7 +18,20 @@ export class GetExercisesService {
   ) {}
 
   getExercises(): Observable<Exercise[]> {
-    if (this._shared.getChapter() === 99) {
+    //if (this._shared.getChapter() === 100) {
+    console.log('get test exercises');
+    if (this._shared.getChapter() === 100) {
+      return this._store
+        .collection('exercises-6b-230323', (ref) =>
+          ref
+            .orderBy('chapter', 'asc')
+            .orderBy('subChapter', 'asc')
+            .orderBy('questionNumber', 'asc')
+            .orderBy('version', 'asc')
+        )
+        .get()
+        .pipe(map((result) => convertSnaps<Exercise>(result)));
+    } else if (this._shared.getChapter() === 99) {
       return this._store
         .collection('exercises', (ref) =>
           ref
@@ -28,23 +41,17 @@ export class GetExercisesService {
         )
         .get()
         .pipe(map((result) => convertSnaps<Exercise>(result)));
-    } else if ((this._shared.mode = 'test')) {
-      console.log('get test exercises');
+    } else {
       return this._store
-        .collection('exercises-2')
+        .collection('exercises', (ref) =>
+          ref
+            .where('classLevel', '==', this._shared.getSchoolClass())
+            .where('chapter', '==', this._shared.getChapter())
+            .orderBy('difficulty', 'asc')
+        )
         .get()
-        .pipe(map((result) => convertSnaps<Exercise>(result)))
-        .pipe(tap((result) => console.log(result)));
+        .pipe(map((result) => convertSnaps<Exercise>(result)));
     }
-    return this._store
-      .collection('exercises', (ref) =>
-        ref
-          .where('classLevel', '==', this._shared.getSchoolClass())
-          .where('chapter', '==', this._shared.getChapter())
-          .orderBy('difficulty', 'asc')
-      )
-      .get()
-      .pipe(map((result) => convertSnaps<Exercise>(result)));
   }
 
   /*
