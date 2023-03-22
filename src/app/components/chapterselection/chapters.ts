@@ -72,4 +72,9 @@ export const chapters: Chapter[] = [
     chapterNumber: 99,
     chapterName: 'Alle Kapitel',
   },
+  {
+    classLevel: 6,
+    chapterNumber: 100,
+    chapterName: 'Testschulaufgabe',
+  },
 ];
