@@ -25,4 +25,5 @@ export interface Exercise {
   difficulty?: number;
   numVersions?: number;
   questionNumber?: number;
+  version?: number;
 }

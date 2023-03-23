@@ -4,6 +4,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import 'firebase/firestore';
 import { serverTimestamp } from 'firebase/firestore';
 
+import { Exercise } from '../components/exercise/exercise';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,12 +38,45 @@ export class StoreQuizService {
     duration: number,
     attempts: number,
     startTime: Date,
-    endTime: Date
+    endTime: Date,
+    exercise: Exercise
   ) {
     this._store
       .collection(
         `students/${this._shared.getStudentDocumentId()}/quizzes/${this._shared.getQuizId()}/answers`
       )
+      .add({
+        startTime: startTime,
+        endTime: endTime,
+        exerciseId: exerciseId,
+        attempt: attempts,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+        studentId: this._shared.getStudentId(),
+        question: exercise.question,
+        answer: exercise.correctAnswer,
+        version: exercise.version,
+        difficulty: exercise.difficulty,
+      });
+    this._store
+      .collection(
+        `testSchulaufgabenStudents/${this._shared.getStudentId()}/answers`
+      )
+      .add({
+        startTime: startTime,
+        endTime: endTime,
+        exerciseId: exerciseId,
+        attempt: attempts,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+        studentId: this._shared.getStudentId(),
+        question: exercise.question,
+        answer: exercise.correctAnswer,
+        version: exercise.version,
+        difficulty: exercise.difficulty,
+      });
+    this._store
+      .collection(`testSchulaufgabenExercises/${exerciseId}/answers`)
       .add({
         startTime: startTime,
         endTime: endTime,

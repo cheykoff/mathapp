@@ -404,18 +404,27 @@ export class ExerciseComponent implements OnInit {
         this.isDisabled = true;
       }
     }
-    this._storeAnswer(isCorrect, exercise.id);
+    this._storeAnswer(
+      isCorrect,
+      exercise.id,
+      this.exercises[this.quizRecord.currentQuestion]
+    );
     return;
   }
 
-  private _storeAnswer(isCorrect: boolean, currentQuestionId: string): void {
+  private _storeAnswer(
+    isCorrect: boolean,
+    currentQuestionId: string,
+    exercise: Exercise
+  ): void {
     this._storeQuizService.storeAnswer(
       currentQuestionId,
       isCorrect,
       this._duration,
       this.attempts,
       this._startTime,
-      this._endTime
+      this._endTime,
+      exercise
     );
   }
 
