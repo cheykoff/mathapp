@@ -116,7 +116,6 @@ export class ExerciseComponent implements OnInit {
       this._storeQuizService.storeQuizStart();
       this.shared.countDownTimer();
       if (this.shared.getChapter() === 100) {
-        console.log('Testschulaufgabe');
         this.exercises$ = this._getExercisesService
           .getExercises()
           .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
@@ -133,7 +132,6 @@ export class ExerciseComponent implements OnInit {
             })
           );
       } else if (this.shared.getChapter() === 99) {
-        console.log('chapter 99');
         this.exercises$ = this._getExercisesService
           .getExercises()
           .pipe(map((exercises: Exercise[]) => shuffleExercises2(exercises)))
@@ -151,7 +149,6 @@ export class ExerciseComponent implements OnInit {
             })
           );
       } else {
-        console.log('normal chapter');
         this.exercises$ = this._getExercisesService
           .getExercises()
           .pipe(map((exercises: Exercise[]) => shuffleExercises(exercises)))
@@ -193,18 +190,6 @@ export class ExerciseComponent implements OnInit {
           exercise,
         });
         this.exercises[this.quizRecord.currentQuestion].answeredCorrectly = tmp;
-        /* 
-        if (!tmp && this.attempts === 1) {
-          this.exercises.push(this.exercises[this.quizRecord.currentQuestion]);*/
-        /* 
-        this.incorrectExercises.splice(0, 1);
-          console.log(this.exercises[this.quizRecord.currentQuestion]);
-          this.incorrectExercises.push(
-            this.exercises[this.quizRecord.currentQuestion]
-          );
-          */
-        /*  
-        }*/
         this.isCorrect = tmp;
 
         this._saveAnswer(tmp, exercise);
@@ -249,8 +234,6 @@ export class ExerciseComponent implements OnInit {
   }
 
   nextExercise(): void {
-    console.log(this.quizRecord.currentQuestion);
-    console.log(this.exercises[this.quizRecord.currentQuestion]);
     if (this.quizRecord.userQuestion >= this.shared.totalSessionQuestions - 1) {
       this._showResult();
     }

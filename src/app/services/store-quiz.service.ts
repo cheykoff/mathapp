@@ -57,6 +57,9 @@ export class StoreQuizService {
         answer: exercise.correctAnswer,
         version: exercise.version,
         difficulty: exercise.difficulty,
+        chapter: exercise.chapter,
+        subChapter: exercise.subChapter,
+        questionNumber: exercise.questionNumber,
       });
     this._store
       .collection(
@@ -74,9 +77,14 @@ export class StoreQuizService {
         answer: exercise.correctAnswer,
         version: exercise.version,
         difficulty: exercise.difficulty,
+        chapter: exercise.chapter,
+        subChapter: exercise.subChapter,
+        questionNumber: exercise.questionNumber,
       });
     this._store
-      .collection(`testSchulaufgabenExercises/${exerciseId}/answers`)
+      .collection(
+        `testSchulaufgabenChapters/${exercise.chapter}/subchapters/${exercise.subChapter}/questionNumbers/${exercise.questionNumber}/answers`
+      )
       .add({
         startTime: startTime,
         endTime: endTime,
@@ -85,6 +93,33 @@ export class StoreQuizService {
         answerIsCorrect: answerIsCorrect,
         duration: duration,
         studentId: this._shared.getStudentId(),
+        question: exercise.question,
+        answer: exercise.correctAnswer,
+        version: exercise.version,
+        difficulty: exercise.difficulty,
+        chapter: exercise.chapter,
+        subChapter: exercise.subChapter,
+        questionNumber: exercise.questionNumber,
+      });
+    this._store
+      .collection(
+        `testSchulaufgabenExercises/${exercise.chapter}-${exercise.subChapter}-${exercise.questionNumber}/answers`
+      )
+      .add({
+        startTime: startTime,
+        endTime: endTime,
+        exerciseId: exerciseId,
+        attempt: attempts,
+        answerIsCorrect: answerIsCorrect,
+        duration: duration,
+        studentId: this._shared.getStudentId(),
+        question: exercise.question,
+        answer: exercise.correctAnswer,
+        version: exercise.version,
+        difficulty: exercise.difficulty,
+        chapter: exercise.chapter,
+        subChapter: exercise.subChapter,
+        questionNumber: exercise.questionNumber,
       });
   }
 

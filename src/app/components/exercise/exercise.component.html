@@ -1,7 +1,9 @@
 <div class="header">
   <h1 class="headerTitle" *ngIf="shared.mode === 'quiz'">
     Frage
-    {{ quizRecord.userQuestion + 1 }} von 17
+    {{ quizRecord.userQuestion + 1 }} ({{ shared.correctAnswer }}/{{
+      shared.correctAnswer + shared.incorrectAnswer
+    }})
   </h1>
   <h1 class="headerTitle" *ngIf="shared.mode === 'practice'">
     {{ this.shared.topic }} {{ this.shared.chosenLevel }}:
