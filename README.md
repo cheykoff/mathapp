@@ -1,27 +1,35 @@
-# Quizappv1
+# DieMatheApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+This app allows highschool teachers to give their students quizzes to assess their knowledge and practice the basics.
 
-## Development server
+## Usage of the app
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+You find the app on https://diematheapp.de
+The content is in German and focused on highschools ("Gymnasium") in Bavaria, Germany.
+It is free, doesn't display ads, and does not require any personal data (not even an email).
 
-## Code scaffolding
+### Quizzes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Quizzes allow to assess the math skills of the students within 30 min.
 
-## Build
+### Exercises
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Exercises allow students to practice the basics and progress towards fluency.
 
-## Running unit tests
+### Successes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Successes show the total number of exercises tried and solved and the number of stars that were collected.
 
-## Running end-to-end tests
+## Technical Implementation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+DieMatheApp is written in Angular and uses Firebase as a backend and database.
 
-## Further help
+### Architecture
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The whole app is only one module and screens are separated components.
+Communications are done in services.
+
+### Packages
+
+- AngularFire to communicate between the Angular app and Firebase
+- MathJax to display math signs and formula properly
